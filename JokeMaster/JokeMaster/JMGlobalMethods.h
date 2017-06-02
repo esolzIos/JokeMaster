@@ -6,11 +6,11 @@
 //  Copyright © 2017 esolz. All rights reserved.
 //
 
-#import "ViewController.h"
+
 #import "JMGlobalHeader.h"
 #import "AppDelegate.h"
 #import "SVProgressHUD.h"
-@interface JMGlobalMethods : ViewController
+@interface JMGlobalMethods : UIViewController
 {
     UIView *loader_shadow_View;
 }

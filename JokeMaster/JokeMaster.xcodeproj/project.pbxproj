@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0C6F9E311EE14A7B005D31A0 /* JMChooseCountryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C6F9E301EE14A7B005D31A0 /* JMChooseCountryViewController.m */; };
+		0C6F9E361EE14E84005D31A0 /* CountryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C6F9E351EE14E84005D31A0 /* CountryCell.m */; };
 		B0A32B401EE1292F0044D443 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B0A32B3F1EE1292F0044D443 /* main.m */; };
 		B0A32B431EE1292F0044D443 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B0A32B421EE1292F0044D443 /* AppDelegate.m */; };
 		B0A32B491EE129300044D443 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B0A32B471EE129300044D443 /* Main.storyboard */; };
@@ -43,6 +45,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0C6F9E2F1EE14A7B005D31A0 /* JMChooseCountryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMChooseCountryViewController.h; sourceTree = "<group>"; };
+		0C6F9E301EE14A7B005D31A0 /* JMChooseCountryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMChooseCountryViewController.m; sourceTree = "<group>"; };
+		0C6F9E341EE14E84005D31A0 /* CountryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CountryCell.h; sourceTree = "<group>"; };
+		0C6F9E351EE14E84005D31A0 /* CountryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CountryCell.m; sourceTree = "<group>"; };
 		B0A32B3B1EE1292F0044D443 /* JokeMaster.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JokeMaster.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0A32B3F1EE1292F0044D443 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		B0A32B411EE1292F0044D443 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -101,6 +107,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0C6F9E321EE14E44005D31A0 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				0C6F9E331EE14E50005D31A0 /* Cell */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		0C6F9E331EE14E50005D31A0 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				0C6F9E341EE14E84005D31A0 /* CountryCell.h */,
+				0C6F9E351EE14E84005D31A0 /* CountryCell.m */,
+			);
+			name = Cell;
+			sourceTree = "<group>";
+		};
 		B0A32B321EE1292F0044D443 = {
 			isa = PBXGroup;
 			children = (
@@ -124,6 +147,7 @@
 		B0A32B3D1EE1292F0044D443 /* JokeMaster */ = {
 			isa = PBXGroup;
 			children = (
+				0C6F9E321EE14E44005D31A0 /* Views */,
 				B0A32B811EE1313F0044D443 /* Frameworks */,
 				B0A32B7D1EE12E750044D443 /* ViewControllers */,
 				B0A32B781EE12DE60044D443 /* JMGlobalMethods */,
@@ -195,6 +219,8 @@
 		B0A32B7D1EE12E750044D443 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				0C6F9E2F1EE14A7B005D31A0 /* JMChooseCountryViewController.h */,
+				0C6F9E301EE14A7B005D31A0 /* JMChooseCountryViewController.m */,
 				B0A32B7E1EE12F0C0044D443 /* JMSplashViewController.h */,
 				B0A32B7F1EE12F0C0044D443 /* JMSplashViewController.m */,
 			);
@@ -369,9 +395,11 @@
 				B0A32B431EE1292F0044D443 /* AppDelegate.m in Sources */,
 				B0A32B401EE1292F0044D443 /* main.m in Sources */,
 				B0A32B901EE131680044D443 /* SVProgressHUD.m in Sources */,
+				0C6F9E311EE14A7B005D31A0 /* JMChooseCountryViewController.m in Sources */,
 				B0A32B8D1EE131680044D443 /* SVIndefiniteAnimatedView.m in Sources */,
 				B0A32B7C1EE12E4E0044D443 /* JMGlobalMethods.m in Sources */,
 				B0A32B8E1EE131680044D443 /* SVProgressAnimatedView.m in Sources */,
+				0C6F9E361EE14E84005D31A0 /* CountryCell.m in Sources */,
 				B0A32B911EE131680044D443 /* SVRadialGradientLayer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
