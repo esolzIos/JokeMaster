@@ -7,7 +7,16 @@
 //
 
 #import "JMGlobalMethods.h"
-
-@interface JMChooseCountryViewController : JMGlobalMethods
+#import "CountryCell.h"
+@interface JMChooseCountryViewController : JMGlobalMethods<UITableViewDataSource,UITableViewDelegate>
+{
+   
+    NSMutableArray *CountryArray;
+}
+@property (weak, nonatomic) IBOutlet UITableView *CountryTable;
+@property (weak, nonatomic) IBOutlet UIView *LanguageView;
+@property (weak, nonatomic) IBOutlet UILabel *LanguageLabel;
+@property (weak, nonatomic) IBOutlet UIButton *GoButton;
+- (IBAction)GoTapped:(id)sender;
 
 @end

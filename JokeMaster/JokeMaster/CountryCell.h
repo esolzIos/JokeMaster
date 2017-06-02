@@ -9,5 +9,9 @@
 #import <UIKit/UIKit.h>
 
 @interface CountryCell : UITableViewCell
+@property (weak, nonatomic) IBOutlet UIImageView *CountryImage;
+@property (weak, nonatomic) IBOutlet UILabel *CountryLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *CheckImage;
+@property (weak, nonatomic) IBOutlet UIButton *CheckButton;
 
 @end
