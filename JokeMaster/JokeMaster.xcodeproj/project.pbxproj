@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0C6F9E311EE14A7B005D31A0 /* JMChooseCountryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C6F9E301EE14A7B005D31A0 /* JMChooseCountryViewController.m */; };
 		0C6F9E361EE14E84005D31A0 /* CountryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C6F9E351EE14E84005D31A0 /* CountryCell.m */; };
+		0CE2FB481EE190E50031C0E6 /* JMRegistrationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CE2FB471EE190E50031C0E6 /* JMRegistrationViewController.m */; };
 		B0A32B401EE1292F0044D443 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B0A32B3F1EE1292F0044D443 /* main.m */; };
 		B0A32B431EE1292F0044D443 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B0A32B421EE1292F0044D443 /* AppDelegate.m */; };
 		B0A32B491EE129300044D443 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B0A32B471EE129300044D443 /* Main.storyboard */; };
@@ -49,6 +50,8 @@
 		0C6F9E301EE14A7B005D31A0 /* JMChooseCountryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMChooseCountryViewController.m; sourceTree = "<group>"; };
 		0C6F9E341EE14E84005D31A0 /* CountryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CountryCell.h; sourceTree = "<group>"; };
 		0C6F9E351EE14E84005D31A0 /* CountryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CountryCell.m; sourceTree = "<group>"; };
+		0CE2FB461EE190E50031C0E6 /* JMRegistrationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMRegistrationViewController.h; sourceTree = "<group>"; };
+		0CE2FB471EE190E50031C0E6 /* JMRegistrationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMRegistrationViewController.m; sourceTree = "<group>"; };
 		B0A32B3B1EE1292F0044D443 /* JokeMaster.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JokeMaster.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0A32B3F1EE1292F0044D443 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		B0A32B411EE1292F0044D443 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -223,6 +226,8 @@
 				0C6F9E301EE14A7B005D31A0 /* JMChooseCountryViewController.m */,
 				B0A32B7E1EE12F0C0044D443 /* JMSplashViewController.h */,
 				B0A32B7F1EE12F0C0044D443 /* JMSplashViewController.m */,
+				0CE2FB461EE190E50031C0E6 /* JMRegistrationViewController.h */,
+				0CE2FB471EE190E50031C0E6 /* JMRegistrationViewController.m */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -396,6 +401,7 @@
 				B0A32B401EE1292F0044D443 /* main.m in Sources */,
 				B0A32B901EE131680044D443 /* SVProgressHUD.m in Sources */,
 				0C6F9E311EE14A7B005D31A0 /* JMChooseCountryViewController.m in Sources */,
+				0CE2FB481EE190E50031C0E6 /* JMRegistrationViewController.m in Sources */,
 				B0A32B8D1EE131680044D443 /* SVIndefiniteAnimatedView.m in Sources */,
 				B0A32B7C1EE12E4E0044D443 /* JMGlobalMethods.m in Sources */,
 				B0A32B8E1EE131680044D443 /* SVProgressAnimatedView.m in Sources */,

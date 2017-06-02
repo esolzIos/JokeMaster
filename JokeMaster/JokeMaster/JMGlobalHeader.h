@@ -87,5 +87,9 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 //Extra key
 #define ANIMATION_DURATION				0.3f
 
+//font
+
+#define ComicBold @"comicbd_1"
+
 
 #endif /* JMGlobalHeader_h */
