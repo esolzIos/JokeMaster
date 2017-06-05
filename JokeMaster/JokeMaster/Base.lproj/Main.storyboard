@@ -196,6 +196,9 @@
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" name="ComicSansMS-Bold" family="Comic Sans MS" pointSize="17"/>
                                         <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="1Lh-pv-E2G" id="tRU-0z-ZAh"/>
+                                        </connections>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Name" textAlignment="center" minimumFontSize="17" background="input-box" id="MVs-0V-F7l">
                                         <rect key="frame" x="23" y="157" width="275" height="46"/>
@@ -203,6 +206,9 @@
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" name="ComicSansMS-Bold" family="Comic Sans MS" pointSize="17"/>
                                         <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="1Lh-pv-E2G" id="dee-Ep-5or"/>
+                                        </connections>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Name" textAlignment="center" minimumFontSize="17" background="input-box" id="3h4-ui-bPw">
                                         <rect key="frame" x="23" y="262" width="275" height="46"/>
@@ -210,6 +216,9 @@
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" name="ComicSansMS-Bold" family="Comic Sans MS" pointSize="17"/>
                                         <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="1Lh-pv-E2G" id="ktG-sq-WD2"/>
+                                        </connections>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Name" textAlignment="center" minimumFontSize="17" background="input-box" id="iZ9-DU-7Ak">
                                         <rect key="frame" x="23" y="315" width="275" height="46"/>
@@ -217,6 +226,9 @@
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" name="ComicSansMS-Bold" family="Comic Sans MS" pointSize="17"/>
                                         <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="1Lh-pv-E2G" id="nNN-ha-diM"/>
+                                        </connections>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="6Ov-FN-1F0">
                                         <rect key="frame" x="19" y="374" width="283" height="52"/>
@@ -226,7 +238,7 @@
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <action selector="GoTapped:" destination="9Eb-8Y-mco" eventType="touchUpInside" id="Aa4-hz-Kfa"/>
+                                            <action selector="SignUpTapped:" destination="1Lh-pv-E2G" eventType="touchUpInside" id="Z3G-Ni-YSA"/>
                                         </connections>
                                     </button>
                                     <view contentMode="scaleToFill" misplaced="YES" id="SXd-uB-nGM">
@@ -251,11 +263,30 @@
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </view>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" editable="NO" textAlignment="natural" id="Uta-qN-A26">
+                                        <rect key="frame" x="23" y="434" width="275" height="29"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
                                 </subviews>
                             </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <connections>
+                        <outlet property="ConfirmPassword" destination="iZ9-DU-7Ak" id="4n8-MC-Foi"/>
+                        <outlet property="Emailtxt" destination="MVs-0V-F7l" id="PSY-JK-q89"/>
+                        <outlet property="LanguageLabel" destination="Luf-sC-FWi" id="JKy-NB-YZw"/>
+                        <outlet property="LanguageView" destination="SXd-uB-nGM" id="oHi-va-s6V"/>
+                        <outlet property="Logintxtvw" destination="Uta-qN-A26" id="h0a-c3-hlG"/>
+                        <outlet property="Nametxt" destination="X9b-Sd-n4M" id="WQL-YJ-eQ9"/>
+                        <outlet property="Passwordtxt" destination="3h4-ui-bPw" id="PTp-DA-m2h"/>
+                        <outlet property="ProfileImage" destination="Ub9-EK-Cy0" id="seW-rr-1r7"/>
+                        <outlet property="ProfileImageLabel" destination="OoI-6t-DRB" id="gRV-Qs-w4s"/>
+                        <outlet property="mainscroll" destination="sP6-fM-hvT" id="4pF-fx-bJh"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZOv-cN-eaC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

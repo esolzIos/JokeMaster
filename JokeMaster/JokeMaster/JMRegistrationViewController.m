@@ -13,10 +13,28 @@
 @end
 
 @implementation JMRegistrationViewController
-
+@synthesize Nametxt,Emailtxt,Passwordtxt,ProfileImage,ProfileImageLabel,ConfirmPassword,mainscroll,Logintxtvw,LanguageView,LanguageLabel;
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+//    UIFont *font1 = [UIFont fontWithName:@"comicbd_1.ttf" size:14];
+//    NSDictionary *arialDict = [NSDictionary dictionaryWithObject:font1 forKey:NSFontAttributeName];
+//    NSMutableAttributedString *aAttrString1 = [[NSMutableAttributedString alloc] initWithString:NSLocalizedString(@"Back to ",nil) attributes: arialDict];
+//    [aAttrString1 addAttribute:NSForegroundColorAttributeName
+//                         value:[UIColor whiteColor]
+//                         range:NSMakeRange(0, [aAttrString1 length])];
+//    
+//    UIFont *font2 = [UIFont fontWithName:@"comicbd_1.ttf" size:17];
+//    NSDictionary *arialDict2 = [NSDictionary dictionaryWithObject:font2 forKey:NSFontAttributeName];
+//    NSMutableAttributedString *aAttrString2 = [[NSMutableAttributedString alloc] initWithString:NSLocalizedString(@"Log in",nil) attributes: arialDict2];
+//    [aAttrString2 addAttribute:NSForegroundColorAttributeName
+//                         value:[UIColor whiteColor]
+//                         range:NSMakeRange(0, [aAttrString2 length])];
+//    
+//    [aAttrString1 appendAttributedString:aAttrString2];
+//    Logintxtvw.attributedText = aAttrString1;
+//    Logintxtvw.textAlignment = NSTextAlignmentCenter;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -34,4 +52,6 @@
 }
 */
 
+- (IBAction)SignUpTapped:(id)sender {
+}
 @end
