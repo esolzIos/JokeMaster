@@ -14,10 +14,10 @@
         </array>
     </customFonts>
     <scenes>
-        <!--View Controller-->
+        <!--Language View Controller-->
         <scene sceneID="Smt-53-b35">
             <objects>
-                <viewController id="k9q-3k-hVX" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="JMLanguage" useStoryboardIdentifierAsRestorationIdentifier="YES" id="k9q-3k-hVX" customClass="JMLanguageViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="QOU-5m-Bgg">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -48,6 +48,9 @@
                                     <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="tqj-qZ-izc">
                                         <rect key="frame" x="0.0" y="0.0" width="280" height="50"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                        <connections>
+                                            <action selector="chooseClicked:" destination="k9q-3k-hVX" eventType="touchUpInside" id="0sf-Hp-QlT"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -74,15 +77,20 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <connections>
+                        <outlet property="chooseBtn" destination="tqj-qZ-izc" id="NHc-j4-ao3"/>
+                        <outlet property="languageLbl" destination="ayi-9Y-aNd" id="cmG-Z1-eHF"/>
+                        <outlet property="languageView" destination="hsq-K1-NEU" id="1lc-aj-PVO"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gpz-ZX-L6V" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-41" y="99"/>
         </scene>
-        <!--View Controller-->
+        <!--Login View Controller-->
         <scene sceneID="G7h-OL-ScO">
             <objects>
-                <viewController id="Zbw-Va-FYs" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="JMLogin" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Zbw-Va-FYs" customClass="JMLoginViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5fu-dX-Ehr">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -105,6 +113,9 @@
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" name="ComicSansMS-Bold" family="Comic Sans MS" pointSize="13"/>
                                         <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="Zbw-Va-FYs" id="osS-19-i9c"/>
+                                        </connections>
                                     </textField>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -123,6 +134,9 @@
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" name="ComicSansMS-Bold" family="Comic Sans MS" pointSize="13"/>
                                         <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="Zbw-Va-FYs" id="AnM-ep-bGV"/>
+                                        </connections>
                                     </textField>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -139,9 +153,12 @@
                                         <rect key="frame" x="0.0" y="0.0" width="295" height="55"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="ComicSansMS-Bold" family="Comic Sans MS" pointSize="13"/>
-                                        <state key="normal" title="GO">
+                                        <state key="normal" title="LOG IN">
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <action selector="loginClicked:" destination="Zbw-Va-FYs" eventType="touchUpInside" id="6bA-PK-HQT"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -161,6 +178,9 @@
                                         <state key="normal">
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <action selector="fbClicked:" destination="Zbw-Va-FYs" eventType="touchUpInside" id="8CW-BT-9qS"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -180,6 +200,9 @@
                                         <state key="normal">
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <action selector="googleClicked:" destination="Zbw-Va-FYs" eventType="touchUpInside" id="3N6-BR-E8z"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -198,10 +221,27 @@
                                 <state key="normal" title="Dont have an account? sign up">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="signUpClicked:" destination="Zbw-Va-FYs" eventType="touchUpInside" id="LYr-U7-wgL"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <connections>
+                        <outlet property="emailView" destination="5Vy-da-vNT" id="UV8-Qa-Z85"/>
+                        <outlet property="fbBtn" destination="z3a-hf-8wO" id="iXl-ac-oSC"/>
+                        <outlet property="fbView" destination="MzH-Ty-uR0" id="d2T-pu-hYp"/>
+                        <outlet property="googleBtn" destination="5qN-7P-RWj" id="UPY-hS-l1F"/>
+                        <outlet property="googleView" destination="PgO-b4-D7m" id="vY7-mA-rUx"/>
+                        <outlet property="infoTxt" destination="C53-9G-HlM" id="hyp-H0-e1c"/>
+                        <outlet property="loginBtn" destination="Tlt-SJ-GSu" id="gef-fS-eL3"/>
+                        <outlet property="loginView" destination="Cgw-7S-1fT" id="bRU-2n-6BQ"/>
+                        <outlet property="passView" destination="PYT-iW-qL4" id="ynj-y6-5cV"/>
+                        <outlet property="password" destination="2a5-Vp-WlV" id="diF-o3-Vxq"/>
+                        <outlet property="signupBtn" destination="dMO-6y-hbn" id="SUR-DF-Xgx"/>
+                        <outlet property="userEmail" destination="hpT-a8-z5k" id="xmb-ri-r9w"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kIg-fU-5i8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

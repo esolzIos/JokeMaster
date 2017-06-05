@@ -11,6 +11,20 @@
 		0C6F9E361EE14E84005D31A0 /* CountryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C6F9E351EE14E84005D31A0 /* CountryCell.m */; };
 		0CE2FB481EE190E50031C0E6 /* JMRegistrationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CE2FB471EE190E50031C0E6 /* JMRegistrationViewController.m */; };
 		B07ABAC11EE527050011DD57 /* Temp.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B07ABAC01EE527050011DD57 /* Temp.storyboard */; };
+		B07ABAC41EE540B90011DD57 /* JMLanguageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B07ABAC31EE540B90011DD57 /* JMLanguageViewController.m */; };
+		B07ABAC71EE540F90011DD57 /* JMLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B07ABAC61EE540F90011DD57 /* JMLoginViewController.m */; };
+		B07ABACB1EE570C60011DD57 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B07ABAC81EE570C60011DD57 /* FBSDKCoreKit.framework */; };
+		B07ABACC1EE570C60011DD57 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B07ABAC91EE570C60011DD57 /* FBSDKLoginKit.framework */; };
+		B07ABACD1EE570C60011DD57 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B07ABACA1EE570C60011DD57 /* FBSDKShareKit.framework */; };
+		B07ABACF1EE571280011DD57 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B07ABACE1EE571280011DD57 /* Bolts.framework */; };
+		B07ABAD51EE58E4E0011DD57 /* GoogleAppUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B07ABAD01EE58E4E0011DD57 /* GoogleAppUtilities.framework */; };
+		B07ABAD61EE58E4E0011DD57 /* GoogleSignIn.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B07ABAD11EE58E4E0011DD57 /* GoogleSignIn.bundle */; };
+		B07ABAD71EE58E4E0011DD57 /* GoogleSignIn.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B07ABAD21EE58E4E0011DD57 /* GoogleSignIn.framework */; };
+		B07ABAD81EE58E4E0011DD57 /* GoogleSignInDependencies.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B07ABAD31EE58E4E0011DD57 /* GoogleSignInDependencies.framework */; };
+		B07ABAD91EE58E4E0011DD57 /* GoogleSymbolUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B07ABAD41EE58E4E0011DD57 /* GoogleSymbolUtilities.framework */; };
+		B07ABADC1EE58E740011DD57 /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B07ABADB1EE58E740011DD57 /* SafariServices.framework */; };
+		B07ABADE1EE58E790011DD57 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B07ABADD1EE58E790011DD57 /* SystemConfiguration.framework */; };
+		B07ABAE01EE590580011DD57 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B07ABADF1EE590580011DD57 /* GoogleService-Info.plist */; };
 		B0A32B401EE1292F0044D443 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B0A32B3F1EE1292F0044D443 /* main.m */; };
 		B0A32B431EE1292F0044D443 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B0A32B421EE1292F0044D443 /* AppDelegate.m */; };
 		B0A32B491EE129300044D443 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B0A32B471EE129300044D443 /* Main.storyboard */; };
@@ -54,6 +68,22 @@
 		0CE2FB461EE190E50031C0E6 /* JMRegistrationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMRegistrationViewController.h; sourceTree = "<group>"; };
 		0CE2FB471EE190E50031C0E6 /* JMRegistrationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMRegistrationViewController.m; sourceTree = "<group>"; };
 		B07ABAC01EE527050011DD57 /* Temp.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Temp.storyboard; sourceTree = "<group>"; };
+		B07ABAC21EE540B90011DD57 /* JMLanguageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMLanguageViewController.h; sourceTree = "<group>"; };
+		B07ABAC31EE540B90011DD57 /* JMLanguageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMLanguageViewController.m; sourceTree = "<group>"; };
+		B07ABAC51EE540F90011DD57 /* JMLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMLoginViewController.h; sourceTree = "<group>"; };
+		B07ABAC61EE540F90011DD57 /* JMLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMLoginViewController.m; sourceTree = "<group>"; };
+		B07ABAC81EE570C60011DD57 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
+		B07ABAC91EE570C60011DD57 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
+		B07ABACA1EE570C60011DD57 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKShareKit.framework; sourceTree = "<group>"; };
+		B07ABACE1EE571280011DD57 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
+		B07ABAD01EE58E4E0011DD57 /* GoogleAppUtilities.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleAppUtilities.framework; sourceTree = "<group>"; };
+		B07ABAD11EE58E4E0011DD57 /* GoogleSignIn.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = GoogleSignIn.bundle; sourceTree = "<group>"; };
+		B07ABAD21EE58E4E0011DD57 /* GoogleSignIn.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleSignIn.framework; sourceTree = "<group>"; };
+		B07ABAD31EE58E4E0011DD57 /* GoogleSignInDependencies.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleSignInDependencies.framework; sourceTree = "<group>"; };
+		B07ABAD41EE58E4E0011DD57 /* GoogleSymbolUtilities.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleSymbolUtilities.framework; sourceTree = "<group>"; };
+		B07ABADB1EE58E740011DD57 /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
+		B07ABADD1EE58E790011DD57 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		B07ABADF1EE590580011DD57 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B0A32B3B1EE1292F0044D443 /* JokeMaster.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JokeMaster.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0A32B3F1EE1292F0044D443 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		B0A32B411EE1292F0044D443 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -92,6 +122,16 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B07ABADE1EE58E790011DD57 /* SystemConfiguration.framework in Frameworks */,
+				B07ABADC1EE58E740011DD57 /* SafariServices.framework in Frameworks */,
+				B07ABACC1EE570C60011DD57 /* FBSDKLoginKit.framework in Frameworks */,
+				B07ABAD81EE58E4E0011DD57 /* GoogleSignInDependencies.framework in Frameworks */,
+				B07ABAD91EE58E4E0011DD57 /* GoogleSymbolUtilities.framework in Frameworks */,
+				B07ABAD71EE58E4E0011DD57 /* GoogleSignIn.framework in Frameworks */,
+				B07ABAD51EE58E4E0011DD57 /* GoogleAppUtilities.framework in Frameworks */,
+				B07ABACB1EE570C60011DD57 /* FBSDKCoreKit.framework in Frameworks */,
+				B07ABACD1EE570C60011DD57 /* FBSDKShareKit.framework in Frameworks */,
+				B07ABACF1EE571280011DD57 /* Bolts.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -129,6 +169,15 @@
 			name = Cell;
 			sourceTree = "<group>";
 		};
+		B07ABADA1EE58E740011DD57 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B07ABADD1EE58E790011DD57 /* SystemConfiguration.framework */,
+				B07ABADB1EE58E740011DD57 /* SafariServices.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		B0A32B321EE1292F0044D443 = {
 			isa = PBXGroup;
 			children = (
@@ -136,6 +185,7 @@
 				B0A32B5A1EE129300044D443 /* JokeMasterTests */,
 				B0A32B651EE129300044D443 /* JokeMasterUITests */,
 				B0A32B3C1EE1292F0044D443 /* Products */,
+				B07ABADA1EE58E740011DD57 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -163,6 +213,7 @@
 				B0A32B471EE129300044D443 /* Main.storyboard */,
 				B0A32B4D1EE129300044D443 /* Assets.xcassets */,
 				B0A32B4F1EE129300044D443 /* LaunchScreen.storyboard */,
+				B07ABADF1EE590580011DD57 /* GoogleService-Info.plist */,
 				B0A32B521EE129300044D443 /* Info.plist */,
 				B0A32B4A1EE129300044D443 /* JokeMaster.xcdatamodeld */,
 				B0A32B3E1EE1292F0044D443 /* Supporting Files */,
@@ -231,6 +282,10 @@
 				B0A32B7F1EE12F0C0044D443 /* JMSplashViewController.m */,
 				0CE2FB461EE190E50031C0E6 /* JMRegistrationViewController.h */,
 				0CE2FB471EE190E50031C0E6 /* JMRegistrationViewController.m */,
+				B07ABAC21EE540B90011DD57 /* JMLanguageViewController.h */,
+				B07ABAC31EE540B90011DD57 /* JMLanguageViewController.m */,
+				B07ABAC51EE540F90011DD57 /* JMLoginViewController.h */,
+				B07ABAC61EE540F90011DD57 /* JMLoginViewController.m */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -238,6 +293,15 @@
 		B0A32B811EE1313F0044D443 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B07ABAD01EE58E4E0011DD57 /* GoogleAppUtilities.framework */,
+				B07ABAD11EE58E4E0011DD57 /* GoogleSignIn.bundle */,
+				B07ABAD21EE58E4E0011DD57 /* GoogleSignIn.framework */,
+				B07ABAD31EE58E4E0011DD57 /* GoogleSignInDependencies.framework */,
+				B07ABAD41EE58E4E0011DD57 /* GoogleSymbolUtilities.framework */,
+				B07ABAC81EE570C60011DD57 /* FBSDKCoreKit.framework */,
+				B07ABACE1EE571280011DD57 /* Bolts.framework */,
+				B07ABAC91EE570C60011DD57 /* FBSDKLoginKit.framework */,
+				B07ABACA1EE570C60011DD57 /* FBSDKShareKit.framework */,
 				B0A32B821EE131570044D443 /* SVProgressHUD */,
 			);
 			name = Frameworks;
@@ -371,9 +435,11 @@
 			files = (
 				B0A32B8F1EE131680044D443 /* SVProgressHUD.bundle in Resources */,
 				B0A32B761EE12DC20044D443 /* comicbd_1.ttf in Resources */,
+				B07ABAE01EE590580011DD57 /* GoogleService-Info.plist in Resources */,
 				B0A32B511EE129300044D443 /* LaunchScreen.storyboard in Resources */,
 				B0A32B4E1EE129300044D443 /* Assets.xcassets in Resources */,
 				B07ABAC11EE527050011DD57 /* Temp.storyboard in Resources */,
+				B07ABAD61EE58E4E0011DD57 /* GoogleSignIn.bundle in Resources */,
 				B0A32B491EE129300044D443 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -402,6 +468,7 @@
 				B0A32B801EE12F0C0044D443 /* JMSplashViewController.m in Sources */,
 				B0A32B4C1EE129300044D443 /* JokeMaster.xcdatamodeld in Sources */,
 				B0A32B431EE1292F0044D443 /* AppDelegate.m in Sources */,
+				B07ABAC71EE540F90011DD57 /* JMLoginViewController.m in Sources */,
 				B0A32B401EE1292F0044D443 /* main.m in Sources */,
 				B0A32B901EE131680044D443 /* SVProgressHUD.m in Sources */,
 				0C6F9E311EE14A7B005D31A0 /* JMChooseCountryViewController.m in Sources */,
@@ -411,6 +478,7 @@
 				B0A32B8E1EE131680044D443 /* SVProgressAnimatedView.m in Sources */,
 				0C6F9E361EE14E84005D31A0 /* CountryCell.m in Sources */,
 				B0A32B911EE131680044D443 /* SVRadialGradientLayer.m in Sources */,
+				B07ABAC41EE540B90011DD57 /* JMLanguageViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -566,8 +634,16 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = K22GQFS8BW;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/JokeMaster",
+				);
 				INFOPLIST_FILE = JokeMaster/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"$(OTHER_LDFLAGS)",
+					"-ObjC",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.esolz.JokeMaster;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -580,8 +656,16 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = K22GQFS8BW;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/JokeMaster",
+				);
 				INFOPLIST_FILE = JokeMaster/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"$(OTHER_LDFLAGS)",
+					"-ObjC",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.esolz.JokeMaster;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
