@@ -150,7 +150,11 @@ fbM=[[FBSDKLoginManager alloc]init];
 
     
 }
-- (IBAction)signUpClicked:(id)sender {
+- (IBAction)signUpClicked:(id)sender
+{
+    JMRegistrationViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMRegistrationViewController"];
+    
+    [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
 }
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
