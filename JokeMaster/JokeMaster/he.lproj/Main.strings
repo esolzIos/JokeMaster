@@ -1,0 +1,57 @@
+
+/* Class = "UITextField"; placeholder = "Name"; ObjectID = "3h4-ui-bPw"; */
+"3h4-ui-bPw.placeholder" = "Name";
+
+/* Class = "UIButton"; normalTitle = "LOG IN"; ObjectID = "4Qi-G0-W26"; */
+"4Qi-G0-W26.normalTitle" = "LOG IN";
+
+/* Class = "UIButton"; normalTitle = "SIGN UP"; ObjectID = "6Ov-FN-1F0"; */
+"6Ov-FN-1F0.normalTitle" = "SIGN UP";
+
+/* Class = "UILabel"; text = "English"; ObjectID = "9rO-Ob-5J1"; */
+"9rO-Ob-5J1.text" = "English";
+
+/* Class = "UIButton"; normalTitle = "GO"; ObjectID = "Ipd-Bz-HQi"; */
+"Ipd-Bz-HQi.normalTitle" = "GO";
+
+/* Class = "UILabel"; text = "Language"; ObjectID = "Luf-sC-FWi"; */
+"Luf-sC-FWi.text" = "Language";
+
+/* Class = "UITextField"; placeholder = "Name"; ObjectID = "MVs-0V-F7l"; */
+"MVs-0V-F7l.placeholder" = "Name";
+
+/* Class = "UITextField"; placeholder = "Email"; ObjectID = "NZK-Bj-BGB"; */
+"NZK-Bj-BGB.placeholder" = "Email";
+
+/* Class = "UITextField"; text = "Password"; ObjectID = "NZK-Bj-BGB"; */
+"NZK-Bj-BGB.text" = "Password";
+
+/* Class = "UILabel"; text = "Upload Profile Picture"; ObjectID = "OoI-6t-DRB"; */
+"OoI-6t-DRB.text" = "Upload Profile Picture";
+
+/* Class = "UILabel"; text = "Select joke Language"; ObjectID = "PW4-UP-zSs"; */
+"PW4-UP-zSs.text" = "Select joke Language";
+
+/* Class = "UIButton"; normalTitle = "GO"; ObjectID = "PZh-6v-jKE"; */
+"PZh-6v-jKE.normalTitle" = "GO";
+
+/* Class = "UIButton"; normalTitle = "Dont have an account? sign up"; ObjectID = "W2J-gb-nsI"; */
+"W2J-gb-nsI.normalTitle" = "Dont have an account? sign up";
+
+/* Class = "UITextField"; placeholder = "Name"; ObjectID = "X9b-Sd-n4M"; */
+"X9b-Sd-n4M.placeholder" = "Name";
+
+/* Class = "UITextField"; placeholder = "Email"; ObjectID = "iVC-ze-54n"; */
+"iVC-ze-54n.placeholder" = "Email";
+
+/* Class = "UITextField"; text = "Email"; ObjectID = "iVC-ze-54n"; */
+"iVC-ze-54n.text" = "Email";
+
+/* Class = "UITextField"; placeholder = "Name"; ObjectID = "iZ9-DU-7Ak"; */
+"iZ9-DU-7Ak.placeholder" = "Name";
+
+/* Class = "UILabel"; text = "UNITED STATES"; ObjectID = "oye-Mv-pDD"; */
+"oye-Mv-pDD.text" = "UNITED STATES";
+
+/* Class = "UILabel"; text = "or login with"; ObjectID = "vZ7-dc-nHw"; */
+"vZ7-dc-nHw.text" = "or login with";

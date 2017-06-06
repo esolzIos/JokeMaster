@@ -10,6 +10,7 @@
 		0C6F9E311EE14A7B005D31A0 /* JMChooseCountryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C6F9E301EE14A7B005D31A0 /* JMChooseCountryViewController.m */; };
 		0C6F9E361EE14E84005D31A0 /* CountryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C6F9E351EE14E84005D31A0 /* CountryCell.m */; };
 		0CE2FB481EE190E50031C0E6 /* JMRegistrationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CE2FB471EE190E50031C0E6 /* JMRegistrationViewController.m */; };
+		B0739C791EE68A2D00A22C22 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B0739C781EE68A2D00A22C22 /* Localizable.strings */; };
 		B07ABAC11EE527050011DD57 /* Temp.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B07ABAC01EE527050011DD57 /* Temp.storyboard */; };
 		B07ABAC41EE540B90011DD57 /* JMLanguageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B07ABAC31EE540B90011DD57 /* JMLanguageViewController.m */; };
 		B07ABAC71EE540F90011DD57 /* JMLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B07ABAC61EE540F90011DD57 /* JMLoginViewController.m */; };
@@ -67,6 +68,11 @@
 		0C6F9E351EE14E84005D31A0 /* CountryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CountryCell.m; sourceTree = "<group>"; };
 		0CE2FB461EE190E50031C0E6 /* JMRegistrationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMRegistrationViewController.h; sourceTree = "<group>"; };
 		0CE2FB471EE190E50031C0E6 /* JMRegistrationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMRegistrationViewController.m; sourceTree = "<group>"; };
+		B0739C741EE6891800A22C22 /* he */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = he; path = he.lproj/Main.strings; sourceTree = "<group>"; };
+		B0739C751EE6891800A22C22 /* he */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = he; path = he.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		B0739C761EE689C000A22C22 /* hi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hi; path = hi.lproj/Main.strings; sourceTree = "<group>"; };
+		B0739C771EE689C000A22C22 /* hi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hi; path = hi.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		B0739C781EE68A2D00A22C22 /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		B07ABAC01EE527050011DD57 /* Temp.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Temp.storyboard; sourceTree = "<group>"; };
 		B07ABAC21EE540B90011DD57 /* JMLanguageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMLanguageViewController.h; sourceTree = "<group>"; };
 		B07ABAC31EE540B90011DD57 /* JMLanguageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMLanguageViewController.m; sourceTree = "<group>"; };
@@ -225,6 +231,7 @@
 		B0A32B3E1EE1292F0044D443 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				B0739C781EE68A2D00A22C22 /* Localizable.strings */,
 				B0A32B3F1EE1292F0044D443 /* main.m */,
 			);
 			name = "Supporting Files";
@@ -441,6 +448,7 @@
 				B07ABAC11EE527050011DD57 /* Temp.storyboard in Resources */,
 				B07ABAD61EE58E4E0011DD57 /* GoogleSignIn.bundle in Resources */,
 				B0A32B491EE129300044D443 /* Main.storyboard in Resources */,
+				B0739C791EE68A2D00A22C22 /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -518,6 +526,8 @@
 			isa = PBXVariantGroup;
 			children = (
 				B0A32B481EE129300044D443 /* Base */,
+				B0739C741EE6891800A22C22 /* he */,
+				B0739C761EE689C000A22C22 /* hi */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -526,6 +536,8 @@
 			isa = PBXVariantGroup;
 			children = (
 				B0A32B501EE129300044D443 /* Base */,
+				B0739C751EE6891800A22C22 /* he */,
+				B0739C771EE689C000A22C22 /* hi */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -537,6 +549,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -587,6 +600,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";

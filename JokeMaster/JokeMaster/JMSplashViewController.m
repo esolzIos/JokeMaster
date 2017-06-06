@@ -7,16 +7,30 @@
 //
 
 #import "JMSplashViewController.h"
-
+#import "JMLoginViewController.h"
 @interface JMSplashViewController ()
-
+{
+    NSURLSession *session;
+    AppDelegate *app;
+}
 @end
 
 @implementation JMSplashViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    app=(AppDelegate *)[[UIApplication sharedApplication]delegate];
+    
+    [self performSelector:@selector(LoadHome) withObject:nil afterDelay:3.0];
     // Do any additional setup after loading the view.
+}
+
+-(void)LoadHome
+{
+    JMLoginViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMLogin"];
+    
+    [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
 }
 
 - (void)didReceiveMemoryWarning {
