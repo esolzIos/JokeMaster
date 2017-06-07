@@ -106,4 +106,9 @@
 #pragma mark - Go button tapped
 - (IBAction)GoTapped:(id)sender {
 }
+#pragma mark - status bar white color
+- (UIStatusBarStyle)preferredStatusBarStyle
+{
+    return UIStatusBarStyleLightContent;
+}
 @end

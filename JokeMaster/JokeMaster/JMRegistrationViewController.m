@@ -680,7 +680,7 @@
     [mainscroll setContentOffset:CGPointMake(0.0f,0) animated:YES];
     
 }
-//#pragma mark -  picker delegate
+#pragma mark -  picker delegate
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
 {
     return 1;

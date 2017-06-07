@@ -33,7 +33,7 @@
     {
         LocalizationSetLanguage(@"en");
         
-        LocalizationSetLanguage(@"he");
+      //  LocalizationSetLanguage(@"he");
     }
     else
     {

@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		0C48BFAF1EE7CD6F00CD1C2A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0C48BFB11EE7CD6F00CD1C2A /* Localizable.strings */; };
 		0C48BFB61EE7CF1200CD1C2A /* LocalizationSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C48BFB51EE7CF1200CD1C2A /* LocalizationSystem.m */; };
+		0C48BFB81EE82DA400CD1C2A /* JMHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C48BFB71EE82DA400CD1C2A /* JMHeaderView.xib */; };
+		0C48BFBB1EE82EEF00CD1C2A /* JMHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C48BFBA1EE82EEF00CD1C2A /* JMHeaderView.m */; };
 		0C6F9E311EE14A7B005D31A0 /* JMChooseCountryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C6F9E301EE14A7B005D31A0 /* JMChooseCountryViewController.m */; };
 		0C6F9E361EE14E84005D31A0 /* CountryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C6F9E351EE14E84005D31A0 /* CountryCell.m */; };
 		0CE2FB481EE190E50031C0E6 /* JMRegistrationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CE2FB471EE190E50031C0E6 /* JMRegistrationViewController.m */; };
@@ -68,6 +70,9 @@
 		0C48BFB31EE7CD7600CD1C2A /* hi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hi; path = hi.lproj/Localizable.strings; sourceTree = "<group>"; };
 		0C48BFB41EE7CF1200CD1C2A /* LocalizationSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalizationSystem.h; sourceTree = "<group>"; };
 		0C48BFB51EE7CF1200CD1C2A /* LocalizationSystem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalizationSystem.m; sourceTree = "<group>"; };
+		0C48BFB71EE82DA400CD1C2A /* JMHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JMHeaderView.xib; sourceTree = "<group>"; };
+		0C48BFB91EE82EEF00CD1C2A /* JMHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMHeaderView.h; sourceTree = "<group>"; };
+		0C48BFBA1EE82EEF00CD1C2A /* JMHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMHeaderView.m; sourceTree = "<group>"; };
 		0C6F9E2F1EE14A7B005D31A0 /* JMChooseCountryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMChooseCountryViewController.h; sourceTree = "<group>"; };
 		0C6F9E301EE14A7B005D31A0 /* JMChooseCountryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMChooseCountryViewController.m; sourceTree = "<group>"; };
 		0C6F9E341EE14E84005D31A0 /* CountryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CountryCell.h; sourceTree = "<group>"; };
@@ -167,6 +172,9 @@
 			isa = PBXGroup;
 			children = (
 				0C6F9E331EE14E50005D31A0 /* Cell */,
+				0C48BFB71EE82DA400CD1C2A /* JMHeaderView.xib */,
+				0C48BFB91EE82EEF00CD1C2A /* JMHeaderView.h */,
+				0C48BFBA1EE82EEF00CD1C2A /* JMHeaderView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -457,6 +465,7 @@
 				B07ABAC11EE527050011DD57 /* Temp.storyboard in Resources */,
 				B07ABAD61EE58E4E0011DD57 /* GoogleSignIn.bundle in Resources */,
 				B0A32B491EE129300044D443 /* Main.storyboard in Resources */,
+				0C48BFB81EE82DA400CD1C2A /* JMHeaderView.xib in Resources */,
 				0C48BFAF1EE7CD6F00CD1C2A /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -486,6 +495,7 @@
 				B0A32B4C1EE129300044D443 /* JokeMaster.xcdatamodeld in Sources */,
 				B0A32B431EE1292F0044D443 /* AppDelegate.m in Sources */,
 				B07ABAC71EE540F90011DD57 /* JMLoginViewController.m in Sources */,
+				0C48BFBB1EE82EEF00CD1C2A /* JMHeaderView.m in Sources */,
 				B0A32B401EE1292F0044D443 /* main.m in Sources */,
 				B0A32B901EE131680044D443 /* SVProgressHUD.m in Sources */,
 				0C6F9E311EE14A7B005D31A0 /* JMChooseCountryViewController.m in Sources */,
