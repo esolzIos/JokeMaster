@@ -118,9 +118,7 @@ fbM=[[FBSDKLoginManager alloc]init];
 
 - (IBAction)loginClicked:(id)sender {
     
-    JMLanguageViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMLanguage"];
-    
-    [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
+
 }
 - (IBAction)fbClicked:(id)sender {
     

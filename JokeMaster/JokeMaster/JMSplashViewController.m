@@ -7,7 +7,7 @@
 //
 
 #import "JMSplashViewController.h"
-#import "JMLoginViewController.h"
+#import "JMLanguageViewController.h"
 @interface JMSplashViewController ()
 {
     NSURLSession *session;
@@ -28,7 +28,9 @@
 
 -(void)LoadHome
 {
-    JMLoginViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMLogin"];
+ 
+    
+    JMLanguageViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMLanguage"];
     
     [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
 }

@@ -7,7 +7,7 @@
 //
 
 #import "JMChooseCountryViewController.h"
-
+#import "JMLoginViewController.h"
 @interface JMChooseCountryViewController ()
 
 @end
@@ -105,5 +105,8 @@
 }
 #pragma mark - Go button tapped
 - (IBAction)GoTapped:(id)sender {
+    JMLoginViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMLogin"];
+    
+    [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
 }
 @end
