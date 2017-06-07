@@ -8,7 +8,7 @@
 
 #import "JMGlobalMethods.h"
 
-@interface JMRegistrationViewController : JMGlobalMethods<UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIActionSheetDelegate>
+@interface JMRegistrationViewController : JMGlobalMethods<UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIActionSheetDelegate,UIPickerViewDataSource,UIPickerViewDelegate>
 {
     UIActionSheet *actionsheet;
     NSMutableArray *LangaugeArray;
