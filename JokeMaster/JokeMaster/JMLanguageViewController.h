@@ -13,5 +13,8 @@
 @property (strong, nonatomic) IBOutlet UILabel *languageLbl;
 @property (strong, nonatomic) IBOutlet UIButton *chooseBtn;
 - (IBAction)chooseClicked:(id)sender;
+@property (strong, nonatomic) IBOutlet UIView *goView;
+@property (strong, nonatomic) IBOutlet UIButton *goBtn;
+- (IBAction)goClicked:(id)sender;
 
 @end

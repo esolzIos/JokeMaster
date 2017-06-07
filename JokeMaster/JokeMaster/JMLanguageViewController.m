@@ -7,7 +7,7 @@
 //
 
 #import "JMLanguageViewController.h"
-
+#import "JMChooseCountryViewController.h"
 @interface JMLanguageViewController ()
 
 @end
@@ -16,6 +16,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [_languageLbl setFont:[UIFont fontWithName:_languageLbl.font.fontName size:[self getFontSize:_languageLbl.font.pointSize]]];
+    [_chooseBtn.titleLabel setFont:[UIFont fontWithName:_chooseBtn.titleLabel.font.fontName size:[self getFontSize:_chooseBtn.titleLabel.font.pointSize]]];
+
     // Do any additional setup after loading the view.
 }
 
@@ -35,5 +39,12 @@
 */
 
 - (IBAction)chooseClicked:(id)sender {
+    
+
+}
+- (IBAction)goClicked:(id)sender {
+    JMChooseCountryViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMChooseCountryViewController"];
+    
+    [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
 }
 @end

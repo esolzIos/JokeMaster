@@ -10,6 +10,8 @@
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 #import <GoogleSignIn/GoogleSignIn.h>
+
+#import "JMLanguageViewController.h"
 @import SafariServices;
 @interface JMLoginViewController ()<UITextFieldDelegate,FBSDKLoginButtonDelegate,GIDSignInUIDelegate,GIDSignInDelegate,SFSafariViewControllerDelegate>
 {
@@ -25,7 +27,54 @@ fbM=[[FBSDKLoginManager alloc]init];
     
     [fbM logOut];
     
+    [_userEmail setFont:[UIFont fontWithName:_userEmail.font.fontName size:[self getFontSize:_userEmail.font.pointSize]]];
+     [_password setFont:[UIFont fontWithName:_password.font.fontName size:[self getFontSize:_password.font.pointSize]]];
+     [_loginBtn.titleLabel setFont:[UIFont fontWithName:_loginBtn.titleLabel.font.fontName size:[self getFontSize:_loginBtn.titleLabel.font.pointSize]]];
+     [_infoTxt setFont:[UIFont fontWithName:_infoTxt.font.fontName size:[self getFontSize:_infoTxt.font.pointSize]]];
 
+    
+
+//    NSMutableParagraphStyle *style = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+//    [style setAlignment:NSTextAlignmentCenter];
+//    [style setLineBreakMode:NSLineBreakByWordWrapping];
+//    
+//UIFont *font1 = [UIFont fontWithName:@"HelveticaNeue-Medium" size:20.0f];
+//    NSDictionary *dict1 =@{NSFontAttributeName :font1,NSForegroundColorAttributeName : [UIColor whiteColor],NSParagraphStyleAttributeName:style}; // Added line
+//    
+//    NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:@"Don't have an account? Sign up" attributes:dict1];
+//    [_signupBtn setAttributedTitle:attributedText forState:UIControlStateNormal];
+//    [[_signupBtn titleLabel] setNumberOfLines:0];
+//    [[_signupBtn titleLabel] setLineBreakMode:NSLineBreakByWordWrapping];
+    
+    // to set alignment
+    [_signupBtn setTitle:@"Don't have an account? Sign up" forState:UIControlStateNormal];
+    
+    //  set the different range
+    
+    NSRange range1 = [_signupBtn.titleLabel.text rangeOfString:@"Sign up"];
+    
+    
+    // to set alignment
+    
+    NSMutableParagraphStyle *paragraph = [[NSMutableParagraphStyle alloc] init];
+    
+    paragraph.alignment = NSTextAlignmentCenter;
+    
+    UIFont *font1 = [UIFont fontWithName:@"ComicSansMS-Bold" size:13.0f];
+      UIFont *font2 = [UIFont fontWithName:@"ComicSansMS-Bold" size:15.0f];
+    //    set the attributes to different ranges
+    
+    NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:_signupBtn.titleLabel.text];
+    
+    [attributedText setAttributes: @{NSFontAttributeName :font1,
+                                     
+                                     NSForegroundColorAttributeName : [UIColor whiteColor],NSParagraphStyleAttributeName:paragraph} range:NSMakeRange(0,_signupBtn.titleLabel.text.length)];
+    
+    [attributedText addAttributes:@{NSFontAttributeName :font2, NSForegroundColorAttributeName : [UIColor whiteColor],NSParagraphStyleAttributeName:paragraph} range:range1];
+    
+    
+    [_signupBtn setAttributedTitle:attributedText forState:UIControlStateNormal];
+    
     
     // Uncomment to automatically sign in the user.
     //[[GIDSignIn sharedInstance] signInSilently];
@@ -68,6 +117,10 @@ fbM=[[FBSDKLoginManager alloc]init];
 */
 
 - (IBAction)loginClicked:(id)sender {
+    
+    JMLanguageViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMLanguage"];
+    
+    [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
 }
 - (IBAction)fbClicked:(id)sender {
     
