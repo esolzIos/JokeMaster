@@ -10,7 +10,7 @@
 #import "JMGlobalHeader.h"
 #import "AppDelegate.h"
 #import "SVProgressHUD.h"
-
+#import "LocalizationSystem.h"
 @interface JMGlobalMethods : UIViewController
 {
     UIView *loader_shadow_View;

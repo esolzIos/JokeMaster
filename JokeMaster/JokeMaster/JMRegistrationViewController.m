@@ -13,7 +13,7 @@
 @end
 
 @implementation JMRegistrationViewController
-@synthesize Nametxt,Emailtxt,Passwordtxt,ProfileImage,ProfileImageLabel,ConfirmPassword,mainscroll,Logintxtvw,LanguageView,LanguageLabel,LanguageBtn;
+@synthesize Nametxt,Emailtxt,Passwordtxt,ProfileImage,ProfileImageLabel,ConfirmPassword,mainscroll,Logintxtvw,LanguageView,LanguageLabel,LanguageBtn,SignUpBtn;
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -21,14 +21,14 @@
     // sign in text view design
     UIFont *font1 = [UIFont fontWithName:@"ComicSansMS-Bold" size:15];
     NSDictionary *arialDict = [NSDictionary dictionaryWithObject:font1 forKey:NSFontAttributeName];
-    NSMutableAttributedString *aAttrString1 = [[NSMutableAttributedString alloc] initWithString:NSLocalizedString(@"Back to ",nil) attributes: arialDict];
+    NSMutableAttributedString *aAttrString1 = [[NSMutableAttributedString alloc] initWithString:AMLocalizedString(@"Back to",nil) attributes: arialDict];
     [aAttrString1 addAttribute:NSForegroundColorAttributeName
                          value:[UIColor whiteColor]
                          range:NSMakeRange(0, [aAttrString1 length])];
     
     UIFont *font2 = [UIFont fontWithName:@"ComicSansMS-Bold" size:20];
     NSDictionary *arialDict2 = [NSDictionary dictionaryWithObject:font2 forKey:NSFontAttributeName];
-    NSMutableAttributedString *aAttrString2 = [[NSMutableAttributedString alloc] initWithString:NSLocalizedString(@"Log in",nil) attributes: arialDict2];
+    NSMutableAttributedString *aAttrString2 = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@" %@",AMLocalizedString(@"Log in",nil)] attributes: arialDict2];
     [aAttrString2 addAttribute:NSForegroundColorAttributeName
                          value:[UIColor whiteColor]
                          range:NSMakeRange(0, [aAttrString2 length])];
@@ -42,15 +42,19 @@
     
     
     // place holder design
-    Emailtxt.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"Email" attributes:@{NSForegroundColorAttributeName: [UIColor whiteColor]}];
-    Nametxt.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"Name" attributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
-    Passwordtxt.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"Password" attributes:@{NSForegroundColorAttributeName: [UIColor whiteColor]}];
-    ConfirmPassword.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"Confirm Password" attributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
+    Emailtxt.attributedPlaceholder = [[NSAttributedString alloc] initWithString:AMLocalizedString(@"Email",nil) attributes:@{NSForegroundColorAttributeName: [UIColor whiteColor]}];
+    Nametxt.attributedPlaceholder = [[NSAttributedString alloc] initWithString:AMLocalizedString(@"Name",nil) attributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
+    Passwordtxt.attributedPlaceholder = [[NSAttributedString alloc] initWithString:AMLocalizedString(@"Password",nil)attributes:@{NSForegroundColorAttributeName: [UIColor whiteColor]}];
+    ConfirmPassword.attributedPlaceholder = [[NSAttributedString alloc] initWithString:AMLocalizedString(@"Confirm Password",nil) attributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
     
     
     ProfileImageLabel.frame=CGRectMake(ProfileImageLabel.frame.origin.x, ProfileImage.frame.origin.y+ProfileImage.frame.size.height/2-ProfileImageLabel.frame.size.height/2, ProfileImageLabel.frame.size.width, ProfileImageLabel.frame.size.height);
     
-    LangaugeArray=[[NSMutableArray alloc] initWithObjects:@"English",@"Hebrew",@"Spanish", nil];
+    LangaugeArray=[[NSMutableArray alloc] initWithObjects:@"English",@"Hebrew",@"Hindi", nil];
+    
+    ProfileImageLabel.text= AMLocalizedString(@"Upload Profile Picture",nil);
+    LanguageLabel.text=AMLocalizedString(@"Language",nil);
+    [SignUpBtn setTitle:AMLocalizedString(@"SIGN UP",nil) forState:UIControlStateNormal];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -85,12 +89,12 @@
         if([self textFieldBlankorNot:Nametxt.text]==YES)
         {
             UIAlertController * alert=   [UIAlertController
-                                          alertControllerWithTitle:@"Alert"
+                                          alertControllerWithTitle:AMLocalizedString(@"Alert",nil)
                                           message:@"Enter Name"
                                           preferredStyle:UIAlertControllerStyleAlert];
             
             UIAlertAction* ok = [UIAlertAction
-                                 actionWithTitle:@"OK"
+                                 actionWithTitle:AMLocalizedString(@"OK",nil)
                                  style:UIAlertActionStyleDefault
                                  handler:^(UIAlertAction * action)
                                  {
@@ -108,12 +112,12 @@
         else if ([self textFieldBlankorNot:Emailtxt.text]==YES)
         {
             UIAlertController * alert=   [UIAlertController
-                                          alertControllerWithTitle:@"Alert"
+                                          alertControllerWithTitle:AMLocalizedString(@"Alert",nil)
                                           message:@"Enter Email Address"
                                           preferredStyle:UIAlertControllerStyleAlert];
             
             UIAlertAction* ok = [UIAlertAction
-                                 actionWithTitle:@"OK"
+                                 actionWithTitle:AMLocalizedString(@"OK",nil)
                                  style:UIAlertActionStyleDefault
                                  handler:^(UIAlertAction * action)
                                  {
@@ -130,12 +134,12 @@
         else if ([self validateEmailWithString:Emailtxt.text]==NO)
         {
             UIAlertController * alert=   [UIAlertController
-                                          alertControllerWithTitle:@"Alert"
+                                          alertControllerWithTitle:AMLocalizedString(@"Alert",nil)
                                           message:@"Enter Valid Email Address"
                                           preferredStyle:UIAlertControllerStyleAlert];
             
             UIAlertAction* ok = [UIAlertAction
-                                 actionWithTitle:@"OK"
+                                 actionWithTitle:AMLocalizedString(@"OK",nil)
                                  style:UIAlertActionStyleDefault
                                  handler:^(UIAlertAction * action)
                                  {
@@ -149,15 +153,15 @@
             [alert addAction:ok];
             [self presentViewController:alert animated:YES completion:nil];
         }
-        else if ([LanguageLabel.text isEqualToString:@"Language"])
+        else if ([LanguageLabel.text isEqualToString:AMLocalizedString(@"Language",nil)])
         {
             UIAlertController * alert=   [UIAlertController
-                                          alertControllerWithTitle:@"Alert"
+                                          alertControllerWithTitle:AMLocalizedString(@"Alert",nil)
                                           message:@"Select Language"
                                           preferredStyle:UIAlertControllerStyleAlert];
             
             UIAlertAction* ok = [UIAlertAction
-                                 actionWithTitle:@"OK"
+                                 actionWithTitle:AMLocalizedString(@"OK",nil)
                                  style:UIAlertActionStyleDefault
                                  handler:^(UIAlertAction * action)
                                  {
@@ -174,12 +178,12 @@
         else if ([self textFieldBlankorNot:Passwordtxt.text]==YES)
         {
             UIAlertController * alert=   [UIAlertController
-                                          alertControllerWithTitle:@"Alert"
+                                          alertControllerWithTitle:AMLocalizedString(@"Alert",nil)
                                           message:@"Enter Password"
                                           preferredStyle:UIAlertControllerStyleAlert];
             
             UIAlertAction* ok = [UIAlertAction
-                                 actionWithTitle:@"OK"
+                                 actionWithTitle:AMLocalizedString(@"OK",nil)
                                  style:UIAlertActionStyleDefault
                                  handler:^(UIAlertAction * action)
                                  {
@@ -196,12 +200,12 @@
         else if (Passwordtxt.text.length<6)
         {
             UIAlertController * alert=   [UIAlertController
-                                          alertControllerWithTitle:@"Alert"
+                                          alertControllerWithTitle:AMLocalizedString(@"Alert",nil)
                                           message:@"Password Should be at least 6 characters"
                                           preferredStyle:UIAlertControllerStyleAlert];
             
             UIAlertAction* ok = [UIAlertAction
-                                 actionWithTitle:@"OK"
+                                 actionWithTitle:AMLocalizedString(@"OK",nil)
                                  style:UIAlertActionStyleDefault
                                  handler:^(UIAlertAction * action)
                                  {
@@ -218,12 +222,12 @@
         else if ([self textFieldBlankorNot:ConfirmPassword.text]==YES)
         {
             UIAlertController * alert=   [UIAlertController
-                                          alertControllerWithTitle:@"Alert"
+                                          alertControllerWithTitle:AMLocalizedString(@"Alert",nil)
                                           message:@"Enter Confirm Password"
                                           preferredStyle:UIAlertControllerStyleAlert];
             
             UIAlertAction* ok = [UIAlertAction
-                                 actionWithTitle:@"OK"
+                                 actionWithTitle:AMLocalizedString(@"OK",nil)
                                  style:UIAlertActionStyleDefault
                                  handler:^(UIAlertAction * action)
                                  {
@@ -240,12 +244,12 @@
         else if (![Passwordtxt.text isEqualToString:ConfirmPassword.text])
         {
             UIAlertController * alert=   [UIAlertController
-                                          alertControllerWithTitle:@"Alert"
+                                          alertControllerWithTitle:AMLocalizedString(@"Alert",nil)
                                           message:@"Password and confirm password should be same."
                                           preferredStyle:UIAlertControllerStyleAlert];
             
             UIAlertAction* ok = [UIAlertAction
-                                 actionWithTitle:@"OK"
+                                 actionWithTitle:AMLocalizedString(@"OK",nil)
                                  style:UIAlertActionStyleDefault
                                  handler:^(UIAlertAction * action)
                                  {
@@ -280,7 +284,7 @@
     NSString *pressedWord = [self getPressedWordWithRecognizer:tapGesture];
     
     
-    if ([pressedWord isEqualToString:@"Log"] || [pressedWord isEqualToString:@"in"])
+    if ([pressedWord isEqualToString:@"Log"] || [pressedWord isEqualToString:@"in"] || [pressedWord isEqualToString:AMLocalizedString(@"Log in",nil)])
     {
         
       //  DebugLog(@" sign in");
@@ -398,7 +402,7 @@
                 [self openCamera];
             }
             else {
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"No Camera Available." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"No Camera Available." delegate:self cancelButtonTitle:AMLocalizedString(@"OK",nil) otherButtonTitles:nil];
                 [alert show];
             }
             break;
@@ -539,7 +543,7 @@
             Langpicker.dataSource=self;
             [Langpicker setBackgroundColor:[UIColor whiteColor]];
             
-            if (![LanguageLabel.text isEqualToString:@"Language"])
+            if (![LanguageLabel.text isEqualToString:AMLocalizedString(@"Language",nil)])
             {
                 for (int i=0; i<[LangaugeArray count]; i++)
                 {
@@ -582,9 +586,8 @@
             
             btnSave = [UIButton buttonWithType:UIButtonTypeCustom];
             btnSave.frame = CGRectMake(Langpicker.frame.origin.x+Langpicker.frame.size.width-50,0, 50, 30);
-       //     [btnSave setTitle:AMLocalizedString(@"Save",nil) forState:UIControlStateNormal];
+            [btnSave setTitle:AMLocalizedString(@"Save",nil) forState:UIControlStateNormal];
             
-            [btnSave setTitle:@"Save" forState:UIControlStateNormal];
             
             [btnSave setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal ];
             btnSave.titleLabel.font = [UIFont fontWithName:@"ComicSansMS-Bold" size:15.0];
@@ -595,8 +598,7 @@
             btnCancel = [UIButton buttonWithType:UIButtonTypeCustom];
             btnCancel.frame = CGRectMake(Langpicker.frame.origin.x,0, 70, 30);
             
-//            [btnCancel setTitle:AMLocalizedString(@"Cancel",nil) forState:UIControlStateNormal];
-             [btnCancel setTitle:@"Cancel" forState:UIControlStateNormal];
+           [btnCancel setTitle:AMLocalizedString(@"Cancel",nil) forState:UIControlStateNormal];
             [btnCancel setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal ];
             btnCancel.titleLabel.font = [UIFont fontWithName:@"ComicSansMS-Bold" size:15.0];
             [btnCancel addTarget:self action:@selector(CategoryCancel) forControlEvents:UIControlEventTouchUpInside];
@@ -629,7 +631,7 @@
         
     }
 }
-//#pragma mark -  title picker cancel
+#pragma mark -  title picker cancel
 -(void)CategoryCancel
 {
     [mainscroll setContentOffset:CGPointMake(0.0f,0) animated:YES];

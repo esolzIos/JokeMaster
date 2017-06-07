@@ -303,6 +303,7 @@
                         <outlet property="ProfileImage" destination="Ub9-EK-Cy0" id="seW-rr-1r7"/>
                         <outlet property="ProfileImageBtn" destination="U8P-6D-hlW" id="u4R-QU-pT9"/>
                         <outlet property="ProfileImageLabel" destination="OoI-6t-DRB" id="gRV-Qs-w4s"/>
+                        <outlet property="SignUpBtn" destination="6Ov-FN-1F0" id="yaT-9s-KmO"/>
                         <outlet property="mainscroll" destination="sP6-fM-hvT" id="4pF-fx-bJh"/>
                     </connections>
                 </viewController>

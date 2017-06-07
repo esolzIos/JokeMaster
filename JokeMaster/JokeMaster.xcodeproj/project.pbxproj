@@ -7,10 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0C48BFAF1EE7CD6F00CD1C2A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0C48BFB11EE7CD6F00CD1C2A /* Localizable.strings */; };
+		0C48BFB61EE7CF1200CD1C2A /* LocalizationSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C48BFB51EE7CF1200CD1C2A /* LocalizationSystem.m */; };
 		0C6F9E311EE14A7B005D31A0 /* JMChooseCountryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C6F9E301EE14A7B005D31A0 /* JMChooseCountryViewController.m */; };
 		0C6F9E361EE14E84005D31A0 /* CountryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C6F9E351EE14E84005D31A0 /* CountryCell.m */; };
 		0CE2FB481EE190E50031C0E6 /* JMRegistrationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CE2FB471EE190E50031C0E6 /* JMRegistrationViewController.m */; };
-		B0739C791EE68A2D00A22C22 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B0739C781EE68A2D00A22C22 /* Localizable.strings */; };
 		B07ABAC11EE527050011DD57 /* Temp.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B07ABAC01EE527050011DD57 /* Temp.storyboard */; };
 		B07ABAC41EE540B90011DD57 /* JMLanguageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B07ABAC31EE540B90011DD57 /* JMLanguageViewController.m */; };
 		B07ABAC71EE540F90011DD57 /* JMLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B07ABAC61EE540F90011DD57 /* JMLoginViewController.m */; };
@@ -62,6 +63,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0C48BFB01EE7CD6F00CD1C2A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		0C48BFB21EE7CD7400CD1C2A /* he */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = he; path = he.lproj/Localizable.strings; sourceTree = "<group>"; };
+		0C48BFB31EE7CD7600CD1C2A /* hi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hi; path = hi.lproj/Localizable.strings; sourceTree = "<group>"; };
+		0C48BFB41EE7CF1200CD1C2A /* LocalizationSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalizationSystem.h; sourceTree = "<group>"; };
+		0C48BFB51EE7CF1200CD1C2A /* LocalizationSystem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalizationSystem.m; sourceTree = "<group>"; };
 		0C6F9E2F1EE14A7B005D31A0 /* JMChooseCountryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMChooseCountryViewController.h; sourceTree = "<group>"; };
 		0C6F9E301EE14A7B005D31A0 /* JMChooseCountryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMChooseCountryViewController.m; sourceTree = "<group>"; };
 		0C6F9E341EE14E84005D31A0 /* CountryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CountryCell.h; sourceTree = "<group>"; };
@@ -72,7 +78,6 @@
 		B0739C751EE6891800A22C22 /* he */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = he; path = he.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		B0739C761EE689C000A22C22 /* hi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hi; path = hi.lproj/Main.strings; sourceTree = "<group>"; };
 		B0739C771EE689C000A22C22 /* hi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hi; path = hi.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
-		B0739C781EE68A2D00A22C22 /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		B07ABAC01EE527050011DD57 /* Temp.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Temp.storyboard; sourceTree = "<group>"; };
 		B07ABAC21EE540B90011DD57 /* JMLanguageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMLanguageViewController.h; sourceTree = "<group>"; };
 		B07ABAC31EE540B90011DD57 /* JMLanguageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMLanguageViewController.m; sourceTree = "<group>"; };
@@ -231,7 +236,9 @@
 		B0A32B3E1EE1292F0044D443 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				B0739C781EE68A2D00A22C22 /* Localizable.strings */,
+				0C48BFB41EE7CF1200CD1C2A /* LocalizationSystem.h */,
+				0C48BFB51EE7CF1200CD1C2A /* LocalizationSystem.m */,
+				0C48BFB11EE7CD6F00CD1C2A /* Localizable.strings */,
 				B0A32B3F1EE1292F0044D443 /* main.m */,
 			);
 			name = "Supporting Files";
@@ -422,6 +429,8 @@
 			knownRegions = (
 				en,
 				Base,
+				he,
+				hi,
 			);
 			mainGroup = B0A32B321EE1292F0044D443;
 			productRefGroup = B0A32B3C1EE1292F0044D443 /* Products */;
@@ -448,7 +457,7 @@
 				B07ABAC11EE527050011DD57 /* Temp.storyboard in Resources */,
 				B07ABAD61EE58E4E0011DD57 /* GoogleSignIn.bundle in Resources */,
 				B0A32B491EE129300044D443 /* Main.storyboard in Resources */,
-				B0739C791EE68A2D00A22C22 /* Localizable.strings in Resources */,
+				0C48BFAF1EE7CD6F00CD1C2A /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -487,6 +496,7 @@
 				0C6F9E361EE14E84005D31A0 /* CountryCell.m in Sources */,
 				B0A32B911EE131680044D443 /* SVRadialGradientLayer.m in Sources */,
 				B07ABAC41EE540B90011DD57 /* JMLanguageViewController.m in Sources */,
+				0C48BFB61EE7CF1200CD1C2A /* LocalizationSystem.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -522,6 +532,16 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		0C48BFB11EE7CD6F00CD1C2A /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0C48BFB01EE7CD6F00CD1C2A /* en */,
+				0C48BFB21EE7CD7400CD1C2A /* he */,
+				0C48BFB31EE7CD7600CD1C2A /* hi */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		B0A32B471EE129300044D443 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (

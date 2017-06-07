@@ -33,5 +33,6 @@
 - (IBAction)ProfileImageUploadTapped:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *LanguageBtn;
 - (IBAction)LanguageTapped:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *SignUpBtn;
 
 @end
