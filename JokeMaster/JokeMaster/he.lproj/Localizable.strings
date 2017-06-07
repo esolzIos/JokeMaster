@@ -18,3 +18,14 @@
 "OK" = "בסדר";
 "Alert" = "עֵרָנִי";
 "SIGN UP" = "הירשם";
+"Enter Name" = "הכנס שם";
+"Enter Email Address" = "הזן כתובת דואל";
+"Enter Valid Email Address" = "הזן כתובת דואל חוקית";
+"Select Language" = "בחר שפה";
+"Enter Password" = "הזן את הסיסמה";
+"Password Should be at least 6 characters" = "סיסמה צריכה להיות לפחות 6 תווים";
+"Enter Confirm Password" = "הזן אישור סיסמה";
+"Password and confirm password should be same." = "סיסמה ואישור הסיסמה צריך להיות זהה.";
+"Camera" = "מַצלֵמָה";
+"Photo Library" = "ספריית תמונות";
+
