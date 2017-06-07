@@ -1,0 +1,20 @@
+/* 
+  File.strings
+  JokeMaster
+
+  Created by santanu on 06/06/17.
+  Copyright © 2017 esolz. All rights reserved.
+*/
+"Save" = "לשמור";
+"Cancel" = "לְבַטֵל";
+"Upload Profile Picture" = "טען תמונת פרופיל";
+"Back to" = "בחזרה ל";
+"Log in" = "התחברות";
+"Email" = "אֶלֶקטרוֹנִי";
+"Name" = "שֵׁם";
+"Password" = "סיסמה";
+"Confirm Password" = "אשר סיסמה";
+"Language" = "שפה";
+"OK" = "בסדר";
+"Alert" = "עֵרָנִי";
+"SIGN UP" = "הירשם";

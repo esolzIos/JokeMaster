@@ -8,7 +8,7 @@
 
 #import "JMGlobalMethods.h"
 
-@interface JMRegistrationViewController : JMGlobalMethods<UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIActionSheetDelegate>
+@interface JMRegistrationViewController : JMGlobalMethods<UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIActionSheetDelegate,UIPickerViewDataSource,UIPickerViewDelegate>
 {
     UIActionSheet *actionsheet;
     NSMutableArray *LangaugeArray;
@@ -33,5 +33,6 @@
 - (IBAction)ProfileImageUploadTapped:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *LanguageBtn;
 - (IBAction)LanguageTapped:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *SignUpBtn;
 
 @end

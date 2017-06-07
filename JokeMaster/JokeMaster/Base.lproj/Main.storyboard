@@ -264,6 +264,7 @@
                                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="rbQ-TV-UDS">
                                                 <rect key="frame" x="4" y="0.0" width="279" height="46"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                                <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 <connections>
                                                     <action selector="LanguageTapped:" destination="1Lh-pv-E2G" eventType="touchUpInside" id="aHV-9o-TKq"/>
                                                 </connections>
@@ -302,6 +303,7 @@
                         <outlet property="ProfileImage" destination="Ub9-EK-Cy0" id="seW-rr-1r7"/>
                         <outlet property="ProfileImageBtn" destination="U8P-6D-hlW" id="u4R-QU-pT9"/>
                         <outlet property="ProfileImageLabel" destination="OoI-6t-DRB" id="gRV-Qs-w4s"/>
+                        <outlet property="SignUpBtn" destination="6Ov-FN-1F0" id="yaT-9s-KmO"/>
                         <outlet property="mainscroll" destination="sP6-fM-hvT" id="4pF-fx-bJh"/>
                     </connections>
                 </viewController>
