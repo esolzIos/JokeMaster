@@ -74,6 +74,10 @@
 #pragma mark - Sign up tap
 - (IBAction)SignUpTapped:(id)sender
 {
+    JMRegistrationViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMHomeViewController"];
+    
+    [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
+    
     [UIView animateWithDuration:0.0f animations:^{
         [Nametxt resignFirstResponder];
         [Emailtxt resignFirstResponder];

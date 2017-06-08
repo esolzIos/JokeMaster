@@ -11,6 +11,7 @@
 #import "AppDelegate.h"
 #import "SVProgressHUD.h"
 #import "LocalizationSystem.h"
+#import "JMHeaderView.h"
 @interface JMGlobalMethods : UIViewController
 {
     UIView *loader_shadow_View;
@@ -65,4 +66,9 @@
 @property(nonatomic,weak) UITabBar *footerTabBar;
 -(void)checkPushCount;
 -(void)readAfterPush;
+
+@property (weak, nonatomic) IBOutlet UIView *MainView;
+@property (weak, nonatomic) IBOutlet JMHeaderView *HeaderView;
+
+
 @end
