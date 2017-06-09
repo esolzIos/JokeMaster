@@ -12,9 +12,13 @@
 #import "SVProgressHUD.h"
 #import "LocalizationSystem.h"
 #import "JMHeaderView.h"
-@interface JMGlobalMethods : UIViewController
+#import "JMLeftMenuView.h"
+@interface JMGlobalMethods : UIViewController<Side_menu_delegate>
 {
     UIView *loader_shadow_View;
+    JMLeftMenuView *leftmenu;
+    UITapGestureRecognizer *tapRecognizer;
+    NSInteger leftmenurowindex;
 }
 
 @property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectCon;

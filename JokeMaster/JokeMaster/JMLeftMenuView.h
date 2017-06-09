@@ -7,7 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-
+@protocol Side_menu_delegate<NSObject>
+@optional
+-(void)action_method:(NSInteger )sender;
+@end
 @interface JMLeftMenuView : UIView
-
++ (id)leftmenu;
+@property (strong, nonatomic) IBOutlet UIView *view;
+@property(assign)id<Side_menu_delegate>SideDelegate;
 @end
