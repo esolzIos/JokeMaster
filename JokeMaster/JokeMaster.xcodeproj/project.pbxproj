@@ -19,6 +19,7 @@
 		0C6F9E311EE14A7B005D31A0 /* JMChooseCountryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C6F9E301EE14A7B005D31A0 /* JMChooseCountryViewController.m */; };
 		0C6F9E361EE14E84005D31A0 /* CountryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C6F9E351EE14E84005D31A0 /* CountryCell.m */; };
 		0CE2FB481EE190E50031C0E6 /* JMRegistrationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CE2FB471EE190E50031C0E6 /* JMRegistrationViewController.m */; };
+		B0779D701EEBD2D10065FECD /* Comic_Book.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B0779D6F1EEBD2D10065FECD /* Comic_Book.ttf */; };
 		B07ABAC11EE527050011DD57 /* Temp.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B07ABAC01EE527050011DD57 /* Temp.storyboard */; };
 		B07ABAC41EE540B90011DD57 /* JMLanguageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B07ABAC31EE540B90011DD57 /* JMLanguageViewController.m */; };
 		B07ABAC71EE540F90011DD57 /* JMLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B07ABAC61EE540F90011DD57 /* JMLoginViewController.m */; };
@@ -97,6 +98,8 @@
 		B0739C751EE6891800A22C22 /* he */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = he; path = he.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		B0739C761EE689C000A22C22 /* hi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hi; path = hi.lproj/Main.strings; sourceTree = "<group>"; };
 		B0739C771EE689C000A22C22 /* hi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hi; path = hi.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		B0779D6E1EEBD2260065FECD /* Comic_Book.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Comic_Book.ttf; sourceTree = "<group>"; };
+		B0779D6F1EEBD2D10065FECD /* Comic_Book.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Comic_Book.ttf; sourceTree = "<group>"; };
 		B07ABAC01EE527050011DD57 /* Temp.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Temp.storyboard; sourceTree = "<group>"; };
 		B07ABAC21EE540B90011DD57 /* JMLanguageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMLanguageViewController.h; sourceTree = "<group>"; };
 		B07ABAC31EE540B90011DD57 /* JMLanguageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMLanguageViewController.m; sourceTree = "<group>"; };
@@ -219,6 +222,7 @@
 		B0A32B321EE1292F0044D443 = {
 			isa = PBXGroup;
 			children = (
+				B0779D6F1EEBD2D10065FECD /* Comic_Book.ttf */,
 				B0A32B3D1EE1292F0044D443 /* JokeMaster */,
 				B0A32B5A1EE129300044D443 /* JokeMasterTests */,
 				B0A32B651EE129300044D443 /* JokeMasterUITests */,
@@ -293,6 +297,7 @@
 			isa = PBXGroup;
 			children = (
 				B0A32B741EE12BD50044D443 /* comicbd_1.ttf */,
+				B0779D6E1EEBD2260065FECD /* Comic_Book.ttf */,
 			);
 			name = Fonts;
 			sourceTree = "<group>";
@@ -480,6 +485,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B0779D701EEBD2D10065FECD /* Comic_Book.ttf in Resources */,
 				B0A32B8F1EE131680044D443 /* SVProgressHUD.bundle in Resources */,
 				0C58274B1EE9308E00480E19 /* JMLeftMenuView.xib in Resources */,
 				B0A32B761EE12DC20044D443 /* comicbd_1.ttf in Resources */,
