@@ -7,7 +7,16 @@
 //
 
 #import "JMGlobalMethods.h"
+#import "JMRecentUploadedCollectionViewCell.h"
+@interface JMRecentlyUploadedViewController : JMGlobalMethods<UICollectionViewDataSource,UICollectionViewDelegate>
+@property (weak, nonatomic) IBOutlet UIScrollView *MainScroll;
 
-@interface JMRecentlyUploadedViewController : JMGlobalMethods
+@property (weak, nonatomic) IBOutlet UIView *ChooseCategoryView;
+@property (weak, nonatomic) IBOutlet UILabel *ChooseCategoryLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *ChooseCatImage;
+@property (weak, nonatomic) IBOutlet UIButton *ChooseCategoryBtn;
+- (IBAction)ChooseCategoryTapped:(id)sender;
+
+@property (weak, nonatomic) IBOutlet UICollectionView *RecentVideoCollectionView;
 
 @end

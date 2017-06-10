@@ -13,7 +13,7 @@
 @end
 
 @implementation JMRecentlyUploadedViewController
-
+@synthesize ChooseCatImage,ChooseCategoryBtn,ChooseCategoryView,ChooseCategoryLabel,MainScroll,RecentVideoCollectionView;
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -28,6 +28,51 @@
 {
     return UIStatusBarStyleLightContent;
 }
+#pragma mark - CollectionView delegates
+
+- (CGSize)collectionView:(UICollectionView *)collectionView
+                  layout:(UICollectionViewLayout *)collectionViewLayout
+  sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    return CGSizeMake(self.view.frame.size.width/3,100);
+}
+
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    return 30;
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
+    static NSString *identifier = @"JMRecentUploadedCollectionViewCell";
+    
+    
+    JMRecentUploadedCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
+    
+    
+    
+    //   NSLog(@"%@",[arrCategory objectAtIndex:indexPath.row]);
+    
+    //    cell.categoryLbl.text = [[[arrCategory objectAtIndex:indexPath.row]objectForKey:@"category_name" ] uppercaseString];
+    //
+    //    [cell.categoryImage sd_setImageWithURL:[NSURL URLWithString:[[arrCategory objectAtIndex:indexPath.row]objectForKey:@"picture" ]] placeholderImage:[UIImage imageNamed: @"NoJob"]];
+    //
+    //    cell.categoryImage.layer.masksToBounds = YES;
+    //    cell.categoryImage.layer.cornerRadius=5.0;
+    //
+    //    cell.OverlayView.layer.cornerRadius=5.0;
+    
+    return cell;
+}
+
+- (void)collectionView:(UICollectionViewCell *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+
+{
+    
+    
+    
+    
+}
 /*
 #pragma mark - Navigation
 
@@ -38,4 +83,6 @@
 }
 */
 
+- (IBAction)ChooseCategoryTapped:(id)sender {
+}
 @end

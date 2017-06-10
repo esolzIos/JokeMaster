@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0C3E27721EEBBFF70075B104 /* JMRecentlyUploadedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C3E27711EEBBFF70075B104 /* JMRecentlyUploadedViewController.m */; };
+		0C3E27751EEBCD3B0075B104 /* JMRecentUploadedCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C3E27741EEBCD3B0075B104 /* JMRecentUploadedCollectionViewCell.m */; };
 		0C48BFAF1EE7CD6F00CD1C2A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0C48BFB11EE7CD6F00CD1C2A /* Localizable.strings */; };
 		0C48BFB61EE7CF1200CD1C2A /* LocalizationSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C48BFB51EE7CF1200CD1C2A /* LocalizationSystem.m */; };
 		0C48BFB81EE82DA400CD1C2A /* JMHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C48BFB71EE82DA400CD1C2A /* JMHeaderView.xib */; };
@@ -72,6 +73,8 @@
 /* Begin PBXFileReference section */
 		0C3E27701EEBBFF70075B104 /* JMRecentlyUploadedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMRecentlyUploadedViewController.h; sourceTree = "<group>"; };
 		0C3E27711EEBBFF70075B104 /* JMRecentlyUploadedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMRecentlyUploadedViewController.m; sourceTree = "<group>"; };
+		0C3E27731EEBCD3B0075B104 /* JMRecentUploadedCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMRecentUploadedCollectionViewCell.h; sourceTree = "<group>"; };
+		0C3E27741EEBCD3B0075B104 /* JMRecentUploadedCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMRecentUploadedCollectionViewCell.m; sourceTree = "<group>"; };
 		0C48BFB01EE7CD6F00CD1C2A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		0C48BFB21EE7CD7400CD1C2A /* he */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = he; path = he.lproj/Localizable.strings; sourceTree = "<group>"; };
 		0C48BFB31EE7CD7600CD1C2A /* hi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hi; path = hi.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -201,6 +204,8 @@
 			children = (
 				0C6F9E341EE14E84005D31A0 /* CountryCell.h */,
 				0C6F9E351EE14E84005D31A0 /* CountryCell.m */,
+				0C3E27731EEBCD3B0075B104 /* JMRecentUploadedCollectionViewCell.h */,
+				0C3E27741EEBCD3B0075B104 /* JMRecentUploadedCollectionViewCell.m */,
 			);
 			name = Cell;
 			sourceTree = "<group>";
@@ -528,6 +533,7 @@
 				0CE2FB481EE190E50031C0E6 /* JMRegistrationViewController.m in Sources */,
 				B0A32B8D1EE131680044D443 /* SVIndefiniteAnimatedView.m in Sources */,
 				B0A32B7C1EE12E4E0044D443 /* JMGlobalMethods.m in Sources */,
+				0C3E27751EEBCD3B0075B104 /* JMRecentUploadedCollectionViewCell.m in Sources */,
 				B0A32B8E1EE131680044D443 /* SVProgressAnimatedView.m in Sources */,
 				0C58274E1EE9316F00480E19 /* JMLeftMenuView.m in Sources */,
 				0C6F9E361EE14E84005D31A0 /* CountryCell.m in Sources */,
