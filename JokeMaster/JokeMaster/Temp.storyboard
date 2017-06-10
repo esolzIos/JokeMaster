@@ -295,6 +295,10 @@
                                                         <rect key="frame" x="8" y="5" width="300" height="205"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                     </imageView>
+                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="emotion" id="tT1-xg-o51">
+                                                        <rect key="frame" x="262" y="66" width="55" height="64"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                                    </imageView>
                                                 </subviews>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             </view>
@@ -320,6 +324,7 @@
         <image name="Background" width="621" height="1104"/>
         <image name="button" width="542" height="119"/>
         <image name="down-arrow" width="19" height="14"/>
+        <image name="emotion" width="119" height="147"/>
         <image name="facebook-button" width="542" height="119"/>
         <image name="google-plus" width="542" height="119"/>
         <image name="input-box" width="527" height="104"/>
