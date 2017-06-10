@@ -129,7 +129,9 @@ fbM=[[FBSDKLoginManager alloc]init];
 
 - (IBAction)loginClicked:(id)sender {
     
-
+    JMLoginViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMRecentlyUploadedViewController"];
+    
+    [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
 }
 - (IBAction)fbClicked:(id)sender {
     

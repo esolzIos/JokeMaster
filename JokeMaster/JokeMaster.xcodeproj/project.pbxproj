@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0C3E27721EEBBFF70075B104 /* JMRecentlyUploadedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C3E27711EEBBFF70075B104 /* JMRecentlyUploadedViewController.m */; };
 		0C48BFAF1EE7CD6F00CD1C2A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0C48BFB11EE7CD6F00CD1C2A /* Localizable.strings */; };
 		0C48BFB61EE7CF1200CD1C2A /* LocalizationSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C48BFB51EE7CF1200CD1C2A /* LocalizationSystem.m */; };
 		0C48BFB81EE82DA400CD1C2A /* JMHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C48BFB71EE82DA400CD1C2A /* JMHeaderView.xib */; };
@@ -68,6 +69,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0C3E27701EEBBFF70075B104 /* JMRecentlyUploadedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMRecentlyUploadedViewController.h; sourceTree = "<group>"; };
+		0C3E27711EEBBFF70075B104 /* JMRecentlyUploadedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMRecentlyUploadedViewController.m; sourceTree = "<group>"; };
 		0C48BFB01EE7CD6F00CD1C2A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		0C48BFB21EE7CD7400CD1C2A /* he */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = he; path = he.lproj/Localizable.strings; sourceTree = "<group>"; };
 		0C48BFB31EE7CD7600CD1C2A /* hi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hi; path = hi.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -321,6 +324,8 @@
 				B07ABAC61EE540F90011DD57 /* JMLoginViewController.m */,
 				0C5827471EE9205600480E19 /* JMHomeViewController.h */,
 				0C5827481EE9205600480E19 /* JMHomeViewController.m */,
+				0C3E27701EEBBFF70075B104 /* JMRecentlyUploadedViewController.h */,
+				0C3E27711EEBBFF70075B104 /* JMRecentlyUploadedViewController.m */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -523,6 +528,7 @@
 				B0A32B911EE131680044D443 /* SVRadialGradientLayer.m in Sources */,
 				B07ABAC41EE540B90011DD57 /* JMLanguageViewController.m in Sources */,
 				0C48BFB61EE7CF1200CD1C2A /* LocalizationSystem.m in Sources */,
+				0C3E27721EEBBFF70075B104 /* JMRecentlyUploadedViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
