@@ -51,6 +51,7 @@
 		B0A32B8F1EE131680044D443 /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B0A32B881EE131680044D443 /* SVProgressHUD.bundle */; };
 		B0A32B901EE131680044D443 /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = B0A32B8A1EE131680044D443 /* SVProgressHUD.m */; };
 		B0A32B911EE131680044D443 /* SVRadialGradientLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = B0A32B8C1EE131680044D443 /* SVRadialGradientLayer.m */; };
+		B0DA70901EEBF52900FD91A7 /* JokeCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B0DA708F1EEBF52900FD91A7 /* JokeCollectionViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -148,6 +149,8 @@
 		B0A32B8A1EE131680044D443 /* SVProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressHUD.m; sourceTree = "<group>"; };
 		B0A32B8B1EE131680044D443 /* SVRadialGradientLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVRadialGradientLayer.h; sourceTree = "<group>"; };
 		B0A32B8C1EE131680044D443 /* SVRadialGradientLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVRadialGradientLayer.m; sourceTree = "<group>"; };
+		B0DA708E1EEBF52900FD91A7 /* JokeCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JokeCollectionViewCell.h; sourceTree = "<group>"; };
+		B0DA708F1EEBF52900FD91A7 /* JokeCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JokeCollectionViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -206,6 +209,8 @@
 				0C6F9E351EE14E84005D31A0 /* CountryCell.m */,
 				0C3E27731EEBCD3B0075B104 /* JMRecentUploadedCollectionViewCell.h */,
 				0C3E27741EEBCD3B0075B104 /* JMRecentUploadedCollectionViewCell.m */,
+				B0DA708E1EEBF52900FD91A7 /* JokeCollectionViewCell.h */,
+				B0DA708F1EEBF52900FD91A7 /* JokeCollectionViewCell.m */,
 			);
 			name = Cell;
 			sourceTree = "<group>";
@@ -540,6 +545,7 @@
 				B0A32B911EE131680044D443 /* SVRadialGradientLayer.m in Sources */,
 				B07ABAC41EE540B90011DD57 /* JMLanguageViewController.m in Sources */,
 				0C48BFB61EE7CF1200CD1C2A /* LocalizationSystem.m in Sources */,
+				B0DA70901EEBF52900FD91A7 /* JokeCollectionViewCell.m in Sources */,
 				0C3E27721EEBBFF70075B104 /* JMRecentlyUploadedViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
