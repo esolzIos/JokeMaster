@@ -109,6 +109,10 @@
 #pragma mark - Sign up tap
 - (IBAction)SignUpTapped:(id)sender
 {
+    JMRegistrationViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMHomeViewController"];
+    
+    [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
+    
     [UIView animateWithDuration:0.0f animations:^{
         [Nametxt resignFirstResponder];
         [Emailtxt resignFirstResponder];
@@ -125,7 +129,11 @@
         {
             UIAlertController * alert=   [UIAlertController
                                           alertControllerWithTitle:AMLocalizedString(@"Alert",nil)
+<<<<<<< HEAD
                                           message:AMLocalizedString(@"Enter Name", nil)
+=======
+                                          message:AMLocalizedString(@"Enter Name",nil)
+>>>>>>> 9c3e99b61110ae32946626af52c83ff22f163b61
                                           preferredStyle:UIAlertControllerStyleAlert];
             
             UIAlertAction* ok = [UIAlertAction
@@ -148,7 +156,7 @@
         {
             UIAlertController * alert=   [UIAlertController
                                           alertControllerWithTitle:AMLocalizedString(@"Alert",nil)
-                                          message:@"Enter Email Address"
+                                          message:AMLocalizedString(@"Enter Email Address",nil)
                                           preferredStyle:UIAlertControllerStyleAlert];
             
             UIAlertAction* ok = [UIAlertAction
@@ -214,7 +222,7 @@
         {
             UIAlertController * alert=   [UIAlertController
                                           alertControllerWithTitle:AMLocalizedString(@"Alert",nil)
-                                          message:@"Enter Password"
+                                          message:AMLocalizedString(@"Enter Password", nil)
                                           preferredStyle:UIAlertControllerStyleAlert];
             
             UIAlertAction* ok = [UIAlertAction
@@ -236,7 +244,7 @@
         {
             UIAlertController * alert=   [UIAlertController
                                           alertControllerWithTitle:AMLocalizedString(@"Alert",nil)
-                                          message:@"Password Should be at least 6 characters"
+                                          message:AMLocalizedString(@"Password Should be at least 6 characters",nil)
                                           preferredStyle:UIAlertControllerStyleAlert];
             
             UIAlertAction* ok = [UIAlertAction
@@ -258,7 +266,7 @@
         {
             UIAlertController * alert=   [UIAlertController
                                           alertControllerWithTitle:AMLocalizedString(@"Alert",nil)
-                                          message:@"Enter Confirm Password"
+                                          message:AMLocalizedString(@"Enter Confirm Password",nil)
                                           preferredStyle:UIAlertControllerStyleAlert];
             
             UIAlertAction* ok = [UIAlertAction
@@ -280,7 +288,7 @@
         {
             UIAlertController * alert=   [UIAlertController
                                           alertControllerWithTitle:AMLocalizedString(@"Alert",nil)
-                                          message:@"Password and confirm password should be same."
+                                          message:AMLocalizedString(@"Password and confirm password should be same.",nil)
                                           preferredStyle:UIAlertControllerStyleAlert];
             
             UIAlertAction* ok = [UIAlertAction
@@ -407,7 +415,7 @@
 #pragma mark - upload profile image
 - (IBAction)ProfileImageUploadTapped:(id)sender
 {
-    actionsheet=[[UIActionSheet alloc]initWithTitle:@"" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Camera", @"Photo Library", nil];
+    actionsheet=[[UIActionSheet alloc]initWithTitle:@"" delegate:self cancelButtonTitle:AMLocalizedString(@"Cancel",nil) destructiveButtonTitle:nil otherButtonTitles:AMLocalizedString(@"Camera",nil),AMLocalizedString(@"Photo Library",nil), nil];
     [actionsheet showInView:self.view];
 }
 #pragma mark - status bar white color
@@ -715,7 +723,7 @@
     [mainscroll setContentOffset:CGPointMake(0.0f,0) animated:YES];
     
 }
-//#pragma mark -  picker delegate
+#pragma mark -  picker delegate
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
 {
     return 1;

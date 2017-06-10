@@ -201,4 +201,9 @@
     
     [_pickerView setHidden:YES];
 }
+#pragma mark - status bar white color
+- (UIStatusBarStyle)preferredStatusBarStyle
+{
+    return UIStatusBarStyleLightContent;
+}
 @end

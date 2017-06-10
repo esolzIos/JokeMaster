@@ -11,9 +11,14 @@
 #import "AppDelegate.h"
 #import "SVProgressHUD.h"
 #import "LocalizationSystem.h"
-@interface JMGlobalMethods : UIViewController
+#import "JMHeaderView.h"
+#import "JMLeftMenuView.h"
+@interface JMGlobalMethods : UIViewController<Side_menu_delegate>
 {
     UIView *loader_shadow_View;
+    JMLeftMenuView *leftmenu;
+    UITapGestureRecognizer *tapRecognizer;
+    NSInteger leftmenurowindex;
 }
 
 @property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectCon;
@@ -65,4 +70,9 @@
 @property(nonatomic,weak) UITabBar *footerTabBar;
 -(void)checkPushCount;
 -(void)readAfterPush;
+
+@property (weak, nonatomic) IBOutlet UIView *MainView;
+@property (weak, nonatomic) IBOutlet JMHeaderView *HeaderView;
+
+
 @end

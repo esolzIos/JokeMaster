@@ -30,7 +30,7 @@
 @end
 
 @implementation JMGlobalMethods
-
+@synthesize HeaderView,MainView;
 @synthesize headerLbl,footerTabBar,favImage,myQueue,searchBar,footerLoadView,footerReloadView,profileBtn,profileView,chatBtn,chatView,notifyBtn,notifyView,pushTitle,pushDesc,pushBtn,pushInnerView,badgeLbl;
 @synthesize managedObjectCon = _managedObjectContext;
 @synthesize managedObjectModel = _managedObjectModel;
@@ -55,6 +55,8 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appendAfterPush) name:@"ReceivedPush" object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(readAfterPush) name:@"ReadPush" object:nil];
+    
+    [HeaderView.MenuButton addTarget:self action:@selector(menuClicked) forControlEvents:UIControlEventTouchUpInside];
     
 }
 
@@ -2655,6 +2657,150 @@
         return [link substringWithRange:result.range];
     }
     return nil;
+}
+#pragma - mark menu click
+-(void)menuClicked
+{
+    if(MainView.center.x==self.view.frame.size.width/2)
+    {
+        
+        
+        
+        [leftmenu removeFromSuperview];
+        leftmenu = [JMLeftMenuView leftmenu];
+        leftmenu.SideDelegate=self;
+        
+//        NSIndexPath *indexpath=[NSIndexPath indexPathForRow:leftmenurowindex inSection:0];
+//        LeftMenuCell * cell = [leftmenu.LeftTable cellForRowAtIndexPath:indexpath];
+//        [[leftmenu.LeftTable cellForRowAtIndexPath:indexpath] setBackgroundColor:UIColorFromRGB(0x636F7C)];
+//        
+//        if (leftmenurowindex==0)
+//        {
+//            cell.menuImg.image = [UIImage imageNamed:@"Add Property-1"];
+//        }
+//        if (leftmenurowindex==1)
+//        {
+//            cell.menuImg.image = [UIImage imageNamed:@"wallet-2"];
+//        }
+//        else if (leftmenurowindex==2)
+//        {
+//            cell.menuImg.image = [UIImage imageNamed:@"Explore"];
+//        }
+//        else if (leftmenurowindex==3)
+//        {
+//            cell.menuImg.image = [UIImage imageNamed:@"LocationSelected"];
+//        }
+//        else if (leftmenurowindex==4)
+//        {
+//            cell.menuImg.image = [UIImage imageNamed:@"ConnectSelected"];
+//        }
+//        else if (leftmenurowindex==5)
+//        {
+//            cell.menuImg.image = [UIImage imageNamed:@"New Campaign-1"];
+//        }
+//        else if (leftmenurowindex==6)
+//        {
+//            cell.menuImg.image = [UIImage imageNamed:@"star-1"];
+//        }
+//        else if (leftmenurowindex==7)
+//        {
+//            cell.menuImg.image = [UIImage imageNamed:@"like-2"];
+//        }
+//        else if (leftmenurowindex==8)
+//        {
+//            cell.menuImg.image = [UIImage imageNamed:@"Combined Shape Copy-1"];
+//        }
+//        else if (leftmenurowindex==9)
+//        {
+//            cell.menuImg.image = [UIImage imageNamed:@"Log out-1"];
+//        }
+        
+        
+        
+        
+        
+        leftmenu.frame = CGRectMake(-[[UIScreen mainScreen] bounds].size.width/4*3, 0,[[UIScreen mainScreen] bounds].size.width/4*3, self.view.frame.size.height);
+        
+        [self.view addSubview:leftmenu];
+        
+        
+        
+        
+        [UIView animateWithDuration:0.5 animations:^{
+            
+            
+            
+            
+            
+            MainView.center = CGPointMake([[UIScreen mainScreen] bounds].size.width+[[UIScreen mainScreen] bounds].size.width/4*1,self.view.center.y);
+            
+            leftmenu.frame = CGRectMake(0, 0,[[UIScreen mainScreen] bounds].size.width/4*3, self.view.frame.size.height);
+            
+            tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(gestureHandlerMethod:)];
+            [MainView addGestureRecognizer:tapRecognizer];
+            MainView.tag=2;
+            
+            
+            
+        } completion:^(BOOL finished) {
+            
+            
+        }];
+        
+    }
+    else
+    {
+        
+        [UIView animateWithDuration:0.5 animations:^{
+            
+            
+            MainView.center = CGPointMake(self.view.center.x,self.view.center.y);
+            
+            leftmenu.frame = CGRectMake(-leftmenu.frame.size.width, 0,[[UIScreen mainScreen] bounds].size.width/4*3, self.view.frame.size.height);
+            
+            
+        } completion:^(BOOL finished) {
+            
+            [leftmenu removeFromSuperview];
+            [UIView commitAnimations];
+            [MainView removeGestureRecognizer:tapRecognizer];
+        }];
+        
+        
+    }
+    
+}
+#pragma - mark tap gesture on view controller when left menu is opened
+-(void)gestureHandlerMethod:(UITapGestureRecognizer*)sender
+{
+    if(sender.view.tag==2)
+    {
+        if(MainView.center.x==self.view.frame.size.width/2)
+        {
+            
+            
+        }
+        else
+        {
+            [UIView animateWithDuration:0.5 animations:^{
+                
+                
+                MainView.center = CGPointMake(self.view.center.x,self.view.center.y);
+                
+                leftmenu.frame = CGRectMake(-leftmenu.frame.size.width, 0,[[UIScreen mainScreen] bounds].size.width/4*3, self.view.frame.size.height);
+                
+                
+            } completion:^(BOOL finished) {
+                
+                [leftmenu removeFromSuperview];
+                [MainView removeGestureRecognizer:tapRecognizer];
+                [UIView commitAnimations];
+            }];
+            
+            
+        }
+        
+    }
 }
 
 
