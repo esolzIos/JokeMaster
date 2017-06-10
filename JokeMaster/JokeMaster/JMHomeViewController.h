@@ -20,5 +20,8 @@
 @property (strong, nonatomic) IBOutlet UIButton *categoryBtn;
 - (IBAction)categoryClicked:(id)sender;
 @property (strong, nonatomic) IBOutlet UICollectionView *jokeCollectionView;
+@property (strong, nonatomic) IBOutlet UIView *tutorialView;
+@property (strong, nonatomic) IBOutlet UIButton *tutorialBtn;
+- (IBAction)tutorialClicked:(id)sender;
 
 @end

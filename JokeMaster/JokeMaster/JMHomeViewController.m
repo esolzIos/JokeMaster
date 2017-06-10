@@ -16,6 +16,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [self setRoundCornertoView:_videoThumb withBorderColor:[UIColor clearColor] WithRadius:0.15];
+    
     // Do any additional setup after loading the view.
 }
 
@@ -80,4 +83,9 @@
     return CGSizeMake(125.0f/320.0*FULLWIDTH, 90.0f/480.0*FULLHEIGHT);
 }
 
+- (IBAction)tutorialClicked:(id)sender {
+    
+    [_tutorialView setHidden:YES];
+    
+}
 @end
