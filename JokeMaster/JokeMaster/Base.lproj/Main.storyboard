@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" colorMatched="YES" initialViewController="379-H8-3KE">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" colorMatched="YES" initialViewController="379-H8-3KE">
     <device id="retina3_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -810,7 +810,9 @@
                         <outlet property="HeaderView" destination="Oa9-DX-hmZ" id="qSW-v1-rme"/>
                         <outlet property="MainScroll" destination="kKX-aF-U7E" id="Rtf-YG-a1i"/>
                         <outlet property="MainView" destination="U4E-Xo-oE5" id="fe6-u0-7lk"/>
+                        <outlet property="MenuBaseView" destination="JgG-eT-lea" id="Cef-zJ-fDb"/>
                         <outlet property="RecentVideoCollectionView" destination="vmg-Bz-Kgn" id="krZ-D6-PVt"/>
+                        <outlet property="TransparentView" destination="6au-Kf-bQf" id="hL6-Mj-u1b"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="h1u-E0-jvc" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -18,5 +18,7 @@
 - (IBAction)ChooseCategoryTapped:(id)sender;
 
 @property (weak, nonatomic) IBOutlet UICollectionView *RecentVideoCollectionView;
+@property (weak, nonatomic) IBOutlet UIView *TransparentView;
+@property (weak, nonatomic) IBOutlet UIView *MenuBaseView;
 
 @end
