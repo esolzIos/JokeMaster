@@ -129,11 +129,10 @@
         {
             UIAlertController * alert=   [UIAlertController
                                           alertControllerWithTitle:AMLocalizedString(@"Alert",nil)
-<<<<<<< HEAD
+
                                           message:AMLocalizedString(@"Enter Name", nil)
-=======
-                                          message:AMLocalizedString(@"Enter Name",nil)
->>>>>>> 9c3e99b61110ae32946626af52c83ff22f163b61
+
+
                                           preferredStyle:UIAlertControllerStyleAlert];
             
             UIAlertAction* ok = [UIAlertAction
