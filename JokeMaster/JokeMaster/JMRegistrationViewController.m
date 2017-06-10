@@ -19,26 +19,61 @@
     // Do any additional setup after loading the view.
     
     // sign in text view design
-    UIFont *font1 = [UIFont fontWithName:@"ComicSansMS-Bold" size:15];
-    NSDictionary *arialDict = [NSDictionary dictionaryWithObject:font1 forKey:NSFontAttributeName];
-    NSMutableAttributedString *aAttrString1 = [[NSMutableAttributedString alloc] initWithString:AMLocalizedString(@"Back to",nil) attributes: arialDict];
-    [aAttrString1 addAttribute:NSForegroundColorAttributeName
-                         value:[UIColor whiteColor]
-                         range:NSMakeRange(0, [aAttrString1 length])];
     
-    UIFont *font2 = [UIFont fontWithName:@"ComicSansMS-Bold" size:20];
-    NSDictionary *arialDict2 = [NSDictionary dictionaryWithObject:font2 forKey:NSFontAttributeName];
-    NSMutableAttributedString *aAttrString2 = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@" %@",AMLocalizedString(@"Log in",nil)] attributes: arialDict2];
-    [aAttrString2 addAttribute:NSForegroundColorAttributeName
-                         value:[UIColor whiteColor]
-                         range:NSMakeRange(0, [aAttrString2 length])];
     
-    [aAttrString1 appendAttributedString:aAttrString2];
-    Logintxtvw.attributedText = aAttrString1;
-    Logintxtvw.textAlignment = NSTextAlignmentCenter;
+    NSString *titleText=AMLocalizedString(@"Back to Log in", nil);
     
-    UITapGestureRecognizer *tapRecognizer1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedTextView:)];
-    [Logintxtvw addGestureRecognizer:tapRecognizer1];
+    [_gobackBtn setTitle:titleText forState:UIControlStateNormal];
+    
+    //  set the different range
+    
+    NSRange range1 = [_gobackBtn.titleLabel.text rangeOfString:AMLocalizedString(@"Log in", nil) ];
+    
+    
+    // to set alignment
+    
+    NSMutableParagraphStyle *paragraph = [[NSMutableParagraphStyle alloc] init];
+    
+    paragraph.alignment = NSTextAlignmentCenter;
+    
+    UIFont *font1 = [UIFont fontWithName:@"ComicSansMS-Bold" size:[self getFontSize:13.0f]];
+    UIFont *font2 = [UIFont fontWithName:@"ComicSansMS-Bold" size:[self getFontSize:16.0f]];
+    //    set the attributes to different ranges
+    
+    NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:_gobackBtn.titleLabel.text];
+    
+    [attributedText setAttributes: @{NSFontAttributeName :font1,
+                                     
+                                     NSForegroundColorAttributeName : [UIColor whiteColor],NSParagraphStyleAttributeName:paragraph} range:NSMakeRange(0,_gobackBtn.titleLabel.text.length)];
+    
+    [attributedText addAttributes:@{NSFontAttributeName :font2, NSForegroundColorAttributeName : [UIColor whiteColor],NSParagraphStyleAttributeName:paragraph} range:range1];
+    
+    
+    [_gobackBtn setAttributedTitle:attributedText forState:UIControlStateNormal];
+
+    
+    
+    
+//    UIFont *font1 = [UIFont fontWithName:@"ComicSansMS-Bold" size:15];
+//    NSDictionary *arialDict = [NSDictionary dictionaryWithObject:font1 forKey:NSFontAttributeName];
+//    NSMutableAttributedString *aAttrString1 = [[NSMutableAttributedString alloc] initWithString:AMLocalizedString(@"Back to",nil) attributes: arialDict];
+//    [aAttrString1 addAttribute:NSForegroundColorAttributeName
+//                         value:[UIColor whiteColor]
+//                         range:NSMakeRange(0, [aAttrString1 length])];
+//    
+//    UIFont *font2 = [UIFont fontWithName:@"ComicSansMS-Bold" size:20];
+//    NSDictionary *arialDict2 = [NSDictionary dictionaryWithObject:font2 forKey:NSFontAttributeName];
+//    NSMutableAttributedString *aAttrString2 = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@" %@",AMLocalizedString(@"Log in",nil)] attributes: arialDict2];
+//    [aAttrString2 addAttribute:NSForegroundColorAttributeName
+//                         value:[UIColor whiteColor]
+//                         range:NSMakeRange(0, [aAttrString2 length])];
+//    
+//    [aAttrString1 appendAttributedString:aAttrString2];
+//    Logintxtvw.attributedText = aAttrString1;
+//    Logintxtvw.textAlignment = NSTextAlignmentCenter;
+//    
+//    UITapGestureRecognizer *tapRecognizer1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedTextView:)];
+//    [Logintxtvw addGestureRecognizer:tapRecognizer1];
     
     
     // place holder design
@@ -50,7 +85,7 @@
     
     ProfileImageLabel.frame=CGRectMake(ProfileImageLabel.frame.origin.x, ProfileImage.frame.origin.y+ProfileImage.frame.size.height/2-ProfileImageLabel.frame.size.height/2, ProfileImageLabel.frame.size.width, ProfileImageLabel.frame.size.height);
     
-    LangaugeArray=[[NSMutableArray alloc] initWithObjects:@"English",@"Hebrew",@"Hindi", nil];
+    LangaugeArray=[[NSMutableArray alloc] initWithObjects:AMLocalizedString(@"English",nil),AMLocalizedString(@"Hebrew",nil),AMLocalizedString(@"Hindi",nil), nil];
     
     ProfileImageLabel.text= AMLocalizedString(@"Upload Profile Picture",nil);
     LanguageLabel.text=AMLocalizedString(@"Language",nil);
@@ -90,7 +125,7 @@
         {
             UIAlertController * alert=   [UIAlertController
                                           alertControllerWithTitle:AMLocalizedString(@"Alert",nil)
-                                          message:@"Enter Name"
+                                          message:AMLocalizedString(@"Enter Name", nil)
                                           preferredStyle:UIAlertControllerStyleAlert];
             
             UIAlertAction* ok = [UIAlertAction
@@ -135,7 +170,7 @@
         {
             UIAlertController * alert=   [UIAlertController
                                           alertControllerWithTitle:AMLocalizedString(@"Alert",nil)
-                                          message:@"Enter Valid Email Address"
+                                          message:AMLocalizedString(@"Enter Valid Email Address",nil)
                                           preferredStyle:UIAlertControllerStyleAlert];
             
             UIAlertAction* ok = [UIAlertAction
@@ -157,7 +192,7 @@
         {
             UIAlertController * alert=   [UIAlertController
                                           alertControllerWithTitle:AMLocalizedString(@"Alert",nil)
-                                          message:@"Select Language"
+                                          message:AMLocalizedString(@"Select Language",nil)
                                           preferredStyle:UIAlertControllerStyleAlert];
             
             UIAlertAction* ok = [UIAlertAction
@@ -794,4 +829,8 @@
     
 }
 
+- (IBAction)backClicked:(id)sender {
+    
+        [self.navigationController popViewControllerAnimated:NO];
+}
 @end

@@ -8,7 +8,7 @@
 
 #import "JMGlobalMethods.h"
 #import "CountryCell.h"
-@interface JMChooseCountryViewController : JMGlobalMethods<UITableViewDataSource,UITableViewDelegate>
+@interface JMChooseCountryViewController : JMGlobalMethods<UITableViewDataSource,UITableViewDelegate,UIPickerViewDelegate>
 {
    
     NSMutableArray *CountryArray;
@@ -18,5 +18,13 @@
 @property (weak, nonatomic) IBOutlet UILabel *LanguageLabel;
 @property (weak, nonatomic) IBOutlet UIButton *GoButton;
 - (IBAction)GoTapped:(id)sender;
+@property (strong, nonatomic) IBOutlet UIButton *languageBtn;
+- (IBAction)languageClicked:(id)sender;
+@property (strong, nonatomic) IBOutlet UIView *pickerView;
+@property (strong, nonatomic) IBOutlet UIPickerView *languagePicker;
+@property (strong, nonatomic) IBOutlet UIButton *selectBtn;
+- (IBAction)selectClicked:(id)sender;
+@property (strong, nonatomic) IBOutlet UIButton *cancelBttn;
+- (IBAction)cancelClicked:(id)sender;
 
 @end

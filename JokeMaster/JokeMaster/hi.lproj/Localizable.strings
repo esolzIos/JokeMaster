@@ -5,16 +5,29 @@
   Created by santanu on 06/06/17.
   Copyright © 2017 esolz. All rights reserved.
 */
-"Save" = "सहेजें";
-"Cancel" = "आईटी रद्द";
-"Upload Profile Picture" = "प्रोफ़ाइल चित्र अपलोड करें"
-"Back to" = "בחזרה ל";
-"Log in" = "התחברות";
-"Email" = "אֶלֶקטרוֹנִי";
-"Name" = "שֵׁם";
-"Password" = "סיסמה";
-"Confirm Password" = "אשר סיסמה";
-"Language" = "שפה";
-"OK" = "בסדר";
-"Alert" = "עֵרָנִי";
-"SIGN UP" = "साइन अप करने";
+"Save" ="सहेजें";
+"Cancel" ="रद्द";
+"Upload Profile Picture" ="प्रोफ़ाइल चित्र अपलोड करें";
+"Back to" ="बीएसी के लिए";
+"Log in" ="प्रवेश करें";
+"Email" ="ईमेल";
+"Name" ="नाम";
+"Password" ="पासवर्ड";
+"Confirm Password" ="पासवर्ड की पुष्टि करें";
+"Language" ="भाषा";
+"OK" ="ठीक";
+"Alert" ="चेतावनी";
+"SIGN UP" ="साइन अप करने";
+"LOG IN" ="प्रवेश करें";
+"or login with" = "या प्रवेश करें इन के साथ";
+"Don't have an account? Sign Up" = "एक खाता नहीं है? साइन अप करें";
+"Sign Up" ="साइन अप करने";
+"Back to Log in" = "लॉग इन पर वापस जाएं";
+"English"="अंग्रेजी";
+"Hindi"="हिन्दी";
+"Hebrew"="यहूदी";
+"Choose Language" = "भाषा चुनें";
+"GO" = "आगे जाएं";
+"Enter Name" = "नाम दर्ज करें";
+"Enter Valid Email Address" = "मान्य ईमेल पता दर्ज करें";
+"Select Language" = "भाषा का चयन करें";

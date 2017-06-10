@@ -31,7 +31,15 @@ fbM=[[FBSDKLoginManager alloc]init];
      [_password setFont:[UIFont fontWithName:_password.font.fontName size:[self getFontSize:_password.font.pointSize]]];
      [_loginBtn.titleLabel setFont:[UIFont fontWithName:_loginBtn.titleLabel.font.fontName size:[self getFontSize:_loginBtn.titleLabel.font.pointSize]]];
      [_infoTxt setFont:[UIFont fontWithName:_infoTxt.font.fontName size:[self getFontSize:_infoTxt.font.pointSize]]];
+    
+    _userEmail.attributedPlaceholder = [[NSAttributedString alloc] initWithString:AMLocalizedString(@"Email", nil) attributes:@{NSForegroundColorAttributeName: [UIColor whiteColor]}];
+    
+    _password.attributedPlaceholder = [[NSAttributedString alloc] initWithString:AMLocalizedString(@"Password", nil) attributes:@{NSForegroundColorAttributeName: [UIColor whiteColor]}];
 
+    
+    [_loginBtn setTitle:AMLocalizedString(@"LOG IN", nil) forState:UIControlStateNormal];
+    
+    [_infoTxt setText:AMLocalizedString(@"or login with", nil)];
     
 
 //    NSMutableParagraphStyle *style = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
@@ -47,11 +55,14 @@ fbM=[[FBSDKLoginManager alloc]init];
 //    [[_signupBtn titleLabel] setLineBreakMode:NSLineBreakByWordWrapping];
     
     // to set alignment
-    [_signupBtn setTitle:@"Don't have an account? Sign up" forState:UIControlStateNormal];
+    
+    NSString *titleText=AMLocalizedString(@"Don't have an account? Sign Up", nil);
+    
+    [_signupBtn setTitle:titleText forState:UIControlStateNormal];
     
     //  set the different range
     
-    NSRange range1 = [_signupBtn.titleLabel.text rangeOfString:@"Sign up"];
+    NSRange range1 = [_signupBtn.titleLabel.text rangeOfString:AMLocalizedString(@"Sign Up", nil) ];
     
     
     // to set alignment
@@ -60,8 +71,8 @@ fbM=[[FBSDKLoginManager alloc]init];
     
     paragraph.alignment = NSTextAlignmentCenter;
     
-    UIFont *font1 = [UIFont fontWithName:@"ComicSansMS-Bold" size:13.0f];
-      UIFont *font2 = [UIFont fontWithName:@"ComicSansMS-Bold" size:15.0f];
+    UIFont *font1 = [UIFont fontWithName:@"ComicSansMS-Bold" size:[self getFontSize:13.0f]];
+      UIFont *font2 = [UIFont fontWithName:@"ComicSansMS-Bold" size:[self getFontSize:16.0f]];
     //    set the attributes to different ranges
     
     NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:_signupBtn.titleLabel.text];

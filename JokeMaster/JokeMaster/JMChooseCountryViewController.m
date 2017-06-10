@@ -9,7 +9,13 @@
 #import "JMChooseCountryViewController.h"
 #import "JMLoginViewController.h"
 @interface JMChooseCountryViewController ()
+{
+    NSMutableArray *langArr,*codeArr;
+    
+    int rowSelected;
+    
 
+}
 @end
 
 @implementation JMChooseCountryViewController
@@ -18,7 +24,16 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-  
+    langArr=[[NSMutableArray alloc] initWithObjects:AMLocalizedString(@"English", nil),AMLocalizedString(@"Hebrew", nil),AMLocalizedString(@"Hindi", nil), nil];
+    
+    codeArr=[[NSMutableArray alloc] initWithObjects:@"en",@"he",@"hi", nil];
+    
+    [_LanguageLabel setText:AMLocalizedString(@"Choose Language", nil)];
+    
+        [_GoButton setTitle:AMLocalizedString(@"GO",nil) forState:UIControlStateNormal] ;
+    
+[_languagePicker setDelegate:self];
+    
 }
 #pragma mark - UITableView Delegates
 
@@ -108,5 +123,82 @@
     JMLoginViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMLogin"];
     
     [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
+}
+- (IBAction)languageClicked:(id)sender {
+    
+    
+    [_pickerView setHidden:NO];
+    
+    [_languagePicker reloadAllComponents];
+}
+
+#pragma mark picker delegates
+
+-(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
+{
+    
+    return 1;
+    
+}
+
+-(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
+{
+    
+    return langArr.count;
+    
+    
+}
+- (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view {
+    UILabel *pickerLabel = (UILabel *)view;
+    // NSString *text = nil;
+    // Reuse the label if possible, otherwise create and configure a new one
+    if ((pickerLabel == nil) || ([pickerLabel class] != [UILabel class])) { //newlabel
+        CGRect frame = CGRectMake(0.0, 0.0, 270, 32.0);
+        pickerLabel = [[UILabel alloc] initWithFrame:frame];
+        pickerLabel.textAlignment = NSTextAlignmentCenter;
+        pickerLabel.backgroundColor = [UIColor clearColor];
+        pickerLabel.font = [UIFont fontWithName:@"ComicSansMS-Bold" size:24];
+        [pickerLabel setText:[langArr objectAtIndex:row]];
+    }
+    pickerLabel.textColor = [UIColor whiteColor];
+    return pickerLabel;
+}
+- (CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component
+{
+    
+    return 50.0/480.0*FULLHEIGHT;
+    
+}
+
+-(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
+{
+    
+    return [langArr objectAtIndex:row];
+    
+    
+}
+
+
+-(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
+{
+    rowSelected=(int)row;
+    
+    
+    
+}
+- (IBAction)selectClicked:(id)sender {
+    
+    [_LanguageLabel setText:[langArr objectAtIndex:rowSelected]];
+    
+    DebugLog(@"%@",[codeArr objectAtIndex:rowSelected]);
+    
+    LocalizationSetLanguage([codeArr objectAtIndex:rowSelected]);
+    
+    //   [[NSUserDefaults standardUserDefaults]setObject:[codeArr objectAtIndex:rowSelected] forKey:@"language"];
+    [_pickerView setHidden:YES];
+}
+- (IBAction)cancelClicked:(id)sender {
+    
+    [_pickerView setHidden:YES];
 }
 @end

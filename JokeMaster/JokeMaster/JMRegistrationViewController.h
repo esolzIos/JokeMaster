@@ -34,5 +34,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *LanguageBtn;
 - (IBAction)LanguageTapped:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *SignUpBtn;
+@property (strong, nonatomic) IBOutlet UIButton *gobackBtn;
+- (IBAction)backClicked:(id)sender;
 
 @end

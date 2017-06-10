@@ -18,3 +18,16 @@
 "OK" = "בסדר";
 "Alert" = "עֵרָנִי";
 "SIGN UP" = "הירשם";
+"LOG IN" ="התחברות";
+"or login with" = "או להתחבר עם אלה";
+"Don't have an account? Sign Up" = "אין לך חשבון? הירשמו";
+"Sign Up"="הירשם";
+"Back to Log in" = "חזרה להתחבר";
+"English"="אנגלית";
+"Hindi"="הינדי";
+"Hebrew"="עברי";
+"Choose Language" = "בחר שפה";
+"GO" = "ללכת";
+"Enter Name" = "נא להזין שם";
+"Enter Valid Email Address" = "הזן כתובת אימייל תקינה";
+"Select Language" = "בחר שפה";
