@@ -8,7 +8,7 @@
 
 #import "JMGlobalMethods.h"
 #import <QuartzCore/QuartzCore.h>
-
+#import "JMHeaderView.h"
 #import "AppDelegate.h"
 #import <SystemConfiguration/SCNetworkReachability.h>
 
@@ -673,12 +673,12 @@
     
     
     
-    headerView= [[[NSBundle mainBundle] loadNibNamed:@"extendedView" owner:self options:nil] objectAtIndex:0];
+    headerView= [[[NSBundle mainBundle] loadNibNamed:@"JMHeaderView" owner:self options:nil] objectAtIndex:0];
     
     
     [ headerView setFrame:CGRectMake(0, 0, FULLWIDTH, mainView.frame.size.height)];
     
-    
+
     
     headerLbl=(UILabel *)[headerView viewWithTag:10];
     [headerLbl setFont:[UIFont fontWithName:headerLbl.font.fontName size:[self getFontSize:headerLbl.font.pointSize]]];
