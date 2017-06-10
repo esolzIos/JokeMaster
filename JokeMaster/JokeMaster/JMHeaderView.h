@@ -18,5 +18,9 @@
 @property (strong, nonatomic) IBOutlet UIButton *searchBtn;
 @property (strong, nonatomic) IBOutlet UIView *moreView;
 @property (strong, nonatomic) IBOutlet UIButton *moreBtn;
+@property (weak, nonatomic) IBOutlet UIView *BackView;
+@property (weak, nonatomic) IBOutlet UIButton *BackButton;
+
+@property (weak, nonatomic) IBOutlet UIImageView *RecentUploadImage;
 
 @end

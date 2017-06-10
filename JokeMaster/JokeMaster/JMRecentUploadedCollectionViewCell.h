@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface JMRecentUploadedCollectionViewCell : UICollectionViewCell
-
+@property (weak, nonatomic) IBOutlet UIImageView *VideoThumpnailImage;
 @end

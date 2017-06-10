@@ -56,158 +56,192 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(readAfterPush) name:@"ReadPush" object:nil];
     
-    [HeaderView.MenuButton addTarget:self action:@selector(menuClicked) forControlEvents:UIControlEventTouchUpInside];
+    
+    // Current View Controller
+    
+    UIViewController *topMostViewControllerObj = [self topViewController];
+    CurrentViewController = NSStringFromClass([topMostViewControllerObj class]);
+    NSLog(@"controller=%@",CurrentViewController);
+    
+    if ([CurrentViewController isEqualToString:@"JMHomeViewController"])
+    {
+        // leftmenurowindex=2;
+        
+        HeaderView.logoImage.hidden=NO;
+        HeaderView.menuView.hidden=NO;
+        
+        HeaderView.RecentUploadImage.hidden=YES;
+        HeaderView.BackView.hidden=YES;
+        
+        [HeaderView.MenuButton addTarget:self action:@selector(menuClicked) forControlEvents:UIControlEventTouchUpInside];
+        
+    }
+    else if ([CurrentViewController isEqualToString:@"JMRecentlyUploadedViewController"])
+    {
+        // leftmenurowindex=2;
+        
+        HeaderView.logoImage.hidden=YES;
+        HeaderView.menuView.hidden=YES;
+        
+        HeaderView.RecentUploadImage.hidden=NO;
+        HeaderView.BackView.hidden=NO;
+        
+        [HeaderView.BackButton addTarget:self action:@selector(BackClicked) forControlEvents:UIControlEventTouchUpInside];
+        
+    }
+    
+    
     
 }
 
 //-(void)readAfterPush
 //{
-//    
-//    
-//    
+//
+//
+//
 //    if([self networkAvailable])
 //    {
-//        
-//        
-//        
+//
+//
+//
 //        [SVProgressHUD showWithStatus:@"Please Wait"];
-//        
-//        
+//
+//
 //        //  AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
 //        //
-//        
+//
 //        NSURL *url=[NSURL URLWithString:[NSString stringWithFormat:@"%@badgecountminus_control",GLOBALAPI]];
-//        
-//        
-//        
-//        
+//
+//
+//
+//
 //        // configure the request
-//        
+//
 //        NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
 //        [request setHTTPMethod:@"POST"];
-//        
-//        
-//        
+//
+//
+//
 //        //        NSString *boundary = @"---------------------------14737809831466499882746641449";
 //        //        NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@", boundary];
 //        //        [request addValue:contentType forHTTPHeaderField:@"Content-Type"];
-//        
+//
 //        NSString *sendData = @"authtoken=";
 //        sendData = [sendData stringByAppendingString:[NSString stringWithFormat:@"%@", app.authToken]];
-//        
-//        
+//
+//
 //        [request setValue:@"gzip" forHTTPHeaderField:@"Accept-Encoding"];
-//        
+//
 //        NSMutableData *theBodyData = [NSMutableData data];
-//        
+//
 //        theBodyData = [[sendData dataUsingEncoding:NSUTF8StringEncoding] mutableCopy];
-//        
-//        
+//
+//
 //        //  self.session = [NSURLSession sharedSession];  // use sharedSession or create your own
-//        
+//
 //        session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
-//        
+//
 //        NSURLSessionTask *task = [session uploadTaskWithRequest:request fromData:theBodyData completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
 //            if (error) {
 //                NSLog(@"error = %@", error);
-//                
+//
 //                return;
 //            }
-//            
+//
 //            if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
 //                NSError *jsonError;
 //                NSDictionary *response = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
-//                
-//                
-//                
-//                
-//                
-//                
+//
+//
+//
+//
+//
+//
 //                if (jsonError) {
 //                    // Error Parsing JSON
-//                    
+//
 //                    NSString *responseString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-//                    
+//
 //                    NSLog(@"response = %@",responseString);
-//                    
+//
 //                    [SVProgressHUD showInfoWithStatus:@"some error occured"];
-//                    
+//
 //                } else {
 //                    // Success Parsing JSON
 //                    // Log NSDictionary response:
 //                    NSLog(@"result = %@",response);
-//                    
+//
 //                    if ([[response objectForKey:@"status_code"]intValue]==406) {
-//                        
+//
 //                        app.userId=@"";
-//                        
+//
 //                        app.authToken=@"";
-//                        
+//
 //                        NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
 //                        [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
-//                        
-//                        
-//                        
+//
+//
+//
 //                        ADLoginViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"ADLogin"];
 //                        VC.forcedToLogin=true;
 //                        [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
-//                        
+//
 //                    }
 //                    else
-//                        
+//
 //                        if ([[response objectForKey:@"status_code"]intValue]==200) {
-//                            
+//
 //                            [SVProgressHUD dismiss];
-//                            
+//
 //                            app.badgeCount=[[response objectForKey:@"batchcount"]intValue];
-//                            
+//
 //                            if (app.badgeCount>0) {
-//                                
+//
 //                                [badgeLbl setHidden:NO];
 //                                [badgeLbl setText:[NSString stringWithFormat:@"%d", app.badgeCount]];
-//                                
-//                                
+//
+//
 //                            }
 //                            else{
 //                                [badgeLbl setHidden:YES];
 //                            }
-//                            
-//                            
-//                            
+//
+//
+//
 //                        }
-//                    
+//
 //                        else{
-//                            
-//                            
+//
+//
 //                        }
-//                    
-//                    
-//                    
-//                    
+//
+//
+//
+//
 //                }
-//                
-//                
+//
+//
 //            }
-//            
-//            
+//
+//
 //        }];
-//        
-//        
+//
+//
 //        [task resume];
-//        
-//        
+//
+//
 //    }
-//    
+//
 //    else{
-//        
-//        
+//
+//
 //        [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
-//        
-//        
-//        
+//
+//
+//
 //    }
-//    
-//    
+//
+//
 //}
 
 -(void)appendAfterPush
@@ -246,58 +280,58 @@
 //-(void)addPushView:(UIView *)mainView
 //{
 //    [pushView removeFromSuperview];
-//    
+//
 //    pushView= [[[NSBundle mainBundle] loadNibNamed:@"extendedView" owner:self options:nil] objectAtIndex:3];
-//    
-//    
+//
+//
 //    [ pushView setFrame:CGRectMake(0, -70.0/480.0*FULLHEIGHT, FULLWIDTH,70.0/480.0*FULLHEIGHT)];
-//    
-//    
-//    
+//
+//
+//
 //    pushTitle=(UILabel *)[pushView viewWithTag:1];
 //    [pushTitle setFont:[UIFont fontWithName:pushTitle.font.fontName size:[self getFontSize:pushTitle.font.pointSize]]];
-//    
+//
 //    pushDesc=(UILabel *)[pushView viewWithTag:2];
 //    [pushDesc setFont:[UIFont fontWithName:pushDesc.font.fontName size:[self getFontSize:pushDesc.font.pointSize]]];
-//    
+//
 //    pushBtn=(UIButton *)[pushView viewWithTag:3];
 //    [pushBtn addTarget:self action:@selector(pushClicked) forControlEvents:UIControlEventTouchUpInside];
-//    
+//
 //    pushInnerView=(UIView *)[pushView viewWithTag:4];
 //    [self setRoundCornertoView:pushInnerView withBorderColor:[UIColor blackColor] WithRadius:0.05];
-//    
+//
 //    [pushTitle setText:[app.pushDict objectForKey:@"sendername"]];
 //    [pushDesc setText:[app.pushDict objectForKey:@"alert"]];
-//    
+//
 //    UISwipeGestureRecognizer * recognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeLeft)];
 //    [recognizer setDirection:(UISwipeGestureRecognizerDirectionLeft)];
 //    [pushView addGestureRecognizer:recognizer];
-//    
+//
 //    UISwipeGestureRecognizer * recognizer2 = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeRight)];
 //    [recognizer2 setDirection:(UISwipeGestureRecognizerDirectionRight)];
 //    [pushView addGestureRecognizer:recognizer2];
-//    
-//    
+//
+//
 //    [mainView addSubview:pushView];
-//    
-//    
-//    
-//    
-//    
-//    
+//
+//
+//
+//
+//
+//
 //    [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:0.0 initialSpringVelocity:0.0 options:UIViewAnimationOptionCurveEaseIn animations:^{
 //        [ pushView setFrame:CGRectMake(0, 0, FULLWIDTH,70.0/480.0*FULLHEIGHT)];
 //    } completion:^(BOOL finished) {
-//        
-//        
+//
+//
 //    }];
-//    
-//    
+//
+//
 //    [self performSelector:@selector(hidePush) withObject:nil afterDelay:4];
-//    
-//    
-//    
-//    
+//
+//
+//
+//
 //}
 
 -(void)swipeLeft
@@ -347,196 +381,196 @@
 
 //-(void)pushClicked
 //{
-//    
+//
 //    [pushView removeFromSuperview];
 //    //  app.badgeCount--;
-//    
-//    
+//
+//
 //    if([self networkAvailable])
 //    {
-//        
-//        
-//        
+//
+//
+//
 //        [SVProgressHUD showWithStatus:@"Please Wait"];
-//        
-//        
+//
+//
 //        //  AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
 //        //
-//        
+//
 //        NSURL *url=[NSURL URLWithString:[NSString stringWithFormat:@"%@badgecountminus_control",GLOBALAPI]];
-//        
-//        
-//        
-//        
+//
+//
+//
+//
 //        // configure the request
-//        
+//
 //        NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
 //        [request setHTTPMethod:@"POST"];
-//        
-//        
-//        
+//
+//
+//
 //        //        NSString *boundary = @"---------------------------14737809831466499882746641449";
 //        //        NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@", boundary];
 //        //        [request addValue:contentType forHTTPHeaderField:@"Content-Type"];
-//        
+//
 //        NSString *sendData = @"authtoken=";
 //        sendData = [sendData stringByAppendingString:[NSString stringWithFormat:@"%@", app.authToken]];
-//        
-//        
+//
+//
 //        [request setValue:@"gzip" forHTTPHeaderField:@"Accept-Encoding"];
-//        
+//
 //        NSMutableData *theBodyData = [NSMutableData data];
-//        
+//
 //        theBodyData = [[sendData dataUsingEncoding:NSUTF8StringEncoding] mutableCopy];
-//        
-//        
+//
+//
 //        //  self.session = [NSURLSession sharedSession];  // use sharedSession or create your own
-//        
+//
 //        session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
-//        
+//
 //        NSURLSessionTask *task = [session uploadTaskWithRequest:request fromData:theBodyData completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
 //            if (error) {
 //                NSLog(@"error = %@", error);
-//                
+//
 //                return;
 //            }
-//            
+//
 //            if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
 //                NSError *jsonError;
 //                NSDictionary *response = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
-//                
-//                
-//                
-//                
-//                
-//                
+//
+//
+//
+//
+//
+//
 //                if (jsonError) {
 //                    // Error Parsing JSON
-//                    
+//
 //                    NSString *responseString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-//                    
+//
 //                    NSLog(@"response = %@",responseString);
-//                    
+//
 //                    [SVProgressHUD showInfoWithStatus:@"some error occured"];
-//                    
+//
 //                } else {
 //                    // Success Parsing JSON
 //                    // Log NSDictionary response:
 //                    NSLog(@"result = %@",response);
-//                    
+//
 //                    if ([[response objectForKey:@"status_code"]intValue]==406) {
-//                        
+//
 //                        app.userId=@"";
-//                        
+//
 //                        app.authToken=@"";
-//                        
+//
 //                        NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
 //                        [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
-//                        
-//                        
-//                        
+//
+//
+//
 //                        ADLoginViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"ADLogin"];
 //                        VC.forcedToLogin=true;
 //                        [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
-//                        
+//
 //                    }
 //                    else
-//                        
+//
 //                        if ([[response objectForKey:@"status_code"]intValue]==200) {
-//                            
+//
 //                            [SVProgressHUD dismiss];
-//                            
+//
 //                            app.badgeCount=[[response objectForKey:@"batchcount"]intValue];
-//                            
+//
 //                            if (app.badgeCount>0) {
-//                                
+//
 //                                [badgeLbl setHidden:NO];
 //                                [badgeLbl setText:[NSString stringWithFormat:@"%d", app.badgeCount]];
-//                                
-//                                
+//
+//
 //                            }
 //                            else{
 //                                [badgeLbl setHidden:YES];
 //                            }
-//                            
+//
 //                            if ( [[app.pushDict objectForKey:@"type"]intValue]==3) {
-//                                
+//
 //                                UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main"
 //                                                                                     bundle: nil];
-//                                
+//
 //                                ADChatViewController *VC=[storyboard instantiateViewControllerWithIdentifier:@"ADChat"];
 //                                VC.userId=[app.pushDict objectForKey:@"senderid"];
 //                                VC.userName=[[app.pushDict objectForKey:@"sendername"] capitalizedString];
 //                                //  VC.userImage=[pushDict objectForKey:@"profile_image"];
-//                                
+//
 //                                [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
-//                                
-//                                
+//
+//
 //                            }
-//                            
+//
 //                            else if ([[app.pushDict objectForKey:@"type"]intValue]==2) {
-//                                
-//                                
+//
+//
 //                                UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main"
 //                                                                                     bundle: nil];
-//                                
+//
 //                                ADUserProfileViewController *VC=[storyboard instantiateViewControllerWithIdentifier:@"ADProfile"];
 //                                VC.profileId=[app.pushDict objectForKey:@"senderid"];
 //                                //  VC.userImage=[pushDict objectForKey:@"profile_image"];
 //                                VC.isFromList=true;
 //                                [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
-//                                
-//                                
+//
+//
 //                            }   else
 //                            {
 //                                UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main"
 //                                                                                     bundle: nil];
-//                                
+//
 //                                ADEventDetailViewController *VC=[storyboard instantiateViewControllerWithIdentifier:@"ADEventDetail"];
 //                                VC.eventId=[app.pushDict objectForKey:@"eventid"];
 //                                //  VC.userImage=[pushDict objectForKey:@"profile_image"];
-//                                
+//
 //                                [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
-//                                
-//                                
-//                                
+//
+//
+//
 //                            }
-//                            
-//                            
+//
+//
 //                        }
-//                    
+//
 //                        else{
-//                            
-//                            
+//
+//
 //                        }
-//                    
-//                    
-//                    
-//                    
+//
+//
+//
+//
 //                }
-//                
-//                
+//
+//
 //            }
-//            
-//            
+//
+//
 //        }];
-//        
-//        
+//
+//
 //        [task resume];
-//        
-//        
+//
+//
 //    }
-//    
+//
 //    else{
-//        
-//        
+//
+//
 //        [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
-//        
-//        
-//        
+//
+//
+//
 //    }
-//    
-//    
+//
+//
 //}
 
 - (void)viewDidLoad {
@@ -678,7 +712,7 @@
     
     [ headerView setFrame:CGRectMake(0, 0, FULLWIDTH, mainView.frame.size.height)];
     
-
+    
     
     headerLbl=(UILabel *)[headerView viewWithTag:10];
     [headerLbl setFont:[UIFont fontWithName:headerLbl.font.fontName size:[self getFontSize:headerLbl.font.pointSize]]];
@@ -1015,325 +1049,325 @@
 
 //-(void)checkPushCount
 //{
-//    
+//
 //    badgeLbl =(UILabel *)[headerView viewWithTag:999];
-//    
+//
 //    if([self networkAvailable])
 //    {
-//        
-//        
-//        
+//
+//
+//
 //        //  [SVProgressHUD show];
-//        
-//        
+//
+//
 //        //  AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
 //        //
-//        
+//
 //        NSURL *url=[NSURL URLWithString:[NSString stringWithFormat:@"%@batchcount_control",GLOBALAPI]];
-//        
-//        
-//        
-//        
+//
+//
+//
+//
 //        // configure the request
-//        
+//
 //        NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
 //        [request setHTTPMethod:@"POST"];
-//        
-//        
-//        
+//
+//
+//
 //        //        NSString *boundary = @"---------------------------14737809831466499882746641449";
 //        //        NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@", boundary];
 //        //        [request addValue:contentType forHTTPHeaderField:@"Content-Type"];
-//        
+//
 //        NSString *sendData = @"authtoken=";
 //        sendData = [sendData stringByAppendingString:[NSString stringWithFormat:@"%@", app.authToken]];
-//        
-//        
+//
+//
 //        [request setValue:@"gzip" forHTTPHeaderField:@"Accept-Encoding"];
-//        
+//
 //        NSMutableData *theBodyData = [NSMutableData data];
-//        
+//
 //        theBodyData = [[sendData dataUsingEncoding:NSUTF8StringEncoding] mutableCopy];
-//        
-//        
+//
+//
 //        //  self.session = [NSURLSession sharedSession];  // use sharedSession or create your own
-//        
+//
 //        session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
-//        
+//
 //        NSURLSessionTask *task = [session uploadTaskWithRequest:request fromData:theBodyData completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
 //            if (error) {
 //                NSLog(@"error = %@", error);
-//                
+//
 //                return;
 //            }
-//            
+//
 //            if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
 //                NSError *jsonError;
 //                NSDictionary *response = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
-//                
-//                
-//                
-//                
-//                
-//                
+//
+//
+//
+//
+//
+//
 //                if (jsonError) {
 //                    // Error Parsing JSON
-//                    
+//
 //                    NSString *responseString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-//                    
+//
 //                    NSLog(@"response = %@",responseString);
-//                    
+//
 //                    //  [SVProgressHUD showInfoWithStatus:@"some error occured"];
-//                    
+//
 //                } else {
 //                    // Success Parsing JSON
 //                    // Log NSDictionary response:
 //                    NSLog(@"result = %@",response);
-//                    
+//
 //                    if ([[response objectForKey:@"status_code"]intValue]==406) {
-//                        
+//
 //                        app.userId=@"";
-//                        
+//
 //                        app.authToken=@"";
-//                        
+//
 //                        NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
 //                        [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
-//                        
-//                        
-//                        
+//
+//
+//
 //                        ADLoginViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"ADLogin"];
 //                        VC.forcedToLogin=true;
 //                        [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
-//                        
+//
 //                    }
 //                    else
-//                        
+//
 //                        if ([[response objectForKey:@"status_code"]intValue]==200) {
-//                            
+//
 //                            // [SVProgressHUD dismiss];
-//                            
+//
 //                            app.badgeCount=[[response objectForKey:@"batchcount"]intValue];
-//                            
+//
 //                            if (app.badgeCount>0) {
-//                                
+//
 //                                [badgeLbl setHidden:NO];
 //                                [badgeLbl setText:[NSString stringWithFormat:@"%d", app.badgeCount]];
-//                                
-//                                
+//
+//
 //                            }
 //                            else{
 //                                [badgeLbl setHidden:YES];
 //                            }
-//                            
-//                            
+//
+//
 //                        }
-//                    
+//
 //                        else{
-//                            
-//                            
+//
+//
 //                        }
-//                    
-//                    
-//                    
-//                    
+//
+//
+//
+//
 //                }
-//                
-//                
+//
+//
 //            }
-//            
-//            
+//
+//
 //        }];
-//        
-//        
+//
+//
 //        [task resume];
-//        
-//        
+//
+//
 //    }
-//    
+//
 //    else{
-//        
-//        
+//
+//
 //        [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
-//        
-//        
-//        
+//
+//
+//
 //    }
-//    
+//
 //}
 
 //-(void)writeClicked
 //{
-//    
+//
 //    ADUserListViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"ADUser"];
-//    
-//    
-//    
+//
+//
+//
 //    [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
 //}
 //
 //
 //-(void)profileClicked
 //{
-//    
+//
 //    ADUserProfileViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"ADProfile"];
-//    
+//
 //    VC.isFromProfile=true;
-//    
+//
 //    [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
-//    
-//    
+//
+//
 //}
 //
 //-(void)notifyClicked
 //{
 //    ADNotificationViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"ADNotification"];
-//    
-//    
-//    
+//
+//
+//
 //    if([self networkAvailable])
 //    {
-//        
-//        
-//        
+//
+//
+//
 //        [SVProgressHUD showWithStatus:@"Please Wait"];
-//        
-//        
+//
+//
 //        //  AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
 //        //
-//        
+//
 //        NSURL *url=[NSURL URLWithString:[NSString stringWithFormat:@"%@batchcountclear_control",GLOBALAPI]];
-//        
-//        
-//        
-//        
+//
+//
+//
+//
 //        // configure the request
-//        
+//
 //        NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
 //        [request setHTTPMethod:@"POST"];
-//        
-//        
-//        
+//
+//
+//
 //        //        NSString *boundary = @"---------------------------14737809831466499882746641449";
 //        //        NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@", boundary];
 //        //        [request addValue:contentType forHTTPHeaderField:@"Content-Type"];
-//        
+//
 //        NSString *sendData = @"authtoken=";
 //        sendData = [sendData stringByAppendingString:[NSString stringWithFormat:@"%@", app.authToken]];
-//        
-//        
+//
+//
 //        [request setValue:@"gzip" forHTTPHeaderField:@"Accept-Encoding"];
-//        
+//
 //        NSMutableData *theBodyData = [NSMutableData data];
-//        
+//
 //        theBodyData = [[sendData dataUsingEncoding:NSUTF8StringEncoding] mutableCopy];
-//        
-//        
+//
+//
 //        //  self.session = [NSURLSession sharedSession];  // use sharedSession or create your own
-//        
+//
 //        session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
-//        
+//
 //        NSURLSessionTask *task = [session uploadTaskWithRequest:request fromData:theBodyData completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
 //            if (error) {
 //                NSLog(@"error = %@", error);
-//                
+//
 //                return;
 //            }
-//            
+//
 //            if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
 //                NSError *jsonError;
 //                NSDictionary *response = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
-//                
-//                
-//                
-//                
-//                
-//                
+//
+//
+//
+//
+//
+//
 //                if (jsonError) {
 //                    // Error Parsing JSON
-//                    
+//
 //                    NSString *responseString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-//                    
+//
 //                    NSLog(@"response = %@",responseString);
-//                    
+//
 //                    [SVProgressHUD showInfoWithStatus:@"some error occured"];
-//                    
+//
 //                } else {
 //                    // Success Parsing JSON
 //                    // Log NSDictionary response:
 //                    NSLog(@"result = %@",response);
-//                    
+//
 //                    if ([[response objectForKey:@"status_code"]intValue]==406) {
-//                        
+//
 //                        app.userId=@"";
-//                        
+//
 //                        app.authToken=@"";
-//                        
+//
 //                        NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
 //                        [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
-//                        
-//                        
-//                        
+//
+//
+//
 //                        ADLoginViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"ADLogin"];
 //                        VC.forcedToLogin=true;
 //                        [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
-//                        
+//
 //                    }
 //                    else
-//                        
+//
 //                        if ([[response objectForKey:@"status_code"]intValue]==200) {
-//                            
+//
 //                            [SVProgressHUD dismiss];
-//                            
+//
 //                            app.badgeCount=[[response objectForKey:@"batchcount"]intValue];
-//                            
+//
 //                        }
-//                    
+//
 //                        else{
-//                            
-//                            
+//
+//
 //                        }
-//                    
-//                    
-//                    
-//                    
+//
+//
+//
+//
 //                }
-//                
-//                
+//
+//
 //            }
-//            
-//            
+//
+//
 //        }];
-//        
-//        
+//
+//
 //        [task resume];
-//        
-//        
+//
+//
 //    }
-//    
+//
 //    else{
-//        
-//        
+//
+//
 //        [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
-//        
-//        
-//        
+//
+//
+//
 //    }
-//    
-//    
-//    
-//    
-//    
+//
+//
+//
+//
+//
 //    [badgeLbl setHidden:YES];
-//    
-//    
+//
+//
 //    [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
 //}
 
 //-(void)chatClicked
 //{
-//    
+//
 //    ADMessageListViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"ADmessageList"];
-//    
+//
 //    [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
 //}
 
@@ -1532,8 +1566,8 @@
 
 //-(void)searchClicked
 //{
-//    
-//    
+//
+//
 //    //    if ([self respondsToSelector:@selector(setNeedsStatusBarAppearanceUpdate)]) {
 //    //        // iOS 7
 //    //        [self prefersStatusBarHidden];
@@ -1543,36 +1577,36 @@
 //    //        [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
 //    //    }
 //    //
-//    
-//    
+//
+//
 //    [self addSearchBar:[headerView superview]];
-//    
-//    
+//
+//
 //    searchBar=(UISearchBar *)[[headerView superview] viewWithTag:50];
-//    
+//
 //    [searchBar setDelegate:self];
-//    
-//    
+//
+//
 //    NSString *class=[NSString stringWithFormat:@"%@",[self.navigationController.visibleViewController class]];
-//    
+//
 //    if ([class isEqualToString:@"EIHomeViewController"]) {
-//        
+//
 //        [searchBar setPlaceholder:@"Search by Name or post text"];
-//        
-//        
+//
+//
 //    }
 //    else   if ([class isEqualToString:@"EIPeopleViewController"]) {
-//        
+//
 //        [searchBar setPlaceholder:@"Search by name"];
 //    }
-//    
+//
 //    searchBar.showsCancelButton=YES;
 //    [[UITextField appearanceWhenContainedIn:[searchBar class], nil] setDefaultTextAttributes:@{
 //                                                                                               NSFontAttributeName: [UIFont fontWithName:RobotoMedium size:[self getFontSize:13.0]], }];
-//    
+//
 //    [searchBar becomeFirstResponder];
-//    
-//    
+//
+//
 //}
 -(void)addClicked
 {
@@ -1587,12 +1621,7 @@
     
 }
 
--(void)backClicked
-{
-    
-    [self POPViewController];
-    
-}
+
 
 
 
@@ -1600,7 +1629,7 @@
 
 //- (void)tabClicked:(UIButton *)btn
 //{
-//    
+//
 //    //    [_homeView setBackgroundColor:THEMECOLOUR];
 //    //
 //    //    [_homeImg setImage:[UIImage imageNamed:@"homeIcon"]];
@@ -1625,67 +1654,67 @@
 //    //
 //    //    [_searchImg setImage:[UIImage imageNamed:@"search"]];
 //    //
-//    
-//    
-//    
-//    
-//    
+//
+//
+//
+//
+//
 //    NSString *class=[NSString stringWithFormat:@"%@",[self.navigationController.visibleViewController class]];
-//    
-//    
-//    
-//    
+//
+//
+//
+//
 //    if (btn.tag==1) {
-//        
-//        
-//        
+//
+//
+//
 //        if (![class isEqualToString:@"ADHomeViewController"]) {
-//            
-//            
-//            
-//            
+//
+//
+//
+//
 //            ADHomeViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"ADHome"];
 //            [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
 //        }
 //        //          [_homeView setBackgroundColor:[UIColor whiteColor]];
 //        //        [_homeImg setImage:[UIImage imageNamed:@"homeIcon1"]];
-//        
-//        
+//
+//
 //    }
 //    else if (btn.tag==2) {
-//        
+//
 //        DebugLog(@"Two clicked");
 //        if (![class isEqualToString:@"ADEventsViewController"]) {
-//            
+//
 //            ADEventsViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"ADEvents"];
 //            [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
 //        }
-//        
+//
 //        //         [_eventView setBackgroundColor:[UIColor whiteColor]];
 //        //
 //        //        [_eventImg setImage:[UIImage imageNamed:@"eventIcon1"]];
-//        
-//        
+//
+//
 //    }
 //    else if (btn.tag==3) {
-//        
+//
 //        if (![class isEqualToString:@"ADCreateEventViewController"]) {
-//            
+//
 //            ADCreateEventViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"ADCreate"];
 //            [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
 //        }
-//        
-//        
+//
+//
 //        //        [_locationview setBackgroundColor:[UIColor whiteColor]];
 //        //
 //        //        [_locationImg setImage:[UIImage imageNamed:@"location1"]];
 //    }
 //    else if (btn.tag==4) {
-//        
+//
 //        DebugLog(@"Four clicked");
-//        
+//
 //        if (![class isEqualToString:@"ADFeaturedViewController"]) {
-//            
+//
 //            ADFeaturedViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"ADFeatured"];
 //            [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
 //        }
@@ -1693,80 +1722,80 @@
 //        //        [_trophyView setBackgroundColor:[UIColor whiteColor]];
 //        //
 //        //        [_trophyImg setImage:[UIImage imageNamed:@"trophy1"]];
-//        
+//
 //    }
 //    else if (btn.tag==5) {
-//        
+//
 //        DebugLog(@"Five clicked");
-//        
+//
 //        if (![class isEqualToString:@"ADSearchViewController"]) {
-//            
-//            
+//
+//
 //            UIAlertController *alertController = [UIAlertController
 //                                                  alertControllerWithTitle:@"What do you want to search?"
 //                                                  message:nil
 //                                                  preferredStyle:UIAlertControllerStyleActionSheet];
-//            
-//            
-//            
-//            
-//            
-//            
-//            
+//
+//
+//
+//
+//
+//
+//
 //            UIAlertAction *userAction = [UIAlertAction
 //                                         actionWithTitle:NSLocalizedString(@"Users", @"OK action")
 //                                         style:UIAlertActionStyleDefault
 //                                         handler:^(UIAlertAction *action)
 //                                         {
-//                                             
-//                                             
+//
+//
 //                                             ADSearchViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"ADSearch"];
-//                                             
-//                                             
+//
+//
 //                                             [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
-//                                             
-//                                             
+//
+//
 //                                         }];
-//            
-//            
+//
+//
 //            [alertController addAction:userAction];
-//            
+//
 //            UIAlertAction *eventAction = [UIAlertAction
 //                                          actionWithTitle:NSLocalizedString(@"Events", @"OK action")
 //                                          style:UIAlertActionStyleDefault
 //                                          handler:^(UIAlertAction *action)
 //                                          {
-//                                              
-//                                              
+//
+//
 //                                              ADSearchViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"ADSearch"];
 //                                              VC.searchType=1;
 //                                              [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
-//                                              
-//                                              
+//
+//
 //                                          }];
-//            
-//            
+//
+//
 //            [alertController addAction:eventAction];
-//            
+//
 //            UIAlertAction *cancelAction = [UIAlertAction
 //                                           actionWithTitle:@"Cancel"
 //                                           style:UIAlertActionStyleCancel
 //                                           handler:^(UIAlertAction *action)
 //                                           {
 //                                               DebugLog(@"Cancel action");
-//                                               
-//                                               
-//                                               
-//                                               
+//
+//
+//
+//
 //                                           }];
-//            
+//
 //            [alertController addAction:cancelAction];
-//            
+//
 //            if (IDIOM==IPAD) {
-//                
-//                
-//                
-//                
+//
+//
+//
+//
 //                UIPopoverPresentationController *popPresenter = [alertController
 //                                                                 popoverPresentationController];
 //                popPresenter.sourceView = _searchBtn;
@@ -1775,21 +1804,21 @@
 //            }
 //            else{
 //                [self presentViewController:alertController animated:YES completion:nil];
-//                
+//
 //            }
-//            
-//            
-//            
-//            
-//            
+//
+//
+//
+//
+//
 //        }
-//        
-//        
+//
+//
 //        //        [_searchView setBackgroundColor:[UIColor whiteColor]];
 //        //
 //        //        [_searchImg setImage:[UIImage imageNamed:@"search1"]];
 //    }
-//    
+//
 //    //    else if (btn.tag==6) {
 //    //
 //    //        DebugLog(@"Six clicked");
@@ -2521,21 +2550,21 @@
 }
 
 //- (NSString *)getIPAddress {
-//    
+//
 //    NSString *address = @"error";
 //    struct ifaddrs *interfaces = NULL;
 //    struct ifaddrs *temp_addr = NULL;
 //    int success = 0;
 //    // retrieve the current interfaces - returns 0 on success
 //    success = getifaddrs(&interfaces);
-//    
-//    
-//    
+//
+//
+//
 //    // ifa->ifa_netmask; // subnet mask
 //    // ifa->ifa_dstaddr; // broadcast address, NOT router address
-//    
-//    
-//    
+//
+//
+//
 //    if (success == 0) {
 //        // Loop through linked list of interfaces
 //        temp_addr = interfaces;
@@ -2545,22 +2574,22 @@
 //                if([[NSString stringWithUTF8String:temp_addr->ifa_name] isEqualToString:@"en0"]) {
 //                    // Get NSString from C String
 //                    address = [NSString stringWithUTF8String:inet_ntoa(((struct sockaddr_in *)temp_addr->ifa_addr)->sin_addr)];
-//                    
+//
 //                }
-//                
+//
 //            }
-//            
+//
 //            temp_addr = temp_addr->ifa_next;
 //        }
 //    }
 //    // Free memory
 //    freeifaddrs(interfaces);
-//    
-//    
-//    
-//    
+//
+//
+//
+//
 //    return address;
-//    
+//
 //}
 
 - (NSURL *)applicationDocumentsDirectory {
@@ -2670,50 +2699,50 @@
         leftmenu = [JMLeftMenuView leftmenu];
         leftmenu.SideDelegate=self;
         
-//        NSIndexPath *indexpath=[NSIndexPath indexPathForRow:leftmenurowindex inSection:0];
-//        LeftMenuCell * cell = [leftmenu.LeftTable cellForRowAtIndexPath:indexpath];
-//        [[leftmenu.LeftTable cellForRowAtIndexPath:indexpath] setBackgroundColor:UIColorFromRGB(0x636F7C)];
-//        
-//        if (leftmenurowindex==0)
-//        {
-//            cell.menuImg.image = [UIImage imageNamed:@"Add Property-1"];
-//        }
-//        if (leftmenurowindex==1)
-//        {
-//            cell.menuImg.image = [UIImage imageNamed:@"wallet-2"];
-//        }
-//        else if (leftmenurowindex==2)
-//        {
-//            cell.menuImg.image = [UIImage imageNamed:@"Explore"];
-//        }
-//        else if (leftmenurowindex==3)
-//        {
-//            cell.menuImg.image = [UIImage imageNamed:@"LocationSelected"];
-//        }
-//        else if (leftmenurowindex==4)
-//        {
-//            cell.menuImg.image = [UIImage imageNamed:@"ConnectSelected"];
-//        }
-//        else if (leftmenurowindex==5)
-//        {
-//            cell.menuImg.image = [UIImage imageNamed:@"New Campaign-1"];
-//        }
-//        else if (leftmenurowindex==6)
-//        {
-//            cell.menuImg.image = [UIImage imageNamed:@"star-1"];
-//        }
-//        else if (leftmenurowindex==7)
-//        {
-//            cell.menuImg.image = [UIImage imageNamed:@"like-2"];
-//        }
-//        else if (leftmenurowindex==8)
-//        {
-//            cell.menuImg.image = [UIImage imageNamed:@"Combined Shape Copy-1"];
-//        }
-//        else if (leftmenurowindex==9)
-//        {
-//            cell.menuImg.image = [UIImage imageNamed:@"Log out-1"];
-//        }
+        //        NSIndexPath *indexpath=[NSIndexPath indexPathForRow:leftmenurowindex inSection:0];
+        //        LeftMenuCell * cell = [leftmenu.LeftTable cellForRowAtIndexPath:indexpath];
+        //        [[leftmenu.LeftTable cellForRowAtIndexPath:indexpath] setBackgroundColor:UIColorFromRGB(0x636F7C)];
+        //
+        //        if (leftmenurowindex==0)
+        //        {
+        //            cell.menuImg.image = [UIImage imageNamed:@"Add Property-1"];
+        //        }
+        //        if (leftmenurowindex==1)
+        //        {
+        //            cell.menuImg.image = [UIImage imageNamed:@"wallet-2"];
+        //        }
+        //        else if (leftmenurowindex==2)
+        //        {
+        //            cell.menuImg.image = [UIImage imageNamed:@"Explore"];
+        //        }
+        //        else if (leftmenurowindex==3)
+        //        {
+        //            cell.menuImg.image = [UIImage imageNamed:@"LocationSelected"];
+        //        }
+        //        else if (leftmenurowindex==4)
+        //        {
+        //            cell.menuImg.image = [UIImage imageNamed:@"ConnectSelected"];
+        //        }
+        //        else if (leftmenurowindex==5)
+        //        {
+        //            cell.menuImg.image = [UIImage imageNamed:@"New Campaign-1"];
+        //        }
+        //        else if (leftmenurowindex==6)
+        //        {
+        //            cell.menuImg.image = [UIImage imageNamed:@"star-1"];
+        //        }
+        //        else if (leftmenurowindex==7)
+        //        {
+        //            cell.menuImg.image = [UIImage imageNamed:@"like-2"];
+        //        }
+        //        else if (leftmenurowindex==8)
+        //        {
+        //            cell.menuImg.image = [UIImage imageNamed:@"Combined Shape Copy-1"];
+        //        }
+        //        else if (leftmenurowindex==9)
+        //        {
+        //            cell.menuImg.image = [UIImage imageNamed:@"Log out-1"];
+        //        }
         
         
         
@@ -2802,8 +2831,33 @@
         
     }
 }
-
-
+#pragma - mark current/ top view controller check
+- (UIViewController*)topViewController
+{
+    return [self topViewControllerWithRootViewController:[UIApplication sharedApplication].keyWindow.rootViewController];
+}
+- (UIViewController*)topViewControllerWithRootViewController:(UIViewController*)rootViewController
+{
+    if ([rootViewController isKindOfClass:[UITabBarController class]]) {
+        UITabBarController* tabBarController = (UITabBarController*)rootViewController;
+        return [self topViewControllerWithRootViewController:tabBarController.selectedViewController];
+    } else if ([rootViewController isKindOfClass:[UINavigationController class]]) {
+        UINavigationController* navigationController = (UINavigationController*)rootViewController;
+        return [self topViewControllerWithRootViewController:navigationController.visibleViewController];
+    } else if (rootViewController.presentedViewController) {
+        UIViewController* presentedViewController = rootViewController.presentedViewController;
+        return [self topViewControllerWithRootViewController:presentedViewController];
+    } else {
+        return rootViewController;
+    }
+}
+#pragma - mark Back click
+-(void)BackClicked
+{
+    
+    [self POPViewController];
+    
+}
 /*
  #pragma mark - Navigation
  

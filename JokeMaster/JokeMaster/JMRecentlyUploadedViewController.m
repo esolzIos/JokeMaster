@@ -17,6 +17,17 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    ChooseCategoryLabel.frame=CGRectMake(ChooseCatImage.frame.origin.x-ChooseCategoryLabel.frame.size.width-6, ChooseCategoryLabel.frame.origin.y, ChooseCategoryLabel.frame.size.width, ChooseCategoryLabel.frame.size.height);
+    
+    if (IsIphone6)
+    {
+        RecentVideoCollectionView.frame=CGRectMake(RecentVideoCollectionView.frame.origin.x, RecentVideoCollectionView.frame.origin.y+10, RecentVideoCollectionView.frame.size.width, RecentVideoCollectionView.frame.size.height);
+    }
+    else if (IsIphone6plus)
+    {
+        RecentVideoCollectionView.frame=CGRectMake(RecentVideoCollectionView.frame.origin.x, RecentVideoCollectionView.frame.origin.y+16, RecentVideoCollectionView.frame.size.width, RecentVideoCollectionView.frame.size.height);
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -34,8 +45,19 @@
                   layout:(UICollectionViewLayout *)collectionViewLayout
   sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (IsIphone5)
+    {
+        return CGSizeMake(self.view.frame.size.width/3,90);
+    }
+    else if (IsIphone6)
+    {
+        return CGSizeMake(self.view.frame.size.width/3,104);
+    }
+    else
+    {
+        return CGSizeMake(self.view.frame.size.width/3,112);
+    }
     
-    return CGSizeMake(self.view.frame.size.width/3,100);
 }
 
 
@@ -49,7 +71,8 @@
     
     JMRecentUploadedCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
     
-    
+    cell.VideoThumpnailImage.layer.cornerRadius=12.0;
+    cell.VideoThumpnailImage.clipsToBounds=YES;
     
     //   NSLog(@"%@",[arrCategory objectAtIndex:indexPath.row]);
     
@@ -74,15 +97,15 @@
     
 }
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
+#pragma mark - Choose Category
 - (IBAction)ChooseCategoryTapped:(id)sender {
 }
 @end
