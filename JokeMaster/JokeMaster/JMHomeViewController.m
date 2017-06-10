@@ -7,7 +7,7 @@
 //
 
 #import "JMHomeViewController.h"
-
+#import "JMRecentlyUploadedViewController.h"
 @interface JMHomeViewController ()
 
 @end
@@ -18,6 +18,24 @@
     [super viewDidLoad];
     
     [self setRoundCornertoView:_videoThumb withBorderColor:[UIColor clearColor] WithRadius:0.15];
+    
+    
+    [_jokeTitle setFont:[UIFont fontWithName:_jokeTitle.font.fontName size:[self getFontSize:_jokeTitle.font.pointSize]]];
+    
+    [_categoryBtnlbl setFont:[UIFont fontWithName:_categoryBtnlbl.font.fontName size:[self getFontSize:_categoryBtnlbl.font.pointSize]]];
+    
+    [_recentBtn.titleLabel setFont:[UIFont fontWithName:_recentBtn.titleLabel.font.fontName size:[self getFontSize:_recentBtn.titleLabel.font.pointSize]]];
+    
+    
+    [_jokeTitle setText:AMLocalizedString(@"JOKE OF THE DAY", nil)];
+    
+    [_categoryBtnlbl setText:AMLocalizedString(@"CHOOSE CATEGORY", nil)];
+    
+    [_recentBtn setTitle:AMLocalizedString(@"RECENTLY UPLOADED VIDEOS", nil) forState:UIControlStateNormal];
+    
+    
+    
+    
     
     // Do any additional setup after loading the view.
 }
@@ -87,5 +105,11 @@
     
     [_tutorialView setHidden:YES];
     
+}
+- (IBAction)recentClicked:(id)sender {
+    
+    JMRecentlyUploadedViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMRecentlyUploadedViewController"];
+    
+    [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
 }
 @end

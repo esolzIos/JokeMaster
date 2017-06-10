@@ -23,5 +23,7 @@
 @property (strong, nonatomic) IBOutlet UIView *tutorialView;
 @property (strong, nonatomic) IBOutlet UIButton *tutorialBtn;
 - (IBAction)tutorialClicked:(id)sender;
+@property (strong, nonatomic) IBOutlet UIButton *recentBtn;
+- (IBAction)recentClicked:(id)sender;
 
 @end

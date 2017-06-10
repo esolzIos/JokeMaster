@@ -18,7 +18,7 @@
 "OK" = "בסדר";
 "Alert" = "עֵרָנִי";
 "SIGN UP" = "הירשם";
-<<<<<<< HEAD
+
 "LOG IN" ="התחברות";
 "or login with" = "או להתחבר עם אלה";
 "Don't have an account? Sign Up" = "אין לך חשבון? הירשמו";
@@ -32,7 +32,7 @@
 "Enter Name" = "נא להזין שם";
 "Enter Valid Email Address" = "הזן כתובת אימייל תקינה";
 "Select Language" = "בחר שפה";
-=======
+
 "Enter Name" = "הכנס שם";
 "Enter Email Address" = "הזן כתובת דואל";
 "Enter Valid Email Address" = "הזן כתובת דואל חוקית";
@@ -43,5 +43,9 @@
 "Password and confirm password should be same." = "סיסמה ואישור הסיסמה צריך להיות זהה.";
 "Camera" = "מַצלֵמָה";
 "Photo Library" = "ספריית תמונות";
+"Facebook"="פייסבוק";
+"Google"="גוגל";
+"JOKE OF THE DAY" ="בדיחה של היום";
+"CHOOSE CATEGORY" ="בחר קטגוריה";
+"RECENTLY UPLOADED VIDEOS" ="סרטונים שהועלו לאחרונה";
 
->>>>>>> 9c3e99b61110ae32946626af52c83ff22f163b61

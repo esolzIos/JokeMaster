@@ -7,6 +7,7 @@
 //
 
 #import "JMLoginViewController.h"
+#import "JMHomeViewController.h"
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 #import <GoogleSignIn/GoogleSignIn.h>
@@ -30,6 +31,11 @@ fbM=[[FBSDKLoginManager alloc]init];
     [_userEmail setFont:[UIFont fontWithName:_userEmail.font.fontName size:[self getFontSize:_userEmail.font.pointSize]]];
      [_password setFont:[UIFont fontWithName:_password.font.fontName size:[self getFontSize:_password.font.pointSize]]];
      [_loginBtn.titleLabel setFont:[UIFont fontWithName:_loginBtn.titleLabel.font.fontName size:[self getFontSize:_loginBtn.titleLabel.font.pointSize]]];
+    
+         [_fbBtn.titleLabel setFont:[UIFont fontWithName:_fbBtn.titleLabel.font.fontName size:[self getFontSize:_fbBtn.titleLabel.font.pointSize]]];
+    
+         [_googleBtn.titleLabel setFont:[UIFont fontWithName:_googleBtn.titleLabel.font.fontName size:[self getFontSize:_googleBtn.titleLabel.font.pointSize]]];
+    
      [_infoTxt setFont:[UIFont fontWithName:_infoTxt.font.fontName size:[self getFontSize:_infoTxt.font.pointSize]]];
     
     _userEmail.attributedPlaceholder = [[NSAttributedString alloc] initWithString:AMLocalizedString(@"Email", nil) attributes:@{NSForegroundColorAttributeName: [UIColor whiteColor]}];
@@ -38,6 +44,10 @@ fbM=[[FBSDKLoginManager alloc]init];
 
     
     [_loginBtn setTitle:AMLocalizedString(@"LOG IN", nil) forState:UIControlStateNormal];
+    
+      [_fbBtn setTitle:AMLocalizedString(@"Facebook", nil) forState:UIControlStateNormal];
+    
+      [_googleBtn setTitle:AMLocalizedString(@"Google", nil) forState:UIControlStateNormal];
     
     [_infoTxt setText:AMLocalizedString(@"or login with", nil)];
     
@@ -129,9 +139,12 @@ fbM=[[FBSDKLoginManager alloc]init];
 
 - (IBAction)loginClicked:(id)sender {
     
-    JMLoginViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMRecentlyUploadedViewController"];
+    JMHomeViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMHomeViewController"];
     
     [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
+
+    
+  
 }
 - (IBAction)fbClicked:(id)sender {
     
