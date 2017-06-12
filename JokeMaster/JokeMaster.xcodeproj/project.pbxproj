@@ -19,6 +19,7 @@
 		0C6F9E311EE14A7B005D31A0 /* JMChooseCountryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C6F9E301EE14A7B005D31A0 /* JMChooseCountryViewController.m */; };
 		0C6F9E361EE14E84005D31A0 /* CountryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C6F9E351EE14E84005D31A0 /* CountryCell.m */; };
 		0C91CFBD1EEE5B7A00123303 /* JMCategoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C91CFBC1EEE5B7A00123303 /* JMCategoryCell.m */; };
+		0C91CFC31EEE92F400123303 /* JMJokesCategoryVideoListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C91CFC21EEE92F400123303 /* JMJokesCategoryVideoListViewController.m */; };
 		0CE2FB481EE190E50031C0E6 /* JMRegistrationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CE2FB471EE190E50031C0E6 /* JMRegistrationViewController.m */; };
 		B0779D701EEBD2D10065FECD /* Comic_Book.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B0779D6F1EEBD2D10065FECD /* Comic_Book.ttf */; };
 		B07ABAC11EE527050011DD57 /* Temp.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B07ABAC01EE527050011DD57 /* Temp.storyboard */; };
@@ -96,6 +97,8 @@
 		0C6F9E351EE14E84005D31A0 /* CountryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CountryCell.m; sourceTree = "<group>"; };
 		0C91CFBB1EEE5B7A00123303 /* JMCategoryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMCategoryCell.h; sourceTree = "<group>"; };
 		0C91CFBC1EEE5B7A00123303 /* JMCategoryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMCategoryCell.m; sourceTree = "<group>"; };
+		0C91CFC11EEE92F400123303 /* JMJokesCategoryVideoListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMJokesCategoryVideoListViewController.h; sourceTree = "<group>"; };
+		0C91CFC21EEE92F400123303 /* JMJokesCategoryVideoListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMJokesCategoryVideoListViewController.m; sourceTree = "<group>"; };
 		0CE2FB461EE190E50031C0E6 /* JMRegistrationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMRegistrationViewController.h; sourceTree = "<group>"; };
 		0CE2FB471EE190E50031C0E6 /* JMRegistrationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMRegistrationViewController.m; sourceTree = "<group>"; };
 		B0739C741EE6891800A22C22 /* he */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = he; path = he.lproj/Main.strings; sourceTree = "<group>"; };
@@ -346,6 +349,8 @@
 				0C5827481EE9205600480E19 /* JMHomeViewController.m */,
 				0C3E27701EEBBFF70075B104 /* JMRecentlyUploadedViewController.h */,
 				0C3E27711EEBBFF70075B104 /* JMRecentlyUploadedViewController.m */,
+				0C91CFC11EEE92F400123303 /* JMJokesCategoryVideoListViewController.h */,
+				0C91CFC21EEE92F400123303 /* JMJokesCategoryVideoListViewController.m */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -537,6 +542,7 @@
 				B0A32B431EE1292F0044D443 /* AppDelegate.m in Sources */,
 				0C5827491EE9205600480E19 /* JMHomeViewController.m in Sources */,
 				B07ABAC71EE540F90011DD57 /* JMLoginViewController.m in Sources */,
+				0C91CFC31EEE92F400123303 /* JMJokesCategoryVideoListViewController.m in Sources */,
 				0C48BFBB1EE82EEF00CD1C2A /* JMHeaderView.m in Sources */,
 				B0A32B401EE1292F0044D443 /* main.m in Sources */,
 				B0A32B901EE131680044D443 /* SVProgressHUD.m in Sources */,

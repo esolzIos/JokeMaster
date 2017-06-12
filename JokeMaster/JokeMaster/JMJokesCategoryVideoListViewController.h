@@ -1,16 +1,16 @@
 //
-//  JMRecentlyUploadedViewController.h
+//  JMJokesCategoryVideoListViewController.h
 //  JokeMaster
 //
-//  Created by priyanka on 10/06/17.
+//  Created by priyanka on 12/06/17.
 //  Copyright © 2017 esolz. All rights reserved.
 //
 
 #import "JMGlobalMethods.h"
 #import "JMCategoryCell.h"
 #import "JMRecentUploadedCollectionViewCell.h"
-#import "JMJokesCategoryVideoListViewController.h"
-@interface JMRecentlyUploadedViewController : JMGlobalMethods<UICollectionViewDataSource,UICollectionViewDelegate>
+
+@interface JMJokesCategoryVideoListViewController : JMGlobalMethods<UICollectionViewDataSource,UICollectionViewDelegate>
 {
     float MenuViewY;
     NSMutableArray *CategoryArray;
@@ -31,5 +31,7 @@
 - (IBAction)CategoryCrossTapped:(id)sender;
 
 @property (weak, nonatomic) IBOutlet UITableView *CategoryTable;
+@property (weak, nonatomic) IBOutlet UIButton *RecentlyUploadedBtn;
+- (IBAction)RecentlyUploadedVideoTapped:(id)sender;
 
 @end

@@ -89,6 +89,19 @@
         [HeaderView.BackButton addTarget:self action:@selector(BackClicked) forControlEvents:UIControlEventTouchUpInside];
         
     }
+    else if ([CurrentViewController isEqualToString:@"JMJokesCategoryVideoListViewController"])
+    {
+        // leftmenurowindex=2;
+        
+        HeaderView.logoImage.hidden=YES;
+        HeaderView.menuView.hidden=YES;
+        
+        HeaderView.RecentUploadImage.hidden=NO;
+        HeaderView.BackView.hidden=NO;
+        
+        [HeaderView.BackButton addTarget:self action:@selector(BackClicked) forControlEvents:UIControlEventTouchUpInside];
+        
+    }
     
     
     

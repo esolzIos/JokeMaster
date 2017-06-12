@@ -1,18 +1,18 @@
 //
-//  JMRecentlyUploadedViewController.m
+//  JMJokesCategoryVideoListViewController.m
 //  JokeMaster
 //
-//  Created by priyanka on 10/06/17.
+//  Created by priyanka on 12/06/17.
 //  Copyright © 2017 esolz. All rights reserved.
 //
 
-#import "JMRecentlyUploadedViewController.h"
+#import "JMJokesCategoryVideoListViewController.h"
 
-@interface JMRecentlyUploadedViewController ()
+@interface JMJokesCategoryVideoListViewController ()
 
 @end
 
-@implementation JMRecentlyUploadedViewController
+@implementation JMJokesCategoryVideoListViewController
 @synthesize ChooseCatImage,ChooseCategoryBtn,ChooseCategoryView,ChooseCategoryLabel,MainScroll,RecentVideoCollectionView,MenuBaseView,TransparentView,CategoryTable,CrossView;
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -56,7 +56,7 @@
 {
     if (IsIphone5)
     {
-        return CGSizeMake(self.view.frame.size.width/3,90);
+        return CGSizeMake(self.view.frame.size.width/3,105);
     }
     else if (IsIphone6)
     {
@@ -119,7 +119,7 @@
 {
     TransparentView.hidden=NO;
     MenuBaseView.hidden=NO;
- 
+    
     
     [UIView animateWithDuration:0.5
                           delay:0.1
@@ -130,30 +130,31 @@
                      }
                      completion:^(BOOL finished){
                      }];
-  
+    
 }
 #pragma mark - Category view hide
 - (IBAction)CategoryCrossTapped:(id)sender
 {
+    
     [UIView animateWithDuration:0.5
                           delay:0.1
                         options:(UIViewAnimationOptions) UIViewAnimationCurveEaseIn
                      animations:^{
                          TransparentView.frame = CGRectMake(0, self.view.frame.size.height, TransparentView.frame.size.width, TransparentView.frame.size.height);
                          MenuBaseView.frame = CGRectMake(0, self.view.frame.size.height, MenuBaseView.frame.size.width, MenuBaseView.frame.size.height);
+                        
                      }
-                     completion:^(BOOL finished)
-                     {
-                         JMJokesCategoryVideoListViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMJokesCategoryVideoListViewController"];
+                     completion:^(BOOL finished){
                          
-                         [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
+                         
+                        
                      }];
 }
 #pragma mark - UITableView Delegates
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section;
 {
-     return [CategoryArray count];
+    return [CategoryArray count];
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -190,14 +191,14 @@
 {
     
     return 40;
-//    if (IsIphone5 || IsIphone4)
-//    {
-//        return 50;
-//    }
-//    else
-//    {
-//        return 60;
-//    }
+    //    if (IsIphone5 || IsIphone4)
+    //    {
+    //        return 50;
+    //    }
+    //    else
+    //    {
+    //        return 60;
+    //    }
     
 }
 
@@ -228,5 +229,17 @@
     
     
     
+}
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
+
+- (IBAction)RecentlyUploadedVideoTapped:(id)sender {
 }
 @end
