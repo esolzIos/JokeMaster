@@ -194,7 +194,7 @@
     
     LocalizationSetLanguage([codeArr objectAtIndex:rowSelected]);
     
-    //   [[NSUserDefaults standardUserDefaults]setObject:[codeArr objectAtIndex:rowSelected] forKey:@"language"];
+    [[NSUserDefaults standardUserDefaults]setObject:[codeArr objectAtIndex:rowSelected] forKey:@"language"];
     [_pickerView setHidden:YES];
 }
 - (IBAction)cancelClicked:(id)sender {
