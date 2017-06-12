@@ -10,7 +10,10 @@
 #import "JMLoginViewController.h"
 @interface JMChooseCountryViewController ()
 {
-    NSMutableArray *langArr,*codeArr,*engArr,*hindiArr,*hebrewArr;
+    NSMutableArray *langArr,*codeArr,*engArr,*hindiArr,*hebrewArr,*flagArr;
+    
+    NSMutableDictionary *langDict;
+    
     
     int rowSelected;
     
@@ -24,15 +27,27 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    langDict=[[NSMutableDictionary alloc]init];
+    
+    CountryArray=[[NSMutableArray alloc]init];
+    
+    
+    
     langArr=[[NSMutableArray alloc] initWithObjects:AMLocalizedString(@"English", nil),AMLocalizedString(@"Hebrew", nil),AMLocalizedString(@"Hindi", nil), nil];
     
     codeArr=[[NSMutableArray alloc] initWithObjects:@"en",@"he",@"hi", nil];
     
     engArr=[[NSMutableArray alloc] initWithObjects:@"UNITED STATES",@"UNITED KINGDOM",@"INDIA", nil];
     
-     engArr=[[NSMutableArray alloc] initWithObjects:@"INDIA",@"PAKISTAN", nil];
+     hindiArr=[[NSMutableArray alloc] initWithObjects:@"INDIA",@"PAKISTAN", nil];
     
       hebrewArr=[[NSMutableArray alloc] initWithObjects:@"ISRAEL", nil];
+    
+    [langDict setObject:engArr forKey:@"en"];
+    
+    [langDict setObject:hebrewArr forKey:@"he"] ;
+    
+     [langDict setObject:hindiArr forKey:@"hi"] ;
     
     [_LanguageLabel setText:AMLocalizedString(@"Choose Language", nil)];
     
@@ -45,8 +60,8 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section;
 {
-   // return [CountryArray count];
-    return 3;
+    return [CountryArray count];
+
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -83,6 +98,13 @@
 
 -(void) tableView:(UITableView *)tableView willDisplayCell:(CountryCell *) cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
+
+    
+    
+        [cell.CountryImage setImage:[UIImage imageNamed:[CountryArray objectAtIndex:indexPath.row]]] ;
+    
+    [cell.CountryLabel setText:[[CountryArray objectAtIndex:indexPath.row]uppercaseString]];
     
     
 }
@@ -200,7 +222,13 @@
 //
 //    LocalizationSetLanguage([codeArr objectAtIndex:rowSelected]);
     
-    [[NSUserDefaults standardUserDefaults]setObject:[codeArr objectAtIndex:rowSelected] forKey:@"language"];
+ //   [[NSUserDefaults standardUserDefaults]setObject:[codeArr objectAtIndex:rowSelected] forKey:@"language"];
+    
+    CountryArray = [[langDict objectForKey:[codeArr objectAtIndex:rowSelected]] copy];
+    
+    [_CountryTable reloadData];
+    
+    
     [_pickerView setHidden:YES];
 }
 - (IBAction)cancelClicked:(id)sender {
