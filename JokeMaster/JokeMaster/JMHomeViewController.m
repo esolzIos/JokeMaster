@@ -19,6 +19,8 @@
     
     [self setRoundCornertoView:_videoThumb withBorderColor:[UIColor clearColor] WithRadius:0.15];
     
+        [self setRoundCornertoView:_optionView withBorderColor:[UIColor clearColor] WithRadius:0.15];
+    
     
     [_jokeTitle setFont:[UIFont fontWithName:_jokeTitle.font.fontName size:[self getFontSize:_jokeTitle.font.pointSize]]];
     
@@ -111,5 +113,25 @@
     JMRecentlyUploadedViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMRecentlyUploadedViewController"];
     
     [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
+}
+- (IBAction)jokeDetailClicked:(id)sender {
+    
+    [_optionView setHidden:NO];
+    
+}
+- (IBAction)ratingClicked:(id)sender {
+    
+}
+- (IBAction)likeClicked:(id)sender {
+    
+    [_optionView setHidden:YES];
+}
+- (IBAction)playClicked:(id)sender {
+    
+      [_optionView setHidden:YES];
+}
+- (IBAction)shareClicked:(id)sender {
+    
+      [_optionView setHidden:YES];
 }
 @end

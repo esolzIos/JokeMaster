@@ -25,5 +25,23 @@
 - (IBAction)tutorialClicked:(id)sender;
 @property (strong, nonatomic) IBOutlet UIButton *recentBtn;
 - (IBAction)recentClicked:(id)sender;
+@property (strong, nonatomic) IBOutlet UIButton *jokeDetailBtn;
+- (IBAction)jokeDetailClicked:(id)sender;
+@property (strong, nonatomic) IBOutlet UIButton *ratingBtn;
+- (IBAction)ratingClicked:(id)sender;
+@property (strong, nonatomic) IBOutlet UIView *optionView;
+@property (strong, nonatomic) IBOutlet UIView *transView;
+@property (strong, nonatomic) IBOutlet UIView *likeVIew;
+@property (strong, nonatomic) IBOutlet UIImageView *likeImage;
+@property (strong, nonatomic) IBOutlet UIButton *likeBtn;
+- (IBAction)likeClicked:(id)sender;
+@property (strong, nonatomic) IBOutlet UIView *playView;
+@property (strong, nonatomic) IBOutlet UIImageView *playImage;
+@property (strong, nonatomic) IBOutlet UIButton *playBtn;
+- (IBAction)playClicked:(id)sender;
+@property (strong, nonatomic) IBOutlet UIView *shareView;
+@property (strong, nonatomic) IBOutlet UIImageView *shareImg;
+@property (strong, nonatomic) IBOutlet UIButton *shareBtn;
+- (IBAction)shareClicked:(id)sender;
 
 @end

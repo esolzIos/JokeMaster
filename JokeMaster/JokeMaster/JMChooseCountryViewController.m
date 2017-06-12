@@ -191,8 +191,8 @@
     [_LanguageLabel setText:[langArr objectAtIndex:rowSelected]];
     
     DebugLog(@"%@",[codeArr objectAtIndex:rowSelected]);
-    
-    LocalizationSetLanguage([codeArr objectAtIndex:rowSelected]);
+//
+//    LocalizationSetLanguage([codeArr objectAtIndex:rowSelected]);
     
     //   [[NSUserDefaults standardUserDefaults]setObject:[codeArr objectAtIndex:rowSelected] forKey:@"language"];
     [_pickerView setHidden:YES];

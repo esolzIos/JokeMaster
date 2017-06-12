@@ -139,7 +139,10 @@ fbM=[[FBSDKLoginManager alloc]init];
 
 - (IBAction)loginClicked:(id)sender {
     
-    JMHomeViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMHomeViewController"];
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Temp" bundle: nil];
+
+    
+    JMHomeViewController *VC=[storyboard instantiateViewControllerWithIdentifier:@"JMHomeViewController"];
     
     [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
 
