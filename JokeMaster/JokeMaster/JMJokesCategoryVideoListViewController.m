@@ -40,6 +40,8 @@
     
     [RecentlyUploadedBtn.titleLabel setFont:[UIFont fontWithName:RecentlyUploadedBtn.titleLabel.font.fontName size:[self getFontSize:RecentlyUploadedBtn.titleLabel.font.pointSize]]];
     
+    [ChooseCategoryLabel setFont:[UIFont fontWithName:ChooseCategoryLabel.font.fontName size:[self getFontSize:ChooseCategoryLabel.font.pointSize]]];
+    
     [RecentlyUploadedBtn setTitle:AMLocalizedString(@"RECENTLY UPLOADED VIDEOS", nil) forState:UIControlStateNormal];
 }
 
@@ -64,11 +66,11 @@
     }
     else if (IsIphone6)
     {
-        return CGSizeMake(self.view.frame.size.width/3,104);
+        return CGSizeMake(self.view.frame.size.width/3,123);
     }
     else
     {
-        return CGSizeMake(self.view.frame.size.width/3,112);
+        return CGSizeMake(self.view.frame.size.width/3,135);
     }
     
 }
@@ -86,6 +88,8 @@
     
     cell.VideoThumpnailImage.layer.cornerRadius=12.0;
     cell.VideoThumpnailImage.clipsToBounds=YES;
+    
+    [cell.CategoryNameLabel setFont:[UIFont fontWithName:cell.CategoryNameLabel.font.fontName size:[self getFontSize:cell.CategoryNameLabel.font.pointSize]]];
     
     //   NSLog(@"%@",[arrCategory objectAtIndex:indexPath.row]);
     
@@ -171,14 +175,16 @@
     
     cell.CategoryLabel.text=[CategoryArray objectAtIndex:indexPath.row];
     
-    if ([[NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] valueForKey:@"language"]] isEqualToString:@"he"])
-    {
-        cell.CategoryLabel.textAlignment=NSTextAlignmentRight;
-    }
-    else
-    {
-        cell.CategoryLabel.textAlignment=NSTextAlignmentLeft;
-    }
+    [cell.CategoryLabel setFont:[UIFont fontWithName:cell.CategoryLabel.font.fontName size:[self getFontSize:cell.CategoryLabel.font.pointSize]]];
+    
+//    if ([[NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] valueForKey:@"language"]] isEqualToString:@"he"])
+//    {
+//        cell.CategoryLabel.textAlignment=NSTextAlignmentRight;
+//    }
+//    else
+//    {
+//        cell.CategoryLabel.textAlignment=NSTextAlignmentLeft;
+//    }
     
     cell.CheckImage.tag=indexPath.row+500;
     cell.CheckButton.tag=indexPath.row;

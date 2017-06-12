@@ -37,6 +37,8 @@
     MenuBaseView.frame = CGRectMake(0, self.view.frame.size.height, MenuBaseView.frame.size.width, MenuBaseView.frame.size.height);
     
     CategoryArray=[[NSMutableArray alloc] initWithObjects:@"LATEST",@"SEXUAL JOKES",@"ANIMAL JOKES",@"DOCTORS JOKES",@"GIRLFRIEND JOKES",@"STUPID JOKES", nil];
+    
+    [ChooseCategoryLabel setFont:[UIFont fontWithName:ChooseCategoryLabel.font.fontName size:[self getFontSize:ChooseCategoryLabel.font.pointSize]]];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -166,14 +168,16 @@
     
     cell.CategoryLabel.text=[CategoryArray objectAtIndex:indexPath.row];
     
-    if ([[NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] valueForKey:@"language"]] isEqualToString:@"he"])
-    {
-        cell.CategoryLabel.textAlignment=NSTextAlignmentRight;
-    }
-    else
-    {
-        cell.CategoryLabel.textAlignment=NSTextAlignmentLeft;
-    }
+    [cell.CategoryLabel setFont:[UIFont fontWithName:cell.CategoryLabel.font.fontName size:[self getFontSize:cell.CategoryLabel.font.pointSize]]];
+    
+//    if ([[NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] valueForKey:@"language"]] isEqualToString:@"he"])
+//    {
+//        cell.CategoryLabel.textAlignment=NSTextAlignmentRight;
+//    }
+//    else
+//    {
+//        cell.CategoryLabel.textAlignment=NSTextAlignmentLeft;
+//    }
     
     cell.CheckImage.tag=indexPath.row+500;
     cell.CheckButton.tag=indexPath.row;

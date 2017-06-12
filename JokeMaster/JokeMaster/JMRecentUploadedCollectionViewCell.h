@@ -10,4 +10,5 @@
 
 @interface JMRecentUploadedCollectionViewCell : UICollectionViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *VideoThumpnailImage;
+@property (weak, nonatomic) IBOutlet UILabel *CategoryNameLabel;
 @end
