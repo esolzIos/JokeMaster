@@ -104,7 +104,7 @@
     
         [cell.CountryImage setImage:[UIImage imageNamed:[CountryArray objectAtIndex:indexPath.row]]] ;
     
-    [cell.CountryLabel setText:[[CountryArray objectAtIndex:indexPath.row]uppercaseString]];
+    [cell.CountryLabel setText:AMLocalizedString([[CountryArray objectAtIndex:indexPath.row]uppercaseString], nil) ];
     
     
 }
