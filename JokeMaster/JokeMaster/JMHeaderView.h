@@ -22,5 +22,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *BackButton;
 
 @property (weak, nonatomic) IBOutlet UIImageView *RecentUploadImage;
+@property (strong, nonatomic) IBOutlet UIButton *langBtn;
 
 @end

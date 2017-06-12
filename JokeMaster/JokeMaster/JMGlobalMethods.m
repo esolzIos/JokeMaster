@@ -75,6 +75,10 @@
         
         [HeaderView.MenuButton addTarget:self action:@selector(menuClicked) forControlEvents:UIControlEventTouchUpInside];
         
+ 
+        
+        
+        
     }
     else if ([CurrentViewController isEqualToString:@"JMRecentlyUploadedViewController"])
     {

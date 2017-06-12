@@ -36,7 +36,7 @@
     [_recentBtn setTitle:AMLocalizedString(@"RECENTLY UPLOADED VIDEOS", nil) forState:UIControlStateNormal];
     
     
-    
+       [self.HeaderView.langBtn addTarget:self action:@selector(langClicked) forControlEvents:UIControlEventTouchUpInside];
     
     
     // Do any additional setup after loading the view.
@@ -133,5 +133,11 @@
 - (IBAction)shareClicked:(id)sender {
     
       [_optionView setHidden:YES];
+}
+
+-(void)langClicked
+{
+
+
 }
 @end
