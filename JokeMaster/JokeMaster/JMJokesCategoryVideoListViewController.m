@@ -13,7 +13,7 @@
 @end
 
 @implementation JMJokesCategoryVideoListViewController
-@synthesize ChooseCatImage,ChooseCategoryBtn,ChooseCategoryView,ChooseCategoryLabel,MainScroll,RecentVideoCollectionView,MenuBaseView,TransparentView,CategoryTable,CrossView;
+@synthesize ChooseCatImage,ChooseCategoryBtn,ChooseCategoryView,ChooseCategoryLabel,MainScroll,RecentVideoCollectionView,MenuBaseView,TransparentView,CategoryTable,CrossView,RecentlyUploadedBtn;
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -37,6 +37,10 @@
     MenuBaseView.frame = CGRectMake(0, self.view.frame.size.height, MenuBaseView.frame.size.width, MenuBaseView.frame.size.height);
     
     CategoryArray=[[NSMutableArray alloc] initWithObjects:@"LATEST",@"SEXUAL JOKES",@"ANIMAL JOKES",@"DOCTORS JOKES",@"GIRLFRIEND JOKES",@"STUPID JOKES", nil];
+    
+    [RecentlyUploadedBtn.titleLabel setFont:[UIFont fontWithName:RecentlyUploadedBtn.titleLabel.font.fontName size:[self getFontSize:RecentlyUploadedBtn.titleLabel.font.pointSize]]];
+    
+    [RecentlyUploadedBtn setTitle:AMLocalizedString(@"RECENTLY UPLOADED VIDEOS", nil) forState:UIControlStateNormal];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -240,6 +244,8 @@
 }
 */
 
-- (IBAction)RecentlyUploadedVideoTapped:(id)sender {
+- (IBAction)RecentlyUploadedVideoTapped:(id)sender
+{
+    [self POPViewController];
 }
 @end

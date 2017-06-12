@@ -18,6 +18,7 @@
 "OK" ="ठीक";
 "Alert" ="चेतावनी";
 "SIGN UP" ="साइन अप करने";
+
 "LOG IN" ="प्रवेश करें";
 "or login with" = "या प्रवेश करें इन के साथ";
 "Don't have an account? Sign Up" = "एक खाता नहीं है? साइन अप करें";
@@ -31,6 +32,17 @@
 "Enter Name" = "नाम दर्ज करें";
 "Enter Valid Email Address" = "मान्य ईमेल पता दर्ज करें";
 "Select Language" = "भाषा का चयन करें";
+
+"Enter Name" = "नाम दर्ज करें";
+"Enter Email Address" = "ईमेल पता दर्ज";
+"Enter Valid Email Address" = "मान्य ईमेल पता दर्ज करें";
+"Select Language" = "भाषा का चयन करें";
+"Enter Password" = "पास वर्ड दर्ज करें";
+"Password Should be at least 6 characters" = "पासवर्ड कम से कम 6 वर्ण होना चाहिए";
+"Enter Confirm Password" = "पासवर्ड की पुष्टि करें दर्ज करें";
+"Password and confirm password should be same." = "पासवर्ड और पासवर्ड की पुष्टि करना समान होना चाहिए";
+"Camera" = "कैमरा";
+"Photo Library" = "चित्र पुस्तकालय";
 "Facebook"="फेसबुक";
 "Google"="गूगल";
 "JOKE OF THE DAY" ="दिन के मजाक";
