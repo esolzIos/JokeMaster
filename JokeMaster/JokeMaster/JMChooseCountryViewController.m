@@ -10,7 +10,7 @@
 #import "JMLoginViewController.h"
 @interface JMChooseCountryViewController ()
 {
-    NSMutableArray *langArr,*codeArr;
+    NSMutableArray *langArr,*codeArr,*engArr,*hindiArr,*hebrewArr;
     
     int rowSelected;
     
@@ -27,6 +27,12 @@
     langArr=[[NSMutableArray alloc] initWithObjects:AMLocalizedString(@"English", nil),AMLocalizedString(@"Hebrew", nil),AMLocalizedString(@"Hindi", nil), nil];
     
     codeArr=[[NSMutableArray alloc] initWithObjects:@"en",@"he",@"hi", nil];
+    
+    engArr=[[NSMutableArray alloc] initWithObjects:@"UNITED STATES",@"UNITED KINGDOM",@"INDIA", nil];
+    
+     engArr=[[NSMutableArray alloc] initWithObjects:@"INDIA",@"PAKISTAN", nil];
+    
+      hebrewArr=[[NSMutableArray alloc] initWithObjects:@"ISRAEL", nil];
     
     [_LanguageLabel setText:AMLocalizedString(@"Choose Language", nil)];
     
