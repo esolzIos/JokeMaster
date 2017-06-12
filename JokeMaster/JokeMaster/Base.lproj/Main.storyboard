@@ -785,14 +785,82 @@
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                     </view>
-                                    <view hidden="YES" contentMode="scaleToFill" id="JgG-eT-lea">
-                                        <rect key="frame" x="0.0" y="236" width="320" height="244"/>
-                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <view hidden="YES" contentMode="scaleToFill" misplaced="YES" id="JgG-eT-lea">
+                                        <rect key="frame" x="0.0" y="205" width="320" height="275"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                         <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="overlay-bg" id="edC-tb-05d">
-                                                <rect key="frame" x="0.0" y="0.0" width="320" height="244"/>
-                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="overlay-bg" id="edC-tb-05d">
+                                                <rect key="frame" x="-1" y="1" width="322" height="274"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                             </imageView>
+                                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="40" sectionHeaderHeight="28" sectionFooterHeight="28" id="jdI-Y3-asp">
+                                                <rect key="frame" x="69" y="44" width="183" height="171"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                <prototypes>
+                                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="JMCategoryCell" id="7eh-Tc-DW9" customClass="JMCategoryCell">
+                                                        <rect key="frame" x="0.0" y="28" width="196" height="40"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES"/>
+                                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="7eh-Tc-DW9" id="Qbd-oh-VJl">
+                                                            <rect key="frame" x="0.0" y="0.0" width="196" height="40"/>
+                                                            <autoresizingMask key="autoresizingMask"/>
+                                                            <subviews>
+                                                                <view contentMode="scaleToFill" misplaced="YES" id="V1T-Gx-bu2">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="183" height="40"/>
+                                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                                    <subviews>
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="LATEST" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="yn3-yC-LXY">
+                                                                            <rect key="frame" x="32" y="10" width="143" height="20"/>
+                                                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                                                            <fontDescription key="fontDescription" name="ComicBook" family="Comic Book" pointSize="15"/>
+                                                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                                            <nil key="highlightedColor"/>
+                                                                        </label>
+                                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="uncheck" id="J7k-S3-SzN">
+                                                                            <rect key="frame" x="6" y="12" width="17" height="17"/>
+                                                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                                                        </imageView>
+                                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="ksm-zf-fuw">
+                                                                            <rect key="frame" x="-1" y="2" width="55" height="38"/>
+                                                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                                                        </button>
+                                                                    </subviews>
+                                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                                </view>
+                                                            </subviews>
+                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                        </tableViewCellContentView>
+                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                        <connections>
+                                                            <outlet property="CategoryLabel" destination="yn3-yC-LXY" id="o0C-US-VER"/>
+                                                            <outlet property="CheckButton" destination="ksm-zf-fuw" id="Dku-Be-UKD"/>
+                                                            <outlet property="CheckImage" destination="J7k-S3-SzN" id="wd2-F4-xbh"/>
+                                                        </connections>
+                                                    </tableViewCell>
+                                                </prototypes>
+                                                <connections>
+                                                    <outlet property="dataSource" destination="f4C-PM-yS7" id="CFh-gi-b8N"/>
+                                                    <outlet property="delegate" destination="f4C-PM-yS7" id="Bqg-rg-tJv"/>
+                                                </connections>
+                                            </tableView>
+                                            <view contentMode="scaleToFill" misplaced="YES" id="noo-nX-q7s">
+                                                <rect key="frame" x="109" y="215" width="101" height="60"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                                <subviews>
+                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cross" id="d7p-Tp-8hZ">
+                                                        <rect key="frame" x="0.0" y="0.0" width="101" height="60"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                                    </imageView>
+                                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="bGt-DY-V4d">
+                                                        <rect key="frame" x="0.0" y="0.0" width="101" height="60"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                                        <connections>
+                                                            <action selector="CategoryCrossTapped:" destination="f4C-PM-yS7" eventType="touchUpInside" id="Fyr-X5-out"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                            </view>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </view>
@@ -803,6 +871,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
+                        <outlet property="CategoryTable" destination="jdI-Y3-asp" id="HoG-Ry-M2U"/>
                         <outlet property="ChooseCatImage" destination="ESs-Ld-gOm" id="rg6-07-pbr"/>
                         <outlet property="ChooseCategoryBtn" destination="rda-v1-3qS" id="48G-nM-R6y"/>
                         <outlet property="ChooseCategoryLabel" destination="3r6-oZ-lBO" id="nCx-pg-CK6"/>
@@ -1004,6 +1073,7 @@
         <image name="US" width="114" height="60"/>
         <image name="button" width="542" height="119"/>
         <image name="circle-down" width="26" height="26"/>
+        <image name="cross" width="167" height="100"/>
         <image name="dog1" width="63" height="63"/>
         <image name="down-arrow" width="19" height="14"/>
         <image name="down-arrow-1" width="26" height="26"/>

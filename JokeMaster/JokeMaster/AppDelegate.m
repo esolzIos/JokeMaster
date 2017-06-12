@@ -30,29 +30,18 @@
 [GIDSignIn sharedInstance].clientID = @"257838552176-cik6p18idkqgrgecuss42mcmn66gd1lk.apps.googleusercontent.com";
     
 
+
 //    if ([[[NSUserDefaults standardUserDefaults] valueForKey:@"language"] length]==0)
 //    {
 //        LocalizationSetLanguage(@"en");
 //        
-//        LocalizationSetLanguage(@"he");
+//      //  LocalizationSetLanguage(@"he");
 //    }
 //    else
 //    {
 //        NSString *lang=[NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] valueForKey:@"language"]];
 //        LocalizationSetLanguage(lang);
 //    }
-
-    if ([[[NSUserDefaults standardUserDefaults] valueForKey:@"language"] length]==0)
-    {
-        LocalizationSetLanguage(@"en");
-        
-      //  LocalizationSetLanguage(@"he");
-    }
-    else
-    {
-        NSString *lang=[NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] valueForKey:@"language"]];
-        LocalizationSetLanguage(lang);
-    }
 
     
     return YES;
