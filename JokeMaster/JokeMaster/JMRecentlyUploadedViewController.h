@@ -10,6 +10,7 @@
 #import "JMCategoryCell.h"
 #import "JMRecentUploadedCollectionViewCell.h"
 #import "JMJokesCategoryVideoListViewController.h"
+#import "JMPlayVideoViewController.h"
 @interface JMRecentlyUploadedViewController : JMGlobalMethods<UICollectionViewDataSource,UICollectionViewDelegate>
 {
     float MenuViewY;

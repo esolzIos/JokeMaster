@@ -102,7 +102,9 @@
 - (void)collectionView:(UICollectionViewCell *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 
 {
+    JMPlayVideoViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMPlayVideoViewController"];
     
+    [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
     
     
     
