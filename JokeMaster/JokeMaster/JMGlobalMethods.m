@@ -2875,6 +2875,391 @@
     [self POPViewController];
     
 }
+#pragma - mark left menu row click action- custom delegate
+-(void)action_method:(NSInteger )sender
+{
+    
+        if (sender==3)
+        {
+            if ([CurrentViewController isEqualToString:@"JMHomeViewController"])
+            {
+                [UIView animateWithDuration:0.5 animations:^{
+    
+    
+                    MainView.center = CGPointMake(self.view.center.x,self.view.center.y);
+    
+                    leftmenu.frame = CGRectMake(-leftmenu.frame.size.width, 0,[[UIScreen mainScreen] bounds].size.width/4*3, self.view.frame.size.height);
+    
+    
+                } completion:^(BOOL finished) {
+    
+                    [leftmenu removeFromSuperview];
+                    [UIView commitAnimations];
+                    [MainView removeGestureRecognizer:tapRecognizer];
+                }];
+            }
+            else
+            {
+    
+                JMGlobalMethods *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMHomeViewController"];
+                [self.navigationController pushViewController:VC animated:kCAMediaTimingFunctionEaseIn];
+//                if (userid.length==0)
+//                {
+//                    [[NSUserDefaults standardUserDefaults] setObject:@"DLAddPropertyViewController" forKey:@"DestinationPage"];
+//                    GlobalViewController *obj=[self.storyboard instantiateViewControllerWithIdentifier:@"DLLoginViewController"];
+//                    [self PushViewController:obj WithAnimation:kCAMediaTimingFunctionEaseIn];
+//                }
+//                else
+//                {
+//                    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"AddPropertyDictionary"];
+//                    [[NSUserDefaults standardUserDefaults] synchronize];
+//    
+//                    GlobalViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"DLAddPropertyViewController"];
+//                    [self.navigationController pushViewController:VC animated:kCAMediaTimingFunctionEaseIn];
+//                }
+            }
+        }
+        else if (sender==7)
+        {
+            NSString *deviceToken;
+            NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+            deviceToken=[prefs valueForKey:@"deviceToken"];
+            
+            NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
+            [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            
+            [[NSUserDefaults standardUserDefaults] setObject:deviceToken  forKey:@"deviceToken"];
+            
+            LocalizationSetLanguage(@"en");
+            
+            
+            JMGlobalMethods *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMLogin"];
+            [self.navigationController pushViewController:VC animated:kCAMediaTimingFunctionEaseIn];
+        }
+//    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+  //  NSString *userid=[prefs valueForKey:@"UserId"];
+    
+    //  NSLog(@"##### test mode...%ld",(long)sender.tag);
+//    if (sender==0)
+//    {
+//        if ([CurrentViewController isEqualToString:@"DLAddPropertyViewController"])
+//        {
+//            [UIView animateWithDuration:0.5 animations:^{
+//                
+//                
+//                MainView.center = CGPointMake(self.view.center.x,self.view.center.y);
+//                
+//                leftmenu.frame = CGRectMake(-leftmenu.frame.size.width, 0,[[UIScreen mainScreen] bounds].size.width/4*3, self.view.frame.size.height);
+//                
+//                
+//            } completion:^(BOOL finished) {
+//                
+//                [leftmenu removeFromSuperview];
+//                [UIView commitAnimations];
+//                [MainView removeGestureRecognizer:tapRecognizer];
+//            }];
+//        }
+//        else
+//        {
+//            
+//            
+//            if (userid.length==0)
+//            {
+//                [[NSUserDefaults standardUserDefaults] setObject:@"DLAddPropertyViewController" forKey:@"DestinationPage"];
+//                GlobalViewController *obj=[self.storyboard instantiateViewControllerWithIdentifier:@"DLLoginViewController"];
+//                [self PushViewController:obj WithAnimation:kCAMediaTimingFunctionEaseIn];
+//            }
+//            else
+//            {
+//                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"AddPropertyDictionary"];
+//                [[NSUserDefaults standardUserDefaults] synchronize];
+//                
+//                GlobalViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"DLAddPropertyViewController"];
+//                [self.navigationController pushViewController:VC animated:kCAMediaTimingFunctionEaseIn];
+//            }
+//        }
+//    }
+//    else if (sender==1)
+//    {
+//        if ([CurrentViewController isEqualToString:@"DLWalletViewController"])
+//        {
+//            [UIView animateWithDuration:0.5 animations:^{
+//                
+//                
+//                MainView.center = CGPointMake(self.view.center.x,self.view.center.y);
+//                
+//                leftmenu.frame = CGRectMake(-leftmenu.frame.size.width, 0,[[UIScreen mainScreen] bounds].size.width/4*3, self.view.frame.size.height);
+//                
+//                
+//            } completion:^(BOOL finished) {
+//                
+//                [leftmenu removeFromSuperview];
+//                [UIView commitAnimations];
+//                [MainView removeGestureRecognizer:tapRecognizer];
+//            }];
+//        }
+//        else
+//        {
+//            
+//            
+//            if (userid.length==0)
+//            {
+//                [[NSUserDefaults standardUserDefaults] setObject:@"DLWalletViewController" forKey:@"DestinationPage"];
+//                GlobalViewController *obj=[self.storyboard instantiateViewControllerWithIdentifier:@"DLLoginViewController"];
+//                [self PushViewController:obj WithAnimation:kCAMediaTimingFunctionEaseIn];
+//            }
+//            else
+//            {
+//                GlobalViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"DLWalletViewController"];
+//                [self.navigationController pushViewController:VC animated:kCAMediaTimingFunctionEaseIn];
+//            }
+//        }
+//    }
+//    else if (sender==2)
+//    {
+//        if ([CurrentViewController isEqualToString:@"DLExploreViewController"])
+//        {
+//            [UIView animateWithDuration:0.5 animations:^{
+//                
+//                
+//                MainView.center = CGPointMake(self.view.center.x,self.view.center.y);
+//                
+//                leftmenu.frame = CGRectMake(-leftmenu.frame.size.width, 0,[[UIScreen mainScreen] bounds].size.width/4*3, self.view.frame.size.height);
+//                
+//                
+//            } completion:^(BOOL finished) {
+//                
+//                [leftmenu removeFromSuperview];
+//                [UIView commitAnimations];
+//                [MainView removeGestureRecognizer:tapRecognizer];
+//            }];
+//        }
+//        else
+//        {
+//            
+//            GlobalViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"DLExploreViewController"];
+//            [self.navigationController pushViewController:VC animated:kCAMediaTimingFunctionEaseIn];
+//        }
+//    }
+//    else if (sender==3)
+//    {
+//        if ([CurrentViewController isEqualToString:@"DLNearbyViewController"])
+//        {
+//            [UIView animateWithDuration:0.5 animations:^{
+//                
+//                
+//                MainView.center = CGPointMake(self.view.center.x,self.view.center.y);
+//                
+//                leftmenu.frame = CGRectMake(-leftmenu.frame.size.width, 0,[[UIScreen mainScreen] bounds].size.width/4*3, self.view.frame.size.height);
+//                
+//                
+//            } completion:^(BOOL finished) {
+//                
+//                [leftmenu removeFromSuperview];
+//                [UIView commitAnimations];
+//                [MainView removeGestureRecognizer:tapRecognizer];
+//            }];
+//        }
+//        else
+//        {
+//            
+//            GlobalViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"DLNearbyViewController"];
+//            [self.navigationController pushViewController:VC animated:kCAMediaTimingFunctionEaseIn];
+//            
+//        }
+//    }
+//    else if (sender==4)
+//    {
+//        if ([CurrentViewController isEqualToString:@"DLAdvanceSearchViewController"])
+//        {
+//            [UIView animateWithDuration:0.5 animations:^{
+//                
+//                
+//                MainView.center = CGPointMake(self.view.center.x,self.view.center.y);
+//                
+//                leftmenu.frame = CGRectMake(-leftmenu.frame.size.width, 0,[[UIScreen mainScreen] bounds].size.width/4*3, self.view.frame.size.height);
+//                
+//                
+//            } completion:^(BOOL finished) {
+//                
+//                [leftmenu removeFromSuperview];
+//                [UIView commitAnimations];
+//                [MainView removeGestureRecognizer:tapRecognizer];
+//            }];
+//        }
+//        else
+//        {
+//            
+//            GlobalViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"DLAdvanceSearchViewController"];
+//            [self.navigationController pushViewController:VC animated:kCAMediaTimingFunctionEaseIn];
+//        }
+//    }
+//    else if (sender==6)
+//    {
+//        if ([CurrentViewController isEqualToString:@"DLMyPropertiesViewController"])
+//        {
+//            [UIView animateWithDuration:0.5 animations:^{
+//                
+//                
+//                MainView.center = CGPointMake(self.view.center.x,self.view.center.y);
+//                
+//                leftmenu.frame = CGRectMake(-leftmenu.frame.size.width, 0,[[UIScreen mainScreen] bounds].size.width/4*3, self.view.frame.size.height);
+//                
+//                
+//            } completion:^(BOOL finished) {
+//                
+//                [leftmenu removeFromSuperview];
+//                [UIView commitAnimations];
+//                [MainView removeGestureRecognizer:tapRecognizer];
+//            }];
+//        }
+//        else
+//        {
+//            
+//            
+//            if (userid.length==0)
+//            {
+//                [[NSUserDefaults standardUserDefaults] setObject:@"DLMyPropertiesViewController" forKey:@"DestinationPage"];
+//                GlobalViewController *obj=[self.storyboard instantiateViewControllerWithIdentifier:@"DLLoginViewController"];
+//                [self PushViewController:obj WithAnimation:kCAMediaTimingFunctionEaseIn];
+//            }
+//            else
+//            {
+//                GlobalViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"DLMyPropertiesViewController"];
+//                [self.navigationController pushViewController:VC animated:kCAMediaTimingFunctionEaseIn];
+//            }
+//        }
+//    }
+//    else if (sender==5)
+//    {
+//        if ([CurrentViewController isEqualToString:@"DLPostPropertiesViewController"])
+//        {
+//            [UIView animateWithDuration:0.5 animations:^{
+//                
+//                
+//                MainView.center = CGPointMake(self.view.center.x,self.view.center.y);
+//                
+//                leftmenu.frame = CGRectMake(-leftmenu.frame.size.width, 0,[[UIScreen mainScreen] bounds].size.width/4*3, self.view.frame.size.height);
+//                
+//                
+//            } completion:^(BOOL finished) {
+//                
+//                [leftmenu removeFromSuperview];
+//                [UIView commitAnimations];
+//                [MainView removeGestureRecognizer:tapRecognizer];
+//            }];
+//        }
+//        else
+//        {
+//            
+//            
+//            if (userid.length==0)
+//            {
+//                [[NSUserDefaults standardUserDefaults] setObject:@"DLPostPropertiesViewController" forKey:@"DestinationPage"];
+//                GlobalViewController *obj=[self.storyboard instantiateViewControllerWithIdentifier:@"DLLoginViewController"];
+//                [self PushViewController:obj WithAnimation:kCAMediaTimingFunctionEaseIn];
+//            }
+//            else
+//            {
+//                GlobalViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"DLPostPropertiesViewController"];
+//                [self.navigationController pushViewController:VC animated:kCAMediaTimingFunctionEaseIn];
+//            }
+//        }
+//    }
+//    else if (sender==7)
+//    {
+//        if ([CurrentViewController isEqualToString:@"DLMyFavouritesViewController"])
+//        {
+//            [UIView animateWithDuration:0.5 animations:^{
+//                
+//                
+//                MainView.center = CGPointMake(self.view.center.x,self.view.center.y);
+//                
+//                leftmenu.frame = CGRectMake(-leftmenu.frame.size.width, 0,[[UIScreen mainScreen] bounds].size.width/4*3, self.view.frame.size.height);
+//                
+//                
+//            } completion:^(BOOL finished) {
+//                
+//                [leftmenu removeFromSuperview];
+//                [UIView commitAnimations];
+//                [MainView removeGestureRecognizer:tapRecognizer];
+//            }];
+//        }
+//        else
+//        {
+//            
+//            
+//            if (userid.length==0)
+//            {
+//                [[NSUserDefaults standardUserDefaults] setObject:@"DLMyFavouritesViewController" forKey:@"DestinationPage"];
+//                GlobalViewController *obj=[self.storyboard instantiateViewControllerWithIdentifier:@"DLLoginViewController"];
+//                [self PushViewController:obj WithAnimation:kCAMediaTimingFunctionEaseIn];
+//            }
+//            else
+//            {
+//                GlobalViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"DLMyFavouritesViewController"];
+//                [self.navigationController pushViewController:VC animated:kCAMediaTimingFunctionEaseIn];
+//            }
+//        }
+//    }
+//    
+//    else if (sender==100)
+//    {
+//        if ([CurrentViewController isEqualToString:@"DLProfileViewController"])
+//        {
+//            [UIView animateWithDuration:0.5 animations:^{
+//                
+//                
+//                MainView.center = CGPointMake(self.view.center.x,self.view.center.y);
+//                
+//                leftmenu.frame = CGRectMake(-leftmenu.frame.size.width, 0,[[UIScreen mainScreen] bounds].size.width/4*3, self.view.frame.size.height);
+//                
+//                
+//            } completion:^(BOOL finished) {
+//                
+//                [leftmenu removeFromSuperview];
+//                [UIView commitAnimations];
+//                [MainView removeGestureRecognizer:tapRecognizer];
+//            }];
+//        }
+//        else
+//        {
+//            
+//            
+//            if (userid.length==0)
+//            {
+//                [[NSUserDefaults standardUserDefaults] setObject:@"DLProfileViewController" forKey:@"DestinationPage"];
+//                GlobalViewController *obj=[self.storyboard instantiateViewControllerWithIdentifier:@"DLLoginViewController"];
+//                [self PushViewController:obj WithAnimation:kCAMediaTimingFunctionEaseIn];
+//            }
+//            else
+//            {
+//                GlobalViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"DLProfileViewController"];
+//                [self.navigationController pushViewController:VC animated:kCAMediaTimingFunctionEaseIn];
+//            }
+//        }
+//    }
+//    else if (sender==9)
+//    {
+//        NSString *deviceToken;
+//        NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+//        deviceToken=[prefs valueForKey:@"deviceToken"];
+//        
+//        NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
+//        [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
+//        [[NSUserDefaults standardUserDefaults] synchronize];
+//        
+//        [[NSUserDefaults standardUserDefaults] setObject:deviceToken  forKey:@"deviceToken"];
+//        
+//        LocalizationSetLanguage(@"en");
+//        
+//        
+//        GlobalViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"DLLoginViewController"];
+//        [self.navigationController pushViewController:VC animated:kCAMediaTimingFunctionEaseIn];
+//    }
+}
+
 /*
  #pragma mark - Navigation
  
