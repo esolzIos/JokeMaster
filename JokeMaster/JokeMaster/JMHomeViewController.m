@@ -38,6 +38,13 @@
     
        [self.HeaderView.langBtn addTarget:self action:@selector(langClicked) forControlEvents:UIControlEventTouchUpInside];
     
+    MenuViewY=_MenuBaseView.frame.origin.y;
+    
+    _TransparentView.frame = CGRectMake(0, self.view.frame.size.height, _TransparentView.frame.size.width, _TransparentView.frame.size.height);
+    _MenuBaseView.frame = CGRectMake(0, self.view.frame.size.height, _MenuBaseView.frame.size.width, _MenuBaseView.frame.size.height);
+    
+    CategoryArray=[[NSMutableArray alloc] initWithObjects:@"LATEST",@"SEXUAL JOKES",@"ANIMAL JOKES",@"DOCTORS JOKES",@"GIRLFRIEND JOKES",@"STUPID JOKES", nil];
+    
     
     // Do any additional setup after loading the view.
 }
@@ -61,7 +68,21 @@
 {
     return UIStatusBarStyleLightContent;
 }
-- (IBAction)categoryClicked:(id)sender {
+- (IBAction)categoryClicked:(id)sender
+{
+    _TransparentView.hidden=NO;
+    _MenuBaseView.hidden=NO;
+    
+    
+    [UIView animateWithDuration:0.5
+                          delay:0.1
+                        options:(UIViewAnimationOptions) UIViewAnimationCurveEaseIn
+                     animations:^{
+                         _TransparentView.frame = CGRectMake(0, 0, _TransparentView.frame.size.width, _TransparentView.frame.size.height);
+                         _MenuBaseView.frame = CGRectMake(0,MenuViewY, _MenuBaseView.frame.size.width, _MenuBaseView.frame.size.height);
+                     }
+                     completion:^(BOOL finished){
+                     }];
 }
 
 #pragma mark collection view delegate
@@ -139,5 +160,107 @@
 {
 
 
+}
+#pragma mark - Category view hide
+- (IBAction)CategoryCrossTapped:(id)sender
+{
+    
+    [UIView animateWithDuration:0.5
+                          delay:0.1
+                        options:(UIViewAnimationOptions) UIViewAnimationCurveEaseIn
+                     animations:^{
+                         _TransparentView.frame = CGRectMake(0, self.view.frame.size.height, _TransparentView.frame.size.width, _TransparentView.frame.size.height);
+                         _MenuBaseView.frame = CGRectMake(0, self.view.frame.size.height, _MenuBaseView.frame.size.width, _MenuBaseView.frame.size.height);
+                         
+                     }
+                     completion:^(BOOL finished){
+                         
+                         JMJokesCategoryVideoListViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMJokesCategoryVideoListViewController"];
+                         
+                         [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
+                         
+                     }];
+}
+#pragma mark - UITableView Delegates
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section;
+{
+    return [CategoryArray count];
+}
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    NSString *identifier = @"JMCategoryCell";
+    
+    JMCategoryCell *cell = (JMCategoryCell *)[tableView dequeueReusableCellWithIdentifier:identifier];
+    
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
+    cell.CategoryLabel.text=[CategoryArray objectAtIndex:indexPath.row];
+    
+    [cell.CategoryLabel setFont:[UIFont fontWithName:cell.CategoryLabel.font.fontName size:[self getFontSize:cell.CategoryLabel.font.pointSize]]];
+    
+    //    if ([[NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] valueForKey:@"language"]] isEqualToString:@"he"])
+    //    {
+    //        cell.CategoryLabel.textAlignment=NSTextAlignmentRight;
+    //    }
+    //    else
+    //    {
+    //        cell.CategoryLabel.textAlignment=NSTextAlignmentLeft;
+    //    }
+    
+    cell.CheckImage.tag=indexPath.row+500;
+    cell.CheckButton.tag=indexPath.row;
+    [cell.CheckButton addTarget:self action:@selector(CheckButtonTap:) forControlEvents:UIControlEventTouchUpInside];
+    
+    return cell;
+    
+    
+    
+    
+    
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    return 40;
+    //    if (IsIphone5 || IsIphone4)
+    //    {
+    //        return 50;
+    //    }
+    //    else
+    //    {
+    //        return 60;
+    //    }
+    
+}
+
+-(void) tableView:(UITableView *)tableView willDisplayCell:(JMCategoryCell *) cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    
+}
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+}
+#pragma mark - Check button tapped on table
+-(void)CheckButtonTap:(UIButton *)btn
+{
+    NSInteger tag=btn.tag;
+    UIImageView *tickImage = (UIImageView* )[_CategoryTable viewWithTag:tag+500];
+    if (btn.selected==NO)
+    {
+        btn.selected=YES;
+        tickImage.image = [UIImage imageNamed:@"tick"];
+    }
+    else
+    {
+        btn.selected=NO;
+        tickImage.image = [UIImage imageNamed:@"uncheck"];
+    }
+    
+    
+    
 }
 @end

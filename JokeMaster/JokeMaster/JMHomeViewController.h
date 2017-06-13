@@ -9,7 +9,10 @@
 #import "JMGlobalMethods.h"
 #import "JokeCollectionViewCell.h"
 @interface JMHomeViewController : JMGlobalMethods<UICollectionViewDelegate,UICollectionViewDataSource,UIScrollViewDelegate>
-
+{
+    float MenuViewY;
+    NSMutableArray *CategoryArray;
+}
 @property (strong, nonatomic) IBOutlet UIScrollView *mainScroll;
 @property (strong, nonatomic) IBOutlet UILabel *jokeTitle;
 @property (strong, nonatomic) IBOutlet UIView *tvView;
@@ -43,5 +46,11 @@
 @property (strong, nonatomic) IBOutlet UIImageView *shareImg;
 @property (strong, nonatomic) IBOutlet UIButton *shareBtn;
 - (IBAction)shareClicked:(id)sender;
+
+@property (weak, nonatomic) IBOutlet UIView *TransparentView;
+@property (weak, nonatomic) IBOutlet UIView *MenuBaseView;
+@property (weak, nonatomic) IBOutlet UIView *CrossView;
+- (IBAction)CategoryCrossTapped:(id)sender;
+@property (weak, nonatomic) IBOutlet UITableView *CategoryTable;
 
 @end

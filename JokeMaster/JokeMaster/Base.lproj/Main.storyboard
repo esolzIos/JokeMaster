@@ -1118,6 +1118,90 @@
                                             </button>
                                         </subviews>
                                     </scrollView>
+                                    <view hidden="YES" alpha="0.55000001192092896" contentMode="scaleToFill" id="QRk-1W-7P7">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                    </view>
+                                    <view hidden="YES" contentMode="scaleToFill" misplaced="YES" id="Fls-OD-Vx5">
+                                        <rect key="frame" x="0.0" y="205" width="320" height="275"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                        <subviews>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="overlay-bg" id="qNS-aF-qSw">
+                                                <rect key="frame" x="-1" y="1" width="322" height="274"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                            </imageView>
+                                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="40" sectionHeaderHeight="28" sectionFooterHeight="28" id="164-BV-CIP">
+                                                <rect key="frame" x="69" y="44" width="183" height="171"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                <prototypes>
+                                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="JMCategoryCell" id="YFC-s4-tl0" customClass="JMCategoryCell">
+                                                        <rect key="frame" x="0.0" y="28" width="183" height="40"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES"/>
+                                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="YFC-s4-tl0" id="Ina-DD-Dae">
+                                                            <rect key="frame" x="0.0" y="0.0" width="183" height="40"/>
+                                                            <autoresizingMask key="autoresizingMask"/>
+                                                            <subviews>
+                                                                <view contentMode="scaleToFill" id="Jmf-sD-K0d">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="183" height="40"/>
+                                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                                    <subviews>
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LATEST" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="hcD-4r-qHu">
+                                                                            <rect key="frame" x="32" y="10" width="143" height="20"/>
+                                                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                                                            <fontDescription key="fontDescription" name="ComicBook" family="Comic Book" pointSize="12"/>
+                                                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                                            <nil key="highlightedColor"/>
+                                                                        </label>
+                                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="uncheck" id="cBA-tQ-oiJ">
+                                                                            <rect key="frame" x="6" y="12" width="17" height="17"/>
+                                                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                                                        </imageView>
+                                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="OEm-Eb-CJo">
+                                                                            <rect key="frame" x="-1" y="2" width="55" height="38"/>
+                                                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                                                        </button>
+                                                                    </subviews>
+                                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                                </view>
+                                                            </subviews>
+                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                        </tableViewCellContentView>
+                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                        <connections>
+                                                            <outlet property="CategoryLabel" destination="hcD-4r-qHu" id="a49-0p-Jed"/>
+                                                            <outlet property="CheckButton" destination="OEm-Eb-CJo" id="3DI-eC-f5R"/>
+                                                            <outlet property="CheckImage" destination="cBA-tQ-oiJ" id="EZY-Sq-9Gr"/>
+                                                        </connections>
+                                                    </tableViewCell>
+                                                </prototypes>
+                                                <connections>
+                                                    <outlet property="dataSource" destination="5xA-Pt-cIj" id="Ahw-ty-hyP"/>
+                                                    <outlet property="delegate" destination="5xA-Pt-cIj" id="prd-ap-aC3"/>
+                                                </connections>
+                                            </tableView>
+                                            <view contentMode="scaleToFill" id="aOM-0e-T3V">
+                                                <rect key="frame" x="109" y="215" width="101" height="60"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                                <subviews>
+                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cross" id="uIX-HN-5Zv">
+                                                        <rect key="frame" x="0.0" y="0.0" width="101" height="60"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                                    </imageView>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="wuk-1k-QnZ">
+                                                        <rect key="frame" x="0.0" y="0.0" width="101" height="60"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                                        <connections>
+                                                            <action selector="CategoryCrossTapped:" destination="5xA-Pt-cIj" eventType="touchUpInside" id="vhe-kW-fKm"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                            </view>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
@@ -1125,8 +1209,12 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
+                        <outlet property="CategoryTable" destination="164-BV-CIP" id="qzW-xs-S0K"/>
+                        <outlet property="CrossView" destination="aOM-0e-T3V" id="vhe-MR-PRa"/>
                         <outlet property="HeaderView" destination="vl7-Jc-fal" id="Nya-yW-a8a"/>
                         <outlet property="MainView" destination="1se-nR-VTt" id="KB8-4k-pep"/>
+                        <outlet property="MenuBaseView" destination="Fls-OD-Vx5" id="BCQ-bY-Brd"/>
+                        <outlet property="TransparentView" destination="QRk-1W-7P7" id="uHm-3T-LMZ"/>
                         <outlet property="categoryBtn" destination="1mk-h0-NbE" id="lZN-LM-kbd"/>
                         <outlet property="categoryBtnView" destination="MBg-l0-BZW" id="MXm-Kq-GUS"/>
                         <outlet property="categoryBtnlbl" destination="nCu-UY-hA2" id="1bG-ND-UO2"/>
