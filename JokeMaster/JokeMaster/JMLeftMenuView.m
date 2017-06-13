@@ -9,7 +9,7 @@
 #import "JMLeftMenuView.h"
 
 @implementation JMLeftMenuView
-
+@synthesize SideDelegate;
 /*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
@@ -21,9 +21,19 @@
 {
     JMLeftMenuView *customView = [[[NSBundle mainBundle] loadNibNamed:@"JMLeftMenuView" owner:nil options:nil] lastObject];
     
+    customView.ProfileImage.layer.cornerRadius=17;
+    customView.ProfileImage.clipsToBounds=YES;
+    
     NSIndexPath *indexpath=[NSIndexPath indexPathForRow:2 inSection:0];
-//    [customView.LeftTable selectRowAtIndexPath:indexpath animated:YES  scrollPosition:UITableViewScrollPositionNone];
-//    
+    [customView.LeftMenuTable selectRowAtIndexPath:indexpath animated:YES  scrollPosition:UITableViewScrollPositionNone];
+    
+    [customView.NameLabel setFont:[UIFont fontWithName:customView.NameLabel.font.fontName size:[customView getFontSize:customView.NameLabel.font.pointSize]]];
+    [customView.ScoreLabel setFont:[UIFont fontWithName:customView.ScoreLabel.font.fontName size:[customView getFontSize:customView.ScoreLabel.font.pointSize]]];
+        
+    
+    customView.ScoreLabel.text=AMLocalizedString(@"SCORE:4.5/5", nil);
+    customView.NameLabel.text=AMLocalizedString(@"JOHN DOE", nil);
+//
 //    customView.lblUserName.text=[[NSUserDefaults standardUserDefaults] valueForKey:@"UserName"];
 //    
 //    if (customView.lblUserName.text.length==0)
@@ -54,5 +64,235 @@
         return nil;
     
     
+}
+#pragma mark - UITableView Delegates
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section;
+{
+    
+    return 8;
+//    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+//    NSString *userid=[prefs valueForKey:@"UserId"];
+//    if (userid.length==0)
+//    {
+//        return 9;
+//    }
+//    else
+//    {
+//        return 10;
+//    }
+    
+}
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSString *CellIdentifier = [NSString stringWithFormat:@"%ld,%ld",(long)indexPath.section,(long)indexPath.row];
+    
+    JMLeftMenuCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    cell = nil;
+    if (cell == nil)
+    {
+        cell = [[JMLeftMenuCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.backgroundColor=[UIColor clearColor];
+        
+        
+        cell.menuImg = [[UIImageView alloc] init];
+        cell.menuImg.frame = CGRectMake(30,14,20,20);
+        cell.menuImg.image = [UIImage imageNamed:@"my-chanel"];
+        cell.menuImg.tag=indexPath.row;
+        [cell addSubview:cell.menuImg];
+        
+        
+        
+        cell.menuName = [[UILabel alloc] init];
+        cell.menuName.frame = CGRectMake(62,14, cell.frame.size.width-70,20);
+        cell.menuName.tag=indexPath.row;
+        cell.menuName.textColor=[UIColor blackColor];
+        cell.menuName.textAlignment = NSTextAlignmentLeft;
+        cell.menuName.font = [UIFont fontWithName:@"ComicSansMS-Bold" size:12];
+        [cell addSubview:cell.menuName];
+        
+        if (IsIphone5)
+        {
+            cell.menuImg.frame = CGRectMake(30,14,20,20);
+            cell.menuName.frame = CGRectMake(62,14, cell.frame.size.width-70,20);
+            cell.menuName.font = [UIFont fontWithName:@"ComicSansMS-Bold" size:12];
+        }
+        else if (IsIphone6)
+        {
+            cell.menuImg.frame = CGRectMake(30,16,22,22);
+            cell.menuName.frame = CGRectMake(64,16, cell.frame.size.width-70,20);
+            cell.menuName.font = [UIFont fontWithName:@"ComicSansMS-Bold" size:14];
+        }
+        else if (IsIphone6plus)
+        {
+            cell.menuImg.frame = CGRectMake(30,18,24,24);
+            cell.menuName.frame = CGRectMake(66,18, cell.frame.size.width-70,20);
+            cell.menuName.font = [UIFont fontWithName:@"ComicSansMS-Bold" size:16];
+        }
+        
+        
+        
+        
+        if (indexPath.row==0)
+        {
+            cell.menuName.text = AMLocalizedString(@"MY CHANNEL",nil);
+            cell.menuImg.image = [UIImage imageNamed:@"my-chanel"];
+        }
+        else if (indexPath.row==1)
+        {
+            cell.menuName.text = AMLocalizedString(@"MY FAVOURITES",nil);
+            cell.menuImg.image = [UIImage imageNamed:@"favourite"];
+            
+           
+        }
+        else if (indexPath.row==2)
+        {
+            cell.menuName.text = AMLocalizedString(@"FOLLOWING",nil);
+            cell.menuImg.image = [UIImage imageNamed:@"following"];
+        }
+        else if (indexPath.row==3)
+        {
+            cell.menuName.text = AMLocalizedString(@"LATEST",nil);
+             cell.menuImg.image = [UIImage imageNamed:@"latest"];
+            
+        }
+        else if (indexPath.row==4)
+        {
+            cell.menuName.text = AMLocalizedString(@"HISTORY",nil);
+            cell.menuImg.image = [UIImage imageNamed:@"history"];
+        }
+        else if (indexPath.row==5)
+        {
+            cell.menuName.text = AMLocalizedString(@"PROFILE",nil);
+            cell.menuImg.image = [UIImage imageNamed:@"profile"];
+        }
+        else if (indexPath.row==6)
+        {
+            cell.menuName.text = AMLocalizedString(@"SETTINGS",nil);
+            cell.menuImg.image = [UIImage imageNamed:@"settings"];
+        }
+        else if (indexPath.row==7)
+        {
+            cell.menuName.text = AMLocalizedString(@"LOG OUT",nil);
+            cell.menuImg.image = [UIImage imageNamed:@"logout"];
+        }
+        
+        
+       
+    }
+    
+    return cell;
+    
+}
+//- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    
+//    NSIndexPath *currentSelectedIndexPath = [tableView indexPathForSelectedRow];
+//    if (currentSelectedIndexPath != nil)
+//    {
+//        
+//        
+//        [[tableView cellForRowAtIndexPath:currentSelectedIndexPath] setBackgroundColor:UIColorFromRGB(0x555F68)];
+//    }
+//    
+//    return indexPath;
+//}
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+  //  [[tableView cellForRowAtIndexPath:indexPath] setBackgroundColor:UIColorFromRGB(0x636F7C)];
+    
+    [SideDelegate action_method:indexPath.row];
+    
+    
+    
+//    LeftMenuCell * cell = [_LeftTable cellForRowAtIndexPath:indexPath];
+//    
+//    if (indexPath.row==0)
+//    {
+//        cell.menuImg.image = [UIImage imageNamed:@"Add Property-1"];
+//    }
+//    if (indexPath.row==1)
+//    {
+//        cell.menuImg.image = [UIImage imageNamed:@"wallet-2"];
+//    }
+//    else if (indexPath.row==2)
+//    {
+//        cell.menuImg.image = [UIImage imageNamed:@"Explore"];
+//    }
+//    else if (indexPath.row==3)
+//    {
+//        cell.menuImg.image = [UIImage imageNamed:@"LocationSelected"];
+//    }
+//    else if (indexPath.row==4)
+//    {
+//        cell.menuImg.image = [UIImage imageNamed:@"ConnectSelected"];
+//    }
+//    else if (indexPath.row==5)
+//    {
+//        cell.menuImg.image = [UIImage imageNamed:@"New Campaign-1"];
+//    }
+//    else if (indexPath.row==6)
+//    {
+//        cell.menuImg.image = [UIImage imageNamed:@"star-1"];
+//    }
+//    else if (indexPath.row==7)
+//    {
+//        cell.menuImg.image = [UIImage imageNamed:@"like-2"];
+//    }
+//    else if (indexPath.row==8)
+//    {
+//        cell.menuImg.image = [UIImage imageNamed:@"Combined Shape Copy-1"];
+//    }
+//    else if (indexPath.row==9)
+//    {
+//        cell.menuImg.image = [UIImage imageNamed:@"Log out-1"];
+//    }
+    
+    
+    
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (IsIphone5)
+    {
+        return 48;
+    }
+    else if (IsIphone6)
+    {
+       return 54;
+    }
+    else if (IsIphone6plus)
+    {
+       return 60;
+    }
+    else
+    {
+        return 60;
+    }
+    
+}
+-(CGFloat)getFontSize:(CGFloat)size
+{
+    
+    if (IsIphone5) {
+        
+        size+=1.0;
+    }
+    else
+        if (IsIphone6) {
+            
+            size+=3.0;
+        }
+        else  if (IsIphone6plus) {
+            
+            size+=4.0;
+        }
+    
+        else if (IsIpad)
+        {
+            size+=5.0;
+        }
+    return size;
 }
 @end
