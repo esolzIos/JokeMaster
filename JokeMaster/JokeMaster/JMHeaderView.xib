@@ -67,7 +67,7 @@
                     <rect key="frame" x="54" y="23" width="25" height="15"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                     <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="US" translatesAutoresizingMaskIntoConstraints="NO" id="Ze8-dU-S0K">
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="INDIA" translatesAutoresizingMaskIntoConstraints="NO" id="Ze8-dU-S0K">
                             <rect key="frame" x="0.0" y="0.0" width="25" height="15"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                         </imageView>
@@ -125,7 +125,7 @@
         </view>
     </objects>
     <resources>
-        <image name="US" width="114" height="60"/>
+        <image name="INDIA" width="640" height="427"/>
         <image name="back" width="36" height="13"/>
         <image name="hamburger-menu" width="32" height="25"/>
         <image name="logo" width="228" height="40"/>
