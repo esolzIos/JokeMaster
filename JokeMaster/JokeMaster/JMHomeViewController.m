@@ -146,10 +146,16 @@
 - (IBAction)likeClicked:(id)sender {
     
     [_optionView setHidden:YES];
+    
+ 
 }
 - (IBAction)playClicked:(id)sender {
     
+    
       [_optionView setHidden:YES];
+    JMPlayVideoViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMPlayVideoViewController"];
+    
+    [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
 }
 - (IBAction)shareClicked:(id)sender {
     
