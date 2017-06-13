@@ -8,8 +8,13 @@
 
 #import "JMPlayVideoViewController.h"
 
-@interface JMPlayVideoViewController ()
-
+@interface JMPlayVideoViewController ()<AVPlayerViewControllerDelegate>
+{
+AVPlayer *player;
+    
+    BOOL paused;
+    
+}
 @end
 
 @implementation JMPlayVideoViewController
@@ -19,16 +24,46 @@
     
         [_reviewTable setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     
-
+[_seekSlider setThumbImage:[UIImage imageNamed:@"circleslider"] forState:UIControlStateNormal];
+    [_seekSlider setThumbImage:[UIImage imageNamed:@"circleslider"] forState:UIControlStateSelected];
+    [_seekSlider setThumbImage:[UIImage imageNamed:@"circleslider"] forState:UIControlStateHighlighted];
+  ;
     
-    NSURL *videoURL = [NSURL URLWithString:@"https://github.com/versluis/Movie-Player/blob/master/Movie%20Player/video.mov?raw=true"];
+    NSURL *videoURL = [NSURL URLWithString:@"http://techslides.com/demos/sample-videos/small.mp4"];
     
-    AVPlayer *player = [AVPlayer playerWithURL:videoURL];
+   player = [AVPlayer playerWithURL:videoURL];
     
     // create a player view controller
     AVPlayerViewController *controller = [[AVPlayerViewController alloc]init];
     controller.player = player;
     [controller setVideoGravity:AVLayerVideoGravityResizeAspectFill];
+ 
+    controller.showsPlaybackControls=NO;
+    
+    
+    _seekSlider.maximumValue = CMTimeGetSeconds(player.currentItem.asset.duration);
+    _seekSlider.value = 0.0;
+    
+  //  [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(updateTime:) userInfo:nil repeats:YES];
+
+    CMTime interval = CMTimeMakeWithSeconds(1.0, NSEC_PER_SEC);
+    
+[player addPeriodicTimeObserverForInterval:interval queue:NULL usingBlock:^(CMTime time) {
+        _seekSlider.value = CMTimeGetSeconds( player.currentItem.currentTime);
+        
+        AVPlayerItem *currentItem = player.currentItem;
+        NSTimeInterval currentTime = CMTimeGetSeconds(currentItem.currentTime);
+        NSLog(@" Capturing Time :%f ",currentTime);
+        
+        NSUInteger dTotalSeconds = CMTimeGetSeconds(currentItem.currentTime);
+        
+        NSUInteger dMinutes = floor(dTotalSeconds % 3600 / 60);
+        NSUInteger dSeconds = floor(dTotalSeconds % 3600 % 60);
+        
+        NSString *videoDurationText = [NSString stringWithFormat:@"%02lu:%02lu", (unsigned long)dMinutes, (unsigned long)dSeconds];
+        
+        [_timeLbl setText:[NSString stringWithFormat:@"%@",videoDurationText]];
+    }];
     
      [player play];
     
@@ -124,4 +159,38 @@
     [self.navigationController popViewControllerAnimated:YES];
     
 }
+
+
+- (void)updateTime:(NSTimer *)timer {
+ 
+ 
+}
+- (IBAction)sliderValueChange:(id)sender {
+    
+    int32_t timeScale = player.currentItem.asset.duration.timescale;
+    [player seekToTime:CMTimeMakeWithSeconds(_seekSlider.value,timeScale)];
+    
+}
+
+
+- (IBAction)pausePlayClicked:(id)sender
+{
+    if (!paused) {
+        paused=true;
+        [_pausePlayBtn setImage:[UIImage imageNamed:@"play-1"] forState:UIControlStateNormal];
+        
+        [player pause];
+        
+    }
+    else{
+        paused=false;
+        [_pausePlayBtn setImage:[UIImage imageNamed:@"pause"] forState:UIControlStateNormal];
+        
+        [player play];
+    }
+    
+ 
+
+}
+
 @end

@@ -738,6 +738,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution: ESolz Technologies Pvt Ltd (K22GQFS8BW)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: ESolz Technologies Pvt Ltd (K22GQFS8BW)";
 				DEVELOPMENT_TEAM = K22GQFS8BW;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/JokeMaster",
@@ -763,6 +764,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution: ESolz Technologies Pvt Ltd (K22GQFS8BW)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: ESolz Technologies Pvt Ltd (K22GQFS8BW)";
 				DEVELOPMENT_TEAM = K22GQFS8BW;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/JokeMaster",

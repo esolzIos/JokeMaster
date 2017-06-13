@@ -21,4 +21,10 @@
 @property (strong, nonatomic) IBOutlet UIButton *ratingBtn;
 - (IBAction)ratingClicked:(id)sender;
 - (IBAction)backClicked:(id)sender;
+@property (strong, nonatomic) IBOutlet UISlider *seekSlider;
+@property (strong, nonatomic) IBOutlet UILabel *timeLbl;
+@property (strong, nonatomic) IBOutlet UIButton *resizeBtn;
+- (IBAction)sliderValueChange:(id)sender;
+@property (strong, nonatomic) IBOutlet UIButton *pausePlayBtn;
+- (IBAction)pausePlayClicked:(id)sender;
 @end
