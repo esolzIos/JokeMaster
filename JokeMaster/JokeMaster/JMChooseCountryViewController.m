@@ -55,6 +55,21 @@
     
 [_languagePicker setDelegate:self];
     
+    
+    if ([codeArr containsObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"language"]]) {
+        
+        rowSelected=(int)[codeArr indexOfObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"language"]];
+        
+        [_LanguageLabel setText:[langArr objectAtIndex:rowSelected]];
+        
+        CountryArray = [[langDict objectForKey:[codeArr objectAtIndex:rowSelected]] copy];
+        
+        [_CountryTable reloadData];
+        
+    }
+ 
+
+    
 }
 #pragma mark - UITableView Delegates
 

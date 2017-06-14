@@ -27,4 +27,28 @@
 - (IBAction)sliderValueChange:(id)sender;
 @property (strong, nonatomic) IBOutlet UIButton *pausePlayBtn;
 - (IBAction)pausePlayClicked:(id)sender;
+@property (strong, nonatomic) IBOutlet UIView *gobackView;
+@property (strong, nonatomic) IBOutlet UIButton *gobackBtn;
+@property (strong, nonatomic) IBOutlet UIView *ownerView;
+@property (strong, nonatomic) IBOutlet UIView *ownerPicView;
+@property (strong, nonatomic) IBOutlet UIImageView *ownerImage;
+@property (strong, nonatomic) IBOutlet UILabel *ownerName;
+@property (strong, nonatomic) IBOutlet UILabel *rankLbl;
+@property (strong, nonatomic) IBOutlet UIButton *shareBtn;
+- (IBAction)shareClicked:(id)sender;
+@property (strong, nonatomic) IBOutlet UIButton *reportBtn;
+- (IBAction)reportClicked:(id)sender;
+@property (strong, nonatomic) IBOutlet UIView *reviewHeaderView;
+@property (strong, nonatomic) IBOutlet UILabel *reviewsLbl;
+@property (strong, nonatomic) IBOutlet UIView *commentView;
+@property (strong, nonatomic) IBOutlet UILabel *commentTitle;
+@property (strong, nonatomic) IBOutlet UIView *ratingView;
+@property (strong, nonatomic) IBOutlet UIImageView *rating1;
+@property (strong, nonatomic) IBOutlet UIImageView *rating2;
+@property (strong, nonatomic) IBOutlet UIImageView *rating3;
+@property (strong, nonatomic) IBOutlet UIImageView *rating4;
+@property (strong, nonatomic) IBOutlet UIImageView *rating5;
+@property (strong, nonatomic) IBOutlet UILabel *ratingLbl;
+- (IBAction)resizeClicked:(id)sender;
+
 @end

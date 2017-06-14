@@ -7,6 +7,7 @@
 //
 
 #import "JMPlayVideoViewController.h"
+#import "ReviewsTableViewCell.h"
 
 @interface JMPlayVideoViewController ()<AVPlayerViewControllerDelegate>
 {
@@ -29,16 +30,27 @@ AVPlayer *player;
     [_seekSlider setThumbImage:[UIImage imageNamed:@"circleslider"] forState:UIControlStateHighlighted];
   ;
     
+
+    
     NSURL *videoURL = [NSURL URLWithString:@"http://techslides.com/demos/sample-videos/small.mp4"];
     
-   player = [AVPlayer playerWithURL:videoURL];
+    
+    AVPlayerItem *item = [AVPlayerItem playerItemWithURL:videoURL];
+ 
+   player = [AVPlayer playerWithPlayerItem:item];
+    
+    
+    CALayer *superlayer = _playerView.layer;
+    
+    AVPlayerLayer *playerLayer = [AVPlayerLayer playerLayerWithPlayer:player];
+    [playerLayer setFrame:self.playerView.bounds];
+    playerLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
+    [superlayer addSublayer:playerLayer];
+
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(playerDidFinishPlaying:) name:AVPlayerItemDidPlayToEndTimeNotification object:item];
+
     
     // create a player view controller
-    AVPlayerViewController *controller = [[AVPlayerViewController alloc]init];
-    controller.player = player;
-    [controller setVideoGravity:AVLayerVideoGravityResizeAspectFill];
- 
-    controller.showsPlaybackControls=NO;
     
     
     _seekSlider.maximumValue = CMTimeGetSeconds(player.currentItem.asset.duration);
@@ -52,10 +64,7 @@ AVPlayer *player;
         _seekSlider.value = CMTimeGetSeconds( player.currentItem.currentTime);
         
         AVPlayerItem *currentItem = player.currentItem;
-        NSTimeInterval currentTime = CMTimeGetSeconds(currentItem.currentTime);
-        NSLog(@" Capturing Time :%f ",currentTime);
-        
-        NSUInteger dTotalSeconds = CMTimeGetSeconds(currentItem.currentTime);
+      NSUInteger dTotalSeconds = CMTimeGetSeconds(currentItem.currentTime);
         
         NSUInteger dMinutes = floor(dTotalSeconds % 3600 / 60);
         NSUInteger dSeconds = floor(dTotalSeconds % 3600 % 60);
@@ -64,15 +73,11 @@ AVPlayer *player;
         
         [_timeLbl setText:[NSString stringWithFormat:@"%@",videoDurationText]];
     }];
-    
+     [player seekToTime:kCMTimeZero];
      [player play];
     
     // show the view controller
-    [self addChildViewController:controller];
-       [_playerView addSubview:controller.view];
-        controller.view.frame= CGRectMake(0, 0, _playerView.frame.size.width, _playerView.frame.size.height);
- 
-    [self setRoundCornertoView:_videoThumb withBorderColor:[UIColor clearColor] WithRadius:0.15];
+      [self setRoundCornertoView:_videoThumb withBorderColor:[UIColor clearColor] WithRadius:0.15];
     
     
       [self setRoundCornertoView:_playerView withBorderColor:[UIColor clearColor] WithRadius:0.15];
@@ -82,61 +87,59 @@ AVPlayer *player;
 
 
 #pragma mark - UITableView Delegates
-//
-//- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section;
-//{
-//    return 0;
-//    
-//}
-//- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    
-////    NSString *identifier = @"CountryCell";
-////    
-////    CountryCell *cell = (CountryCell *)[tableView dequeueReusableCellWithIdentifier:identifier];
-////    
-////    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-////    
-////    cell.CheckImage.tag=indexPath.row+500;
-////    cell.CheckButton.tag=indexPath.row;
-////    [cell.CheckButton addTarget:self action:@selector(CheckButtonTap:) forControlEvents:UIControlEventTouchUpInside];
-////    
-////    return cell;
-////    
-////    
-//    
-//    
-//    
-//}
-//- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-////    if (IsIphone5 || IsIphone4)
-////    {
-////        return 50;
-////    }
-////    else
-////    {
-////        return 60;
-////    }
-//    
-//}
-//
-//-(void) tableView:(UITableView *)tableView willDisplayCell:(CountryCell *) cell forRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    
-//    
-//    
-//    
-//    [cell.CountryImage setImage:[UIImage imageNamed:[CountryArray objectAtIndex:indexPath.row]]] ;
-//    
-//    [cell.CountryLabel setText:AMLocalizedString([[CountryArray objectAtIndex:indexPath.row]uppercaseString], nil) ];
-//    
-//    
-//}
-//- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    
-//}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section;
+{
+    return 5;
+    
+}
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    NSString *identifier = @"reviewCell";
+    
+    ReviewsTableViewCell *cell = (ReviewsTableViewCell *)[tableView dequeueReusableCellWithIdentifier:identifier];
+    
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
+    
+    return cell;
+    
+    
+    
+    
+    
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+//    if (IsIphone5 || IsIphone4)
+//    {
+//        return 50;
+//    }
+//    else
+//    {
+//        return 60;
+//    }
+    
+    return 100.0/480.0*FULLHEIGHT;
+    
+}
+
+-(void) tableView:(UITableView *)tableView willDisplayCell:(ReviewsTableViewCell *) cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    
+    
+    
+    [self setRoundCornertoView:cell.userImage withBorderColor:[UIColor clearColor] WithRadius:0.5];
+    
+    
+    
+}
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+}
 
 
 - (void)didReceiveMemoryWarning {
@@ -193,4 +196,27 @@ AVPlayer *player;
 
 }
 
+- (IBAction)shareClicked:(id)sender {
+}
+- (IBAction)reportClicked:(id)sender {
+}
+- (IBAction)resizeClicked:(id)sender {
+    
+    AVPlayerViewController *controller = [[AVPlayerViewController alloc]init];
+    controller.player = player;
+    [controller setVideoGravity:AVLayerVideoGravityResizeAspectFill];
+    
+
+    
+    [self.navigationController presentViewController:controller animated:YES completion:nil];
+    
+
+}
+
+-(void)playerDidFinishPlaying:(NSNotification *)notification {
+    paused=true;
+    [_pausePlayBtn setImage:[UIImage imageNamed:@"play-1"] forState:UIControlStateNormal];
+    
+  [player seekToTime:kCMTimeZero];
+  }
 @end

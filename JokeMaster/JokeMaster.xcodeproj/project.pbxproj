@@ -39,6 +39,7 @@
 		B07ABADC1EE58E740011DD57 /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B07ABADB1EE58E740011DD57 /* SafariServices.framework */; };
 		B07ABADE1EE58E790011DD57 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B07ABADD1EE58E790011DD57 /* SystemConfiguration.framework */; };
 		B07ABAE01EE590580011DD57 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B07ABADF1EE590580011DD57 /* GoogleService-Info.plist */; };
+		B08609D01EF118CF00E8D84A /* ReviewsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B08609CF1EF118CF00E8D84A /* ReviewsTableViewCell.m */; };
 		B0A32B401EE1292F0044D443 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B0A32B3F1EE1292F0044D443 /* main.m */; };
 		B0A32B431EE1292F0044D443 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B0A32B421EE1292F0044D443 /* AppDelegate.m */; };
 		B0A32B491EE129300044D443 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B0A32B471EE129300044D443 /* Main.storyboard */; };
@@ -130,6 +131,8 @@
 		B07ABADB1EE58E740011DD57 /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
 		B07ABADD1EE58E790011DD57 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		B07ABADF1EE590580011DD57 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		B08609CE1EF118CF00E8D84A /* ReviewsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReviewsTableViewCell.h; sourceTree = "<group>"; };
+		B08609CF1EF118CF00E8D84A /* ReviewsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReviewsTableViewCell.m; sourceTree = "<group>"; };
 		B0A32B3B1EE1292F0044D443 /* JokeMaster.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JokeMaster.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0A32B3F1EE1292F0044D443 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		B0A32B411EE1292F0044D443 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -227,6 +230,8 @@
 				0C91CFBC1EEE5B7A00123303 /* JMCategoryCell.m */,
 				0C429C401EF0038E00A42F07 /* JMLeftMenuCell.h */,
 				0C429C411EF0038E00A42F07 /* JMLeftMenuCell.m */,
+				B08609CE1EF118CF00E8D84A /* ReviewsTableViewCell.h */,
+				B08609CF1EF118CF00E8D84A /* ReviewsTableViewCell.m */,
 			);
 			name = Cell;
 			sourceTree = "<group>";
@@ -563,6 +568,7 @@
 				0C3E27751EEBCD3B0075B104 /* JMRecentUploadedCollectionViewCell.m in Sources */,
 				0C429C421EF0038E00A42F07 /* JMLeftMenuCell.m in Sources */,
 				B0A32B8E1EE131680044D443 /* SVProgressAnimatedView.m in Sources */,
+				B08609D01EF118CF00E8D84A /* ReviewsTableViewCell.m in Sources */,
 				0C58274E1EE9316F00480E19 /* JMLeftMenuView.m in Sources */,
 				0C429BFA1EEFAB2900A42F07 /* JMPlayVideoViewController.m in Sources */,
 				0C6F9E361EE14E84005D31A0 /* CountryCell.m in Sources */,
