@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0C3AFB781EF15CA90037834A /* JMFavouriteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C3AFB771EF15CA90037834A /* JMFavouriteViewController.m */; };
+		0C3AFB7B1EF162820037834A /* JMFavouriteCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C3AFB7A1EF162820037834A /* JMFavouriteCell.m */; };
 		0C3E27721EEBBFF70075B104 /* JMRecentlyUploadedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C3E27711EEBBFF70075B104 /* JMRecentlyUploadedViewController.m */; };
 		0C3E27751EEBCD3B0075B104 /* JMRecentUploadedCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C3E27741EEBCD3B0075B104 /* JMRecentUploadedCollectionViewCell.m */; };
 		0C429BFA1EEFAB2900A42F07 /* JMPlayVideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C429BF91EEFAB2900A42F07 /* JMPlayVideoViewController.m */; };
@@ -77,6 +79,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0C3AFB761EF15CA90037834A /* JMFavouriteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMFavouriteViewController.h; sourceTree = "<group>"; };
+		0C3AFB771EF15CA90037834A /* JMFavouriteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMFavouriteViewController.m; sourceTree = "<group>"; };
+		0C3AFB791EF162820037834A /* JMFavouriteCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMFavouriteCell.h; sourceTree = "<group>"; };
+		0C3AFB7A1EF162820037834A /* JMFavouriteCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMFavouriteCell.m; sourceTree = "<group>"; };
 		0C3E27701EEBBFF70075B104 /* JMRecentlyUploadedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMRecentlyUploadedViewController.h; sourceTree = "<group>"; };
 		0C3E27711EEBBFF70075B104 /* JMRecentlyUploadedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMRecentlyUploadedViewController.m; sourceTree = "<group>"; };
 		0C3E27731EEBCD3B0075B104 /* JMRecentUploadedCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMRecentUploadedCollectionViewCell.h; sourceTree = "<group>"; };
@@ -232,6 +238,8 @@
 				0C429C411EF0038E00A42F07 /* JMLeftMenuCell.m */,
 				B08609CE1EF118CF00E8D84A /* ReviewsTableViewCell.h */,
 				B08609CF1EF118CF00E8D84A /* ReviewsTableViewCell.m */,
+				0C3AFB791EF162820037834A /* JMFavouriteCell.h */,
+				0C3AFB7A1EF162820037834A /* JMFavouriteCell.m */,
 			);
 			name = Cell;
 			sourceTree = "<group>";
@@ -366,6 +374,8 @@
 				0C3E27711EEBBFF70075B104 /* JMRecentlyUploadedViewController.m */,
 				0C91CFC11EEE92F400123303 /* JMJokesCategoryVideoListViewController.h */,
 				0C91CFC21EEE92F400123303 /* JMJokesCategoryVideoListViewController.m */,
+				0C3AFB761EF15CA90037834A /* JMFavouriteViewController.h */,
+				0C3AFB771EF15CA90037834A /* JMFavouriteViewController.m */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -553,6 +563,7 @@
 			files = (
 				B0A32B801EE12F0C0044D443 /* JMSplashViewController.m in Sources */,
 				B0A32B4C1EE129300044D443 /* JokeMaster.xcdatamodeld in Sources */,
+				0C3AFB781EF15CA90037834A /* JMFavouriteViewController.m in Sources */,
 				0C91CFBD1EEE5B7A00123303 /* JMCategoryCell.m in Sources */,
 				B0A32B431EE1292F0044D443 /* AppDelegate.m in Sources */,
 				0C5827491EE9205600480E19 /* JMHomeViewController.m in Sources */,
@@ -562,6 +573,7 @@
 				B0A32B401EE1292F0044D443 /* main.m in Sources */,
 				B0A32B901EE131680044D443 /* SVProgressHUD.m in Sources */,
 				0C6F9E311EE14A7B005D31A0 /* JMChooseCountryViewController.m in Sources */,
+				0C3AFB7B1EF162820037834A /* JMFavouriteCell.m in Sources */,
 				0CE2FB481EE190E50031C0E6 /* JMRegistrationViewController.m in Sources */,
 				B0A32B8D1EE131680044D443 /* SVIndefiniteAnimatedView.m in Sources */,
 				B0A32B7C1EE12E4E0044D443 /* JMGlobalMethods.m in Sources */,
