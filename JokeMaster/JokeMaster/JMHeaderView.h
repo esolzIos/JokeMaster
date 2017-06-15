@@ -23,5 +23,6 @@
 
 @property (weak, nonatomic) IBOutlet UIImageView *RecentUploadImage;
 @property (strong, nonatomic) IBOutlet UIButton *langBtn;
+@property (weak, nonatomic) IBOutlet UILabel *HeaderLabel;
 
 @end

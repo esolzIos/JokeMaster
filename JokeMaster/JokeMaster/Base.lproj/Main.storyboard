@@ -1755,7 +1755,7 @@
                                                         <rect key="frame" x="0.0" y="1" width="320" height="100"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="9SQ-aj-0YR" id="rdh-n1-4Uz">
-                                                            <rect key="frame" x="0.0" y="0.0" width="320" height="99.5"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="320" height="99"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="ALEX MONDAL" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="2TF-2J-AoI">
@@ -2028,6 +2028,201 @@
             </objects>
             <point key="canvasLocation" x="3085" y="76"/>
         </scene>
+        <!--Profile View Controller-->
+        <scene sceneID="nxr-Ud-FSF">
+            <objects>
+                <viewController storyboardIdentifier="JMProfile" useStoryboardIdentifierAsRestorationIdentifier="YES" id="a9z-lR-cCV" customClass="JMProfileViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Az8-CI-PMs">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" misplaced="YES" id="dRm-Jr-wMi">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Recent-background" id="BBf-Cl-524">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    </imageView>
+                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" id="41r-m4-lTX">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" id="pe6-cr-wGX">
+                                                <rect key="frame" x="-3" y="-2" width="324" height="188"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                                <subviews>
+                                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="smiling" id="ZME-YB-C1V">
+                                                        <rect key="frame" x="89" y="47" width="146" height="88"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                                    </imageView>
+                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profile-pic-frame" id="1ij-67-Z2B">
+                                                        <rect key="frame" x="0.0" y="0.0" width="324" height="188"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                                    </imageView>
+                                                </subviews>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                            </view>
+                                            <view contentMode="scaleToFill" misplaced="YES" id="dpJ-wZ-EgA" customClass="JMHeaderView">
+                                                <rect key="frame" x="0.0" y="0.0" width="320" height="55"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                            </view>
+                                            <view contentMode="scaleToFill" id="fA1-ip-W8i">
+                                                <rect key="frame" x="-3" y="144" width="324" height="108"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="JOHN DOE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="CGl-6h-oxa">
+                                                        <rect key="frame" x="0.0" y="5" width="324" height="18"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                                        <fontDescription key="fontDescription" name="ComicBook" family="Comic Book" pointSize="13"/>
+                                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SCORE : 4.5/5 | JOKE MASTER RANK: 59/5300" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Jeu-ZB-YKC">
+                                                        <rect key="frame" x="0.0" y="29" width="324" height="21"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                                        <fontDescription key="fontDescription" name="ComicBook" family="Comic Book" pointSize="10"/>
+                                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MEMBER SINCE 10/05/2017" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Ro0-Gy-7gb">
+                                                        <rect key="frame" x="0.0" y="49" width="324" height="19"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                                        <fontDescription key="fontDescription" name="ComicBook" family="Comic Book" pointSize="8"/>
+                                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <view contentMode="scaleToFill" id="N9F-kg-GOv">
+                                                        <rect key="frame" x="95" y="73" width="129" height="29"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                                        <subviews>
+                                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="follow" id="gUW-yy-y50">
+                                                                <rect key="frame" x="0.0" y="0.0" width="129" height="29"/>
+                                                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                                            </imageView>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="QMO-lD-aIa">
+                                                                <rect key="frame" x="0.0" y="0.0" width="129" height="29"/>
+                                                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                                                <fontDescription key="fontDescription" name="ComicBook" family="Comic Book" pointSize="11"/>
+                                                                <state key="normal" title="FOLLOW">
+                                                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                                                </state>
+                                                                <connections>
+                                                                    <action selector="followClicked:" destination="a9z-lR-cCV" eventType="touchUpInside" id="5KE-Vb-OdJ"/>
+                                                                </connections>
+                                                            </button>
+                                                        </subviews>
+                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                    </view>
+                                                </subviews>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                            </view>
+                                            <view contentMode="scaleToFill" id="8p9-lk-NfB">
+                                                <rect key="frame" x="165" y="252" width="140" height="28"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="UPLOADED CATEGORIES" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="AwM-BH-9h5">
+                                                        <rect key="frame" x="0.0" y="6" width="140" height="15"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                                        <fontDescription key="fontDescription" name="ComicBook" family="Comic Book" pointSize="9"/>
+                                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Q33-4L-1P5">
+                                                        <rect key="frame" x="0.0" y="0.0" width="140" height="28"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                                        <fontDescription key="fontDescription" name="ComicSansMS-Bold" family="Comic Sans MS" pointSize="11"/>
+                                                        <state key="normal">
+                                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                        </state>
+                                                    </button>
+                                                </subviews>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                            </view>
+                                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" id="17E-Re-WCc">
+                                                <rect key="frame" x="-3" y="280" width="324" height="202"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="E1p-nY-vhU">
+                                                    <size key="itemSize" width="107" height="105"/>
+                                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                </collectionViewFlowLayout>
+                                                <cells>
+                                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="JMRecentUploadedCollectionViewCell" reuseIdentifier="JMRecentUploadedCollectionViewCell" id="SDP-IP-CF1" customClass="JMRecentUploadedCollectionViewCell">
+                                                        <rect key="frame" x="0.0" y="0.0" width="107" height="105"/>
+                                                        <autoresizingMask key="autoresizingMask"/>
+                                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                                            <rect key="frame" x="0.0" y="0.0" width="107" height="105"/>
+                                                            <autoresizingMask key="autoresizingMask"/>
+                                                            <subviews>
+                                                                <view contentMode="scaleToFill" id="45h-Ph-gNY">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="107" height="105"/>
+                                                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                                                    <subviews>
+                                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dog1" id="YP3-DI-ICC">
+                                                                            <rect key="frame" x="17" y="17" width="73" height="50"/>
+                                                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                                                        </imageView>
+                                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tv-frame-Collection" id="nXs-Y4-w0v">
+                                                                            <rect key="frame" x="7" y="9" width="93" height="78"/>
+                                                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                                                        </imageView>
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ANIMAL JOKES" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="YB9-Ew-R55">
+                                                                            <rect key="frame" x="7" y="87" width="94" height="15"/>
+                                                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                                                            <fontDescription key="fontDescription" name="ComicBook" family="Comic Book" pointSize="9"/>
+                                                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                                            <nil key="highlightedColor"/>
+                                                                        </label>
+                                                                    </subviews>
+                                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                                </view>
+                                                            </subviews>
+                                                        </view>
+                                                        <connections>
+                                                            <outlet property="CategoryNameLabel" destination="YB9-Ew-R55" id="N7m-dL-MAV"/>
+                                                            <outlet property="VideoThumpnailImage" destination="YP3-DI-ICC" id="rpK-Gy-yvT"/>
+                                                        </connections>
+                                                    </collectionViewCell>
+                                                </cells>
+                                                <connections>
+                                                    <outlet property="dataSource" destination="a9z-lR-cCV" id="jqG-jN-hd5"/>
+                                                    <outlet property="delegate" destination="a9z-lR-cCV" id="wIL-dx-ig1"/>
+                                                </connections>
+                                            </collectionView>
+                                        </subviews>
+                                    </scrollView>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <outlet property="CategoryLabel" destination="AwM-BH-9h5" id="WCd-4Q-L4s"/>
+                        <outlet property="CategoryView" destination="8p9-lk-NfB" id="Cup-Qb-AlB"/>
+                        <outlet property="HeaderView" destination="dpJ-wZ-EgA" id="FBW-6p-PDP"/>
+                        <outlet property="MainScroll" destination="41r-m4-lTX" id="mhg-jT-5mI"/>
+                        <outlet property="MainView" destination="dRm-Jr-wMi" id="A9X-om-gj7"/>
+                        <outlet property="categoryCollectionView" destination="17E-Re-WCc" id="X1P-HN-duJ"/>
+                        <outlet property="followBtn" destination="QMO-lD-aIa" id="paf-Ot-3ih"/>
+                        <outlet property="followView" destination="N9F-kg-GOv" id="Qrr-JM-D0J"/>
+                        <outlet property="imageFrame" destination="1ij-67-Z2B" id="C12-Vy-4GM"/>
+                        <outlet property="infoView" destination="fA1-ip-W8i" id="2aB-Nv-Dss"/>
+                        <outlet property="membershipDate" destination="Ro0-Gy-7gb" id="add-0f-h0w"/>
+                        <outlet property="profileImage" destination="ZME-YB-C1V" id="Aid-hT-fko"/>
+                        <outlet property="profileImgView" destination="pe6-cr-wGX" id="5He-gZ-HTR"/>
+                        <outlet property="scoreLbl" destination="Jeu-ZB-YKC" id="cxX-gW-OcE"/>
+                        <outlet property="userName" destination="CGl-6h-oxa" id="bO9-TV-CdB"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vUq-mW-HcO" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="813" y="660"/>
+        </scene>
     </scenes>
     <resources>
         <image name="Background" width="621" height="1104"/>
@@ -2049,6 +2244,7 @@
         <image name="emotion2" width="24" height="30"/>
         <image name="facebook-button" width="542" height="119"/>
         <image name="film-bg" width="484" height="428"/>
+        <image name="follow" width="255" height="65"/>
         <image name="frame" width="119" height="103"/>
         <image name="google-plus" width="542" height="119"/>
         <image name="input-box" width="527" height="104"/>
@@ -2058,6 +2254,7 @@
         <image name="overlay-bg" width="621" height="635"/>
         <image name="pause" width="16" height="25"/>
         <image name="play" width="107" height="105"/>
+        <image name="profile-pic-frame" width="621" height="440"/>
         <image name="report" width="17" height="27"/>
         <image name="share" width="49" height="52"/>
         <image name="share-1" width="27" height="24"/>

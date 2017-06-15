@@ -157,6 +157,11 @@
     }];
     
 }
+#pragma mark - status bar white color
+- (UIStatusBarStyle)preferredStatusBarStyle
+{
+    return UIStatusBarStyleLightContent;
+}
 //-(NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
 //
 //    // [[UIButton appearance] setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];

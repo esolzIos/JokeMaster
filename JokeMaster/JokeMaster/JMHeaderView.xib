@@ -9,8 +9,8 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
-        <array key="comicbd_1.ttf">
-            <string>ComicSansMS-Bold</string>
+        <array key="GROBOLD.ttf">
+            <string>GROBOLD</string>
         </array>
     </customFonts>
     <objects>
@@ -18,6 +18,7 @@
             <connections>
                 <outlet property="BackButton" destination="MSD-Np-isc" id="wgA-tP-0xx"/>
                 <outlet property="BackView" destination="fZ1-ye-g9I" id="E1f-xq-a1m"/>
+                <outlet property="HeaderLabel" destination="isb-Gx-rfe" id="1dz-Bw-uiV"/>
                 <outlet property="MenuButton" destination="dFz-MY-4bI" id="9AW-uu-xNm"/>
                 <outlet property="RecentUploadImage" destination="LbF-t7-cTZ" id="7WT-b1-Ew7"/>
                 <outlet property="langBtn" destination="jr6-xA-2pX" id="f9e-hZ-BHm"/>
@@ -92,9 +93,9 @@
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                 </imageView>
                 <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="isb-Gx-rfe">
-                    <rect key="frame" x="53" y="19" width="214" height="21"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <fontDescription key="fontDescription" name="ComicSansMS-Bold" family="Comic Sans MS" pointSize="18"/>
+                    <rect key="frame" x="53" y="17" width="214" height="40"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" name="GROBOLD" family="GROBOLD" pointSize="18"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
@@ -133,7 +134,7 @@
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="-91" y="-367"/>
+            <point key="canvasLocation" x="-91" y="-375"/>
         </view>
     </objects>
     <resources>

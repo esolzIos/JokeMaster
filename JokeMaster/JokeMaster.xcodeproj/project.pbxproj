@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0C35E1EC1EF2999500D2CBCE /* HCSStarRatingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C35E1EB1EF2999500D2CBCE /* HCSStarRatingView.m */; };
+		0C35E1EE1EF2AFC100D2CBCE /* GROBOLD.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0C35E1ED1EF2AFC100D2CBCE /* GROBOLD.ttf */; };
 		0C3AFB781EF15CA90037834A /* JMFavouriteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C3AFB771EF15CA90037834A /* JMFavouriteViewController.m */; };
 		0C3AFB7B1EF162820037834A /* JMFavouriteCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C3AFB7A1EF162820037834A /* JMFavouriteCell.m */; };
 		0C3E27721EEBBFF70075B104 /* JMRecentlyUploadedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C3E27711EEBBFF70075B104 /* JMRecentlyUploadedViewController.m */; };
@@ -83,6 +84,7 @@
 /* Begin PBXFileReference section */
 		0C35E1EA1EF2999500D2CBCE /* HCSStarRatingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HCSStarRatingView.h; sourceTree = "<group>"; };
 		0C35E1EB1EF2999500D2CBCE /* HCSStarRatingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HCSStarRatingView.m; sourceTree = "<group>"; };
+		0C35E1ED1EF2AFC100D2CBCE /* GROBOLD.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = GROBOLD.ttf; sourceTree = "<group>"; };
 		0C3AFB761EF15CA90037834A /* JMFavouriteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMFavouriteViewController.h; sourceTree = "<group>"; };
 		0C3AFB771EF15CA90037834A /* JMFavouriteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMFavouriteViewController.m; sourceTree = "<group>"; };
 		0C3AFB791EF162820037834A /* JMFavouriteCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMFavouriteCell.h; sourceTree = "<group>"; };
@@ -346,6 +348,7 @@
 		B0A32B751EE12C110044D443 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				0C35E1ED1EF2AFC100D2CBCE /* GROBOLD.ttf */,
 				B0A32B741EE12BD50044D443 /* comicbd_1.ttf */,
 				B0779D6E1EEBD2260065FECD /* Comic_Book.ttf */,
 			);
@@ -555,6 +558,7 @@
 				B0A32B491EE129300044D443 /* Main.storyboard in Resources */,
 				0C48BFB81EE82DA400CD1C2A /* JMHeaderView.xib in Resources */,
 				0C48BFAF1EE7CD6F00CD1C2A /* Localizable.strings in Resources */,
+				0C35E1EE1EF2AFC100D2CBCE /* GROBOLD.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

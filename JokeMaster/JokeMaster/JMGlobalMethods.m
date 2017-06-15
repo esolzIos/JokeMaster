@@ -63,7 +63,7 @@
     CurrentViewController = NSStringFromClass([topMostViewControllerObj class]);
     NSLog(@"controller=%@",CurrentViewController);
     
-    if ([CurrentViewController isEqualToString:@"JMHomeViewController"]||[CurrentViewController isEqualToString:@"JMProfileViewController"])
+    if ([CurrentViewController isEqualToString:@"JMHomeViewController"])
     {
         // leftmenurowindex=2;
         
@@ -94,6 +94,19 @@
         
     }
     else if ([CurrentViewController isEqualToString:@"JMJokesCategoryVideoListViewController"] || [CurrentViewController isEqualToString:@"JMFavouriteViewController"])
+    {
+        // leftmenurowindex=2;
+        
+        HeaderView.logoImage.hidden=YES;
+        HeaderView.menuView.hidden=YES;
+        
+        HeaderView.RecentUploadImage.hidden=NO;
+        HeaderView.BackView.hidden=NO;
+        
+        [HeaderView.BackButton addTarget:self action:@selector(BackClicked) forControlEvents:UIControlEventTouchUpInside];
+        
+    }
+    else if ([CurrentViewController isEqualToString:@"JMProfileViewController"] )
     {
         // leftmenurowindex=2;
         
@@ -2979,9 +2992,9 @@
         }
         else
         {
-            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Temp" bundle: nil];
+//            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Temp" bundle: nil];
             
-            JMGlobalMethods *VC=[storyboard instantiateViewControllerWithIdentifier:@"JMProfile"];
+            JMGlobalMethods *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMProfile"];
             [self.navigationController pushViewController:VC animated:kCAMediaTimingFunctionEaseIn];
             //                if (userid.length==0)
             //                {
