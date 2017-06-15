@@ -109,26 +109,26 @@
         cell.menuName.tag=indexPath.row;
         cell.menuName.textColor=[UIColor blackColor];
         cell.menuName.textAlignment = NSTextAlignmentLeft;
-        cell.menuName.font = [UIFont fontWithName:@"ComicSansMS-Bold" size:12];
+        cell.menuName.font = [UIFont fontWithName:ComicbkITalic size:12];
         [cell addSubview:cell.menuName];
         
         if (IsIphone5)
         {
             cell.menuImg.frame = CGRectMake(30,14,20,20);
             cell.menuName.frame = CGRectMake(62,14, cell.frame.size.width-70,20);
-            cell.menuName.font = [UIFont fontWithName:@"ComicSansMS-Bold" size:12];
+            cell.menuName.font = [UIFont fontWithName:@"ComicBook" size:12];
         }
         else if (IsIphone6)
         {
             cell.menuImg.frame = CGRectMake(30,16,22,22);
             cell.menuName.frame = CGRectMake(64,16, cell.frame.size.width-70,20);
-            cell.menuName.font = [UIFont fontWithName:@"ComicSansMS-Bold" size:14];
+            cell.menuName.font = [UIFont fontWithName:@"ComicBook" size:14];
         }
         else if (IsIphone6plus)
         {
             cell.menuImg.frame = CGRectMake(30,18,24,24);
             cell.menuName.frame = CGRectMake(66,18, cell.frame.size.width-70,20);
-            cell.menuName.font = [UIFont fontWithName:@"ComicSansMS-Bold" size:16];
+            cell.menuName.font = [UIFont fontWithName:@"ComicBook" size:16];
         }
         
         

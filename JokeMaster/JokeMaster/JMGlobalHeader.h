@@ -91,6 +91,6 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 //font
 
 #define ComicBold @"comicbd_1.ttf"
-
+#define ComicbkITalic @"Comic_Book.ttf"
 
 #endif /* JMGlobalHeader_h */
