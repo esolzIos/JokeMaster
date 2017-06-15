@@ -18,6 +18,14 @@
     [super viewDidLoad];
     
       CategoryArray=[[NSMutableArray alloc] initWithObjects:@"LATEST",@"SEXUAL JOKES",@"ANIMAL JOKES",@"DOCTORS JOKES",@"GIRLFRIEND JOKES",@"STUPID JOKES", nil];
+    
+    [_userName setFont:[UIFont fontWithName:_userName.font.fontName size:[self getFontSize:_userName.font.pointSize]]];
+    
+     [_scoreLbl setFont:[UIFont fontWithName:_scoreLbl.font.fontName size:[self getFontSize:_scoreLbl.font.pointSize]]];
+    
+    
+      [_membershipDate setFont:[UIFont fontWithName:_membershipDate.font.fontName size:[self getFontSize:_membershipDate.font.pointSize]]];
+    
     // Do any additional setup after loading the view.
 }
 
@@ -73,7 +81,7 @@
     cell.VideoThumpnailImage.layer.cornerRadius=12.0;
     cell.VideoThumpnailImage.clipsToBounds=YES;
     
-    [cell.CategoryNameLabel setFont:[UIFont fontWithName:cell.CategoryNameLabel.font.fontName size:[self getFontSize:cell.CategoryNameLabel.font.pointSize]]];
+    [cell.CategoryNameLabel setFont:[UIFont fontWithName:cell.CategoryNameLabel.font.fontName size:[self getFontSize:9.0]]];
     
     //   NSLog(@"%@",[arrCategory objectAtIndex:indexPath.row]);
     
