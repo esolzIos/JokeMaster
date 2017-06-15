@@ -7,7 +7,14 @@
 //
 
 #import "JMGlobalMethods.h"
-
+#import "JMFavouriteCell.h"
 @interface JMFavouriteViewController : JMGlobalMethods
+{
+    BOOL swiped,oneTime;
+    NSInteger PreviousTag;
+    float WhiteViewX;
+}
+@property (weak, nonatomic) IBOutlet UIScrollView *mainscroll;
+@property (weak, nonatomic) IBOutlet UITableView *FavouriteTable;
 
 @end
