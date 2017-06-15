@@ -1958,16 +1958,35 @@
                                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                                         </imageView>
                                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="smiling" id="05S-Lq-egU">
-                                                                            <rect key="frame" x="17" y="14" width="55" height="30"/>
+                                                                            <rect key="frame" x="13" y="11" width="74" height="38"/>
                                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                                         </imageView>
-                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="iIV-yk-F37">
-                                                                            <rect key="frame" x="80" y="14" width="114" height="21"/>
-                                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="DYANO JONSON" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="iIV-yk-F37">
+                                                                            <rect key="frame" x="95" y="14" width="108" height="18"/>
+                                                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                                                            <fontDescription key="fontDescription" name="ComicBook" family="Comic Book" pointSize="11"/>
                                                                             <nil key="textColor"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="FUNNY SOFIA" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="0xs-7O-bhw">
+                                                                            <rect key="frame" x="98" y="32" width="119" height="18"/>
+                                                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                                                            <fontDescription key="fontDescription" name="ComicBook" family="Comic Book" pointSize="8"/>
+                                                                            <nil key="textColor"/>
+                                                                            <nil key="highlightedColor"/>
+                                                                        </label>
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="4.5/5" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="zuT-sd-Ris">
+                                                                            <rect key="frame" x="219" y="32" width="38" height="18"/>
+                                                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                                                            <fontDescription key="fontDescription" name="ComicBook" family="Comic Book" pointSize="9"/>
+                                                                            <nil key="textColor"/>
+                                                                            <nil key="highlightedColor"/>
+                                                                        </label>
+                                                                        <view contentMode="scaleToFill" misplaced="YES" id="SXN-KK-F4N" customClass="HCSStarRatingView">
+                                                                            <rect key="frame" x="205" y="11" width="60" height="19"/>
+                                                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                                        </view>
                                                                     </subviews>
                                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                                 </view>
@@ -1976,6 +1995,11 @@
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                         <connections>
                                                             <outlet property="BackView" destination="S53-ze-v3N" id="ws3-Z2-Z0a"/>
+                                                            <outlet property="JokesNameLabel" destination="0xs-7O-bhw" id="32u-3w-pt9"/>
+                                                            <outlet property="ProfileImage" destination="05S-Lq-egU" id="6S1-Kh-XYg"/>
+                                                            <outlet property="ProfileNameLabel" destination="iIV-yk-F37" id="ofe-cp-WFj"/>
+                                                            <outlet property="RatingLabel" destination="zuT-sd-Ris" id="FDD-TL-XOb"/>
+                                                            <outlet property="RatingView" destination="SXN-KK-F4N" id="Xks-1e-rzY"/>
                                                             <outlet property="WhiteView" destination="Hvk-Gf-hmD" id="ekR-zT-9cQ"/>
                                                         </connections>
                                                     </tableViewCell>

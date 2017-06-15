@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0C35E1EC1EF2999500D2CBCE /* HCSStarRatingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C35E1EB1EF2999500D2CBCE /* HCSStarRatingView.m */; };
 		0C3AFB781EF15CA90037834A /* JMFavouriteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C3AFB771EF15CA90037834A /* JMFavouriteViewController.m */; };
 		0C3AFB7B1EF162820037834A /* JMFavouriteCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C3AFB7A1EF162820037834A /* JMFavouriteCell.m */; };
 		0C3E27721EEBBFF70075B104 /* JMRecentlyUploadedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C3E27711EEBBFF70075B104 /* JMRecentlyUploadedViewController.m */; };
@@ -79,6 +80,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0C35E1EA1EF2999500D2CBCE /* HCSStarRatingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HCSStarRatingView.h; sourceTree = "<group>"; };
+		0C35E1EB1EF2999500D2CBCE /* HCSStarRatingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HCSStarRatingView.m; sourceTree = "<group>"; };
 		0C3AFB761EF15CA90037834A /* JMFavouriteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMFavouriteViewController.h; sourceTree = "<group>"; };
 		0C3AFB771EF15CA90037834A /* JMFavouriteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMFavouriteViewController.m; sourceTree = "<group>"; };
 		0C3AFB791EF162820037834A /* JMFavouriteCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMFavouriteCell.h; sourceTree = "<group>"; };
@@ -209,6 +212,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0C35E1E91EF2991D00D2CBCE /* HCSStarRatingView */ = {
+			isa = PBXGroup;
+			children = (
+				0C35E1EA1EF2999500D2CBCE /* HCSStarRatingView.h */,
+				0C35E1EB1EF2999500D2CBCE /* HCSStarRatingView.m */,
+			);
+			name = HCSStarRatingView;
+			sourceTree = "<group>";
+		};
 		0C6F9E321EE14E44005D31A0 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -301,6 +313,7 @@
 		B0A32B3E1EE1292F0044D443 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				0C35E1E91EF2991D00D2CBCE /* HCSStarRatingView */,
 				0C48BFB41EE7CF1200CD1C2A /* LocalizationSystem.h */,
 				0C48BFB51EE7CF1200CD1C2A /* LocalizationSystem.m */,
 				0C48BFB11EE7CD6F00CD1C2A /* Localizable.strings */,
@@ -568,6 +581,7 @@
 				B0A32B431EE1292F0044D443 /* AppDelegate.m in Sources */,
 				0C5827491EE9205600480E19 /* JMHomeViewController.m in Sources */,
 				B07ABAC71EE540F90011DD57 /* JMLoginViewController.m in Sources */,
+				0C35E1EC1EF2999500D2CBCE /* HCSStarRatingView.m in Sources */,
 				0C91CFC31EEE92F400123303 /* JMJokesCategoryVideoListViewController.m in Sources */,
 				0C48BFBB1EE82EEF00CD1C2A /* JMHeaderView.m in Sources */,
 				B0A32B401EE1292F0044D443 /* main.m in Sources */,

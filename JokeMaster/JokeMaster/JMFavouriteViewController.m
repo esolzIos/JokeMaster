@@ -66,7 +66,7 @@
     }
     else if (IsIphone6plus)
     {
-        return 100;
+        return 120;
     }
     else
     {
@@ -84,6 +84,22 @@
         WhiteViewX=cell.WhiteView.frame.origin.x;
         oneTime=YES;
     }
+    
+    [self setRoundCornertoView:cell.ProfileImage withBorderColor:[UIColor clearColor] WithRadius:0.36];
+    
+    [cell.ProfileNameLabel setFont:[UIFont fontWithName:cell.ProfileNameLabel.font.fontName size:[self getFontSize:cell.ProfileNameLabel.font.pointSize]]];
+    [cell.JokesNameLabel setFont:[UIFont fontWithName:cell.JokesNameLabel.font.fontName size:[self getFontSize:cell.JokesNameLabel.font.pointSize]]];
+    [cell.RatingLabel setFont:[UIFont fontWithName:cell.RatingLabel.font.fontName size:[self getFontSize:cell.RatingLabel.font.pointSize]]];
+    
+    
+    cell.RatingView.maximumValue = 5;
+    cell.RatingView.minimumValue = 0;
+    cell.RatingView.value = 4.5;
+    cell.RatingView.userInteractionEnabled=NO;
+    //    _RatingView.tintColor = [UIColor clearColor];
+    cell.RatingView.allowsHalfStars = YES;
+    cell.RatingView.emptyStarImage = [[UIImage imageNamed:@"emotion"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    cell.RatingView.filledStarImage = [[UIImage imageNamed:@"emotion2"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     
     
     UISwipeGestureRecognizer *gestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeHandler:)];
