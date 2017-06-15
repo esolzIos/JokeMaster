@@ -42,6 +42,7 @@
 		B07ABADE1EE58E790011DD57 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B07ABADD1EE58E790011DD57 /* SystemConfiguration.framework */; };
 		B07ABAE01EE590580011DD57 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B07ABADF1EE590580011DD57 /* GoogleService-Info.plist */; };
 		B08609D01EF118CF00E8D84A /* ReviewsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B08609CF1EF118CF00E8D84A /* ReviewsTableViewCell.m */; };
+		B0A2300D1EF2960600F228BD /* JMProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0A2300C1EF2960600F228BD /* JMProfileViewController.m */; };
 		B0A32B401EE1292F0044D443 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B0A32B3F1EE1292F0044D443 /* main.m */; };
 		B0A32B431EE1292F0044D443 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B0A32B421EE1292F0044D443 /* AppDelegate.m */; };
 		B0A32B491EE129300044D443 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B0A32B471EE129300044D443 /* Main.storyboard */; };
@@ -139,6 +140,8 @@
 		B07ABADF1EE590580011DD57 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B08609CE1EF118CF00E8D84A /* ReviewsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReviewsTableViewCell.h; sourceTree = "<group>"; };
 		B08609CF1EF118CF00E8D84A /* ReviewsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReviewsTableViewCell.m; sourceTree = "<group>"; };
+		B0A2300B1EF2960600F228BD /* JMProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMProfileViewController.h; sourceTree = "<group>"; };
+		B0A2300C1EF2960600F228BD /* JMProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMProfileViewController.m; sourceTree = "<group>"; };
 		B0A32B3B1EE1292F0044D443 /* JokeMaster.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JokeMaster.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0A32B3F1EE1292F0044D443 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		B0A32B411EE1292F0044D443 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -376,6 +379,8 @@
 				0C91CFC21EEE92F400123303 /* JMJokesCategoryVideoListViewController.m */,
 				0C3AFB761EF15CA90037834A /* JMFavouriteViewController.h */,
 				0C3AFB771EF15CA90037834A /* JMFavouriteViewController.m */,
+				B0A2300B1EF2960600F228BD /* JMProfileViewController.h */,
+				B0A2300C1EF2960600F228BD /* JMProfileViewController.m */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -569,6 +574,7 @@
 				0C5827491EE9205600480E19 /* JMHomeViewController.m in Sources */,
 				B07ABAC71EE540F90011DD57 /* JMLoginViewController.m in Sources */,
 				0C91CFC31EEE92F400123303 /* JMJokesCategoryVideoListViewController.m in Sources */,
+				B0A2300D1EF2960600F228BD /* JMProfileViewController.m in Sources */,
 				0C48BFBB1EE82EEF00CD1C2A /* JMHeaderView.m in Sources */,
 				B0A32B401EE1292F0044D443 /* main.m in Sources */,
 				B0A32B901EE131680044D443 /* SVProgressHUD.m in Sources */,

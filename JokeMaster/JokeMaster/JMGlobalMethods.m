@@ -63,7 +63,7 @@
     CurrentViewController = NSStringFromClass([topMostViewControllerObj class]);
     NSLog(@"controller=%@",CurrentViewController);
     
-    if ([CurrentViewController isEqualToString:@"JMHomeViewController"])
+    if ([CurrentViewController isEqualToString:@"JMHomeViewController"]||[CurrentViewController isEqualToString:@"JMProfileViewController"])
     {
         // leftmenurowindex=2;
         
@@ -2958,7 +2958,48 @@
             //                    [self.navigationController pushViewController:VC animated:kCAMediaTimingFunctionEaseIn];
             //                }
         }
+    } if (sender==5)
+    {
+        if ([CurrentViewController isEqualToString:@"JMProfileViewController"])
+        {
+            [UIView animateWithDuration:0.5 animations:^{
+                
+                
+                MainView.center = CGPointMake(self.view.center.x,self.view.center.y);
+                
+                leftmenu.frame = CGRectMake(-leftmenu.frame.size.width, 0,[[UIScreen mainScreen] bounds].size.width/4*3, self.view.frame.size.height);
+                
+                
+            } completion:^(BOOL finished) {
+                
+                [leftmenu removeFromSuperview];
+                [UIView commitAnimations];
+                [MainView removeGestureRecognizer:tapRecognizer];
+            }];
+        }
+        else
+        {
+            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Temp" bundle: nil];
+            
+            JMGlobalMethods *VC=[storyboard instantiateViewControllerWithIdentifier:@"JMProfile"];
+            [self.navigationController pushViewController:VC animated:kCAMediaTimingFunctionEaseIn];
+            //                if (userid.length==0)
+            //                {
+            //                    [[NSUserDefaults standardUserDefaults] setObject:@"DLAddPropertyViewController" forKey:@"DestinationPage"];
+            //                    GlobalViewController *obj=[self.storyboard instantiateViewControllerWithIdentifier:@"DLLoginViewController"];
+            //                    [self PushViewController:obj WithAnimation:kCAMediaTimingFunctionEaseIn];
+            //                }
+            //                else
+            //                {
+            //                    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"AddPropertyDictionary"];
+            //                    [[NSUserDefaults standardUserDefaults] synchronize];
+            //
+            //                    GlobalViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"DLAddPropertyViewController"];
+            //                    [self.navigationController pushViewController:VC animated:kCAMediaTimingFunctionEaseIn];
+            //                }
+        }
     }
+
         else if (sender==7)
         {
             NSString *deviceToken;
