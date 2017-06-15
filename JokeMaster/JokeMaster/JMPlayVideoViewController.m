@@ -170,8 +170,12 @@ AVPlayer *player;
 }
 - (IBAction)sliderValueChange:(id)sender {
     
-    int32_t timeScale = player.currentItem.asset.duration.timescale;
-    [player seekToTime:CMTimeMakeWithSeconds(_seekSlider.value,timeScale)];
+//    int32_t timeScale = player.currentItem.asset.duration.timescale;
+//    [player seekToTime:CMTimeMakeWithSeconds(_seekSlider.value,timeScale)];
+    
+    CMTime showingTime = CMTimeMake(_seekSlider.value *1000, 1000);
+    
+    [player seekToTime:showingTime toleranceBefore:kCMTimeZero toleranceAfter:kCMTimeZero];
     
 }
 
