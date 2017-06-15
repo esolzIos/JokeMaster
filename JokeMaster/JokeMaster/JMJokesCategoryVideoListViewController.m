@@ -89,7 +89,7 @@
     cell.VideoThumpnailImage.layer.cornerRadius=12.0;
     cell.VideoThumpnailImage.clipsToBounds=YES;
     
-    [cell.CategoryNameLabel setFont:[UIFont fontWithName:cell.CategoryNameLabel.font.fontName size:[self getFontSize:cell.CategoryNameLabel.font.pointSize]]];
+    [cell.CategoryNameLabel setFont:[UIFont fontWithName:cell.CategoryNameLabel.font.fontName size:[self getFontSize:9.0]]];
     
     //   NSLog(@"%@",[arrCategory objectAtIndex:indexPath.row]);
     
