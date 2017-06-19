@@ -18,7 +18,8 @@
             <connections>
                 <outlet property="BackButton" destination="MSD-Np-isc" id="wgA-tP-0xx"/>
                 <outlet property="BackView" destination="fZ1-ye-g9I" id="E1f-xq-a1m"/>
-                <outlet property="HeaderLabel" destination="isb-Gx-rfe" id="1dz-Bw-uiV"/>
+                <outlet property="EmojiImage" destination="dGT-1Y-huL" id="rFC-fp-oEx"/>
+                <outlet property="HeaderLabel" destination="isb-Gx-rfe" id="8wO-u9-oqk"/>
                 <outlet property="MenuButton" destination="dFz-MY-4bI" id="9AW-uu-xNm"/>
                 <outlet property="RecentUploadImage" destination="LbF-t7-cTZ" id="7WT-b1-Ew7"/>
                 <outlet property="langBtn" destination="jr6-xA-2pX" id="f9e-hZ-BHm"/>
@@ -37,7 +38,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="daC-dK-w47">
+                <view hidden="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="daC-dK-w47">
                     <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                     <subviews>
@@ -84,7 +85,7 @@
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="3lX-p6-DkQ">
+                <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="3lX-p6-DkQ">
                     <rect key="frame" x="105" y="21" width="115" height="20"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                 </imageView>
@@ -92,13 +93,18 @@
                     <rect key="frame" x="82" y="22" width="156" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                 </imageView>
-                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="isb-Gx-rfe">
-                    <rect key="frame" x="53" y="17" width="214" height="40"/>
+                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="isb-Gx-rfe" customClass="JMStrokeLabel">
+                    <rect key="frame" x="64" y="16" width="191" height="40"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                    <fontDescription key="fontDescription" name="GROBOLD" family="GROBOLD" pointSize="18"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <fontDescription key="fontDescription" name="GROBOLD" family="GROBOLD" pointSize="15"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="emotion" translatesAutoresizingMaskIntoConstraints="NO" id="dGT-1Y-huL">
+                    <rect key="frame" x="223" y="24" width="15" height="15"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                </imageView>
                 <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vQ9-uq-duh">
                     <rect key="frame" x="250" y="0.0" width="40" height="50"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
@@ -140,6 +146,7 @@
     <resources>
         <image name="INDIA" width="640" height="427"/>
         <image name="back" width="36" height="13"/>
+        <image name="emotion" width="119" height="147"/>
         <image name="hamburger-menu" width="32" height="25"/>
         <image name="logo" width="228" height="40"/>
         <image name="more" width="11" height="37"/>

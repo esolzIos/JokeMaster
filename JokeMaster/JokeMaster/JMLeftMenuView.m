@@ -70,7 +70,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section;
 {
     
-    return 8;
+    return 7;
 //    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
 //    NSString *userid=[prefs valueForKey:@"UserId"];
 //    if (userid.length==0)
@@ -157,22 +157,22 @@
              cell.menuImg.image = [UIImage imageNamed:@"latest"];
             
         }
+//        else if (indexPath.row==4)
+//        {
+//            cell.menuName.text = AMLocalizedString(@"HISTORY",nil);
+//            cell.menuImg.image = [UIImage imageNamed:@"history"];
+//        }
         else if (indexPath.row==4)
-        {
-            cell.menuName.text = AMLocalizedString(@"HISTORY",nil);
-            cell.menuImg.image = [UIImage imageNamed:@"history"];
-        }
-        else if (indexPath.row==5)
         {
             cell.menuName.text = AMLocalizedString(@"PROFILE",nil);
             cell.menuImg.image = [UIImage imageNamed:@"profile"];
         }
-        else if (indexPath.row==6)
+        else if (indexPath.row==5)
         {
             cell.menuName.text = AMLocalizedString(@"SETTINGS",nil);
             cell.menuImg.image = [UIImage imageNamed:@"settings"];
         }
-        else if (indexPath.row==7)
+        else if (indexPath.row==6)
         {
             cell.menuName.text = AMLocalizedString(@"LOG OUT",nil);
             cell.menuImg.image = [UIImage imageNamed:@"logout"];

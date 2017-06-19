@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0C337AD31EF3B75D00BE2BB3 /* JMStrokeLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C337AD21EF3B75D00BE2BB3 /* JMStrokeLabel.m */; };
+		0C337AD61EF3ED2C00BE2BB3 /* JMJokeMasterRankViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C337AD51EF3ED2C00BE2BB3 /* JMJokeMasterRankViewController.m */; };
+		0C337AD91EF40FC600BE2BB3 /* JMFollowingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C337AD81EF40FC600BE2BB3 /* JMFollowingViewController.m */; };
 		0C35E1EC1EF2999500D2CBCE /* HCSStarRatingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C35E1EB1EF2999500D2CBCE /* HCSStarRatingView.m */; };
 		0C35E1EE1EF2AFC100D2CBCE /* GROBOLD.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0C35E1ED1EF2AFC100D2CBCE /* GROBOLD.ttf */; };
 		0C3AFB781EF15CA90037834A /* JMFavouriteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C3AFB771EF15CA90037834A /* JMFavouriteViewController.m */; };
@@ -82,6 +85,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0C337AD11EF3B75D00BE2BB3 /* JMStrokeLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMStrokeLabel.h; sourceTree = "<group>"; };
+		0C337AD21EF3B75D00BE2BB3 /* JMStrokeLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMStrokeLabel.m; sourceTree = "<group>"; };
+		0C337AD41EF3ED2C00BE2BB3 /* JMJokeMasterRankViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMJokeMasterRankViewController.h; sourceTree = "<group>"; };
+		0C337AD51EF3ED2C00BE2BB3 /* JMJokeMasterRankViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMJokeMasterRankViewController.m; sourceTree = "<group>"; };
+		0C337AD71EF40FC600BE2BB3 /* JMFollowingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMFollowingViewController.h; sourceTree = "<group>"; };
+		0C337AD81EF40FC600BE2BB3 /* JMFollowingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMFollowingViewController.m; sourceTree = "<group>"; };
 		0C35E1EA1EF2999500D2CBCE /* HCSStarRatingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HCSStarRatingView.h; sourceTree = "<group>"; };
 		0C35E1EB1EF2999500D2CBCE /* HCSStarRatingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HCSStarRatingView.m; sourceTree = "<group>"; };
 		0C35E1ED1EF2AFC100D2CBCE /* GROBOLD.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = GROBOLD.ttf; sourceTree = "<group>"; };
@@ -217,6 +226,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0C337AD01EF3B6E800BE2BB3 /* Custom Class */ = {
+			isa = PBXGroup;
+			children = (
+				0C337AD11EF3B75D00BE2BB3 /* JMStrokeLabel.h */,
+				0C337AD21EF3B75D00BE2BB3 /* JMStrokeLabel.m */,
+			);
+			name = "Custom Class";
+			sourceTree = "<group>";
+		};
 		0C35E1E91EF2991D00D2CBCE /* HCSStarRatingView */ = {
 			isa = PBXGroup;
 			children = (
@@ -295,6 +313,7 @@
 		B0A32B3D1EE1292F0044D443 /* JokeMaster */ = {
 			isa = PBXGroup;
 			children = (
+				0C337AD01EF3B6E800BE2BB3 /* Custom Class */,
 				0C6F9E321EE14E44005D31A0 /* Views */,
 				B0A32B811EE1313F0044D443 /* Frameworks */,
 				B0A32B7D1EE12E750044D443 /* ViewControllers */,
@@ -397,6 +416,10 @@
 				0C3AFB771EF15CA90037834A /* JMFavouriteViewController.m */,
 				B0A2300B1EF2960600F228BD /* JMProfileViewController.h */,
 				B0A2300C1EF2960600F228BD /* JMProfileViewController.m */,
+				0C337AD41EF3ED2C00BE2BB3 /* JMJokeMasterRankViewController.h */,
+				0C337AD51EF3ED2C00BE2BB3 /* JMJokeMasterRankViewController.m */,
+				0C337AD71EF40FC600BE2BB3 /* JMFollowingViewController.h */,
+				0C337AD81EF40FC600BE2BB3 /* JMFollowingViewController.m */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -587,6 +610,7 @@
 				B0A32B4C1EE129300044D443 /* JokeMaster.xcdatamodeld in Sources */,
 				0C3AFB781EF15CA90037834A /* JMFavouriteViewController.m in Sources */,
 				0C91CFBD1EEE5B7A00123303 /* JMCategoryCell.m in Sources */,
+				0C337AD61EF3ED2C00BE2BB3 /* JMJokeMasterRankViewController.m in Sources */,
 				B0A32B431EE1292F0044D443 /* AppDelegate.m in Sources */,
 				0C5827491EE9205600480E19 /* JMHomeViewController.m in Sources */,
 				B07ABAC71EE540F90011DD57 /* JMLoginViewController.m in Sources */,
@@ -607,6 +631,8 @@
 				B08609D01EF118CF00E8D84A /* ReviewsTableViewCell.m in Sources */,
 				0C58274E1EE9316F00480E19 /* JMLeftMenuView.m in Sources */,
 				0C429BFA1EEFAB2900A42F07 /* JMPlayVideoViewController.m in Sources */,
+				0C337AD31EF3B75D00BE2BB3 /* JMStrokeLabel.m in Sources */,
+				0C337AD91EF40FC600BE2BB3 /* JMFollowingViewController.m in Sources */,
 				0C6F9E361EE14E84005D31A0 /* CountryCell.m in Sources */,
 				B0A32B911EE131680044D443 /* SVRadialGradientLayer.m in Sources */,
 				B07ABAC41EE540B90011DD57 /* JMLanguageViewController.m in Sources */,

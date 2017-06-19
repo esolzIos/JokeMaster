@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JMStrokeLabel.h"
 
 @interface JMHeaderView : UIView
 @property (strong, nonatomic) IBOutlet UIView *view;
@@ -23,6 +24,10 @@
 
 @property (weak, nonatomic) IBOutlet UIImageView *RecentUploadImage;
 @property (strong, nonatomic) IBOutlet UIButton *langBtn;
-@property (weak, nonatomic) IBOutlet UILabel *HeaderLabel;
+
+@property (weak, nonatomic) IBOutlet JMStrokeLabel *HeaderLabel;
+-(CGFloat)getFontSize:(CGFloat)size;
+
+@property (weak, nonatomic) IBOutlet UIImageView *EmojiImage;
 
 @end

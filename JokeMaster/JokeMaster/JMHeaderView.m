@@ -25,26 +25,17 @@
         self.view = [[[NSBundle mainBundle] loadNibNamed:className owner:self options:nil] firstObject];
         [self addSubview:self.view];
         
-        CGContextRef context = UIGraphicsGetCurrentContext();
-        CGFloat fontSize = 18.0;
-        CGPoint point = CGPointMake(0, 0);
+        // header label font according to screen size
+        [self.HeaderLabel setFont:[UIFont fontWithName:self.HeaderLabel.font.fontName size:[self getFontSize:self.HeaderLabel.font.pointSize]]];
         
-        UIFont *font = [UIFont fontWithName:@"GROBOLD" size:fontSize];
-        UIColor *outline = [UIColor redColor];
-        UIColor *fill = [UIColor blackColor];
+        // header label shadow
+        self.HeaderLabel.layer.shadowColor = [[UIColor colorWithRed:10.0/255.0 green:10.0/255.0 blue:10.0/255.0 alpha:0.3] CGColor];
+        self.HeaderLabel.layer.shadowOffset = CGSizeMake(-2.0f,3.0f);
+        self.HeaderLabel.layer.shadowOpacity = 1.0f;
+        self.HeaderLabel.layer.shadowRadius = 1.0f;
         
-        NSDictionary *labelAttr = @{NSForegroundColorAttributeName:outline, NSFontAttributeName:font};
         
-        CGContextSetTextDrawingMode(context, kCGTextStroke);
-        CGContextSetLineWidth(context, 2.0);
-        [self.HeaderLabel.text drawAtPoint:point withAttributes:labelAttr];
         
-        CGContextSetTextDrawingMode(context, kCGTextFill);
-        CGContextSetLineWidth(context, 2.0);
-        labelAttr = @{NSForegroundColorAttributeName:fill, NSFontAttributeName:font};
-        [self.HeaderLabel.text drawAtPoint:point withAttributes:labelAttr];
-        
-        //  [FooterTabBar setTintColor:[UIColor whiteColor]];
         return self;
     }
     return nil;
@@ -53,4 +44,28 @@
     
     
 }
+-(CGFloat)getFontSize:(CGFloat)size
+{
+    
+    if (IsIphone5) {
+        
+        size+=1.0;
+    }
+    else
+        if (IsIphone6) {
+            
+            size+=4.0;
+        }
+        else  if (IsIphone6plus) {
+            
+            size+=6.0;
+        }
+    
+        else if (IsIpad)
+        {
+            size+=6.0;
+        }
+    return size;
+}
+
 @end

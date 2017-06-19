@@ -16,5 +16,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *JokesNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *RatingLabel;
 @property (weak, nonatomic) IBOutlet HCSStarRatingView *RatingView;
+@property (weak, nonatomic) IBOutlet UILabel *RankLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *CrownImage;
 
 @end

@@ -1,27 +1,22 @@
 //
-//  JMFavouriteViewController.m
+//  JMFollowingViewController.m
 //  JokeMaster
 //
-//  Created by priyanka on 14/06/17.
+//  Created by priyanka on 16/06/17.
 //  Copyright © 2017 esolz. All rights reserved.
 //
 
-#import "JMFavouriteViewController.h"
+#import "JMFollowingViewController.h"
 
-@interface JMFavouriteViewController ()
+@interface JMFollowingViewController ()
 
 @end
 
-@implementation JMFavouriteViewController
-@synthesize mainscroll,FavouriteTable;
+@implementation JMFollowingViewController
+@synthesize FollowTable,mainscroll;
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
-//    UIView *ContentView=(UIView *)[FavouriteTable viewWithTag:100];
-//    WhiteViewX=ContentView.frame.origin.x;
-    
-    
     swiped=NO;
     PreviousTag=-100;
     oneTime=NO;
@@ -46,8 +41,8 @@
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
-   
-   
+    
+    
     
     
     return cell;
@@ -87,9 +82,9 @@
     
     [self setRoundCornertoView:cell.ProfileImage withBorderColor:[UIColor clearColor] WithRadius:0.36];
     
-//    [cell.ProfileNameLabel setFont:[UIFont fontWithName:cell.ProfileNameLabel.font.fontName size:[self getFontSize:cell.ProfileNameLabel.font.pointSize]]];
-//    [cell.JokesNameLabel setFont:[UIFont fontWithName:cell.JokesNameLabel.font.fontName size:[self getFontSize:cell.JokesNameLabel.font.pointSize]]];
-//    [cell.RatingLabel setFont:[UIFont fontWithName:cell.RatingLabel.font.fontName size:[self getFontSize:cell.RatingLabel.font.pointSize]]];
+    //    [cell.ProfileNameLabel setFont:[UIFont fontWithName:cell.ProfileNameLabel.font.fontName size:[self getFontSize:cell.ProfileNameLabel.font.pointSize]]];
+    //    [cell.JokesNameLabel setFont:[UIFont fontWithName:cell.JokesNameLabel.font.fontName size:[self getFontSize:cell.JokesNameLabel.font.pointSize]]];
+    //    [cell.RatingLabel setFont:[UIFont fontWithName:cell.RatingLabel.font.fontName size:[self getFontSize:cell.RatingLabel.font.pointSize]]];
     
     
     cell.RatingView.maximumValue = 5;
@@ -122,7 +117,7 @@
     }
     else
     {
-        UIView *ContentView=(UIView *)[FavouriteTable viewWithTag:PreviousTag];
+        UIView *ContentView=(UIView *)[FollowTable viewWithTag:PreviousTag];
         [UIView animateWithDuration:0.5 animations:^{
             ContentView.frame =CGRectMake(WhiteViewX, ContentView.frame.origin.y, ContentView.frame.size.width, ContentView.frame.size.height);
         } completion:^(BOOL finished) {
@@ -130,7 +125,7 @@
         }];
     }
     
-    UIView *ContentView=(UIView *)[FavouriteTable viewWithTag:recognizer.view.tag];
+    UIView *ContentView=(UIView *)[FollowTable viewWithTag:recognizer.view.tag];
     
     [UIView animateWithDuration:0.5 animations:^{
         
@@ -146,7 +141,7 @@
 -(void)rightswipeHandler:(UISwipeGestureRecognizer *)recognizer {
     
     
-    UIView *ContentView=(UIView *)[FavouriteTable viewWithTag:recognizer.view.tag];
+    UIView *ContentView=(UIView *)[FollowTable viewWithTag:recognizer.view.tag];
     //  CGRect finalFrame = CGRectMake(0, -100, 320, 301);
     [UIView animateWithDuration:0.5 animations:^{
         //  ContentView.frame = finalFrame;
@@ -180,6 +175,16 @@
 //
 //    return @[delete]; //array with all the buttons you want. 1,2,3, etc...
 //}
+/*
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
+
 /*
 #pragma mark - Navigation
 
