@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0C2D42A51EF79884007C2E5C /* JMUploadVideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C2D42A41EF79884007C2E5C /* JMUploadVideoViewController.m */; };
 		0C337AD31EF3B75D00BE2BB3 /* JMStrokeLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C337AD21EF3B75D00BE2BB3 /* JMStrokeLabel.m */; };
 		0C337AD61EF3ED2C00BE2BB3 /* JMJokeMasterRankViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C337AD51EF3ED2C00BE2BB3 /* JMJokeMasterRankViewController.m */; };
 		0C337AD91EF40FC600BE2BB3 /* JMFollowingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C337AD81EF40FC600BE2BB3 /* JMFollowingViewController.m */; };
@@ -85,6 +86,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0C2D42A31EF79884007C2E5C /* JMUploadVideoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMUploadVideoViewController.h; sourceTree = "<group>"; };
+		0C2D42A41EF79884007C2E5C /* JMUploadVideoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMUploadVideoViewController.m; sourceTree = "<group>"; };
 		0C337AD11EF3B75D00BE2BB3 /* JMStrokeLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMStrokeLabel.h; sourceTree = "<group>"; };
 		0C337AD21EF3B75D00BE2BB3 /* JMStrokeLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMStrokeLabel.m; sourceTree = "<group>"; };
 		0C337AD41EF3ED2C00BE2BB3 /* JMJokeMasterRankViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMJokeMasterRankViewController.h; sourceTree = "<group>"; };
@@ -420,6 +423,8 @@
 				0C337AD51EF3ED2C00BE2BB3 /* JMJokeMasterRankViewController.m */,
 				0C337AD71EF40FC600BE2BB3 /* JMFollowingViewController.h */,
 				0C337AD81EF40FC600BE2BB3 /* JMFollowingViewController.m */,
+				0C2D42A31EF79884007C2E5C /* JMUploadVideoViewController.h */,
+				0C2D42A41EF79884007C2E5C /* JMUploadVideoViewController.m */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -636,6 +641,7 @@
 				0C6F9E361EE14E84005D31A0 /* CountryCell.m in Sources */,
 				B0A32B911EE131680044D443 /* SVRadialGradientLayer.m in Sources */,
 				B07ABAC41EE540B90011DD57 /* JMLanguageViewController.m in Sources */,
+				0C2D42A51EF79884007C2E5C /* JMUploadVideoViewController.m in Sources */,
 				0C48BFB61EE7CF1200CD1C2A /* LocalizationSystem.m in Sources */,
 				B0DA70901EEBF52900FD91A7 /* JokeCollectionViewCell.m in Sources */,
 				0C3E27721EEBBFF70075B104 /* JMRecentlyUploadedViewController.m in Sources */,

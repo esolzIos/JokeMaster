@@ -243,6 +243,36 @@
         
         
     }
+    else if ([CurrentViewController isEqualToString:@"JMUploadVideoViewController"] )
+    {
+        // leftmenurowindex=2;
+        
+        HeaderView.logoImage.hidden=YES;
+        HeaderView.menuView.hidden=YES;
+        
+        HeaderView.RecentUploadImage.hidden=YES;
+        HeaderView.BackView.hidden=NO;
+        
+        HeaderView.HeaderLabel.hidden=NO;
+        HeaderView.HeaderLabel.text=@"Upload Video";
+        HeaderView.EmojiImage.hidden=NO;
+        
+        [HeaderView.BackButton addTarget:self action:@selector(BackClicked) forControlEvents:UIControlEventTouchUpInside];
+        
+        UIFont *font1 = [UIFont fontWithName:@"GROBOLD" size:HeaderView.HeaderLabel.font.pointSize];
+        NSDictionary *arialDict = [NSDictionary dictionaryWithObject: font1 forKey:NSFontAttributeName];
+        
+        NSMutableAttributedString *aAttrString1 = [[NSMutableAttributedString alloc] initWithString:HeaderView.HeaderLabel.text attributes: arialDict];
+        CGRect rect;
+        rect =[aAttrString1 boundingRectWithSize:CGSizeMake(HeaderView.HeaderLabel.frame.size.width, 1000) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading context:nil];
+        
+        HeaderView.HeaderLabel.frame=CGRectMake(self.view.frame.size.width/2-rect.size.width/2, HeaderView.HeaderLabel.frame.origin.y, rect.size.width, HeaderView.HeaderLabel.frame.size.height);
+        
+        HeaderView.EmojiImage.frame=CGRectMake(HeaderView.HeaderLabel.frame.origin.x+HeaderView.HeaderLabel.frame.size.width+6, HeaderView.EmojiImage.frame.origin.y, HeaderView.EmojiImage.frame.size.width, HeaderView.EmojiImage.frame.size.height);
+        
+        
+        
+    }
     
    
     
@@ -3177,7 +3207,46 @@
             //                }
         }
     }
-
+    else if (sender==5)
+    {
+        if ([CurrentViewController isEqualToString:@"JMUploadVideoViewController"])
+        {
+            [UIView animateWithDuration:0.5 animations:^{
+                
+                
+                MainView.center = CGPointMake(self.view.center.x,self.view.center.y);
+                
+                leftmenu.frame = CGRectMake(-leftmenu.frame.size.width, 0,[[UIScreen mainScreen] bounds].size.width/4*3, self.view.frame.size.height);
+                
+                
+            } completion:^(BOOL finished) {
+                
+                [leftmenu removeFromSuperview];
+                [UIView commitAnimations];
+                [MainView removeGestureRecognizer:tapRecognizer];
+            }];
+        }
+        else
+        {
+            
+            JMGlobalMethods *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMUploadVideoViewController"];
+            [self.navigationController pushViewController:VC animated:kCAMediaTimingFunctionEaseIn];
+            //                if (userid.length==0)
+            //                {
+            //                    [[NSUserDefaults standardUserDefaults] setObject:@"DLAddPropertyViewController" forKey:@"DestinationPage"];
+            //                    GlobalViewController *obj=[self.storyboard instantiateViewControllerWithIdentifier:@"DLLoginViewController"];
+            //                    [self PushViewController:obj WithAnimation:kCAMediaTimingFunctionEaseIn];
+            //                }
+            //                else
+            //                {
+            //                    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"AddPropertyDictionary"];
+            //                    [[NSUserDefaults standardUserDefaults] synchronize];
+            //
+            //                    GlobalViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"DLAddPropertyViewController"];
+            //                    [self.navigationController pushViewController:VC animated:kCAMediaTimingFunctionEaseIn];
+            //                }
+        }
+    }
         else if (sender==6)
         {
             NSString *deviceToken;
