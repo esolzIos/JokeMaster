@@ -144,28 +144,38 @@
 }
 - (IBAction)jokeDetailClicked:(id)sender {
     
+    CABasicAnimation* anim = [CABasicAnimation animationWithKeyPath:@"transform.rotation"];
+    [anim setToValue:[NSNumber numberWithFloat:0.0f]];
+    [anim setFromValue:[NSNumber numberWithDouble:M_PI/16]]; // rotation angle
+    [anim setDuration:0.1];
+    [anim setRepeatCount:NSUIntegerMax];
+    [anim setAutoreverses:YES];
+    [[_ratingImage layer] addAnimation:anim forKey:@"iconShake"];
+
     [_optionView setHidden:NO];
     
 }
 - (IBAction)ratingClicked:(id)sender {
+       [_ratingImage.layer removeAllAnimations];
     
 }
 - (IBAction)likeClicked:(id)sender {
     
     [_optionView setHidden:YES];
-    
+    [_ratingImage.layer removeAllAnimations];
  
 }
 - (IBAction)playClicked:(id)sender {
     
     
       [_optionView setHidden:YES];
+       [_ratingImage.layer removeAllAnimations];
     JMPlayVideoViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMPlayVideoViewController"];
     
     [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
 }
 - (IBAction)shareClicked:(id)sender {
-    
+       [_ratingImage.layer removeAllAnimations];
       [_optionView setHidden:YES];
 }
 

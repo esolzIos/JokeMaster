@@ -13,12 +13,33 @@
 {
 AVPlayer *player;
     
-    BOOL paused;
+    BOOL paused,inFullscreen;
     
 }
 @end
 
 @implementation JMPlayVideoViewController
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    
+    if (inFullscreen) {
+          [_optionView setHidden:NO];
+        inFullscreen=NO;
+        CABasicAnimation* anim = [CABasicAnimation animationWithKeyPath:@"transform.rotation"];
+        [anim setToValue:[NSNumber numberWithFloat:0.0f]];
+        [anim setFromValue:[NSNumber numberWithDouble:M_PI/16]]; // rotation angle
+        [anim setDuration:0.1];
+        [anim setRepeatCount:NSUIntegerMax];
+        [anim setAutoreverses:YES];
+        [[_ratingImage layer] addAnimation:anim forKey:@"iconShake"];
+    }
+
+
+
+    
+}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -158,6 +179,10 @@ AVPlayer *player;
     // Pass the selected object to the new view controller.
 }
 */
+- (IBAction)ratingClicked:(id)sender
+{
+[_ratingImage.layer removeAllAnimations];
+}
 
 - (IBAction)backClicked:(id)sender {
     
@@ -190,6 +215,13 @@ AVPlayer *player;
         
         [player pause];
            [_optionView setHidden:NO];
+        CABasicAnimation* anim = [CABasicAnimation animationWithKeyPath:@"transform.rotation"];
+        [anim setToValue:[NSNumber numberWithFloat:0.0f]];
+        [anim setFromValue:[NSNumber numberWithDouble:M_PI/16]]; // rotation angle
+        [anim setDuration:0.1];
+        [anim setRepeatCount:NSUIntegerMax];
+        [anim setAutoreverses:YES];
+        [[_ratingImage layer] addAnimation:anim forKey:@"iconShake"];
         
     }
     else{
@@ -197,6 +229,7 @@ AVPlayer *player;
         [_pausePlayBtn setImage:[UIImage imageNamed:@"pause"] forState:UIControlStateNormal];
         
         [player play];
+        [_ratingImage.layer removeAllAnimations];
            [_optionView setHidden:YES];
     }
     
@@ -206,12 +239,12 @@ AVPlayer *player;
 - (IBAction)likeClicked:(id)sender {
     
     [_optionView setHidden:YES];
-    
+     [_ratingImage.layer removeAllAnimations];
     
 }
 - (IBAction)playClicked:(id)sender {
     
-    
+     [_ratingImage.layer removeAllAnimations];
     [_optionView setHidden:YES];
     paused=false;
     [_pausePlayBtn setImage:[UIImage imageNamed:@"pause"] forState:UIControlStateNormal];
@@ -219,7 +252,7 @@ AVPlayer *player;
     [player play];
 }
 - (IBAction)sharedClicked:(id)sender {
-    
+     [_ratingImage.layer removeAllAnimations];
     [_optionView setHidden:YES];
 }
 
@@ -233,7 +266,8 @@ AVPlayer *player;
     controller.player = player;
     [controller setVideoGravity:AVLayerVideoGravityResizeAspectFill];
     
-
+    inFullscreen=TRUE;
+    
     
     [self.navigationController presentViewController:controller animated:YES completion:nil];
     
@@ -246,5 +280,12 @@ AVPlayer *player;
     
   [player seekToTime:kCMTimeZero];
       [_optionView setHidden:NO];
+    CABasicAnimation* anim = [CABasicAnimation animationWithKeyPath:@"transform.rotation"];
+    [anim setToValue:[NSNumber numberWithFloat:0.0f]];
+    [anim setFromValue:[NSNumber numberWithDouble:M_PI/16]]; // rotation angle
+    [anim setDuration:0.1];
+    [anim setRepeatCount:NSUIntegerMax];
+    [anim setAutoreverses:YES];
+    [[_ratingImage layer] addAnimation:anim forKey:@"iconShake"];
   }
 @end

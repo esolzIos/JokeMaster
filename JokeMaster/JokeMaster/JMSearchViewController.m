@@ -119,6 +119,12 @@
     
     
 }
+
+- (IBAction)ratingClicked:(id)sender
+{
+
+}
+
 - (IBAction)RecentlyUploadedVideoTapped:(id)sender
 {
 
