@@ -1,0 +1,46 @@
+/* 
+  File.strings
+  JokeMaster
+
+  Created by santanu on 06/06/17.
+  Copyright © 2017 esolz. All rights reserved.
+*/
+"Save" = "Save";
+"Cancel" = "Cancel";
+"Upload Profile Picture" = "Upload Profile Picture";
+"Back to" = "Back to";
+"Log in" = "Log in";
+"Email" = "Email";
+"Name" = "Name";
+"Password" = "Password";
+"Confirm Password" = "Confirm Password";
+"Language" = "Language";
+"OK" = "OK";
+"Alert" = "Alert";
+"SIGN UP" = "SIGN UP";
+"LOG IN"= "LOG IN";
+"or login with" = "or login with";
+"Don't have an account? Sign Up" = "Don't have an account? Sign up";
+"Sign Up" ="Sign Up";
+"Back to Log in" = "Back to Log in";
+"English"="English";
+"Hindi"="Hindi";
+"Hebrew"="Hebrew";
+"Choose Language" = "Choose Language";
+"GO" = "GO";
+"Enter Name" = "Enter Name";
+"Enter Valid Email Address" = "Enter Valid Email Address";
+"Select Language" = "Select Language";
+"Facebook"="Facebook";
+"Google"="Google";
+"JOKE OF THE DAY" ="JOKE OF THE DAY";
+"CHOOSE CATEGORY" ="CHOOSE CATEGORY";
+"RECENTLY UPLOADED VIDEOS" ="RECENTLY UPLOADED VIDEOS";
+"UNITED STATES" ="UNITED STATES";
+"UNITED KINGDOM" ="UNITED KINGDOM";
+"PAKISTAN" = "PAKISTAN";
+"ISRAEL"="ISRAEL";
+"INDIA"="INDIA";
+
+
+

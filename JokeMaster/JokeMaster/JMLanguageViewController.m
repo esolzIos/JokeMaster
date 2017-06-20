@@ -14,6 +14,8 @@
     
     int rowSelected;
     
+    BOOL selected;
+    
 }
 @end
 
@@ -22,9 +24,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-     langArr=[[NSMutableArray alloc] initWithObjects:@"English",@"Hebrew",@"Hindi", nil];
+     langArr=[[NSMutableArray alloc] initWithObjects:@"English",@"Hebrew",@"Hindi",@"Chinese",@"Spanish", nil];
     
-    codeArr=[[NSMutableArray alloc] initWithObjects:@"en",@"he",@"hi", nil];
+    codeArr=[[NSMutableArray alloc] initWithObjects:@"en",@"he",@"hi",@"zh",@"es", nil];
     
     
     [_languageLbl setFont:[UIFont fontWithName:_languageLbl.font.fontName size:[self getFontSize:_languageLbl.font.pointSize]]];
@@ -62,11 +64,20 @@
     
 }
 - (IBAction)goClicked:(id)sender {
-    JMChooseCountryViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMChooseCountryViewController"];
     
-    [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
+    if (selected) {
+        JMChooseCountryViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMChooseCountryViewController"];
+        
+        [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
+    }
+    else{
+        [SVProgressHUD showInfoWithStatus:@"Please Choose a language first"];
+    }
+
 }
 - (IBAction)selectClicked:(id)sender {
+    
+    selected=true;
     
     [_languageLbl setText:[langArr objectAtIndex:rowSelected]];
     

@@ -13,6 +13,7 @@
 #import "LocalizationSystem.h"
 #import "JMHeaderView.h"
 #import "JMLeftMenuView.h"
+#import "JMSearchView.h"
 @interface JMGlobalMethods : UIViewController<Side_menu_delegate>
 {
     UIView *loader_shadow_View;
@@ -73,6 +74,7 @@
 
 @property (weak, nonatomic) IBOutlet UIView *MainView;
 @property (weak, nonatomic) IBOutlet JMHeaderView *HeaderView;
+@property (strong, nonatomic) IBOutlet JMSearchView *searchHeaderView;
 
 
 @end

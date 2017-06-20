@@ -1,0 +1,228 @@
+
+/* Class = "UILabel"; text = "RANK 1/2000"; ObjectID = "0xs-7O-bhw"; */
+"0xs-7O-bhw.text" = "RANK 1/2000";
+
+/* Class = "UILabel"; text = "ALEX MONDAL"; ObjectID = "2TF-2J-AoI"; */
+"2TF-2J-AoI.text" = "ALEX MONDAL";
+
+/* Class = "UILabel"; text = "Rank 1/2000"; ObjectID = "2Xz-Cj-9rM"; */
+"2Xz-Cj-9rM.text" = "Rank 1/2000";
+
+/* Class = "UITextField"; placeholder = "Name"; ObjectID = "3h4-ui-bPw"; */
+"3h4-ui-bPw.placeholder" = "Name";
+
+/* Class = "UILabel"; text = "CHOOSE CATEGORY"; ObjectID = "3r6-oZ-lBO"; */
+"3r6-oZ-lBO.text" = "CHOOSE CATEGORY";
+
+/* Class = "UILabel"; text = "RANK 25/2900"; ObjectID = "46r-Fr-q1Q"; */
+"46r-Fr-q1Q.text" = "RANK 25/2900";
+
+/* Class = "UIButton"; normalTitle = "LOG IN"; ObjectID = "4Qi-G0-W26"; */
+"4Qi-G0-W26.normalTitle" = "LOG IN";
+
+/* Class = "UILabel"; text = "00:00"; ObjectID = "525-9U-vA6"; */
+"525-9U-vA6.text" = "00:00";
+
+/* Class = "UILabel"; text = "LATEST"; ObjectID = "592-a4-5BP"; */
+"592-a4-5BP.text" = "LATEST";
+
+/* Class = "UIButton"; normalTitle = "Cancel"; ObjectID = "5Ix-7h-UZV"; */
+"5Ix-7h-UZV.normalTitle" = "Cancel";
+
+/* Class = "UILabel"; text = "4.8/5"; ObjectID = "5sl-zp-uZu"; */
+"5sl-zp-uZu.text" = "4.8/5";
+
+/* Class = "UILabel"; text = "Select Joke language"; ObjectID = "61E-xE-eDy"; */
+"61E-xE-eDy.text" = "Select Joke language";
+
+/* Class = "UILabel"; text = "3.4 M VIEWS"; ObjectID = "62N-bt-tJg"; */
+"62N-bt-tJg.text" = "3.4 M VIEWS";
+
+/* Class = "UIButton"; normalTitle = "SIGN UP"; ObjectID = "6Ov-FN-1F0"; */
+"6Ov-FN-1F0.normalTitle" = "SIGN UP";
+
+/* Class = "UILabel"; text = "Top Rated jokes"; ObjectID = "8Zf-eD-AGX"; */
+"8Zf-eD-AGX.text" = "Top Rated jokes";
+
+/* Class = "UILabel"; text = "Choose language"; ObjectID = "9rO-Ob-5J1"; */
+"9rO-Ob-5J1.text" = "Choose language";
+
+/* Class = "UILabel"; text = "JOHN DOE"; ObjectID = "CGl-6h-oxa"; */
+"CGl-6h-oxa.text" = "JOHN DOE";
+
+/* Class = "UILabel"; text = "JOKE OF THE DAY"; ObjectID = "CdC-R0-eOT"; */
+"CdC-R0-eOT.text" = "JOKE OF THE DAY";
+
+/* Class = "UILabel"; text = "JOHN DOE"; ObjectID = "E0m-Dy-DtJ"; */
+"E0m-Dy-DtJ.text" = "JOHN DOE";
+
+/* Class = "UILabel"; text = "FUNNY LINNA"; ObjectID = "EWs-ZH-XYN"; */
+"EWs-ZH-XYN.text" = "FUNNY LINNA";
+
+/* Class = "UIButton"; normalTitle = "Select"; ObjectID = "Fum-7Q-RFX"; */
+"Fum-7Q-RFX.normalTitle" = "Select";
+
+/* Class = "UILabel"; text = "COMMENTS"; ObjectID = "Ij9-ZT-q49"; */
+"Ij9-ZT-q49.text" = "COMMENTS";
+
+/* Class = "UIButton"; normalTitle = "GO"; ObjectID = "Ipd-Bz-HQi"; */
+"Ipd-Bz-HQi.normalTitle" = "GO";
+
+/* Class = "UILabel"; text = "SCORE : 4.5/5 | JOKE MASTER RANK: 59/5300"; ObjectID = "Jeu-ZB-YKC"; */
+"Jeu-ZB-YKC.text" = "SCORE : 4.5/5 | JOKE MASTER RANK: 59/5300";
+
+/* Class = "UILabel"; text = "Top Rated jokes"; ObjectID = "L2Y-nE-XeC"; */
+"L2Y-nE-XeC.text" = "Top Rated jokes";
+
+/* Class = "UILabel"; text = "Language"; ObjectID = "Luf-sC-FWi"; */
+"Luf-sC-FWi.text" = "Language";
+
+/* Class = "UILabel"; text = "04/29/2017"; ObjectID = "M6l-zq-8mT"; */
+"M6l-zq-8mT.text" = "04/29/2017";
+
+/* Class = "UITextField"; placeholder = "Name"; ObjectID = "MVs-0V-F7l"; */
+"MVs-0V-F7l.placeholder" = "Name";
+
+/* Class = "UILabel"; text = "Top Rated jokes"; ObjectID = "NBf-yG-Lfz"; */
+"NBf-yG-Lfz.text" = "Top Rated jokes";
+
+/* Class = "UITextField"; placeholder = "password"; ObjectID = "NZK-Bj-BGB"; */
+"NZK-Bj-BGB.placeholder" = "password";
+
+/* Class = "UILabel"; text = "RANK 1"; ObjectID = "Oeh-Gq-wSm"; */
+"Oeh-Gq-wSm.text" = "RANK 1";
+
+/* Class = "UILabel"; text = "Upload Profile Picture"; ObjectID = "OoI-6t-DRB"; */
+"OoI-6t-DRB.text" = "Upload Profile Picture";
+
+/* Class = "UIButton"; normalTitle = "RECENTLY UPLOADED VIDEOS"; ObjectID = "PVt-K2-cKv"; */
+"PVt-K2-cKv.normalTitle" = "RECENTLY UPLOADED VIDEOS";
+
+/* Class = "UILabel"; text = "Select joke Language"; ObjectID = "PW4-UP-zSs"; */
+"PW4-UP-zSs.text" = "Select joke Language";
+
+/* Class = "UIButton"; normalTitle = "GO"; ObjectID = "PZh-6v-jKE"; */
+"PZh-6v-jKE.normalTitle" = "GO";
+
+/* Class = "UIButton"; normalTitle = "FOLLOW"; ObjectID = "QMO-lD-aIa"; */
+"QMO-lD-aIa.normalTitle" = "FOLLOW";
+
+/* Class = "UILabel"; text = "MEMBER SINCE 10/05/2017"; ObjectID = "Ro0-Gy-7gb"; */
+"Ro0-Gy-7gb.text" = "MEMBER SINCE 10/05/2017";
+
+/* Class = "UILabel"; text = "DYANO JONSON"; ObjectID = "STe-yh-XIx"; */
+"STe-yh-XIx.text" = "DYANO JONSON";
+
+/* Class = "UIButton"; normalTitle = "RECENTLY UPLOADED VIDEOS"; ObjectID = "TCU-Vg-fNF"; */
+"TCU-Vg-fNF.normalTitle" = "RECENTLY UPLOADED VIDEOS";
+
+/* Class = "UILabel"; text = "Choose Category"; ObjectID = "TQP-ep-vGO"; */
+"TQP-ep-vGO.text" = "Choose Category";
+
+/* Class = "UIButton"; normalTitle = "RECENTLY UPLOADED VIDEOS"; ObjectID = "UDc-re-S4s"; */
+"UDc-re-S4s.normalTitle" = "RECENTLY UPLOADED VIDEOS";
+
+/* Class = "UIButton"; normalTitle = "Upload"; ObjectID = "Uwa-J4-TJP"; */
+"Uwa-J4-TJP.normalTitle" = "Upload";
+
+/* Class = "UILabel"; text = "Top Rated jokes"; ObjectID = "VJy-fI-TPH"; */
+"VJy-fI-TPH.text" = "Top Rated jokes";
+
+/* Class = "UIButton"; normalTitle = "Dont have an account? sign up"; ObjectID = "W2J-gb-nsI"; */
+"W2J-gb-nsI.normalTitle" = "Dont have an account? sign up";
+
+/* Class = "UITextView"; text = "Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud "; ObjectID = "WVt-lo-PmU"; */
+"WVt-lo-PmU.text" = "Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud ";
+
+/* Class = "UILabel"; text = "4.5/5"; ObjectID = "X64-ci-id1"; */
+"X64-ci-id1.text" = "4.5/5";
+
+/* Class = "UITextField"; placeholder = "Name"; ObjectID = "X9b-Sd-n4M"; */
+"X9b-Sd-n4M.placeholder" = "Name";
+
+/* Class = "UILabel"; text = "TAP TO CHOOSE VIDEO"; ObjectID = "XYQ-Ye-nSX"; */
+"XYQ-Ye-nSX.text" = "TAP TO CHOOSE VIDEO";
+
+/* Class = "UILabel"; text = "ANIMAL JOKES"; ObjectID = "YB9-Ew-R55"; */
+"YB9-Ew-R55.text" = "ANIMAL JOKES";
+
+/* Class = "UIButton"; normalTitle = "Google"; ObjectID = "aPf-fA-k7i"; */
+"aPf-fA-k7i.normalTitle" = "Google";
+
+/* Class = "UIButton"; normalTitle = "Back to Log In"; ObjectID = "asG-1N-Wwn"; */
+"asG-1N-Wwn.normalTitle" = "Back to Log In";
+
+/* Class = "UILabel"; text = "ANIMAL JOKES"; ObjectID = "bDo-eF-ZZe"; */
+"bDo-eF-ZZe.text" = "ANIMAL JOKES";
+
+/* Class = "UILabel"; text = "SAM MONDAL"; ObjectID = "dFr-E3-TiX"; */
+"dFr-E3-TiX.text" = "SAM MONDAL";
+
+/* Class = "UILabel"; text = "4.8/5"; ObjectID = "dQM-Oh-Nsa"; */
+"dQM-Oh-Nsa.text" = "4.8/5";
+
+/* Class = "UIButton"; normalTitle = "Facebook"; ObjectID = "dV7-nN-92f"; */
+"dV7-nN-92f.normalTitle" = "Facebook";
+
+/* Class = "UILabel"; text = "4.5/5"; ObjectID = "flz-oU-89A"; */
+"flz-oU-89A.text" = "4.5/5";
+
+/* Class = "UILabel"; text = "CAMERA ROLL"; ObjectID = "hxU-ZS-QMB"; */
+"hxU-ZS-QMB.text" = "CAMERA ROLL";
+
+/* Class = "UILabel"; text = "DYANO JONSON"; ObjectID = "iIV-yk-F37"; */
+"iIV-yk-F37.text" = "DYANO JONSON";
+
+/* Class = "UITextField"; placeholder = "Email"; ObjectID = "iVC-ze-54n"; */
+"iVC-ze-54n.placeholder" = "Email";
+
+/* Class = "UITextField"; placeholder = "Name"; ObjectID = "iZ9-DU-7Ak"; */
+"iZ9-DU-7Ak.placeholder" = "Name";
+
+/* Class = "UILabel"; text = "CHOOSE CATEGORY"; ObjectID = "jBY-Cv-N9g"; */
+"jBY-Cv-N9g.text" = "CHOOSE CATEGORY";
+
+/* Class = "UIButton"; normalTitle = "Cancel"; ObjectID = "jjr-6j-aqJ"; */
+"jjr-6j-aqJ.normalTitle" = "Cancel";
+
+/* Class = "UIButton"; normalTitle = "Select"; ObjectID = "kOt-6i-47S"; */
+"kOt-6i-47S.normalTitle" = "Select";
+
+/* Class = "UILabel"; text = "Choose Category"; ObjectID = "nCu-UY-hA2"; */
+"nCu-UY-hA2.text" = "Choose Category";
+
+/* Class = "UILabel"; text = "UNITED STATES"; ObjectID = "oye-Mv-pDD"; */
+"oye-Mv-pDD.text" = "UNITED STATES";
+
+/* Class = "UILabel"; text = "ANIMAL JOKES"; ObjectID = "psp-8E-LuK"; */
+"psp-8E-LuK.text" = "ANIMAL JOKES";
+
+/* Class = "UILabel"; text = "REVIEWS"; ObjectID = "pyE-X7-20e"; */
+"pyE-X7-20e.text" = "REVIEWS";
+
+/* Class = "UILabel"; text = "GALLERY"; ObjectID = "rc0-wl-Amf"; */
+"rc0-wl-Amf.text" = "GALLERY";
+
+/* Class = "UILabel"; text = "LATEST"; ObjectID = "ubK-0E-dM3"; */
+"ubK-0E-dM3.text" = "LATEST";
+
+/* Class = "UILabel"; text = "DYANO JONSON"; ObjectID = "upV-d7-M2r"; */
+"upV-d7-M2r.text" = "DYANO JONSON";
+
+/* Class = "UILabel"; text = "FUNNY LINNA"; ObjectID = "vLB-cy-n27"; */
+"vLB-cy-n27.text" = "FUNNY LINNA";
+
+/* Class = "UILabel"; text = "or login with"; ObjectID = "vZ7-dc-nHw"; */
+"vZ7-dc-nHw.text" = "or login with";
+
+/* Class = "UILabel"; text = "4.8/5"; ObjectID = "xLl-CU-VBc"; */
+"xLl-CU-VBc.text" = "4.8/5";
+
+/* Class = "UILabel"; text = "Choose Category"; ObjectID = "xVB-he-A6d"; */
+"xVB-he-A6d.text" = "Choose Category";
+
+/* Class = "UILabel"; text = "LATEST"; ObjectID = "yn3-yC-LXY"; */
+"yn3-yC-LXY.text" = "LATEST";
+
+/* Class = "UILabel"; text = "4.5/5"; ObjectID = "zuT-sd-Ris"; */
+"zuT-sd-Ris.text" = "4.5/5";

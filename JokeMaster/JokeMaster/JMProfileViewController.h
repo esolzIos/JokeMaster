@@ -8,9 +8,9 @@
 
 #import "JMGlobalMethods.h"
 #import "JMRecentUploadedCollectionViewCell.h"
+#import "JMCategoryCell.h"
 
-
-@interface JMProfileViewController : JMGlobalMethods<UICollectionViewDataSource,UICollectionViewDelegate>
+@interface JMProfileViewController : JMGlobalMethods<UICollectionViewDataSource,UICollectionViewDelegate,UITableViewDelegate,UITableViewDataSource>
 {
     float MenuViewY;
     NSMutableArray *CategoryArray;
@@ -29,6 +29,17 @@
 @property (strong, nonatomic) IBOutlet UIView *followView;
 @property (strong, nonatomic) IBOutlet UIButton *followBtn;
 - (IBAction)followClicked:(id)sender;
+@property (strong, nonatomic) IBOutlet UIButton *categoryBtn;
 
+- (IBAction)categoryClicked:(id)sender;
 @property (weak, nonatomic) IBOutlet UICollectionView *categoryCollectionView;
+
+@property (weak, nonatomic) IBOutlet UIView *TransparentView;
+@property (weak, nonatomic) IBOutlet UIView *MenuBaseView;
+
+@property (weak, nonatomic) IBOutlet UIView *CrossView;
+- (IBAction)CategoryCrossTapped:(id)sender;
+
+@property (weak, nonatomic) IBOutlet UITableView *CategoryTable;
+
 @end

@@ -65,6 +65,13 @@
     CurrentViewController = NSStringFromClass([topMostViewControllerObj class]);
     NSLog(@"controller=%@",CurrentViewController);
     
+    
+    [HeaderView.searchBtn addTarget:self action:@selector(gotoSearch) forControlEvents:UIControlEventTouchUpInside];
+    
+        [HeaderView.MenuButton addTarget:self action:@selector(menuClicked) forControlEvents:UIControlEventTouchUpInside];
+    
+       [HeaderView.BackButton addTarget:self action:@selector(BackClicked) forControlEvents:UIControlEventTouchUpInside];
+    
     if ([CurrentViewController isEqualToString:@"JMHomeViewController"])
     {
         // leftmenurowindex=2;
@@ -75,9 +82,19 @@
         HeaderView.RecentUploadImage.hidden=YES;
         HeaderView.BackView.hidden=YES;
         
-        [HeaderView.MenuButton addTarget:self action:@selector(menuClicked) forControlEvents:UIControlEventTouchUpInside];
+    
         
- 
+
+        
+        
+    }
+    if ([CurrentViewController isEqualToString:@"JMSearchViewController"])
+    {
+        
+        
+        [_searchHeaderView.backBtn addTarget:self action:@selector(BackClicked) forControlEvents:UIControlEventTouchUpInside];
+        
+        
         
         
         
@@ -92,7 +109,7 @@
         HeaderView.RecentUploadImage.hidden=NO;
         HeaderView.BackView.hidden=NO;
         
-        [HeaderView.BackButton addTarget:self action:@selector(BackClicked) forControlEvents:UIControlEventTouchUpInside];
+     
         
     }
     else if ([CurrentViewController isEqualToString:@"JMJokesCategoryVideoListViewController"])
@@ -109,7 +126,7 @@
         HeaderView.HeaderLabel.text=@"Joke Category";
         HeaderView.EmojiImage.hidden=NO;
         
-        [HeaderView.BackButton addTarget:self action:@selector(BackClicked) forControlEvents:UIControlEventTouchUpInside];
+       
         
         
         UIFont *font1 = [UIFont fontWithName:@"GROBOLD" size:HeaderView.HeaderLabel.font.pointSize];
@@ -169,7 +186,7 @@
         HeaderView.HeaderLabel.text=@"Profile";
         HeaderView.EmojiImage.hidden=NO;
         
-        [HeaderView.BackButton addTarget:self action:@selector(BackClicked) forControlEvents:UIControlEventTouchUpInside];
+    
         
         UIFont *font1 = [UIFont fontWithName:@"GROBOLD" size:HeaderView.HeaderLabel.font.pointSize];
         NSDictionary *arialDict = [NSDictionary dictionaryWithObject: font1 forKey:NSFontAttributeName];
@@ -197,7 +214,7 @@
         HeaderView.HeaderLabel.text=@"Joke Master Rank";
         HeaderView.EmojiImage.hidden=NO;
         
-        [HeaderView.BackButton addTarget:self action:@selector(BackClicked) forControlEvents:UIControlEventTouchUpInside];
+    
         
         UIFont *font1 = [UIFont fontWithName:@"GROBOLD" size:HeaderView.HeaderLabel.font.pointSize];
         NSDictionary *arialDict = [NSDictionary dictionaryWithObject: font1 forKey:NSFontAttributeName];
@@ -227,7 +244,7 @@
         HeaderView.HeaderLabel.text=@"Following";
         HeaderView.EmojiImage.hidden=NO;
         
-        [HeaderView.BackButton addTarget:self action:@selector(BackClicked) forControlEvents:UIControlEventTouchUpInside];
+     
         
         UIFont *font1 = [UIFont fontWithName:@"GROBOLD" size:HeaderView.HeaderLabel.font.pointSize];
         NSDictionary *arialDict = [NSDictionary dictionaryWithObject: font1 forKey:NSFontAttributeName];
@@ -257,7 +274,7 @@
         HeaderView.HeaderLabel.text=@"Upload Video";
         HeaderView.EmojiImage.hidden=NO;
         
-        [HeaderView.BackButton addTarget:self action:@selector(BackClicked) forControlEvents:UIControlEventTouchUpInside];
+    
         
         UIFont *font1 = [UIFont fontWithName:@"GROBOLD" size:HeaderView.HeaderLabel.font.pointSize];
         NSDictionary *arialDict = [NSDictionary dictionaryWithObject: font1 forKey:NSFontAttributeName];
@@ -2228,12 +2245,14 @@
 }
 -(void)POPViewController
 {
-    CATransition *Transition=[CATransition animation];
-    [Transition setDuration:0.1f];
-    [Transition setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut]];
-    [Transition setType:kCAMediaTimingFunctionEaseOut];
-    [[[[self navigationController] view] layer] addAnimation:Transition forKey:nil];
-    [[self navigationController] popViewControllerAnimated:NO];
+    [self.navigationController popViewControllerAnimated:YES];
+    
+//    CATransition *Transition=[CATransition animation];
+//    [Transition setDuration:0.1f];
+//    [Transition setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut]];
+//    [Transition setType:kCAMediaTimingFunctionEaseOut];
+//    [[[[self navigationController] view] layer] addAnimation:Transition forKey:nil];
+//    [[self navigationController] popViewControllerAnimated:NO];
 }
 -(void)txtPadding:(UITextField *)text
 {
@@ -3035,6 +3054,17 @@
         return rootViewController;
     }
 }
+#pragma - mark search click
+-(void)gotoSearch
+{
+    
+//    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Temp" bundle: nil];
+    
+    JMGlobalMethods *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMSearch"];
+    [self.navigationController pushViewController:VC animated:kCAMediaTimingFunctionEaseIn];
+    
+}
+
 #pragma - mark Back click
 -(void)BackClicked
 {

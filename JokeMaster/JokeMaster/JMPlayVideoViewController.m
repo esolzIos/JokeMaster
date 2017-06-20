@@ -48,6 +48,8 @@ AVPlayer *player;
     [superlayer addSublayer:playerLayer];
 
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(playerDidFinishPlaying:) name:AVPlayerItemDidPlayToEndTimeNotification object:item];
+    
+      [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(playerDidFinishPlaying:) name:AVPlayerItemPlaybackStalledNotification object:item];
 
     
     // create a player view controller
@@ -79,7 +81,7 @@ AVPlayer *player;
     // show the view controller
       [self setRoundCornertoView:_videoThumb withBorderColor:[UIColor clearColor] WithRadius:0.15];
     
-    
+          [self setRoundCornertoView:_optionView withBorderColor:[UIColor clearColor] WithRadius:0.15];
       [self setRoundCornertoView:_playerView withBorderColor:[UIColor clearColor] WithRadius:0.15];
 
     // Do any additional setup after loading the view.
@@ -187,6 +189,7 @@ AVPlayer *player;
         [_pausePlayBtn setImage:[UIImage imageNamed:@"play-1"] forState:UIControlStateNormal];
         
         [player pause];
+           [_optionView setHidden:NO];
         
     }
     else{
@@ -194,10 +197,30 @@ AVPlayer *player;
         [_pausePlayBtn setImage:[UIImage imageNamed:@"pause"] forState:UIControlStateNormal];
         
         [player play];
+           [_optionView setHidden:YES];
     }
     
  
 
+}
+- (IBAction)likeClicked:(id)sender {
+    
+    [_optionView setHidden:YES];
+    
+    
+}
+- (IBAction)playClicked:(id)sender {
+    
+    
+    [_optionView setHidden:YES];
+    paused=false;
+    [_pausePlayBtn setImage:[UIImage imageNamed:@"pause"] forState:UIControlStateNormal];
+    [player seekToTime:kCMTimeZero];
+    [player play];
+}
+- (IBAction)sharedClicked:(id)sender {
+    
+    [_optionView setHidden:YES];
 }
 
 - (IBAction)shareClicked:(id)sender {
@@ -222,5 +245,6 @@ AVPlayer *player;
     [_pausePlayBtn setImage:[UIImage imageNamed:@"play-1"] forState:UIControlStateNormal];
     
   [player seekToTime:kCMTimeZero];
+      [_optionView setHidden:NO];
   }
 @end

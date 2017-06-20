@@ -47,10 +47,10 @@
 @property (strong, nonatomic) IBOutlet UIButton *shareBtn;
 - (IBAction)shareClicked:(id)sender;
 
-@property (weak, nonatomic) IBOutlet UIView *TransparentView;
-@property (weak, nonatomic) IBOutlet UIView *MenuBaseView;
-@property (weak, nonatomic) IBOutlet UIView *CrossView;
-- (IBAction)CategoryCrossTapped:(id)sender;
-@property (weak, nonatomic) IBOutlet UITableView *CategoryTable;
+//@property (weak, nonatomic) IBOutlet UIView *TransparentView;
+//@property (weak, nonatomic) IBOutlet UIView *MenuBaseView;
+//@property (weak, nonatomic) IBOutlet UIView *CrossView;
+//- (IBAction)CategoryCrossTapped:(id)sender;
+//@property (weak, nonatomic) IBOutlet UITableView *CategoryTable;
 
 @end

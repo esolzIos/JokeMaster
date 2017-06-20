@@ -16,6 +16,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+            [self setRoundCornertoView:_optionView withBorderColor:[UIColor clearColor] WithRadius:0.15];
     // Do any additional setup after loading the view.
 }
 
@@ -37,5 +38,11 @@
 - (IBAction)Test:(id)sender
 {
     DebugLog(@"testtttt");
+}
+- (IBAction)uploadClicked:(id)sender {
+}
+- (IBAction)cameraClicked:(id)sender {
+}
+- (IBAction)galleryClicked:(id)sender {
 }
 @end

@@ -49,6 +49,22 @@
 @property (strong, nonatomic) IBOutlet UIImageView *rating4;
 @property (strong, nonatomic) IBOutlet UIImageView *rating5;
 @property (strong, nonatomic) IBOutlet UILabel *ratingLbl;
+
+@property (strong, nonatomic) IBOutlet UIView *optionView;
+@property (strong, nonatomic) IBOutlet UIView *transView;
+@property (strong, nonatomic) IBOutlet UIView *likeVIew;
+@property (strong, nonatomic) IBOutlet UIImageView *likeImage;
+@property (strong, nonatomic) IBOutlet UIButton *likeBtn;
+- (IBAction)likeClicked:(id)sender;
+@property (strong, nonatomic) IBOutlet UIView *playView;
+@property (strong, nonatomic) IBOutlet UIImageView *playImage;
+@property (strong, nonatomic) IBOutlet UIButton *playBtn;
+- (IBAction)playClicked:(id)sender;
+@property (strong, nonatomic) IBOutlet UIView *shareView;
+@property (strong, nonatomic) IBOutlet UIImageView *shareImg;
+@property (strong, nonatomic) IBOutlet UIButton *shareBttn;
+- (IBAction)sharedClicked:(id)sender;
+
 - (IBAction)resizeClicked:(id)sender;
 
 @end
