@@ -141,7 +141,7 @@ fbM=[[FBSDKLoginManager alloc]init];
     
  //   UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Temp" bundle: nil];
 
-    
+       [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"loggedIn"];
     JMHomeViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMHomeViewController"];
     
     [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
@@ -167,7 +167,11 @@ fbM=[[FBSDKLoginManager alloc]init];
                  }
                  
                     DebugLog(@"Details:%@",(NSDictionary *)result);
-
+                 
+                    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"loggedIn"];
+                 JMHomeViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMHomeViewController"];
+                 
+                 [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
              }];
         }
         
@@ -270,6 +274,11 @@ didCompleteWithResult:(FBSDKLoginManagerLoginResult *)result
              
              DebugLog(@"Details:%@",(NSDictionary *)result);
              
+             [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"loggedIn"];
+             JMHomeViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMHomeViewController"];
+             
+             [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
+             
            //  fbDict=[result copy];
              
             // [self checkLogin];
@@ -308,7 +317,10 @@ didSignInForUser:(GIDGoogleUser *)user
         NSString *givenName = user.profile.givenName;
         NSString *familyName = user.profile.familyName;
 
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"loggedIn"];
+        JMHomeViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMHomeViewController"];
         
+        [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
      //   [self autoLogin:email];
         
     }

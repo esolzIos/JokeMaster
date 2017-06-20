@@ -174,8 +174,15 @@
         }
         else if (indexPath.row==6)
         {
-            cell.menuName.text = AMLocalizedString(@"LOG OUT",nil);
-            cell.menuImg.image = [UIImage imageNamed:@"logout"];
+            if ([[NSUserDefaults standardUserDefaults]boolForKey:@"loggedIn"]) {
+                cell.menuName.text = AMLocalizedString(@"LOG OUT",nil);
+                cell.menuImg.image = [UIImage imageNamed:@"logout"];
+            }
+            else{
+                cell.menuName.text = AMLocalizedString(@"LOG IN",nil);
+                cell.menuImg.image = [UIImage imageNamed:@"logout"];
+            }
+      
         }
         
         

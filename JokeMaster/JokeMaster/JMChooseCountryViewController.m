@@ -7,7 +7,7 @@
 //
 
 #import "JMChooseCountryViewController.h"
-#import "JMLoginViewController.h"
+#import "JMHomeViewController.h"
 @interface JMChooseCountryViewController ()
 {
     NSMutableArray *langArr,*codeArr,*engArr,*hindiArr,*hebrewArr,*flagArr;
@@ -163,9 +163,14 @@
 }
 #pragma mark - Go button tapped
 - (IBAction)GoTapped:(id)sender {
-    JMLoginViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMLogin"];
+    
+    JMHomeViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMHomeViewController"];
     
     [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
+    
+//    JMLoginViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMLogin"];
+//    
+//    [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
 }
 - (IBAction)languageClicked:(id)sender {
     

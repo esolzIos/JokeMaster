@@ -2236,12 +2236,14 @@
 
 -(void)PushViewController:(UIViewController *)viewController WithAnimation:(NSString *)AnimationType
 {
-    CATransition *Transition=[CATransition animation];
-    [Transition setDuration:0.1f];
-    [Transition setTimingFunction:[CAMediaTimingFunction functionWithName:AnimationType]];
-    [Transition setType:AnimationType];
-    [[[[self navigationController] view] layer] addAnimation:Transition forKey:nil];
-    [[self navigationController] pushViewController:viewController animated:NO];
+//    CATransition *Transition=[CATransition animation];
+//    [Transition setDuration:0.1f];
+//    [Transition setTimingFunction:[CAMediaTimingFunction functionWithName:AnimationType]];
+//    [Transition setType:AnimationType];
+//    [[[[self navigationController] view] layer] addAnimation:Transition forKey:nil];
+//    [[self navigationController] pushViewController:viewController animated:NO];
+    
+     [self.navigationController pushViewController:viewController animated:kCAMediaTimingFunctionEaseIn];
 }
 -(void)POPViewController
 {
@@ -3279,21 +3281,36 @@
     }
         else if (sender==6)
         {
-            NSString *deviceToken;
-            NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
-            deviceToken=[prefs valueForKey:@"deviceToken"];
-            
-            NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
-            [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
-            [[NSUserDefaults standardUserDefaults] synchronize];
-            
-            [[NSUserDefaults standardUserDefaults] setObject:deviceToken  forKey:@"deviceToken"];
-            
-            LocalizationSetLanguage(@"en");
+                        if ([[NSUserDefaults standardUserDefaults]boolForKey:@"loggedIn"]) {
+                            [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"loggedIn"];
+                            
+                            
+                            NSString *deviceToken;
+                            NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+                            deviceToken=[prefs valueForKey:@"deviceToken"];
+                            
+                            NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
+                            [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
+                            [[NSUserDefaults standardUserDefaults] synchronize];
+                            
+                            [[NSUserDefaults standardUserDefaults] setObject:deviceToken  forKey:@"deviceToken"];
+                            
+                            LocalizationSetLanguage(@"en");
+                            
+                            JMGlobalMethods *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMHomeViewController"];
+                            
+                         [self.navigationController pushViewController:VC animated:kCAMediaTimingFunctionEaseIn];
+                            
+                        }
+         
+                        else{
+         
+       
             
             
             JMGlobalMethods *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMLogin"];
             [self.navigationController pushViewController:VC animated:kCAMediaTimingFunctionEaseIn];
+                        }
         }
 //    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
   //  NSString *userid=[prefs valueForKey:@"UserId"];

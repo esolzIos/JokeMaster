@@ -25,6 +25,10 @@
     
     // header label font according to screen size
     [self.searchHeaderView.searchText setFont:[UIFont fontWithName:self.searchHeaderView.searchText.font.fontName size:[self getFontSize:self.searchHeaderView.searchText.font.pointSize]]];
+    
+     [_RecentlyUploadedBtn.titleLabel setFont:[UIFont fontWithName:_RecentlyUploadedBtn.titleLabel.font.fontName size:[self getFontSize:_RecentlyUploadedBtn.titleLabel.font.pointSize]]];
+    
+       self.searchHeaderView.searchText.attributedPlaceholder = [[NSAttributedString alloc] initWithString:AMLocalizedString(@"SEARCH BY NAME", nil) attributes:@{NSForegroundColorAttributeName: [UIColor blackColor]}];
     // Do any additional setup after loading the view.
 }
 
