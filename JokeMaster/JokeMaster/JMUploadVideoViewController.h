@@ -38,5 +38,21 @@
 @property (strong, nonatomic) IBOutlet UILabel *categoryLbl;
 @property (strong, nonatomic) IBOutlet UIButton *categoryBtn;
 - (IBAction)categoryClicked:(id)sender;
+@property (strong, nonatomic) IBOutlet UILabel *warningLbl;
+
+@property (strong, nonatomic) IBOutlet UIView *warningView;
+@property (strong, nonatomic) IBOutlet UIView *transView;
+@property (strong, nonatomic) IBOutlet UIView *popupView;
+@property (strong, nonatomic) IBOutlet UILabel *okLbl;
+@property (strong, nonatomic) IBOutlet UILabel *cancelLabl;
+@property (strong, nonatomic) IBOutlet UIButton *warncancelBtn;
+- (IBAction)warnCancelled:(id)sender;
+@property (strong, nonatomic) IBOutlet UIButton *warnOkBtn;
+- (IBAction)warnOkClicked:(id)sender;
+@property (strong, nonatomic) IBOutlet UIButton *crossBtn;
+- (IBAction)crossClicked:(id)sender;
+@property (strong, nonatomic) IBOutlet UILabel *tapInfo;
+@property (strong, nonatomic) IBOutlet UILabel *cameraLbl;
+@property (strong, nonatomic) IBOutlet UILabel *galleryLbl;
 
 @end

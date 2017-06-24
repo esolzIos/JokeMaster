@@ -21,11 +21,9 @@
                 <outlet property="EmojiImage" destination="dGT-1Y-huL" id="rFC-fp-oEx"/>
                 <outlet property="HeaderLabel" destination="isb-Gx-rfe" id="8wO-u9-oqk"/>
                 <outlet property="MenuButton" destination="dFz-MY-4bI" id="9AW-uu-xNm"/>
-                <outlet property="RecentUploadImage" destination="LbF-t7-cTZ" id="7WT-b1-Ew7"/>
                 <outlet property="langBtn" destination="jr6-xA-2pX" id="f9e-hZ-BHm"/>
                 <outlet property="langImage" destination="Ze8-dU-S0K" id="y0s-Ml-6b6"/>
                 <outlet property="langView" destination="Hqf-c0-Pm4" id="2ag-dN-LnM"/>
-                <outlet property="logoImage" destination="3lX-p6-DkQ" id="wT7-c9-ZIF"/>
                 <outlet property="menuView" destination="daC-dK-w47" id="hWd-xz-upw"/>
                 <outlet property="moreBtn" destination="sD7-cg-r8x" id="fL5-vr-lzD"/>
                 <outlet property="moreView" destination="r7j-9B-LA2" id="A5A-ly-qS3"/>
@@ -86,14 +84,6 @@
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
-                <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="3lX-p6-DkQ">
-                    <rect key="frame" x="105" y="21" width="115" height="20"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                </imageView>
-                <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="recently-uploaded" translatesAutoresizingMaskIntoConstraints="NO" id="LbF-t7-cTZ">
-                    <rect key="frame" x="82" y="22" width="156" height="18"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                </imageView>
                 <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="isb-Gx-rfe" customClass="JMStrokeLabel">
                     <rect key="frame" x="64" y="16" width="191" height="40"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
@@ -149,9 +139,7 @@
         <image name="back" width="36" height="13"/>
         <image name="emotion" width="119" height="147"/>
         <image name="hamburger-menu" width="32" height="25"/>
-        <image name="logo" width="228" height="40"/>
         <image name="more" width="11" height="37"/>
-        <image name="recently-uploaded" width="314" height="39"/>
         <image name="search" width="32" height="32"/>
     </resources>
 </document>

@@ -21,6 +21,7 @@
     BOOL loading;
     
     AppDelegate *app;
+    UIView *moreView;
     
     
 }
@@ -45,9 +46,28 @@
     return context;
 }
 
+-(void)addMoreView
+{
 
+    moreView=[[UIView alloc]initWithFrame:CGRectMake(185.0/320.0*FULLWIDTH, 40.0/480.0*FULLHEIGHT, 130.0/320.0*FULLWIDTH, 140.0/480.0*FULLHEIGHT)];
+    
+     moreView= [[[NSBundle mainBundle] loadNibNamed:@"ExtendedViews" owner:self options:nil] objectAtIndex:0];
+    
+  
+    
+    [moreView setHidden:YES];
+    
+    
 
+}
 
+-(void)showMore
+{
+    
+      [self.view addSubview:moreView];
+  [moreView setHidden:NO];
+
+}
 -(void)viewDidAppear:(BOOL)animated
 {
     [SVProgressHUD dismiss];
@@ -72,21 +92,31 @@
     
        [HeaderView.BackButton addTarget:self action:@selector(BackClicked) forControlEvents:UIControlEventTouchUpInside];
     
+      [HeaderView.moreBtn addTarget:self action:@selector(showMore) forControlEvents:UIControlEventTouchUpInside];
+    
+    HeaderView.langView.hidden=NO;
+    HeaderView.searchView.hidden=NO;
+    HeaderView.moreView.hidden=NO;
+    HeaderView.menuView.hidden=YES;
+          HeaderView.HeaderLabel.hidden=NO;
+      HeaderView.logoImage.hidden=NO;
+    HeaderView.BackView.hidden=NO;
+        HeaderView.EmojiImage.hidden=NO;
+    
     if ([CurrentViewController isEqualToString:@"JMHomeViewController"])
     {
         // leftmenurowindex=2;
         
-        HeaderView.logoImage.hidden=NO;
+      
         HeaderView.menuView.hidden=NO;
         
-        HeaderView.RecentUploadImage.hidden=YES;
+ HeaderView.HeaderLabel.text=@"jokeMASTER";
         HeaderView.BackView.hidden=YES;
-        HeaderView.langView.hidden=NO;
-        HeaderView.searchView.hidden=NO;
-        HeaderView.moreView.hidden=NO;
+    
     
         
-
+        [self addMoreView];
+        
         
         
     }
@@ -95,14 +125,12 @@
         // leftmenurowindex=2;
         
 
-        HeaderView.menuView.hidden=YES;
-        
-
-        HeaderView.BackView.hidden=NO;
-        
-        
-        
-        
+          HeaderView.logoImage.hidden=YES;
+         HeaderView.HeaderLabel.hidden=YES;
+        HeaderView.langView.hidden=YES;
+        HeaderView.searchView.hidden=YES;
+        HeaderView.moreView.hidden=YES;
+            HeaderView.EmojiImage.hidden=YES;
         
         
     }
@@ -112,188 +140,65 @@
         
         [_searchHeaderView.backBtn addTarget:self action:@selector(BackClicked) forControlEvents:UIControlEventTouchUpInside];
         
-        
-        
-        
-        
     }
-    else if ([CurrentViewController isEqualToString:@"JMRecentlyUploadedViewController"])
-    {
-        // leftmenurowindex=2;
-        
-        HeaderView.logoImage.hidden=YES;
-        HeaderView.menuView.hidden=YES;
-        
-        HeaderView.RecentUploadImage.hidden=NO;
-        HeaderView.BackView.hidden=NO;
-        
-     
-        
-    }
+
     else if ([CurrentViewController isEqualToString:@"JMJokesCategoryVideoListViewController"])
     {
-        // leftmenurowindex=2;
-        
-        HeaderView.logoImage.hidden=YES;
-        HeaderView.menuView.hidden=YES;
-        
-        HeaderView.RecentUploadImage.hidden=YES;
-        HeaderView.BackView.hidden=NO;
-        
-        HeaderView.HeaderLabel.hidden=NO;
         HeaderView.HeaderLabel.text=@"Joke Category";
-        HeaderView.EmojiImage.hidden=NO;
+
         
-       
-        
-        
-        UIFont *font1 = [UIFont fontWithName:@"GROBOLD" size:HeaderView.HeaderLabel.font.pointSize];
-        NSDictionary *arialDict = [NSDictionary dictionaryWithObject: font1 forKey:NSFontAttributeName];
-        
-        NSMutableAttributedString *aAttrString1 = [[NSMutableAttributedString alloc] initWithString:HeaderView.HeaderLabel.text attributes: arialDict];
-        CGRect rect;
-        rect =[aAttrString1 boundingRectWithSize:CGSizeMake(HeaderView.HeaderLabel.frame.size.width, 1000) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading context:nil];
-        
-        HeaderView.HeaderLabel.frame=CGRectMake(self.view.frame.size.width/2-rect.size.width/2, HeaderView.HeaderLabel.frame.origin.y, rect.size.width, HeaderView.HeaderLabel.frame.size.height);
-        
-        HeaderView.EmojiImage.frame=CGRectMake(HeaderView.HeaderLabel.frame.origin.x+HeaderView.HeaderLabel.frame.size.width+6, HeaderView.EmojiImage.frame.origin.y, HeaderView.EmojiImage.frame.size.width, HeaderView.EmojiImage.frame.size.height);
-      
-        
-    }
+   }
     else if ([CurrentViewController isEqualToString:@"JMFavouriteViewController"] )
     {
-        // leftmenurowindex=2;
-        
-        HeaderView.logoImage.hidden=YES;
-        HeaderView.menuView.hidden=YES;
-        
-        HeaderView.RecentUploadImage.hidden=YES;
-        HeaderView.BackView.hidden=NO;
-        
-        HeaderView.HeaderLabel.hidden=NO;
+
         HeaderView.HeaderLabel.text=@"Favourite";
-        HeaderView.EmojiImage.hidden=NO;
+
         
-        [HeaderView.BackButton addTarget:self action:@selector(BackClicked) forControlEvents:UIControlEventTouchUpInside];
-        
-        UIFont *font1 = [UIFont fontWithName:@"GROBOLD" size:HeaderView.HeaderLabel.font.pointSize];
-        NSDictionary *arialDict = [NSDictionary dictionaryWithObject: font1 forKey:NSFontAttributeName];
-        
-        NSMutableAttributedString *aAttrString1 = [[NSMutableAttributedString alloc] initWithString:HeaderView.HeaderLabel.text attributes: arialDict];
-        CGRect rect;
-        rect =[aAttrString1 boundingRectWithSize:CGSizeMake(HeaderView.HeaderLabel.frame.size.width, 1000) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading context:nil];
-        
-        HeaderView.HeaderLabel.frame=CGRectMake(self.view.frame.size.width/2-rect.size.width/2, HeaderView.HeaderLabel.frame.origin.y, rect.size.width, HeaderView.HeaderLabel.frame.size.height);
-        
-        HeaderView.EmojiImage.frame=CGRectMake(HeaderView.HeaderLabel.frame.origin.x+HeaderView.HeaderLabel.frame.size.width+6, HeaderView.EmojiImage.frame.origin.y, HeaderView.EmojiImage.frame.size.width, HeaderView.EmojiImage.frame.size.height);
+
         
         HeaderView.EmojiImage.image=[UIImage imageNamed:@"like"];
         
     }
     else if ([CurrentViewController isEqualToString:@"JMProfileViewController"] )
     {
-        // leftmenurowindex=2;
-        
-        HeaderView.logoImage.hidden=YES;
-        HeaderView.menuView.hidden=YES;
-        
-        HeaderView.RecentUploadImage.hidden=YES;
-        HeaderView.BackView.hidden=NO;
-        
-        HeaderView.HeaderLabel.hidden=NO;
+
+
         HeaderView.HeaderLabel.text=@"Profile";
-        HeaderView.EmojiImage.hidden=NO;
-        
+
     
         
-        UIFont *font1 = [UIFont fontWithName:@"GROBOLD" size:HeaderView.HeaderLabel.font.pointSize];
-        NSDictionary *arialDict = [NSDictionary dictionaryWithObject: font1 forKey:NSFontAttributeName];
-        
-        NSMutableAttributedString *aAttrString1 = [[NSMutableAttributedString alloc] initWithString:HeaderView.HeaderLabel.text attributes: arialDict];
-        CGRect rect;
-        rect =[aAttrString1 boundingRectWithSize:CGSizeMake(HeaderView.HeaderLabel.frame.size.width, 1000) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading context:nil];
-        
-        HeaderView.HeaderLabel.frame=CGRectMake(self.view.frame.size.width/2-rect.size.width/2, HeaderView.HeaderLabel.frame.origin.y, rect.size.width, HeaderView.HeaderLabel.frame.size.height);
-        
-        HeaderView.EmojiImage.frame=CGRectMake(HeaderView.HeaderLabel.frame.origin.x+HeaderView.HeaderLabel.frame.size.width+6, HeaderView.EmojiImage.frame.origin.y, HeaderView.EmojiImage.frame.size.width, HeaderView.EmojiImage.frame.size.height);
+ 
         
     }
     else if ([CurrentViewController isEqualToString:@"JMJokeMasterRankViewController"] )
     {
-        // leftmenurowindex=2;
-        
-        HeaderView.logoImage.hidden=YES;
-        HeaderView.menuView.hidden=YES;
-        
-        HeaderView.RecentUploadImage.hidden=YES;
-        HeaderView.BackView.hidden=NO;
-        
-        HeaderView.HeaderLabel.hidden=NO;
+
         HeaderView.HeaderLabel.text=@"Joke Master Rank";
-        HeaderView.EmojiImage.hidden=NO;
-        
-    
-        
-        UIFont *font1 = [UIFont fontWithName:@"GROBOLD" size:HeaderView.HeaderLabel.font.pointSize];
-        NSDictionary *arialDict = [NSDictionary dictionaryWithObject: font1 forKey:NSFontAttributeName];
-        
-        NSMutableAttributedString *aAttrString1 = [[NSMutableAttributedString alloc] initWithString:HeaderView.HeaderLabel.text attributes: arialDict];
-        CGRect rect;
-        rect =[aAttrString1 boundingRectWithSize:CGSizeMake(HeaderView.HeaderLabel.frame.size.width, 1000) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading context:nil];
-        
-        HeaderView.HeaderLabel.frame=CGRectMake(self.view.frame.size.width/2-rect.size.width/2, HeaderView.HeaderLabel.frame.origin.y, rect.size.width, HeaderView.HeaderLabel.frame.size.height);
-        
-        HeaderView.EmojiImage.frame=CGRectMake(HeaderView.HeaderLabel.frame.origin.x+HeaderView.HeaderLabel.frame.size.width+6, HeaderView.EmojiImage.frame.origin.y, HeaderView.EmojiImage.frame.size.width, HeaderView.EmojiImage.frame.size.height);
-        
-        
+
         
     }
     else if ([CurrentViewController isEqualToString:@"JMFollowingViewController"] )
     {
-        // leftmenurowindex=2;
-        
-        HeaderView.logoImage.hidden=YES;
-        HeaderView.menuView.hidden=YES;
-        
-        HeaderView.RecentUploadImage.hidden=YES;
-        HeaderView.BackView.hidden=NO;
-        
-        HeaderView.HeaderLabel.hidden=NO;
+
         HeaderView.HeaderLabel.text=@"Following";
-        HeaderView.EmojiImage.hidden=NO;
-        
+
      
-        
-        UIFont *font1 = [UIFont fontWithName:@"GROBOLD" size:HeaderView.HeaderLabel.font.pointSize];
-        NSDictionary *arialDict = [NSDictionary dictionaryWithObject: font1 forKey:NSFontAttributeName];
-        
-        NSMutableAttributedString *aAttrString1 = [[NSMutableAttributedString alloc] initWithString:HeaderView.HeaderLabel.text attributes: arialDict];
-        CGRect rect;
-        rect =[aAttrString1 boundingRectWithSize:CGSizeMake(HeaderView.HeaderLabel.frame.size.width, 1000) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading context:nil];
-        
-        HeaderView.HeaderLabel.frame=CGRectMake(self.view.frame.size.width/2-rect.size.width/2, HeaderView.HeaderLabel.frame.origin.y, rect.size.width, HeaderView.HeaderLabel.frame.size.height);
-        
-        HeaderView.EmojiImage.frame=CGRectMake(HeaderView.HeaderLabel.frame.origin.x+HeaderView.HeaderLabel.frame.size.width+6, HeaderView.EmojiImage.frame.origin.y, HeaderView.EmojiImage.frame.size.width, HeaderView.EmojiImage.frame.size.height);
+
         
         
         
     }
     else if ([CurrentViewController isEqualToString:@"JMUploadVideoViewController"] )
     {
-        // leftmenurowindex=2;
-        
-        HeaderView.logoImage.hidden=YES;
-        HeaderView.menuView.hidden=YES;
-        
-        HeaderView.RecentUploadImage.hidden=YES;
-        HeaderView.BackView.hidden=NO;
-        
-        HeaderView.HeaderLabel.hidden=NO;
+
         HeaderView.HeaderLabel.text=@"Upload a Joke";
-        HeaderView.EmojiImage.hidden=NO;
+     
+
         
+        
+    }
     
-        
+    if (HeaderView.HeaderLabel.text.length>0) {
         UIFont *font1 = [UIFont fontWithName:@"GROBOLD" size:HeaderView.HeaderLabel.font.pointSize];
         NSDictionary *arialDict = [NSDictionary dictionaryWithObject: font1 forKey:NSFontAttributeName];
         
@@ -303,13 +208,10 @@
         
         HeaderView.HeaderLabel.frame=CGRectMake(self.view.frame.size.width/2-rect.size.width/2, HeaderView.HeaderLabel.frame.origin.y, rect.size.width, HeaderView.HeaderLabel.frame.size.height);
         
-        HeaderView.EmojiImage.frame=CGRectMake(HeaderView.HeaderLabel.frame.origin.x+HeaderView.HeaderLabel.frame.size.width+6, HeaderView.EmojiImage.frame.origin.y, HeaderView.EmojiImage.frame.size.width, HeaderView.EmojiImage.frame.size.height);
-        
-        
-        
+        HeaderView.EmojiImage.frame=CGRectMake(HeaderView.HeaderLabel.frame.origin.x+HeaderView.HeaderLabel.frame.size.width+10.0/320.0*FULLWIDTH, HeaderView.EmojiImage.frame.origin.y, HeaderView.EmojiImage.frame.size.width, HeaderView.EmojiImage.frame.size.height);
     }
     
-   
+ 
     
 }
 
@@ -3098,7 +3000,7 @@
     
         if (sender==3)
         {
-            if ([CurrentViewController isEqualToString:@"JMHomeViewController"])
+            if ([CurrentViewController isEqualToString:@"JMJokeMasterRankViewController"])
             {
                 [UIView animateWithDuration:0.5 animations:^{
     
@@ -3118,7 +3020,7 @@
             else
             {
     
-                JMGlobalMethods *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMHomeViewController"];
+                JMGlobalMethods *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMJokeMasterRankViewController"];
                 [self.navigationController pushViewController:VC animated:kCAMediaTimingFunctionEaseIn];
 //                if (userid.length==0)
 //                {

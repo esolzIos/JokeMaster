@@ -49,6 +49,7 @@
 		B07ABAE01EE590580011DD57 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B07ABADF1EE590580011DD57 /* GoogleService-Info.plist */; };
 		B08609D01EF118CF00E8D84A /* ReviewsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B08609CF1EF118CF00E8D84A /* ReviewsTableViewCell.m */; };
 		B08B360A1EFBD98400ECC327 /* JMReviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B08B36091EFBD98400ECC327 /* JMReviewViewController.m */; };
+		B09139841EFE4B5000B17C8B /* JMCategoryVideoListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B09139831EFE4B5000B17C8B /* JMCategoryVideoListViewController.m */; };
 		B099B0C81EF8F741004AC64C /* JMSearchView.m in Sources */ = {isa = PBXBuildFile; fileRef = B099B0C61EF8F741004AC64C /* JMSearchView.m */; };
 		B099B0C91EF8F741004AC64C /* JMSearchView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B099B0C71EF8F741004AC64C /* JMSearchView.xib */; };
 		B099B0CC1EF8FBA2004AC64C /* JMSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B099B0CB1EF8FBA2004AC64C /* JMSearchViewController.m */; };
@@ -69,6 +70,7 @@
 		B0A32B8F1EE131680044D443 /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B0A32B881EE131680044D443 /* SVProgressHUD.bundle */; };
 		B0A32B901EE131680044D443 /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = B0A32B8A1EE131680044D443 /* SVProgressHUD.m */; };
 		B0A32B911EE131680044D443 /* SVRadialGradientLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = B0A32B8C1EE131680044D443 /* SVRadialGradientLayer.m */; };
+		B0A5C4C41EFE6F83002FB26D /* ExtendedViews.xib in Resources */ = {isa = PBXBuildFile; fileRef = B0A5C4C31EFE6F83002FB26D /* ExtendedViews.xib */; };
 		B0DA70901EEBF52900FD91A7 /* JokeCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B0DA708F1EEBF52900FD91A7 /* JokeCollectionViewCell.m */; };
 /* End PBXBuildFile section */
 
@@ -163,6 +165,8 @@
 		B08609CF1EF118CF00E8D84A /* ReviewsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReviewsTableViewCell.m; sourceTree = "<group>"; };
 		B08B36081EFBD98400ECC327 /* JMReviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMReviewViewController.h; sourceTree = "<group>"; };
 		B08B36091EFBD98400ECC327 /* JMReviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMReviewViewController.m; sourceTree = "<group>"; };
+		B09139821EFE4B5000B17C8B /* JMCategoryVideoListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMCategoryVideoListViewController.h; sourceTree = "<group>"; };
+		B09139831EFE4B5000B17C8B /* JMCategoryVideoListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMCategoryVideoListViewController.m; sourceTree = "<group>"; };
 		B099B0C51EF8F741004AC64C /* JMSearchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMSearchView.h; sourceTree = "<group>"; };
 		B099B0C61EF8F741004AC64C /* JMSearchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMSearchView.m; sourceTree = "<group>"; };
 		B099B0C71EF8F741004AC64C /* JMSearchView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JMSearchView.xib; sourceTree = "<group>"; };
@@ -207,6 +211,7 @@
 		B0A32B8A1EE131680044D443 /* SVProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressHUD.m; sourceTree = "<group>"; };
 		B0A32B8B1EE131680044D443 /* SVRadialGradientLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVRadialGradientLayer.h; sourceTree = "<group>"; };
 		B0A32B8C1EE131680044D443 /* SVRadialGradientLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVRadialGradientLayer.m; sourceTree = "<group>"; };
+		B0A5C4C31EFE6F83002FB26D /* ExtendedViews.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ExtendedViews.xib; sourceTree = "<group>"; };
 		B0DA708E1EEBF52900FD91A7 /* JokeCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JokeCollectionViewCell.h; sourceTree = "<group>"; };
 		B0DA708F1EEBF52900FD91A7 /* JokeCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JokeCollectionViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -269,6 +274,7 @@
 			children = (
 				0C6F9E331EE14E50005D31A0 /* Cell */,
 				0C48BFB71EE82DA400CD1C2A /* JMHeaderView.xib */,
+				B0A5C4C31EFE6F83002FB26D /* ExtendedViews.xib */,
 				0C48BFB91EE82EEF00CD1C2A /* JMHeaderView.h */,
 				0C48BFBA1EE82EEF00CD1C2A /* JMHeaderView.m */,
 				0C58274A1EE9308E00480E19 /* JMLeftMenuView.xib */,
@@ -449,6 +455,8 @@
 				0C2D42A41EF79884007C2E5C /* JMUploadVideoViewController.m */,
 				B08B36081EFBD98400ECC327 /* JMReviewViewController.h */,
 				B08B36091EFBD98400ECC327 /* JMReviewViewController.m */,
+				B09139821EFE4B5000B17C8B /* JMCategoryVideoListViewController.h */,
+				B09139831EFE4B5000B17C8B /* JMCategoryVideoListViewController.m */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -606,6 +614,7 @@
 				B0A32B761EE12DC20044D443 /* comicbd_1.ttf in Resources */,
 				B07ABAE01EE590580011DD57 /* GoogleService-Info.plist in Resources */,
 				B099B0C91EF8F741004AC64C /* JMSearchView.xib in Resources */,
+				B0A5C4C41EFE6F83002FB26D /* ExtendedViews.xib in Resources */,
 				B0A32B511EE129300044D443 /* LaunchScreen.storyboard in Resources */,
 				B0A32B4E1EE129300044D443 /* Assets.xcassets in Resources */,
 				B07ABAC11EE527050011DD57 /* Temp.storyboard in Resources */,
@@ -665,6 +674,7 @@
 				0C58274E1EE9316F00480E19 /* JMLeftMenuView.m in Sources */,
 				0C429BFA1EEFAB2900A42F07 /* JMPlayVideoViewController.m in Sources */,
 				0C337AD31EF3B75D00BE2BB3 /* JMStrokeLabel.m in Sources */,
+				B09139841EFE4B5000B17C8B /* JMCategoryVideoListViewController.m in Sources */,
 				0C337AD91EF40FC600BE2BB3 /* JMFollowingViewController.m in Sources */,
 				0C6F9E361EE14E84005D31A0 /* CountryCell.m in Sources */,
 				B0A32B911EE131680044D443 /* SVRadialGradientLayer.m in Sources */,

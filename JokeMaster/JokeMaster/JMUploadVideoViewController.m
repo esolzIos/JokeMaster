@@ -44,6 +44,20 @@
     codeArr=[[NSMutableArray alloc] initWithObjects:@"en",@"he",@"hi",@"zh",@"es", nil];
     
      [_languagePicker setDelegate:self];
+    
+    
+    [_jokeLang setFont:[UIFont fontWithName:_jokeLang.font.fontName size:[self getFontSize:_jokeLang.font.pointSize]]];
+    [_categoryLbl setFont:[UIFont fontWithName:_categoryLbl.font.fontName size:[self getFontSize:_categoryLbl.font.pointSize]]];
+[_cancelLabl setFont:[UIFont fontWithName:_cancelLabl.font.fontName size:[self getFontSize:_cancelLabl.font.pointSize]]];
+   [_warningLbl setFont:[UIFont fontWithName:_warningLbl.font.fontName size:[self getFontSize:_warningLbl.font.pointSize]]];
+      [_okLbl setFont:[UIFont fontWithName:_okLbl.font.fontName size:[self getFontSize:_okLbl.font.pointSize]]];
+      [_cancelLabl setFont:[UIFont fontWithName:_cancelLabl.font.fontName size:[self getFontSize:_cancelLabl.font.pointSize]]];
+    
+          [_tapInfo setFont:[UIFont fontWithName:_tapInfo.font.fontName size:[self getFontSize:_tapInfo.font.pointSize]]];
+    
+      [_cameraLbl setFont:[UIFont fontWithName:_cameraLbl.font.fontName size:[self getFontSize:_cameraLbl.font.pointSize]]];
+    
+      [_galleryLbl setFont:[UIFont fontWithName:_galleryLbl.font.fontName size:[self getFontSize:_galleryLbl.font.pointSize]]];
     // Do any additional setup after loading the view.
 }
 
@@ -67,6 +81,9 @@
     DebugLog(@"testtttt");
 }
 - (IBAction)uploadClicked:(id)sender {
+    
+    [_warningView setHidden:NO];
+    
 }
 - (IBAction)cameraClicked:(id)sender {
     ipc = [[UIImagePickerController alloc] init];
@@ -380,5 +397,15 @@
 
     
     [_languagePicker reloadAllComponents];
+}
+- (IBAction)warnCancelled:(id)sender {
+    
+       [_warningView setHidden:YES];
+}
+- (IBAction)warnOkClicked:(id)sender {
+          [_warningView setHidden:YES];
+}
+- (IBAction)crossClicked:(id)sender {
+          [_warningView setHidden:YES];
 }
 @end

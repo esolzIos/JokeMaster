@@ -153,7 +153,7 @@
         }
         else if (indexPath.row==3)
         {
-            cell.menuName.text = AMLocalizedString(@"LATEST",nil);
+            cell.menuName.text = AMLocalizedString(@"RANKINGS",nil);
              cell.menuImg.image = [UIImage imageNamed:@"latest"];
             
         }

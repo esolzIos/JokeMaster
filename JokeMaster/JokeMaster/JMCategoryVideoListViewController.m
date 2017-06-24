@@ -1,24 +1,27 @@
 //
-//  JMRecentlyUploadedViewController.m
+//  JMCategoryVideoListViewController.m
 //  JokeMaster
 //
-//  Created by priyanka on 10/06/17.
+//  Created by santanu on 24/06/17.
 //  Copyright © 2017 esolz. All rights reserved.
 //
 
-#import "JMRecentlyUploadedViewController.h"
+#import "JMCategoryVideoListViewController.h"
 
-@interface JMRecentlyUploadedViewController ()
+@interface JMCategoryVideoListViewController ()
 
 @end
 
-@implementation JMRecentlyUploadedViewController
+@implementation JMCategoryVideoListViewController
+
 @synthesize ChooseCatImage,ChooseCategoryBtn,ChooseCategoryView,ChooseCategoryLabel,MainScroll,RecentVideoCollectionView,MenuBaseView,TransparentView,CategoryTable,CrossView;
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-        self.HeaderView.HeaderLabel.text= @"Recently Uploaded";
+    
+        self.HeaderView.HeaderLabel.text= @"Category Videos";
+    
     
     ChooseCategoryLabel.frame=CGRectMake(ChooseCatImage.frame.origin.x-ChooseCategoryLabel.frame.size.width-6, ChooseCategoryLabel.frame.origin.y, ChooseCategoryLabel.frame.size.width, ChooseCategoryLabel.frame.size.height);
     
@@ -38,7 +41,7 @@
     TransparentView.frame = CGRectMake(0, self.view.frame.size.height, TransparentView.frame.size.width, TransparentView.frame.size.height);
     MenuBaseView.frame = CGRectMake(0, self.view.frame.size.height, MenuBaseView.frame.size.width, MenuBaseView.frame.size.height);
     
-  CategoryArray=[[NSMutableArray alloc] initWithObjects:@"LATEST",@"SEXUAL",@"ANIMAL",@"DOCTOR",@"GIRLFRIEND",@"STUPID", nil];;
+    CategoryArray=[[NSMutableArray alloc] initWithObjects:@"LATEST",@"SEXUAL",@"ANIMAL",@"DOCTOR",@"GIRLFRIEND",@"STUPID", nil];;
     
     [ChooseCategoryLabel setFont:[UIFont fontWithName:ChooseCategoryLabel.font.fontName size:[self getFontSize:ChooseCategoryLabel.font.pointSize]]];
 }
@@ -125,7 +128,7 @@
 {
     TransparentView.hidden=NO;
     MenuBaseView.hidden=NO;
- 
+    
     
     [UIView animateWithDuration:0.5
                           delay:0.1
@@ -136,7 +139,7 @@
                      }
                      completion:^(BOOL finished){
                      }];
-  
+    
 }
 #pragma mark - Category view hide
 - (IBAction)CategoryCrossTapped:(id)sender
@@ -149,17 +152,17 @@
                          MenuBaseView.frame = CGRectMake(0, self.view.frame.size.height, MenuBaseView.frame.size.width, MenuBaseView.frame.size.height);
                      }
                      completion:^(BOOL finished)
-                     {
-//                         JMJokesCategoryVideoListViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMJokesCategoryVideoListViewController"];
-//                         
-//                         [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
-                     }];
+     {
+         //                         JMJokesCategoryVideoListViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMJokesCategoryVideoListViewController"];
+         //
+         //                         [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
+     }];
 }
 #pragma mark - UITableView Delegates
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section;
 {
-     return [CategoryArray count];
+    return [CategoryArray count];
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -174,14 +177,14 @@
     
     [cell.CategoryLabel setFont:[UIFont fontWithName:cell.CategoryLabel.font.fontName size:[self getFontSize:cell.CategoryLabel.font.pointSize]]];
     
-//    if ([[NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] valueForKey:@"language"]] isEqualToString:@"he"])
-//    {
-//        cell.CategoryLabel.textAlignment=NSTextAlignmentRight;
-//    }
-//    else
-//    {
-//        cell.CategoryLabel.textAlignment=NSTextAlignmentLeft;
-//    }
+    //    if ([[NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] valueForKey:@"language"]] isEqualToString:@"he"])
+    //    {
+    //        cell.CategoryLabel.textAlignment=NSTextAlignmentRight;
+    //    }
+    //    else
+    //    {
+    //        cell.CategoryLabel.textAlignment=NSTextAlignmentLeft;
+    //    }
     
     cell.CheckImage.tag=indexPath.row+500;
     cell.CheckButton.tag=indexPath.row;
@@ -198,14 +201,14 @@
 {
     
     return 40;
-//    if (IsIphone5 || IsIphone4)
-//    {
-//        return 50;
-//    }
-//    else
-//    {
-//        return 60;
-//    }
+    //    if (IsIphone5 || IsIphone4)
+    //    {
+    //        return 50;
+    //    }
+    //    else
+    //    {
+    //        return 60;
+    //    }
     
 }
 
@@ -240,4 +243,5 @@
     
     
 }
+
 @end

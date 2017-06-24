@@ -8,6 +8,7 @@
 
 #import "JMJokesCategoryVideoListViewController.h"
 #import "JMRecentlyUploadedViewController.h"
+#import "JMCategoryVideoListViewController.h"
 @interface JMJokesCategoryVideoListViewController ()
 
 @end
@@ -17,6 +18,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+
     
     ChooseCategoryLabel.frame=CGRectMake(ChooseCatImage.frame.origin.x-ChooseCategoryLabel.frame.size.width-6, ChooseCategoryLabel.frame.origin.y, ChooseCategoryLabel.frame.size.width, ChooseCategoryLabel.frame.size.height);
     
@@ -109,7 +112,9 @@
 
 {
     
+    JMCategoryVideoListViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMVideoList"];
     
+    [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
     
     
 }

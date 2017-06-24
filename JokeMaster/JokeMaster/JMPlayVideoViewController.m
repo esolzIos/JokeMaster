@@ -204,7 +204,17 @@ AVPlayer *player;
     
     [self setRoundCornertoView:cell.userImage withBorderColor:[UIColor clearColor] WithRadius:0.5];
     
-    
+    if (!fontSet) {
+        
+        [cell.userName setFont:[UIFont fontWithName:cell.userName.font.fontName size:[self getFontSize:cell.userName.font.pointSize]]];
+        [cell.reviewDate setFont:[UIFont fontWithName:cell.reviewDate.font.fontName size:[self getFontSize:cell.reviewDate.font.pointSize]]];
+        [cell.ratingLbl setFont:[UIFont fontWithName:cell.ratingLbl.font.fontName size:[self getFontSize:cell.ratingLbl.font.pointSize]]];
+        [cell.reviewTxt setFont:[UIFont fontWithName:cell.reviewTxt.font.fontName size:[self getFontSize:cell.reviewTxt.font.pointSize]]];
+        
+        fontSet=true;
+        
+    }
+
     
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
