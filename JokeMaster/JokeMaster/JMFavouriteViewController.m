@@ -20,7 +20,7 @@
     
 //    UIView *ContentView=(UIView *)[FavouriteTable viewWithTag:100];
 //    WhiteViewX=ContentView.frame.origin.x;
-    
+        [self addMoreView:self.view];
     
     swiped=NO;
     PreviousTag=-100;

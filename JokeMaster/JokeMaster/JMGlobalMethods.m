@@ -21,7 +21,7 @@
     BOOL loading;
     
     AppDelegate *app;
-    UIView *moreView;
+   
     
     
 }
@@ -46,16 +46,20 @@
     return context;
 }
 
--(void)addMoreView
+-(void)addMoreView:(UIView *)mainView
 {
 
-    moreView=[[UIView alloc]initWithFrame:CGRectMake(185.0/320.0*FULLWIDTH, 40.0/480.0*FULLHEIGHT, 130.0/320.0*FULLWIDTH, 140.0/480.0*FULLHEIGHT)];
     
-     moreView= [[[NSBundle mainBundle] loadNibNamed:@"ExtendedViews" owner:self options:nil] objectAtIndex:0];
     
-  
+     _filterView= [[[NSBundle mainBundle] loadNibNamed:@"ExtendedViews" owner:self options:nil] objectAtIndex:0];
     
-    [moreView setHidden:YES];
+    _filterView.frame=CGRectMake(185.0/320.0*FULLWIDTH, 40.0/480.0*FULLHEIGHT, 130.0/320.0*FULLWIDTH, 140.0/480.0*FULLHEIGHT);
+    
+
+    
+     [mainView addSubview:_filterView];
+    
+    [_filterView setHidden:YES];
     
     
 
@@ -64,11 +68,15 @@
 -(void)showMore
 {
     
-      [self.view addSubview:moreView];
-  [moreView setHidden:NO];
+    if ([_filterView isHidden]) {
+         [_filterView setHidden:NO];
+    }
+    else{
+     [_filterView setHidden:YES];
+    }
 
 }
--(void)viewDidAppear:(BOOL)animated
+-(void)viewWillAppear:(BOOL)animated
 {
     [SVProgressHUD dismiss];
     
@@ -115,7 +123,7 @@
     
     
         
-        [self addMoreView];
+
         
         
         

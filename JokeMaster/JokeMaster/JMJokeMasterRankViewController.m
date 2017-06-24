@@ -16,6 +16,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+        [self addMoreView:self.view];
     // Do any additional setup after loading the view.
 }
 #pragma mark - UITableView Delegates

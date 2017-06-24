@@ -21,6 +21,10 @@
     
         [self setRoundCornertoView:_optionView withBorderColor:[UIColor clearColor] WithRadius:0.15];
     
+    [self addMoreView:self.view];
+    
+    
+    
     
     [_jokeTitle setFont:[UIFont fontWithName:_jokeTitle.font.fontName size:[self getFontSize:_jokeTitle.font.pointSize]]];
     

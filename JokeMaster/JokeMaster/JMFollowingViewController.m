@@ -20,6 +20,8 @@
     swiped=NO;
     PreviousTag=-100;
     oneTime=NO;
+    
+        [self addMoreView:self.view];
 }
 
 - (void)didReceiveMemoryWarning {

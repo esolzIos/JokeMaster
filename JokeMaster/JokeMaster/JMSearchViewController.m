@@ -42,19 +42,19 @@
 
 
 }
--(void)moreClicked
-{
-    
-    if ([_filterView isHidden]) {
-          [_filterView setHidden:NO];
-    }
-    else{
-         [_filterView setHidden:YES];
-    }
-    
-    
-    
-}
+//-(void)moreClicked
+//{
+//    
+//    if ([_filterView isHidden]) {
+//          [_filterView setHidden:NO];
+//    }
+//    else{
+//         [_filterView setHidden:YES];
+//    }
+//    
+//    
+//    
+//}
 #pragma mark - status bar white color
 - (UIStatusBarStyle)preferredStatusBarStyle
 {

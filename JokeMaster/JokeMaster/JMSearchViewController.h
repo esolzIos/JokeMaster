@@ -12,7 +12,7 @@
 #import "JMRecentUploadedCollectionViewCell.h"
 @interface JMSearchViewController : JMGlobalMethods<UICollectionViewDataSource,UICollectionViewDelegate>
 
-@property (strong, nonatomic) IBOutlet UIView *filterView;
+
 @property (weak, nonatomic) IBOutlet UIScrollView *MainScroll;
 @property (weak, nonatomic) IBOutlet UICollectionView *RecentVideoCollectionView;
 @property (weak, nonatomic) IBOutlet UIButton *RecentlyUploadedBtn;
