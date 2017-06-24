@@ -102,6 +102,11 @@
     
       [HeaderView.moreBtn addTarget:self action:@selector(showMore) forControlEvents:UIControlEventTouchUpInside];
     
+       [HeaderView.langBtn addTarget:self action:@selector(gotoCountrySelect) forControlEvents:UIControlEventTouchUpInside];
+    
+    [HeaderView.langImage setImage:[UIImage imageNamed:[[NSUserDefaults standardUserDefaults] objectForKey:@"flag"]]];
+    
+    
     HeaderView.langView.hidden=NO;
     HeaderView.searchView.hidden=NO;
     HeaderView.moreView.hidden=NO;
@@ -147,6 +152,8 @@
         
         
         [_searchHeaderView.backBtn addTarget:self action:@selector(BackClicked) forControlEvents:UIControlEventTouchUpInside];
+        
+             [_searchHeaderView.moreBtn addTarget:self action:@selector(showMore) forControlEvents:UIControlEventTouchUpInside];
         
     }
 
@@ -2993,6 +3000,12 @@
     JMGlobalMethods *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMSearch"];
     [self.navigationController pushViewController:VC animated:kCAMediaTimingFunctionEaseIn];
     
+}
+
+-(void)gotoCountrySelect
+{
+    JMGlobalMethods *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMChooseCountryViewController"];
+    [self.navigationController pushViewController:VC animated:kCAMediaTimingFunctionEaseIn];
 }
 
 #pragma - mark Back click

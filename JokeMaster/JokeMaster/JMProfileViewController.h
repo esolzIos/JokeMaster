@@ -41,5 +41,7 @@
 - (IBAction)CategoryCrossTapped:(id)sender;
 
 @property (weak, nonatomic) IBOutlet UITableView *CategoryTable;
+- (IBAction)profileClicked:(id)sender;
 
+@property (strong, nonatomic) IBOutlet UIButton *profileBttn;
 @end

@@ -896,24 +896,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" id="9Fg-KR-cAI">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Tutorial-screen" id="qAc-NT-z84">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                    </imageView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="ByD-oA-V56">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                        <connections>
-                                            <action selector="tutorialClicked:" destination="5xA-Pt-cIj" eventType="touchUpInside" id="vSL-uR-Tei"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                            </view>
                             <view contentMode="scaleToFill" id="1se-nR-VTt">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1168,6 +1150,24 @@
                                     </scrollView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <view contentMode="scaleToFill" id="9Fg-KR-cAI">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Tutorial-screen" id="qAc-NT-z84">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="ByD-oA-V56">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                        <connections>
+                                            <action selector="tutorialClicked:" destination="5xA-Pt-cIj" eventType="touchUpInside" id="vSL-uR-Tei"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1950,13 +1950,17 @@
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <subviews>
                                                                 <view contentMode="scaleToFill" misplaced="YES" id="S53-ze-v3N">
-                                                                    <rect key="frame" x="12" y="5" width="296" height="59"/>
+                                                                    <rect key="frame" x="12" y="5" width="296" height="60"/>
                                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                                     <subviews>
                                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="delete-row1" id="cBi-CR-SOr">
                                                                             <rect key="frame" x="0.0" y="0.0" width="296" height="60"/>
                                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                                         </imageView>
+                                                                        <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="cgR-cw-rYJ">
+                                                                            <rect key="frame" x="236" y="5" width="48" height="45"/>
+                                                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                                                        </button>
                                                                     </subviews>
                                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                                 </view>
@@ -2012,6 +2016,7 @@
                                                             <outlet property="RatingLabel" destination="zuT-sd-Ris" id="FDD-TL-XOb"/>
                                                             <outlet property="RatingView" destination="SXN-KK-F4N" id="Xks-1e-rzY"/>
                                                             <outlet property="WhiteView" destination="Hvk-Gf-hmD" id="ekR-zT-9cQ"/>
+                                                            <outlet property="deleteBtn" destination="cgR-cw-rYJ" id="HWj-61-sbG"/>
                                                         </connections>
                                                     </tableViewCell>
                                                 </prototypes>
@@ -2208,14 +2213,18 @@
                                                             <rect key="frame" x="0.0" y="0.0" width="320" height="70"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <subviews>
-                                                                <view contentMode="scaleToFill" id="xzu-Ik-Wra">
-                                                                    <rect key="frame" x="12" y="5" width="296" height="59"/>
+                                                                <view contentMode="scaleToFill" misplaced="YES" id="xzu-Ik-Wra">
+                                                                    <rect key="frame" x="12" y="5" width="296" height="60"/>
                                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                                     <subviews>
-                                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="delete-row1" id="tl6-Cr-cif">
+                                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="delete-row1" id="tl6-Cr-cif">
                                                                             <rect key="frame" x="0.0" y="0.0" width="296" height="60"/>
                                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                                         </imageView>
+                                                                        <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="DAs-dp-djo">
+                                                                            <rect key="frame" x="236" y="5" width="48" height="45"/>
+                                                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                                                        </button>
                                                                     </subviews>
                                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                                 </view>
@@ -2271,6 +2280,7 @@
                                                             <outlet property="RatingLabel" destination="X64-ci-id1" id="0SH-yr-ONh"/>
                                                             <outlet property="RatingView" destination="UN2-qG-Ua4" id="fHb-rW-vYX"/>
                                                             <outlet property="WhiteView" destination="ns7-Xk-YP8" id="CT4-cZ-fGN"/>
+                                                            <outlet property="deleteBtn" destination="DAs-dp-djo" id="oTQ-Ax-THP"/>
                                                         </connections>
                                                     </tableViewCell>
                                                 </prototypes>
@@ -2946,6 +2956,13 @@
                                                         <rect key="frame" x="0.0" y="0.0" width="324" height="188"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                     </imageView>
+                                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="eSe-Xz-10O">
+                                                        <rect key="frame" x="89" y="47" width="146" height="88"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                                        <connections>
+                                                            <action selector="profileClicked:" destination="a9z-lR-cCV" eventType="touchUpInside" id="41w-eh-uGq"/>
+                                                        </connections>
+                                                    </button>
                                                 </subviews>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             </view>
@@ -3192,6 +3209,7 @@
                         <outlet property="imageFrame" destination="1ij-67-Z2B" id="C12-Vy-4GM"/>
                         <outlet property="infoView" destination="fA1-ip-W8i" id="2aB-Nv-Dss"/>
                         <outlet property="membershipDate" destination="Ro0-Gy-7gb" id="add-0f-h0w"/>
+                        <outlet property="profileBttn" destination="eSe-Xz-10O" id="9Jt-wS-lXF"/>
                         <outlet property="profileImage" destination="ZME-YB-C1V" id="Aid-hT-fko"/>
                         <outlet property="profileImgView" destination="pe6-cr-wGX" id="5He-gZ-HTR"/>
                         <outlet property="scoreLbl" destination="Jeu-ZB-YKC" id="cxX-gW-OcE"/>
@@ -3297,52 +3315,6 @@
                                             </imageView>
                                         </subviews>
                                     </scrollView>
-                                    <view hidden="YES" contentMode="scaleToFill" id="sa4-9b-DdT">
-                                        <rect key="frame" x="185" y="40" width="130" height="140"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                        <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="top-part" id="9cz-aj-0Zj">
-                                                <rect key="frame" x="110" y="5" width="10" height="5"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                            </imageView>
-                                            <view contentMode="scaleToFill" id="hdB-Vg-XaH">
-                                                <rect key="frame" x="0.0" y="10" width="130" height="130"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                                <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Top Rated jokes" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="L2Y-nE-XeC">
-                                                        <rect key="frame" x="0.0" y="20" width="130" height="21"/>
-                                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                                        <fontDescription key="fontDescription" name="ComicBook" family="Comic Book" pointSize="10"/>
-                                                        <nil key="textColor"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Top Rated jokes" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="VJy-fI-TPH">
-                                                        <rect key="frame" x="0.0" y="43" width="130" height="21"/>
-                                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                                        <fontDescription key="fontDescription" name="ComicBook" family="Comic Book" pointSize="10"/>
-                                                        <nil key="textColor"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Top Rated jokes" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="8Zf-eD-AGX">
-                                                        <rect key="frame" x="0.0" y="65" width="130" height="21"/>
-                                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                                        <fontDescription key="fontDescription" name="ComicBook" family="Comic Book" pointSize="10"/>
-                                                        <nil key="textColor"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Top Rated jokes" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="NBf-yG-Lfz">
-                                                        <rect key="frame" x="0.0" y="87" width="130" height="21"/>
-                                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                                        <fontDescription key="fontDescription" name="ComicBook" family="Comic Book" pointSize="10"/>
-                                                        <nil key="textColor"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                </subviews>
-                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            </view>
-                                        </subviews>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
@@ -3354,7 +3326,6 @@
                         <outlet property="MainView" destination="Yrk-L3-dgB" id="i16-7m-Nmo"/>
                         <outlet property="RecentVideoCollectionView" destination="OdX-wS-5m3" id="uMD-n1-1JE"/>
                         <outlet property="RecentlyUploadedBtn" destination="PVt-K2-cKv" id="aso-5v-Qt2"/>
-                        <outlet property="filterView" destination="sa4-9b-DdT" id="dNE-U1-gOW"/>
                         <outlet property="searchHeaderView" destination="OGb-lq-ocU" id="UwZ-L1-FbX"/>
                     </connections>
                 </viewController>
@@ -3611,7 +3582,6 @@
         <image name="share-1" width="27" height="24"/>
         <image name="smiling" width="621" height="1104"/>
         <image name="splash" width="621" height="1104"/>
-        <image name="top-part" width="38" height="25"/>
         <image name="tv-frame" width="583" height="479"/>
         <image name="tv-frame-Collection" width="583" height="478"/>
         <image name="tv-frame1" width="197" height="162"/>

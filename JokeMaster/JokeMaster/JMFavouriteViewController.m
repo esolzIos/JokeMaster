@@ -9,7 +9,11 @@
 #import "JMFavouriteViewController.h"
 
 @interface JMFavouriteViewController ()
-
+{
+    int listcount;
+    
+    NSMutableArray *swipedRows;
+}
 @end
 
 @implementation JMFavouriteViewController
@@ -22,9 +26,14 @@
 //    WhiteViewX=ContentView.frame.origin.x;
         [self addMoreView:self.view];
     
-    swiped=NO;
-    PreviousTag=-100;
-    oneTime=NO;
+//    swiped=NO;
+//    PreviousTag=-100;
+    ///oneTime=NO;
+    listcount=30;
+    
+    swipedRows=[[NSMutableArray alloc]init];
+    
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -35,7 +44,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section;
 {
-    return 30;
+    return listcount;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -76,14 +85,25 @@
 }
 -(void) tableView:(UITableView *)tableView willDisplayCell:(JMFavouriteCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    cell.WhiteView.tag=indexPath.row+500;
-    DebugLog(@"tag %ld",(long)cell.WhiteView.tag);
+//    cell.WhiteView.tag=indexPath.row+500;
+//    DebugLog(@"tag %ld",(long)cell.WhiteView.tag);
     
-    if (oneTime==NO)
-    {
-        WhiteViewX=cell.WhiteView.frame.origin.x;
-        oneTime=YES;
+//    if (oneTime==NO)
+//    {
+//        WhiteViewX=cell.WhiteView.frame.origin.x;
+//        oneTime=YES;
+//    }
+//    
+  
+    if ([swipedRows containsObject:[NSString stringWithFormat:@"%ld",indexPath.row]]) {
+     cell.WhiteView.frame =CGRectMake(-50.0/320.0*FULLWIDTH,  cell.WhiteView.frame.origin.y,  cell.WhiteView.frame.size.width,  cell.WhiteView.frame.size.height);
     }
+    else{
+     cell.WhiteView.frame =CGRectMake(23.0/320.0*FULLWIDTH,  cell.WhiteView.frame.origin.y,  cell.WhiteView.frame.size.width,  cell.WhiteView.frame.size.height);
+    }
+    
+    [cell.deleteBtn addTarget:self action:@selector(deleteRow:) forControlEvents:UIControlEventTouchUpInside];
+    
     
     [self setRoundCornertoView:cell.ProfileImage withBorderColor:[UIColor clearColor] WithRadius:0.36];
     
@@ -115,48 +135,84 @@
 }
 -(void)swipeHandler:(UISwipeGestureRecognizer *)recognizer {
     
+    JMFavouriteCell *cCell=(JMFavouriteCell *)recognizer.view.superview.superview;
     
-    if (swiped==NO)
-    {
-        
-    }
-    else
-    {
-        UIView *ContentView=(UIView *)[FavouriteTable viewWithTag:PreviousTag];
+          if (![swipedRows containsObject:[NSString stringWithFormat:@"%ld",[FavouriteTable indexPathForCell:cCell].row]]) {
+    
+//    NSIndexPath *index=[FavouriteTable indexPathForCell:cCell];
+//    if (swiped==NO)
+//    {
+//        
+//    }
+//    else
+//    {
+       // UIView *ContentView=(UIView *)[FavouriteTable viewWithTag:PreviousTag];
         [UIView animateWithDuration:0.5 animations:^{
-            ContentView.frame =CGRectMake(WhiteViewX, ContentView.frame.origin.y, ContentView.frame.size.width, ContentView.frame.size.height);
+//            cCell.WhiteView.frame =CGRectMake(WhiteViewX,  cCell.WhiteView.frame.origin.y,  cCell.WhiteView.frame.size.width,  cCell.WhiteView.frame.size.height);
+            
+              cCell.WhiteView.frame =CGRectMake(-50.0/320.0*FULLWIDTH,  cCell.WhiteView.frame.origin.y,  cCell.WhiteView.frame.size.width,  cCell.WhiteView.frame.size.height);
         } completion:^(BOOL finished) {
             
+            [swipedRows addObject:[NSString stringWithFormat:@"%ld",[FavouriteTable indexPathForCell:cCell].row]];
         }];
-    }
+   // }
     
-    UIView *ContentView=(UIView *)[FavouriteTable viewWithTag:recognizer.view.tag];
+//    UIView *ContentView=(UIView *)[FavouriteTable viewWithTag:recognizer.view.tag];
+//    
+//    [UIView animateWithDuration:0.5 animations:^{
+//        
+//        ContentView.frame =CGRectMake(-50, ContentView.frame.origin.y, ContentView.frame.size.width, ContentView.frame.size.height);
+//    } completion:^(BOOL finished) {
+//        
+//        swiped=YES;
+//        PreviousTag=recognizer.view.tag;
+//    }];
     
-    [UIView animateWithDuration:0.5 animations:^{
-        
-        ContentView.frame =CGRectMake(-50, ContentView.frame.origin.y, ContentView.frame.size.width, ContentView.frame.size.height);
-    } completion:^(BOOL finished) {
-        
-        swiped=YES;
-        PreviousTag=recognizer.view.tag;
-    }];
-    
-    
+          }
 }
+
+
 -(void)rightswipeHandler:(UISwipeGestureRecognizer *)recognizer {
     
+            JMFavouriteCell *cCell=(JMFavouriteCell *)recognizer.view.superview.superview;
     
-    UIView *ContentView=(UIView *)[FavouriteTable viewWithTag:recognizer.view.tag];
+      if ([swipedRows containsObject:[NSString stringWithFormat:@"%ld",[FavouriteTable indexPathForCell:cCell].row]]) {
+    
+
+    
+  //  UIView *ContentView=(UIView *)[FavouriteTable viewWithTag:recognizer.view.tag];
     //  CGRect finalFrame = CGRectMake(0, -100, 320, 301);
     [UIView animateWithDuration:0.5 animations:^{
         //  ContentView.frame = finalFrame;
-        ContentView.frame =CGRectMake(WhiteViewX, ContentView.frame.origin.y, ContentView.frame.size.width, ContentView.frame.size.height);
+        cCell.WhiteView.frame =CGRectMake(23.0/320.0*FULLWIDTH,  cCell.WhiteView.frame.origin.y,  cCell.WhiteView.frame.size.width,  cCell.WhiteView.frame.size.height);
     } completion:^(BOOL finished) {
-        swiped=NO;
-        PreviousTag=-100;
+       // swiped=NO;
+       // PreviousTag=-100;
+        
+         [swipedRows removeObject:[NSString stringWithFormat:@"%ld",[FavouriteTable indexPathForCell:cCell].row]];
     }];
+      }
+}
+
+-(void)deleteRow:(UIButton *)btn{
+    
+    listcount--;
+    
+    JMFavouriteCell *cCell=(JMFavouriteCell *)btn.superview.superview.superview;
+    
+    [swipedRows removeObject:[NSString stringWithFormat:@"%ld",[FavouriteTable indexPathForCell:cCell].row]];
+    
+    NSIndexPath *index=[FavouriteTable indexPathForCell:cCell];
+    
+    //  NSIndexPath *index=[NSIndexPath indexPathWithIndex:btn.tag];
+    [FavouriteTable beginUpdates];
+    [FavouriteTable deleteRowsAtIndexPaths:[NSArray arrayWithObject:index] withRowAnimation:UITableViewRowAnimationFade];
+    
+    [FavouriteTable endUpdates];
+    
     
 }
+
 #pragma mark - status bar white color
 - (UIStatusBarStyle)preferredStatusBarStyle
 {

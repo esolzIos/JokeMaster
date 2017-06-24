@@ -19,7 +19,8 @@
     
       [self.searchHeaderView.searchBtn addTarget:self action:@selector(searchClicked) forControlEvents:UIControlEventTouchUpInside];
     
-       [self.searchHeaderView.moreBtn addTarget:self action:@selector(moreClicked) forControlEvents:UIControlEventTouchUpInside];
+    [self addMoreView:self.view];
+    
     
         [_RecentlyUploadedBtn setTitle:AMLocalizedString(@"RECENTLY UPLOADED VIDEOS", nil) forState:UIControlStateNormal];
     
@@ -42,19 +43,7 @@
 
 
 }
-//-(void)moreClicked
-//{
-//    
-//    if ([_filterView isHidden]) {
-//          [_filterView setHidden:NO];
-//    }
-//    else{
-//         [_filterView setHidden:YES];
-//    }
-//    
-//    
-//    
-//}
+
 #pragma mark - status bar white color
 - (UIStatusBarStyle)preferredStatusBarStyle
 {

@@ -197,6 +197,8 @@
     
     if (countrySelected.length>0) {
     
+        [[NSUserDefaults standardUserDefaults ]setObject:countrySelected forKey:@"flag"];
+        
     
     JMHomeViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMHomeViewController"];
     
