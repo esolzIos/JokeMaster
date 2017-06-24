@@ -144,13 +144,26 @@
 }
 - (IBAction)jokeDetailClicked:(id)sender {
     
-    CABasicAnimation* anim = [CABasicAnimation animationWithKeyPath:@"transform.rotation"];
-    [anim setToValue:[NSNumber numberWithFloat:0.0f]];
-    [anim setFromValue:[NSNumber numberWithDouble:M_PI/16]]; // rotation angle
-    [anim setDuration:0.1];
-    [anim setRepeatCount:NSUIntegerMax];
+//    CABasicAnimation* anim = [CABasicAnimation animationWithKeyPath:@"transform.rotation"];
+//    [anim setToValue:[NSNumber numberWithFloat:0.0f]];
+//    [anim setFromValue:[NSNumber numberWithDouble:M_PI/16]]; // rotation angle
+//    [anim setDuration:0.1];
+//    [anim setRepeatCount:NSUIntegerMax];
+//    [anim setAutoreverses:YES];
+//    [[_ratingImage layer] addAnimation:anim forKey:@"iconShake"];
+    
+    CABasicAnimation* anim = [CABasicAnimation animationWithKeyPath:@"transform.scale"];
+    anim.duration = 0.4;
+    anim.toValue = [NSNumber numberWithFloat:0.8];
+    anim.removedOnCompletion = NO;
+    anim.fillMode = kCAFillModeForwards;
+
+     [anim setRepeatCount:NSUIntegerMax];
     [anim setAutoreverses:YES];
-    [[_ratingImage layer] addAnimation:anim forKey:@"iconShake"];
+
+    [[_ratingImage layer] addAnimation:anim forKey:nil];
+    
+
 
     [_optionView setHidden:NO];
     

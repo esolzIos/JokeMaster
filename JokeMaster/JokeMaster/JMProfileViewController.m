@@ -7,7 +7,7 @@
 //
 
 #import "JMProfileViewController.h"
-
+#import "JMUploadVideoViewController.h"
 @interface JMProfileViewController ()
 
 @end
@@ -129,6 +129,8 @@
 
 
 - (IBAction)followClicked:(id)sender {
+    JMUploadVideoViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMUploadVideoViewController"];
+               [self.navigationController pushViewController:VC animated:YES];
 }
 - (IBAction)categoryClicked:(id)sender {
     _TransparentView.hidden=NO;

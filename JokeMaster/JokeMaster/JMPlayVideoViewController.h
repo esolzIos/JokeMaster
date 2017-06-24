@@ -64,7 +64,9 @@
 @property (strong, nonatomic) IBOutlet UIImageView *shareImg;
 @property (strong, nonatomic) IBOutlet UIButton *shareBttn;
 - (IBAction)sharedClicked:(id)sender;
+@property (strong, nonatomic) IBOutlet UIImageView *playPauseImg;
 
 - (IBAction)resizeClicked:(id)sender;
+- (IBAction)commentClicked:(id)sender;
 
 @end

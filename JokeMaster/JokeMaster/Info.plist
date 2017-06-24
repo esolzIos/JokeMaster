@@ -81,6 +81,8 @@
 	<string>App requires current location</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>App wants to access gallery</string>
+    <key>Microphone Usage Description</key>
+    <string>App wants to access Microphone</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>comicbd_1.ttf</string>

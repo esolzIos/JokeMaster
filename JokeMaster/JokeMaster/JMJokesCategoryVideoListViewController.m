@@ -220,6 +220,11 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
+    JMCategoryCell *cell = [CategoryTable cellForRowAtIndexPath:indexPath];
+    
+    [cell.CheckButton setHighlighted:YES];
+    [cell.CheckButton sendActionsForControlEvents:UIControlEventTouchUpInside];
+    
 }
 #pragma mark - Check button tapped on table
 -(void)CheckButtonTap:(UIButton *)btn

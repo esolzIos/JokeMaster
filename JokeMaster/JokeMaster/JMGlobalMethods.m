@@ -81,14 +81,32 @@
         
         HeaderView.RecentUploadImage.hidden=YES;
         HeaderView.BackView.hidden=YES;
-        
+        HeaderView.langView.hidden=NO;
+        HeaderView.searchView.hidden=NO;
+        HeaderView.moreView.hidden=NO;
     
         
 
         
         
     }
-    if ([CurrentViewController isEqualToString:@"JMSearchViewController"])
+  else  if ([CurrentViewController isEqualToString:@"JMReviewViewController"])
+    {
+        // leftmenurowindex=2;
+        
+
+        HeaderView.menuView.hidden=YES;
+        
+
+        HeaderView.BackView.hidden=NO;
+        
+        
+        
+        
+        
+        
+    }
+  else  if ([CurrentViewController isEqualToString:@"JMSearchViewController"])
     {
         
         
@@ -271,7 +289,7 @@
         HeaderView.BackView.hidden=NO;
         
         HeaderView.HeaderLabel.hidden=NO;
-        HeaderView.HeaderLabel.text=@"Upload Video";
+        HeaderView.HeaderLabel.text=@"Upload a Joke";
         HeaderView.EmojiImage.hidden=NO;
         
     
@@ -2243,7 +2261,7 @@
 //    [[[[self navigationController] view] layer] addAnimation:Transition forKey:nil];
 //    [[self navigationController] pushViewController:viewController animated:NO];
     
-     [self.navigationController pushViewController:viewController animated:kCAMediaTimingFunctionEaseIn];
+     [self.navigationController pushViewController:viewController animated:YES];
 }
 -(void)POPViewController
 {
@@ -3198,7 +3216,7 @@
             //                }
         }
     }
-    else if (sender==4 || sender==0)
+    else if ( sender==0)
     {
         if ([CurrentViewController isEqualToString:@"JMProfileViewController"])
         {

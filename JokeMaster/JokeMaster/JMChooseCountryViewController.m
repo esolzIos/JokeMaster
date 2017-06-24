@@ -16,6 +16,7 @@
     
     
     int rowSelected;
+  NSString *  countrySelected;
     
 
 }
@@ -87,9 +88,21 @@
         
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
-        cell.CheckImage.tag=indexPath.row+500;
-        cell.CheckButton.tag=indexPath.row;
-        [cell.CheckButton addTarget:self action:@selector(CheckButtonTap:) forControlEvents:UIControlEventTouchUpInside];
+      //  cell.CheckImage.tag=indexPath.row+500;
+      //  cell.CheckButton.tag=indexPath.row;
+      //  [cell.CheckButton addTarget:self action:@selector(CheckButtonTap:) forControlEvents:UIControlEventTouchUpInside];
+    
+    if ([countrySelected isEqualToString:[CountryArray objectAtIndex:indexPath.row]])
+    {
+        
+        cell.CheckImage.image = [UIImage imageNamed:@"tick"];
+   
+    }
+    else
+    {
+     
+        cell.CheckImage.image = [UIImage imageNamed:@"uncheck"];
+    }
     
         return cell;
    
@@ -126,6 +139,24 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
    
+  //  CountryCell *cCell=[_CountryTable cellForRowAtIndexPath:indexPath];
+    
+    
+    if (![countrySelected isEqualToString:[CountryArray objectAtIndex:indexPath.row]])
+    {
+     
+          countrySelected=[CountryArray objectAtIndex:indexPath.row];
+    }
+    else
+    {
+       countrySelected=@"";
+       
+    }
+
+    
+    [_CountryTable reloadData];
+    
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -164,9 +195,17 @@
 #pragma mark - Go button tapped
 - (IBAction)GoTapped:(id)sender {
     
+    if (countrySelected.length>0) {
+    
+    
     JMHomeViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMHomeViewController"];
     
     [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
+        
+    }
+    else{
+        [SVProgressHUD showInfoWithStatus:@"Please select a country first"];
+    }
     
 //    JMLoginViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMLogin"];
 //    
@@ -243,6 +282,8 @@
 //    LocalizationSetLanguage([codeArr objectAtIndex:rowSelected]);
     
  //   [[NSUserDefaults standardUserDefaults]setObject:[codeArr objectAtIndex:rowSelected] forKey:@"language"];
+    
+    countrySelected=@"";
     
     CountryArray = [[langDict objectForKey:[codeArr objectAtIndex:rowSelected]] copy];
     

@@ -22,5 +22,21 @@
 - (IBAction)cameraClicked:(id)sender;
 @property (strong, nonatomic) IBOutlet UIButton *galleryBtn;
 - (IBAction)galleryClicked:(id)sender;
+@property (strong, nonatomic) IBOutlet UIImageView *videoThumb;
+@property (strong, nonatomic) IBOutlet UIView *pickerView;
+@property (strong, nonatomic) IBOutlet UIPickerView *languagePicker;
+@property (strong, nonatomic) IBOutlet UIButton *selectBtn;
+- (IBAction)selectClicked:(id)sender;
+@property (strong, nonatomic) IBOutlet UIButton *cancelBttn;
+- (IBAction)cancelClicked:(id)sender;
+@property (strong, nonatomic) IBOutlet UIView *languageView;
+@property (strong, nonatomic) IBOutlet UILabel *jokeLang;
+@property (strong, nonatomic) IBOutlet UIButton *langBtn;
+- (IBAction)langClicked:(id)sender;
+
+@property (strong, nonatomic) IBOutlet UIView *categoryView;
+@property (strong, nonatomic) IBOutlet UILabel *categoryLbl;
+@property (strong, nonatomic) IBOutlet UIButton *categoryBtn;
+- (IBAction)categoryClicked:(id)sender;
 
 @end

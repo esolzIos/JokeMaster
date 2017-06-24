@@ -21,6 +21,7 @@
 @property (strong, nonatomic) IBOutlet UIButton *moreBtn;
 @property (weak, nonatomic) IBOutlet UIView *BackView;
 @property (weak, nonatomic) IBOutlet UIButton *BackButton;
+@property (strong, nonatomic) IBOutlet UIView *langView;
 
 @property (weak, nonatomic) IBOutlet UIImageView *RecentUploadImage;
 @property (strong, nonatomic) IBOutlet UIButton *langBtn;

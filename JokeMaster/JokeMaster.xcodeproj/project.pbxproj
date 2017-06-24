@@ -48,6 +48,7 @@
 		B07ABADE1EE58E790011DD57 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B07ABADD1EE58E790011DD57 /* SystemConfiguration.framework */; };
 		B07ABAE01EE590580011DD57 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B07ABADF1EE590580011DD57 /* GoogleService-Info.plist */; };
 		B08609D01EF118CF00E8D84A /* ReviewsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B08609CF1EF118CF00E8D84A /* ReviewsTableViewCell.m */; };
+		B08B360A1EFBD98400ECC327 /* JMReviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B08B36091EFBD98400ECC327 /* JMReviewViewController.m */; };
 		B099B0C81EF8F741004AC64C /* JMSearchView.m in Sources */ = {isa = PBXBuildFile; fileRef = B099B0C61EF8F741004AC64C /* JMSearchView.m */; };
 		B099B0C91EF8F741004AC64C /* JMSearchView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B099B0C71EF8F741004AC64C /* JMSearchView.xib */; };
 		B099B0CC1EF8FBA2004AC64C /* JMSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B099B0CB1EF8FBA2004AC64C /* JMSearchViewController.m */; };
@@ -160,6 +161,8 @@
 		B07ABADF1EE590580011DD57 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B08609CE1EF118CF00E8D84A /* ReviewsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReviewsTableViewCell.h; sourceTree = "<group>"; };
 		B08609CF1EF118CF00E8D84A /* ReviewsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReviewsTableViewCell.m; sourceTree = "<group>"; };
+		B08B36081EFBD98400ECC327 /* JMReviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMReviewViewController.h; sourceTree = "<group>"; };
+		B08B36091EFBD98400ECC327 /* JMReviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMReviewViewController.m; sourceTree = "<group>"; };
 		B099B0C51EF8F741004AC64C /* JMSearchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMSearchView.h; sourceTree = "<group>"; };
 		B099B0C61EF8F741004AC64C /* JMSearchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMSearchView.m; sourceTree = "<group>"; };
 		B099B0C71EF8F741004AC64C /* JMSearchView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JMSearchView.xib; sourceTree = "<group>"; };
@@ -444,6 +447,8 @@
 				0C337AD81EF40FC600BE2BB3 /* JMFollowingViewController.m */,
 				0C2D42A31EF79884007C2E5C /* JMUploadVideoViewController.h */,
 				0C2D42A41EF79884007C2E5C /* JMUploadVideoViewController.m */,
+				B08B36081EFBD98400ECC327 /* JMReviewViewController.h */,
+				B08B36091EFBD98400ECC327 /* JMReviewViewController.m */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -637,6 +642,7 @@
 				B0A32B4C1EE129300044D443 /* JokeMaster.xcdatamodeld in Sources */,
 				0C3AFB781EF15CA90037834A /* JMFavouriteViewController.m in Sources */,
 				0C91CFBD1EEE5B7A00123303 /* JMCategoryCell.m in Sources */,
+				B08B360A1EFBD98400ECC327 /* JMReviewViewController.m in Sources */,
 				0C337AD61EF3ED2C00BE2BB3 /* JMJokeMasterRankViewController.m in Sources */,
 				B0A32B431EE1292F0044D443 /* AppDelegate.m in Sources */,
 				0C5827491EE9205600480E19 /* JMHomeViewController.m in Sources */,
