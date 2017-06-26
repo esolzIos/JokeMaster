@@ -56,24 +56,26 @@
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>Microphone Usage Description</key>
+	<string>App wants to access Microphone</string>
 	<key>NSAppTransportSecurity</key>
-    <dict>
-        <key>NSExceptionDomains</key>
-        <dict>
-            <key>YOURHOST.COM</key>
-            <dict>
-                <key>NSIncludesSubdomains</key>
-                <true/>
-                <key>NSTemporaryExceptionAllowsInsecureHTTPLoads</key>
-                <true/>
-                <key>NSTemporaryExceptionMinimumTLSVersion</key>
-                <string>1.0</string>
-                <key>NSTemporaryExceptionRequiresForwardSecrecy</key>
-                <false/>
-            </dict>
-        </dict>
+	<dict>
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
+		<key>NSExceptionDomains</key>
+		<dict>
+			<key>YOURHOST.COM</key>
+			<dict>
+				<key>NSIncludesSubdomains</key>
+				<true/>
+				<key>NSTemporaryExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+				<key>NSTemporaryExceptionMinimumTLSVersion</key>
+				<string>1.0</string>
+				<key>NSTemporaryExceptionRequiresForwardSecrecy</key>
+				<false/>
+			</dict>
+		</dict>
 	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>App wants to access camera</string>
@@ -81,13 +83,15 @@
 	<string>App requires current location</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>App wants to access gallery</string>
-    <key>Microphone Usage Description</key>
-    <string>App wants to access Microphone</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>comicbd_1.ttf</string>
 		<string>Comic_Book.ttf</string>
-        <string>GROBOLD.ttf</string>
+		<string>GROBOLD.ttf</string>
+	</array>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>remote-notification</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>Main</string>

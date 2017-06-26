@@ -7,7 +7,7 @@
 //
 
 #import "JMGlobalMethods.h"
-
+#import "UrlconnectionObject.h"
 @interface JMRegistrationViewController : JMGlobalMethods<UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIActionSheetDelegate,UIPickerViewDataSource,UIPickerViewDelegate>
 {
     UIActionSheet *actionsheet;
@@ -17,6 +17,9 @@
     UIButton *btnSave,*btnCancel;
     UIView *Langview,*OverlayView,*LangBorderView;
     UIImageView *tipImage;
+    UrlconnectionObject *urlobj;
+    UIAlertView *AlertView;
+    
 }
 @property (weak, nonatomic) IBOutlet UIScrollView *mainscroll;
 @property (weak, nonatomic) IBOutlet UIImageView *ProfileImage;

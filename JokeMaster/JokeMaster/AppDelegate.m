@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-
+#import "JMGlobalHeader.h"
 //  AppDelegate.m
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <GoogleSignIn/GoogleSignIn.h>
@@ -28,6 +28,35 @@
     
     
 [GIDSignIn sharedInstance].clientID = @"257838552176-cik6p18idkqgrgecuss42mcmn66gd1lk.apps.googleusercontent.com";
+    
+    
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 80000
+    if ([application respondsToSelector:@selector(registerUserNotificationSettings:)])
+    {
+        // use registerUserNotificationSettings
+        [application registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
+        
+        [application registerForRemoteNotifications];
+        
+        //        alert = [[UIAlertView alloc] initWithTitle:@"Alert!" message:@"Launch Finish" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        //                [alert show];
+    }
+    else
+    {
+        // use registerForRemoteNotifications
+        [[UIApplication sharedApplication] registerForRemoteNotifications];
+        
+       
+        
+    }
+    
+    
+#else
+    {
+        [[UIApplication sharedApplication] registerForRemoteNotificationTypes: (UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge |UIRemoteNotificationTypeSound)];
+    }
+#endif
+
     
 
 
@@ -159,5 +188,94 @@
         abort();
     }
 }
+#pragma mark - Push Notification
 
+
+- (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings
+
+{
+    
+    //register to receive notifications
+    
+    [application registerForRemoteNotifications];
+    
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
+{
+    DebugLog(@"didReceiveRemoteNotification %@",userInfo);
+    
+   
+    
+    UIApplicationState state = [application applicationState];
+    if (state == UIApplicationStateActive)
+    {
+        
+    }
+    else if (state == UIApplicationStateInactive || state == UIApplicationStateBackground)
+    {
+        
+    }
+    
+    
+}
+- (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forRemoteNotification:(NSDictionary *)userInfo completionHandler:(void(^)())completionHandler
+
+{
+    NSLog(@"didReceiveRemoteNotification %@",userInfo);
+    
+    //handle the actions
+    
+    
+    
+    NSLog(@"handle action");
+    
+    if ([identifier isEqualToString:@"declineAction"])
+    {
+        
+    }
+    
+    else if ([identifier isEqualToString:@"answerAction"])
+    {
+        
+    }
+    
+}
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
+{
+    
+    NSString *deviceToken1 = [[[[deviceToken description]
+                                
+                                stringByReplacingOccurrencesOfString:@"<"withString:@""]
+                               
+                               stringByReplacingOccurrencesOfString:@">" withString:@""]
+                              
+                              stringByReplacingOccurrencesOfString: @" " withString: @""];
+    
+    
+    if ([deviceToken1 length] == 0 || [deviceToken1 isKindOfClass:[NSNull class]] || [deviceToken1 isEqual:@"<null>"] || deviceToken1==nil || [deviceToken1 isEqual:@"(null)"])
+    {
+        // deviceToken1 = @"cb8143a8becd78c317b8e0c722c9177a4b9579ab25f5e2f5f4fe806dc2937a3e";
+        deviceToken1 = @"";
+        [[NSUserDefaults standardUserDefaults] setObject:deviceToken1 forKey:@"deviceToken"];
+    }
+    else
+    {
+        [[NSUserDefaults standardUserDefaults] setObject:deviceToken1 forKey:@"deviceToken"];
+    }
+    
+    DebugLog(@"device token here: %@",deviceToken1);
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    //    UIAlertView *pushResponse = [[UIAlertView alloc] initWithTitle:nil message:[NSString stringWithFormat:@"DeviceToken:%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"deviceToken"]] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+    //    [pushResponse show];
+    
+    
+}
+-(void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error{
+    DebugLog(@"error in did fail to regidter remote notification %@",error.description);
+    //    [[NSUserDefaults standardUserDefaults] setObject:@"cb8143a8becd78c317b8e0c722c9177a4b9579ab25f5e2f5f4fe806dc2937a3e" forKey:@"deviceToken"];
+    [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"deviceToken"];
+    
+}
 @end

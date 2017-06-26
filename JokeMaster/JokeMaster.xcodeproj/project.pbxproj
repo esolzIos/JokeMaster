@@ -26,6 +26,7 @@
 		0C5827491EE9205600480E19 /* JMHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C5827481EE9205600480E19 /* JMHomeViewController.m */; };
 		0C58274B1EE9308E00480E19 /* JMLeftMenuView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C58274A1EE9308E00480E19 /* JMLeftMenuView.xib */; };
 		0C58274E1EE9316F00480E19 /* JMLeftMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C58274D1EE9316F00480E19 /* JMLeftMenuView.m */; };
+		0C6455421EFE74CE00850324 /* UrlconnectionObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C6455411EFE74CE00850324 /* UrlconnectionObject.m */; };
 		0C6F9E311EE14A7B005D31A0 /* JMChooseCountryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C6F9E301EE14A7B005D31A0 /* JMChooseCountryViewController.m */; };
 		0C6F9E361EE14E84005D31A0 /* CountryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C6F9E351EE14E84005D31A0 /* CountryCell.m */; };
 		0C91CFBD1EEE5B7A00123303 /* JMCategoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C91CFBC1EEE5B7A00123303 /* JMCategoryCell.m */; };
@@ -128,6 +129,10 @@
 		0C58274A1EE9308E00480E19 /* JMLeftMenuView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JMLeftMenuView.xib; sourceTree = "<group>"; };
 		0C58274C1EE9316F00480E19 /* JMLeftMenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMLeftMenuView.h; sourceTree = "<group>"; };
 		0C58274D1EE9316F00480E19 /* JMLeftMenuView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMLeftMenuView.m; sourceTree = "<group>"; };
+		0C64553F1EFE74CE00850324 /* globalprotocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = globalprotocol.h; sourceTree = "<group>"; };
+		0C6455401EFE74CE00850324 /* UrlconnectionObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UrlconnectionObject.h; sourceTree = "<group>"; };
+		0C6455411EFE74CE00850324 /* UrlconnectionObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UrlconnectionObject.m; sourceTree = "<group>"; };
+		0C6455431EFE7C6600850324 /* JokeMaster.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = JokeMaster.entitlements; sourceTree = "<group>"; };
 		0C6F9E2F1EE14A7B005D31A0 /* JMChooseCountryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMChooseCountryViewController.h; sourceTree = "<group>"; };
 		0C6F9E301EE14A7B005D31A0 /* JMChooseCountryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMChooseCountryViewController.m; sourceTree = "<group>"; };
 		0C6F9E341EE14E84005D31A0 /* CountryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CountryCell.h; sourceTree = "<group>"; };
@@ -269,6 +274,16 @@
 			name = HCSStarRatingView;
 			sourceTree = "<group>";
 		};
+		0C64553E1EFE746D00850324 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				0C64553F1EFE74CE00850324 /* globalprotocol.h */,
+				0C6455401EFE74CE00850324 /* UrlconnectionObject.h */,
+				0C6455411EFE74CE00850324 /* UrlconnectionObject.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
 		0C6F9E321EE14E44005D31A0 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -342,6 +357,8 @@
 		B0A32B3D1EE1292F0044D443 /* JokeMaster */ = {
 			isa = PBXGroup;
 			children = (
+				0C6455431EFE7C6600850324 /* JokeMaster.entitlements */,
+				0C64553E1EFE746D00850324 /* Model */,
 				0C337AD01EF3B6E800BE2BB3 /* Custom Class */,
 				0C6F9E321EE14E44005D31A0 /* Views */,
 				B0A32B811EE1313F0044D443 /* Frameworks */,
@@ -564,6 +581,14 @@
 						CreatedOnToolsVersion = 8.1;
 						DevelopmentTeam = K22GQFS8BW;
 						ProvisioningStyle = Manual;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 					B0A32B561EE129300044D443 = {
 						CreatedOnToolsVersion = 8.1;
@@ -652,6 +677,7 @@
 				0C3AFB781EF15CA90037834A /* JMFavouriteViewController.m in Sources */,
 				0C91CFBD1EEE5B7A00123303 /* JMCategoryCell.m in Sources */,
 				B08B360A1EFBD98400ECC327 /* JMReviewViewController.m in Sources */,
+				0C6455421EFE74CE00850324 /* UrlconnectionObject.m in Sources */,
 				0C337AD61EF3ED2C00BE2BB3 /* JMJokeMasterRankViewController.m in Sources */,
 				B0A32B431EE1292F0044D443 /* AppDelegate.m in Sources */,
 				0C5827491EE9205600480E19 /* JMHomeViewController.m in Sources */,
@@ -861,6 +887,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = JokeMaster/JokeMaster.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: ESolz Technologies Pvt Ltd (K22GQFS8BW)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: ESolz Technologies Pvt Ltd (K22GQFS8BW)";
 				DEVELOPMENT_TEAM = K22GQFS8BW;
@@ -887,6 +914,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = JokeMaster/JokeMaster.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: ESolz Technologies Pvt Ltd (K22GQFS8BW)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: ESolz Technologies Pvt Ltd (K22GQFS8BW)";
 				DEVELOPMENT_TEAM = K22GQFS8BW;

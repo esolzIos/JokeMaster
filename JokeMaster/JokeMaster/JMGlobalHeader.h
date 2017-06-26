@@ -50,7 +50,8 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 #define THEMECOLOUR [UIColor colorWithRed:102.0/255.0 green:197.0/255.0  blue:187.0/255.0 alpha:1]
 
 //#define GLOBALAPI @"http://esolz.co.in/lab6/internal_development_vol_2/"
-#define GLOBALAPI @"http://ec2-54-202-33-64.us-west-2.compute.amazonaws.com/adit/"
+#define GLOBALAPI @"http://ec2-13-58-196-4.us-east-2.compute.amazonaws.com/jokemaster/"
+
 #define GLOBALAPIDEV @"http://esolz.co.in/lab6/internal_development_vol_2/"
 
 #define INDEX @"index.php/"

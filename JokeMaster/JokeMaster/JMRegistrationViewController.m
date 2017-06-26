@@ -90,6 +90,8 @@
     ProfileImageLabel.text= AMLocalizedString(@"Upload Profile Picture",nil);
     LanguageLabel.text=AMLocalizedString(@"Language",nil);
     [SignUpBtn setTitle:AMLocalizedString(@"SIGN UP",nil) forState:UIControlStateNormal];
+    
+    urlobj=[[UrlconnectionObject alloc] init];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -306,7 +308,7 @@
         else
         {
             
-            
+            [self SignUpApi];
             
         }
     
@@ -833,9 +835,112 @@
 //    }
     
 }
-
+#pragma mark - Back Button Click
 - (IBAction)backClicked:(id)sender {
     
         [self.navigationController popViewControllerAnimated:NO];
+}
+#pragma mark -signup api call
+-(void)SignUpApi
+{
+   
+    
+    BOOL net=[urlobj connectedToNetwork];
+    if (net==YES)
+    {
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+            
+            [self checkLoader];
+        }];
+        [[NSOperationQueue new] addOperationWithBlock:^{
+            
+            NSMutableString *urlString;
+          
+            
+          
+             //   urlString=[NSMutableString stringWithFormat:@"%@index.php/Signup",GLOBALAPI];
+                
+                
+                urlString=[NSMutableString stringWithFormat:@"%@index.php/Signup?register_type=1&name=%@&email=%@&password=%@&language=%@&device_token=%@&device_type=1",GLOBALAPI,[Nametxt.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[Emailtxt.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[Passwordtxt.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[LanguageLabel.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[[NSUserDefaults standardUserDefaults] objectForKey:@"deviceToken"]];
+            
+            
+           
+            NSString *strEncoded = [self encodeToBase64String:ProfileImage.image];
+            
+             NSString * requestBody= [NSString stringWithFormat:@"userimage=%@",strEncoded];
+            
+            DebugLog(@"post string: %@",urlString);
+            
+//            [urlobj getSessionJsonResponseWithUploadImage :(NSString *)urlString Image :(NSString *)requestBody  success:^(NSDictionary *responseDict)
+            [urlobj getSessionJsonResponse:urlString  success:^(NSDictionary *responseDict)
+             {
+                 
+                 DebugLog(@"success %@ Status Code:%ld",responseDict,(long)urlobj.statusCode);
+                 
+                 
+                 self.view.userInteractionEnabled = YES;
+                 [self checkLoader];
+                 
+                 if (urlobj.statusCode==200)
+                 {
+                     if ([[responseDict objectForKey:@"status"] boolValue]==YES)
+                     {
+                        // userinfo=[[responseDict objectForKey:@"info"] copy];
+                         AlertView = [[UIAlertView alloc] initWithTitle:@"Success"
+                                                                message:@"Registration successful."
+                                                               delegate:self
+                                                      cancelButtonTitle:nil
+                                                      otherButtonTitles:nil];
+                         
+                         [AlertView show];
+                         
+                         // (success message) dismiss delay of 1 sec
+                         [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(GotoNextPageAfterSuccess) userInfo:nil repeats: NO];
+                     }
+                     else
+                     {
+                         [[[UIAlertView alloc]initWithTitle:@"Error!" message:[responseDict objectForKey:@"message"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
+                     }
+                     
+                 }
+                 else if (urlobj.statusCode==500 || urlobj.statusCode==400)
+                 {
+                     [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Server Failed to Respond" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
+                     
+                 }
+                 else
+                 {
+                     [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Server Failed to Respond" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
+                 }
+                 
+                 
+             } failure:^(NSError *error) {
+                 
+                 [self checkLoader];
+                 self.view.userInteractionEnabled = YES;
+                 NSLog(@"Failure");
+                 [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Server Failed to Respond" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
+                 
+             }];
+            
+            
+        }];
+    }
+    else
+    {
+        
+        [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Network Not Available." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
+    }
+}
+#pragma mark -After registration go to Home screen
+-(void)GotoNextPageAfterSuccess
+{
+    
+    
+    [AlertView dismissWithClickedButtonIndex:0 animated:NO];
+    
+    JMHomeViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMHomeViewController"];
+    
+    [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
 }
 @end
