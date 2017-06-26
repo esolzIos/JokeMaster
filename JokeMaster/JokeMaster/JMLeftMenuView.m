@@ -21,18 +21,39 @@
 {
     JMLeftMenuView *customView = [[[NSBundle mainBundle] loadNibNamed:@"JMLeftMenuView" owner:nil options:nil] lastObject];
     
-    customView.ProfileImage.layer.cornerRadius=17;
-    customView.ProfileImage.clipsToBounds=YES;
+    
     
     NSIndexPath *indexpath=[NSIndexPath indexPathForRow:2 inSection:0];
     [customView.LeftMenuTable selectRowAtIndexPath:indexpath animated:YES  scrollPosition:UITableViewScrollPositionNone];
+    
+    customView.ProfileImage.layer.cornerRadius=17;
+    customView.ProfileImage.clipsToBounds=YES;
     
     [customView.NameLabel setFont:[UIFont fontWithName:customView.NameLabel.font.fontName size:[customView getFontSize:customView.NameLabel.font.pointSize]]];
     [customView.ScoreLabel setFont:[UIFont fontWithName:customView.ScoreLabel.font.fontName size:[customView getFontSize:customView.ScoreLabel.font.pointSize]]];
         
     
     customView.ScoreLabel.text=AMLocalizedString(@"SCORE:4.5/5", nil);
-    customView.NameLabel.text=AMLocalizedString(@"JOHN DOE", nil);
+  //  customView.NameLabel.text=AMLocalizedString(@"JOHN DOE", nil);
+    
+    if ([[NSUserDefaults standardUserDefaults]boolForKey:@"loggedIn"])
+        
+    {
+        
+        customView.NameLabel.text=[[NSUserDefaults standardUserDefaults] objectForKey:@"Name"];
+       
+//         [customView.ProfileImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"Image"]]] placeholderImage:[UIImage imageNamed: @"no-image"]];
+       
+        
+    }
+    
+    else
+        
+    {
+        
+        customView.NameLabel.text=@"Guest";
+        
+    }
 //
 //    customView.lblUserName.text=[[NSUserDefaults standardUserDefaults] valueForKey:@"UserName"];
 //    

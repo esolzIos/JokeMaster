@@ -10,6 +10,7 @@
 #import "JMLeftMenuCell.h"
 #import "JMGlobalHeader.h"
 #import "LocalizationSystem.h"
+#import "SDWebImage/UIImageView+WebCache.h"
 @protocol Side_menu_delegate<NSObject>
 @optional
 -(void)action_method:(NSInteger )sender;
