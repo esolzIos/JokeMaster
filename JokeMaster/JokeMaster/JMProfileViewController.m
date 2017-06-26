@@ -7,9 +7,27 @@
 //
 
 #import "JMProfileViewController.h"
+#import <MobileCoreServices/UTCoreTypes.h>
 #import "JMUploadVideoViewController.h"
-@interface JMProfileViewController ()
+#import <AssetsLibrary/AssetsLibrary.h>
+#import <AVFoundation/AVFoundation.h>
+#import <AVFoundation/AVAsset.h>
+#import "DZNPhotoEditorViewController.h"
+#import "UIImagePickerController+Edit.h"
+#import "JTSImageViewController.h"
+#import "JTSImageInfo.h"
 
+@interface JMProfileViewController ()<UIImagePickerControllerDelegate,UINavigationControllerDelegate>
+{
+
+    UIImagePickerController *ipc;
+    NSURLSession *session;
+    
+    NSDictionary *jsonResponse;
+        AppDelegate *appDelegate;
+    UIImage *selectedImage;
+
+}
 @end
 
 @implementation JMProfileViewController
@@ -17,13 +35,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
+        [self addMoreView:self.view];
     MenuViewY=_MenuBaseView.frame.origin.y;
     
     _TransparentView.frame = CGRectMake(0, self.view.frame.size.height, _TransparentView.frame.size.width, _TransparentView.frame.size.height);
     _MenuBaseView.frame = CGRectMake(0, self.view.frame.size.height, _MenuBaseView.frame.size.width, _MenuBaseView.frame.size.height);
     
-
+    appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
 
     
       CategoryArray=[[NSMutableArray alloc] initWithObjects:@"LATEST",@"SEXUAL",@"ANIMAL",@"DOCTOR",@"GIRLFRIEND",@"STUPID", nil];
@@ -245,6 +263,422 @@
         tickImage.image = [UIImage imageNamed:@"uncheck"];
     }
     
+    
+    
+}
+-(void)showImage
+{
+    
+    // Create image info
+    JTSImageInfo *imageInfo = [[JTSImageInfo alloc] init];
+    imageInfo.image = _profileImage.image;
+    imageInfo.referenceRect = _profileImage.frame;
+    imageInfo.referenceView = _profileImage.superview;
+    
+    // Setup view controller
+    
+    
+    JTSImageViewController *imageViewer = [[JTSImageViewController alloc]
+                                           initWithImageInfo:imageInfo
+                                           mode:JTSImageViewControllerMode_Image
+                                           backgroundStyle:JTSImageViewControllerBackgroundOption_Scaled];
+    
+    // Present the view controller.
+    [imageViewer showFromViewController:self transition:JTSImageViewControllerTransition_FromOriginalPosition];
+    
+}
+- (IBAction)profileClicked:(id)sender {
+    
+    UIAlertController *alertController = [UIAlertController
+                                          alertControllerWithTitle:@"Choose what to do"
+                                          message:nil
+                                          preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    
+    
+    UIAlertAction *ViewImage = [UIAlertAction
+                                actionWithTitle:@"View image"
+                                style:UIAlertActionStyleDefault
+                                handler:^(UIAlertAction *action)
+                                {
+                                    
+                                    
+                                    [self showImage];
+                                    
+                                    
+                                }];
+    
+    
+    
+    UIAlertAction *changeImage = [UIAlertAction
+                                  actionWithTitle:@"Change image"
+                                  style:UIAlertActionStyleDefault
+                                  handler:^(UIAlertAction *action)
+                                  {
+                                      
+                                      [self pickerCall];
+                                      
+                                  }];
+    
+    UIAlertAction *cancelAction = [UIAlertAction
+                                   actionWithTitle:@"Cancel"
+                                   style:UIAlertActionStyleCancel
+                                   handler:^(UIAlertAction *action)
+                                   {
+                                       DebugLog(@"Cancel action");
+                                       
+                                       
+                                       
+                                   }];
+    
+    
+    [alertController addAction:cancelAction];
+    
+    
+    [alertController addAction:changeImage];
+    
+    [alertController addAction:ViewImage];
+    
+    
+    if (IDIOM==IPAD) {
+        
+        
+        
+        
+        UIPopoverPresentationController *popPresenter = [alertController
+                                                         popoverPresentationController];
+        popPresenter.sourceView = _profileBttn;
+        popPresenter.sourceRect = _profileBttn.bounds;
+        [self presentViewController:alertController animated:YES completion:nil];
+    }
+    else{
+        [self presentViewController:alertController animated:YES completion:nil];
+    }
+    
+    
+    
+    
+    
+    
+
+}
+
+-(void)pickerCall
+{
+    
+    ipc = [[UIImagePickerController alloc] init];
+    
+    ipc.delegate = self;
+    
+    ipc.allowsEditing=YES;
+    
+    ipc.cropMode=DZNPhotoEditorViewControllerCropModeSquare;
+    
+    UIAlertController *alertController = [UIAlertController
+                                          alertControllerWithTitle:@"Select image source"
+                                          message:nil
+                                          preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    
+    UIAlertAction *cameraAction = [UIAlertAction
+                                   actionWithTitle:@"Camera"
+                                   style:UIAlertActionStyleDefault
+                                   handler:^(UIAlertAction *action)
+                                   {
+                                       
+                                       if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
+                                           
+                                       {
+                                           
+                                           ipc.sourceType = UIImagePickerControllerSourceTypeCamera;
+                                           
+                                           [self presentViewController:ipc animated:YES completion:^{
+                                               
+                                               
+                                           }];
+                                           
+                                       }
+                                       
+                                       else
+                                           
+                                       {
+                                           
+                                           // [self showAlertwithTitle:@"" withMessage:@"No Camera Available."  withAlertType:UIAlertControllerStyleAlert withOk:YES withCancel:NO];
+                                           
+                                           [SVProgressHUD showInfoWithStatus:@"Camera not supported"];
+                                           
+                                           
+                                       }
+                                       
+                                       
+                                       
+                                       
+                                   }];
+    
+    UIAlertAction *galleryAction = [UIAlertAction
+                                    actionWithTitle:@"Gallery"
+                                    style:UIAlertActionStyleDefault
+                                    handler:^(UIAlertAction *action)
+                                    {
+                                        
+                                        
+                                        ipc.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
+                                        //                                        ipc.videoQuality = UIImagePickerControllerQualityTypeMedium;
+                                        //                                        ipc.videoMaximumDuration = 180;
+                                        //                                        ipc.mediaTypes = [[NSArray alloc] initWithObjects: (NSString *) kUTTypeMovie,(NSString *)kUTTypeImage, nil];
+                                        [self presentViewController:ipc animated:YES completion:^{
+                                            
+                                            
+                                        }];
+                                        
+                                    }];
+    
+    UIAlertAction *cancelAction = [UIAlertAction
+                                   actionWithTitle:@"Cancel"
+                                   style:UIAlertActionStyleCancel
+                                   handler:^(UIAlertAction *action)
+                                   {
+                                       DebugLog(@"Cancel action");
+                                       
+                                       
+                                       
+                                       
+                                   }];
+    
+    
+    [alertController addAction:cancelAction];
+    [alertController addAction:cameraAction];
+    [alertController addAction:galleryAction];
+    
+    
+    if (IDIOM==IPAD) {
+        
+        
+        
+        
+        UIPopoverPresentationController *popPresenter = [alertController
+                                                         popoverPresentationController];
+        popPresenter.sourceView = _profileBttn;
+        popPresenter.sourceRect = _profileBttn.bounds;
+        [self presentViewController:alertController animated:YES completion:nil];
+    }
+    else{
+        [self presentViewController:alertController animated:YES completion:nil];
+    }
+    
+    
+    
+    
+    
+    
+    
+}
+#pragma mark - ImagePickerController Delegate
+
+-(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+
+{
+    
+    //  if(IDIOM==IPHONE) {
+    
+    [picker dismissViewControllerAnimated:YES completion:^{
+        
+        
+                NSString *mediaType = [info objectForKey:UIImagePickerControllerMediaType];
+                if ([mediaType isEqualToString:(NSString *)kUTTypeImage])
+                {
+        
+                    selectedImage=[info valueForKey:UIImagePickerControllerEditedImage];
+                    
+                    [_profileImage setImage:selectedImage];
+                    _profileImage.contentMode = UIViewContentModeScaleAspectFill;
+                     //_profileImage.clipsToBounds = YES;
+                    
+                }
+        
+//        [SVProgressHUD showWithStatus:@"Processing"];
+//        
+//        NSString *mediaType = [info objectForKey:UIImagePickerControllerMediaType];
+//        if ([mediaType isEqualToString:(NSString *)kUTTypeImage])
+//        {
+//            
+//            selectedImage=[info valueForKey:UIImagePickerControllerEditedImage];
+//            
+//            
+//            
+//            if ([self networkAvailable])
+//                
+//            {
+//                
+//                
+//                
+//                [SVProgressHUD showWithStatus:@"Uploading Please wait"];
+//                
+//                
+//                //  AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+//                
+//                
+//                
+//                
+//                
+//                NSData *imageData =  UIImagePNGRepresentation(selectedImage);
+//                
+//                NSString  *encodedString = [self base64forData:imageData];
+//                
+//                
+//                
+//                
+//                
+//                NSURL *url=[NSURL URLWithString:[NSString stringWithFormat:@"%@user_imageupload",GLOBALAPI]];
+//                
+//                // configure the request
+//                
+//                NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
+//                [request setHTTPMethod:@"POST"];
+//                
+//                
+//                
+//                NSString *sendData;
+//                
+//                
+//                sendData = @"authtoken=";
+//                sendData = [sendData stringByAppendingString:[NSString stringWithFormat:@"%@", appDelegate.authToken]];
+//                
+//                
+//                
+//                sendData = [sendData stringByAppendingString:@"&profile_image="];
+//                sendData = [sendData stringByAppendingString:[NSString stringWithFormat:@"%@", encodedString]];
+//                
+//                [request setValue:@"gzip" forHTTPHeaderField:@"Accept-Encoding"];
+//                
+//                NSMutableData *theBodyData = [NSMutableData data];
+//                
+//                theBodyData = [[sendData dataUsingEncoding:NSUTF8StringEncoding] mutableCopy];
+//                
+//                
+//                //  self.session = [NSURLSession sharedSession];  // use sharedSession or create your own
+//                
+//                session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
+//                
+//                NSURLSessionTask *task = [session uploadTaskWithRequest:request fromData:theBodyData completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+//                    if (error) {
+//                        NSLog(@"error = %@", error);
+//                        return;
+//                    }
+//                    
+//                    if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
+//                        NSError *jsonError;
+//                        NSDictionary *Response = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
+//                        
+//                        
+//                        
+//                        if (jsonError) {
+//                            // Error Parsing JSON
+//                            NSString *responseString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+//                            
+//                            [SVProgressHUD showInfoWithStatus:@"some error occured"];
+//                            
+//                            NSLog(@"response = %@",responseString);
+//                        } else {
+//                            // Success Parsing JSON
+//                            // Log NSDictionary response:
+//                            NSLog(@"result = %@",jsonResponse);
+//                            if ([[jsonResponse objectForKey:@"status_code"]intValue]==406) {
+//                                
+//                                appDelegate.userId=@"";
+//                                
+//                                appDelegate.authToken=@"";
+//                                
+//                                NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
+//                                [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
+//                                
+//                                
+//                          
+//                                
+//                            }
+//                            else
+//                                if ([[Response objectForKey:@"status_code"]intValue]==200) {
+//                                    
+//                                    
+//                                    
+//                                    [SVProgressHUD dismiss];
+//                                    
+//                                    [_profileImage setImage:selectedImage];
+//                                    
+//                                    
+//                                    _profileImage.contentMode = UIViewContentModeScaleAspectFill;
+//                                    _profileImage.clipsToBounds = YES;
+//                                    
+//                                   
+//                                    
+//                                    
+//                                }
+//                            
+//                                else{
+//                                    
+//                                    [SVProgressHUD showInfoWithStatus:[jsonResponse objectForKey:@"message"]];
+//                                    
+//                                }
+//                        }
+//                    }
+//                }];
+//                [task resume];
+//                
+//            }
+//            
+//            else
+//                
+//            {
+//                
+//                [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
+//            }
+//        }
+        
+    }];
+    
+    
+    
+    //        [picker dismissViewControllerAnimated:YES completion:^{
+    //            selectedImage=[info valueForKey:UIImagePickerControllerEditedImage];
+    //
+    //
+    ////
+    ////                CGRect rect = CGRectMake(0,0,200,200);
+    ////                UIGraphicsBeginImageContext( rect.size );
+    ////                [[info
+    ////                  objectForKey:@"UIImagePickerControllerEditedImage"] drawInRect:rect];
+    ////                UIImage *picture1 = UIGraphicsGetImageFromCurrentImageContext();
+    ////                UIGraphicsEndImageContext();
+    ////                NSData *imageData = UIImagePNGRepresentation(picture1);
+    ////                  UIImage *image=[UIImage imageWithData:imageData];
+    //
+    //            [_selectedImageView setImage:selectedImage];
+    //
+    //
+    //          _selectedImageView.contentMode = UIViewContentModeScaleAspectFit;
+    //           _selectedImageView.clipsToBounds = NO;
+    //
+    //
+    //            [_imagePlaceHolder setHidden:YES];
+    //
+    //            [postBtn setUserInteractionEnabled:YES];
+    //
+    //            [postBtn.titleLabel setTextColor:[UIColor darkGrayColor]];
+    //
+    //        }];
+    
+    // }
+    
+    
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+    
+    [picker dismissViewControllerAnimated:YES completion:^{
+        
+        
+    }];
     
     
 }

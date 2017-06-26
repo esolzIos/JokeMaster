@@ -46,7 +46,7 @@
 @property (strong, nonatomic) IBOutlet UIImageView *shareImg;
 @property (strong, nonatomic) IBOutlet UIButton *shareBtn;
 - (IBAction)shareClicked:(id)sender;
-
+ @property (strong, nonatomic) UIView *filterView;
 //@property (weak, nonatomic) IBOutlet UIView *TransparentView;
 //@property (weak, nonatomic) IBOutlet UIView *MenuBaseView;
 //@property (weak, nonatomic) IBOutlet UIView *CrossView;

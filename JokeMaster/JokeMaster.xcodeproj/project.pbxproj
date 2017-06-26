@@ -72,6 +72,15 @@
 		B0A32B901EE131680044D443 /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = B0A32B8A1EE131680044D443 /* SVProgressHUD.m */; };
 		B0A32B911EE131680044D443 /* SVRadialGradientLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = B0A32B8C1EE131680044D443 /* SVRadialGradientLayer.m */; };
 		B0A5C4C41EFE6F83002FB26D /* ExtendedViews.xib in Resources */ = {isa = PBXBuildFile; fileRef = B0A5C4C31EFE6F83002FB26D /* ExtendedViews.xib */; };
+		B0A5C4CC1EFE7EFF002FB26D /* DZNPhotoEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0A5C4C71EFE7EFF002FB26D /* DZNPhotoEditorViewController.m */; };
+		B0A5C4CD1EFE7EFF002FB26D /* DZNPhotoPickerControllerConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = B0A5C4C91EFE7EFF002FB26D /* DZNPhotoPickerControllerConstants.m */; };
+		B0A5C4CE1EFE7EFF002FB26D /* UIImagePickerController+Edit.m in Sources */ = {isa = PBXBuildFile; fileRef = B0A5C4CB1EFE7EFF002FB26D /* UIImagePickerController+Edit.m */; };
+		B0A5C4DC1EFE7F2F002FB26D /* JTSAnimatedGIFUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = B0A5C4D11EFE7F2F002FB26D /* JTSAnimatedGIFUtility.m */; };
+		B0A5C4DD1EFE7F2F002FB26D /* JTSImageInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = B0A5C4D31EFE7F2F002FB26D /* JTSImageInfo.m */; };
+		B0A5C4DE1EFE7F2F002FB26D /* JTSImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0A5C4D51EFE7F2F002FB26D /* JTSImageViewController.m */; };
+		B0A5C4DF1EFE7F2F002FB26D /* JTSSimpleImageDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = B0A5C4D71EFE7F2F002FB26D /* JTSSimpleImageDownloader.m */; };
+		B0A5C4E01EFE7F2F002FB26D /* UIApplication+JTSImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0A5C4D91EFE7F2F002FB26D /* UIApplication+JTSImageViewController.m */; };
+		B0A5C4E11EFE7F2F002FB26D /* UIImage+JTSImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = B0A5C4DB1EFE7F2F002FB26D /* UIImage+JTSImageEffects.m */; };
 		B0DA70901EEBF52900FD91A7 /* JokeCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B0DA708F1EEBF52900FD91A7 /* JokeCollectionViewCell.m */; };
 /* End PBXBuildFile section */
 
@@ -217,6 +226,24 @@
 		B0A32B8B1EE131680044D443 /* SVRadialGradientLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVRadialGradientLayer.h; sourceTree = "<group>"; };
 		B0A32B8C1EE131680044D443 /* SVRadialGradientLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVRadialGradientLayer.m; sourceTree = "<group>"; };
 		B0A5C4C31EFE6F83002FB26D /* ExtendedViews.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ExtendedViews.xib; sourceTree = "<group>"; };
+		B0A5C4C61EFE7EFF002FB26D /* DZNPhotoEditorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DZNPhotoEditorViewController.h; sourceTree = "<group>"; };
+		B0A5C4C71EFE7EFF002FB26D /* DZNPhotoEditorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZNPhotoEditorViewController.m; sourceTree = "<group>"; };
+		B0A5C4C81EFE7EFF002FB26D /* DZNPhotoPickerControllerConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DZNPhotoPickerControllerConstants.h; sourceTree = "<group>"; };
+		B0A5C4C91EFE7EFF002FB26D /* DZNPhotoPickerControllerConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZNPhotoPickerControllerConstants.m; sourceTree = "<group>"; };
+		B0A5C4CA1EFE7EFF002FB26D /* UIImagePickerController+Edit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImagePickerController+Edit.h"; sourceTree = "<group>"; };
+		B0A5C4CB1EFE7EFF002FB26D /* UIImagePickerController+Edit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImagePickerController+Edit.m"; sourceTree = "<group>"; };
+		B0A5C4D01EFE7F2F002FB26D /* JTSAnimatedGIFUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JTSAnimatedGIFUtility.h; sourceTree = "<group>"; };
+		B0A5C4D11EFE7F2F002FB26D /* JTSAnimatedGIFUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JTSAnimatedGIFUtility.m; sourceTree = "<group>"; };
+		B0A5C4D21EFE7F2F002FB26D /* JTSImageInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JTSImageInfo.h; sourceTree = "<group>"; };
+		B0A5C4D31EFE7F2F002FB26D /* JTSImageInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JTSImageInfo.m; sourceTree = "<group>"; };
+		B0A5C4D41EFE7F2F002FB26D /* JTSImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JTSImageViewController.h; sourceTree = "<group>"; };
+		B0A5C4D51EFE7F2F002FB26D /* JTSImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JTSImageViewController.m; sourceTree = "<group>"; };
+		B0A5C4D61EFE7F2F002FB26D /* JTSSimpleImageDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JTSSimpleImageDownloader.h; sourceTree = "<group>"; };
+		B0A5C4D71EFE7F2F002FB26D /* JTSSimpleImageDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JTSSimpleImageDownloader.m; sourceTree = "<group>"; };
+		B0A5C4D81EFE7F2F002FB26D /* UIApplication+JTSImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIApplication+JTSImageViewController.h"; sourceTree = "<group>"; };
+		B0A5C4D91EFE7F2F002FB26D /* UIApplication+JTSImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIApplication+JTSImageViewController.m"; sourceTree = "<group>"; };
+		B0A5C4DA1EFE7F2F002FB26D /* UIImage+JTSImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+JTSImageEffects.h"; sourceTree = "<group>"; };
+		B0A5C4DB1EFE7F2F002FB26D /* UIImage+JTSImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+JTSImageEffects.m"; sourceTree = "<group>"; };
 		B0DA708E1EEBF52900FD91A7 /* JokeCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JokeCollectionViewCell.h; sourceTree = "<group>"; };
 		B0DA708F1EEBF52900FD91A7 /* JokeCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JokeCollectionViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -481,6 +508,8 @@
 		B0A32B811EE1313F0044D443 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B0A5C4CF1EFE7F1C002FB26D /* JTSImageViewer */,
+				B0A5C4C51EFE7EDB002FB26D /* DZNPhotoeditorViewController */,
 				B07ABAD01EE58E4E0011DD57 /* GoogleAppUtilities.framework */,
 				B07ABAD11EE58E4E0011DD57 /* GoogleSignIn.bundle */,
 				B07ABAD21EE58E4E0011DD57 /* GoogleSignIn.framework */,
@@ -510,6 +539,38 @@
 				B0A32B8C1EE131680044D443 /* SVRadialGradientLayer.m */,
 			);
 			name = SVProgressHUD;
+			sourceTree = "<group>";
+		};
+		B0A5C4C51EFE7EDB002FB26D /* DZNPhotoeditorViewController */ = {
+			isa = PBXGroup;
+			children = (
+				B0A5C4C61EFE7EFF002FB26D /* DZNPhotoEditorViewController.h */,
+				B0A5C4C71EFE7EFF002FB26D /* DZNPhotoEditorViewController.m */,
+				B0A5C4C81EFE7EFF002FB26D /* DZNPhotoPickerControllerConstants.h */,
+				B0A5C4C91EFE7EFF002FB26D /* DZNPhotoPickerControllerConstants.m */,
+				B0A5C4CA1EFE7EFF002FB26D /* UIImagePickerController+Edit.h */,
+				B0A5C4CB1EFE7EFF002FB26D /* UIImagePickerController+Edit.m */,
+			);
+			name = DZNPhotoeditorViewController;
+			sourceTree = "<group>";
+		};
+		B0A5C4CF1EFE7F1C002FB26D /* JTSImageViewer */ = {
+			isa = PBXGroup;
+			children = (
+				B0A5C4D01EFE7F2F002FB26D /* JTSAnimatedGIFUtility.h */,
+				B0A5C4D11EFE7F2F002FB26D /* JTSAnimatedGIFUtility.m */,
+				B0A5C4D21EFE7F2F002FB26D /* JTSImageInfo.h */,
+				B0A5C4D31EFE7F2F002FB26D /* JTSImageInfo.m */,
+				B0A5C4D41EFE7F2F002FB26D /* JTSImageViewController.h */,
+				B0A5C4D51EFE7F2F002FB26D /* JTSImageViewController.m */,
+				B0A5C4D61EFE7F2F002FB26D /* JTSSimpleImageDownloader.h */,
+				B0A5C4D71EFE7F2F002FB26D /* JTSSimpleImageDownloader.m */,
+				B0A5C4D81EFE7F2F002FB26D /* UIApplication+JTSImageViewController.h */,
+				B0A5C4D91EFE7F2F002FB26D /* UIApplication+JTSImageViewController.m */,
+				B0A5C4DA1EFE7F2F002FB26D /* UIImage+JTSImageEffects.h */,
+				B0A5C4DB1EFE7F2F002FB26D /* UIImage+JTSImageEffects.m */,
+			);
+			name = JTSImageViewer;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -672,8 +733,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B0A5C4E11EFE7F2F002FB26D /* UIImage+JTSImageEffects.m in Sources */,
 				B0A32B801EE12F0C0044D443 /* JMSplashViewController.m in Sources */,
 				B0A32B4C1EE129300044D443 /* JokeMaster.xcdatamodeld in Sources */,
+				B0A5C4CC1EFE7EFF002FB26D /* DZNPhotoEditorViewController.m in Sources */,
 				0C3AFB781EF15CA90037834A /* JMFavouriteViewController.m in Sources */,
 				0C91CFBD1EEE5B7A00123303 /* JMCategoryCell.m in Sources */,
 				B08B360A1EFBD98400ECC327 /* JMReviewViewController.m in Sources */,
@@ -692,7 +755,10 @@
 				0C3AFB7B1EF162820037834A /* JMFavouriteCell.m in Sources */,
 				0CE2FB481EE190E50031C0E6 /* JMRegistrationViewController.m in Sources */,
 				B0A32B8D1EE131680044D443 /* SVIndefiniteAnimatedView.m in Sources */,
+				B0A5C4DD1EFE7F2F002FB26D /* JTSImageInfo.m in Sources */,
 				B0A32B7C1EE12E4E0044D443 /* JMGlobalMethods.m in Sources */,
+				B0A5C4DE1EFE7F2F002FB26D /* JTSImageViewController.m in Sources */,
+				B0A5C4DF1EFE7F2F002FB26D /* JTSSimpleImageDownloader.m in Sources */,
 				0C3E27751EEBCD3B0075B104 /* JMRecentUploadedCollectionViewCell.m in Sources */,
 				0C429C421EF0038E00A42F07 /* JMLeftMenuCell.m in Sources */,
 				B0A32B8E1EE131680044D443 /* SVProgressAnimatedView.m in Sources */,
@@ -704,9 +770,13 @@
 				0C337AD91EF40FC600BE2BB3 /* JMFollowingViewController.m in Sources */,
 				0C6F9E361EE14E84005D31A0 /* CountryCell.m in Sources */,
 				B0A32B911EE131680044D443 /* SVRadialGradientLayer.m in Sources */,
+				B0A5C4DC1EFE7F2F002FB26D /* JTSAnimatedGIFUtility.m in Sources */,
+				B0A5C4CE1EFE7EFF002FB26D /* UIImagePickerController+Edit.m in Sources */,
 				B07ABAC41EE540B90011DD57 /* JMLanguageViewController.m in Sources */,
 				0C2D42A51EF79884007C2E5C /* JMUploadVideoViewController.m in Sources */,
 				0C48BFB61EE7CF1200CD1C2A /* LocalizationSystem.m in Sources */,
+				B0A5C4CD1EFE7EFF002FB26D /* DZNPhotoPickerControllerConstants.m in Sources */,
+				B0A5C4E01EFE7F2F002FB26D /* UIApplication+JTSImageViewController.m in Sources */,
 				B0DA70901EEBF52900FD91A7 /* JokeCollectionViewCell.m in Sources */,
 				B099B0C81EF8F741004AC64C /* JMSearchView.m in Sources */,
 				0C3E27721EEBBFF70075B104 /* JMRecentlyUploadedViewController.m in Sources */,

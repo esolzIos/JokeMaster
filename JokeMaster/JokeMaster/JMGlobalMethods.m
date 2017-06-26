@@ -21,7 +21,7 @@
     BOOL loading;
     
     AppDelegate *app;
-    UIView *moreView;
+   
     
     
 }
@@ -46,16 +46,20 @@
     return context;
 }
 
--(void)addMoreView
+-(void)addMoreView:(UIView *)mainView
 {
 
-    moreView=[[UIView alloc]initWithFrame:CGRectMake(185.0/320.0*FULLWIDTH, 40.0/480.0*FULLHEIGHT, 130.0/320.0*FULLWIDTH, 140.0/480.0*FULLHEIGHT)];
     
-     moreView= [[[NSBundle mainBundle] loadNibNamed:@"ExtendedViews" owner:self options:nil] objectAtIndex:0];
     
-  
+     _filterView= [[[NSBundle mainBundle] loadNibNamed:@"ExtendedViews" owner:self options:nil] objectAtIndex:0];
     
-    [moreView setHidden:YES];
+    _filterView.frame=CGRectMake(185.0/320.0*FULLWIDTH, 40.0/480.0*FULLHEIGHT, 130.0/320.0*FULLWIDTH, 140.0/480.0*FULLHEIGHT);
+    
+
+    
+     [mainView addSubview:_filterView];
+    
+    [_filterView setHidden:YES];
     
     
 
@@ -64,11 +68,15 @@
 -(void)showMore
 {
     
-      [self.view addSubview:moreView];
-  [moreView setHidden:NO];
+    if ([_filterView isHidden]) {
+         [_filterView setHidden:NO];
+    }
+    else{
+     [_filterView setHidden:YES];
+    }
 
 }
--(void)viewDidAppear:(BOOL)animated
+-(void)viewWillAppear:(BOOL)animated
 {
     [SVProgressHUD dismiss];
     
@@ -94,6 +102,11 @@
     
       [HeaderView.moreBtn addTarget:self action:@selector(showMore) forControlEvents:UIControlEventTouchUpInside];
     
+       [HeaderView.langBtn addTarget:self action:@selector(gotoCountrySelect) forControlEvents:UIControlEventTouchUpInside];
+    
+    [HeaderView.langImage setImage:[UIImage imageNamed:[[NSUserDefaults standardUserDefaults] objectForKey:@"flag"]]];
+    
+    
     HeaderView.langView.hidden=NO;
     HeaderView.searchView.hidden=NO;
     HeaderView.moreView.hidden=NO;
@@ -115,7 +128,7 @@
     
     
         
-        [self addMoreView];
+
         
         
         
@@ -139,6 +152,8 @@
         
         
         [_searchHeaderView.backBtn addTarget:self action:@selector(BackClicked) forControlEvents:UIControlEventTouchUpInside];
+        
+             [_searchHeaderView.moreBtn addTarget:self action:@selector(showMore) forControlEvents:UIControlEventTouchUpInside];
         
     }
 
@@ -2985,6 +3000,12 @@
     JMGlobalMethods *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMSearch"];
     [self.navigationController pushViewController:VC animated:kCAMediaTimingFunctionEaseIn];
     
+}
+
+-(void)gotoCountrySelect
+{
+    JMGlobalMethods *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMChooseCountryViewController"];
+    [self.navigationController pushViewController:VC animated:kCAMediaTimingFunctionEaseIn];
 }
 
 #pragma - mark Back click

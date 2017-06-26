@@ -71,10 +71,10 @@
 @property(nonatomic,weak) UITabBar *footerTabBar;
 -(void)checkPushCount;
 -(void)readAfterPush;
-
+ @property (strong, nonatomic) UIView *filterView;
 @property (weak, nonatomic) IBOutlet UIView *MainView;
 @property (weak, nonatomic) IBOutlet JMHeaderView *HeaderView;
 @property (strong, nonatomic) IBOutlet JMSearchView *searchHeaderView;
-
+-(void)addMoreView:(UIView *)mainView;
 
 @end
