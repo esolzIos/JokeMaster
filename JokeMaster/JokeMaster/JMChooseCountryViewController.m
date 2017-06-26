@@ -16,8 +16,12 @@
     
     
     int rowSelected;
-  NSString *  countrySelected;
+  NSString *  countrySelected,*countryImage;
     
+    int totalCount;
+    NSURLSession *session;
+    
+    NSMutableArray *langjsonArr;
 
 }
 @end
@@ -34,22 +38,22 @@
     
     
     
-    langArr=[[NSMutableArray alloc] initWithObjects:AMLocalizedString(@"English", nil),AMLocalizedString(@"Hebrew", nil),AMLocalizedString(@"Hindi", nil), nil];
+    langArr=[[NSMutableArray alloc] init];
     
-    codeArr=[[NSMutableArray alloc] initWithObjects:@"en",@"he",@"hi", nil];
+    codeArr=[[NSMutableArray alloc] init];
     
-    engArr=[[NSMutableArray alloc] initWithObjects:@"UNITED STATES",@"UNITED KINGDOM",@"INDIA", nil];
-    
-     hindiArr=[[NSMutableArray alloc] initWithObjects:@"INDIA",@"PAKISTAN", nil];
-    
-      hebrewArr=[[NSMutableArray alloc] initWithObjects:@"ISRAEL", nil];
-    
-    [langDict setObject:engArr forKey:@"en"];
-    
-    [langDict setObject:hebrewArr forKey:@"he"] ;
-    
-     [langDict setObject:hindiArr forKey:@"hi"] ;
-    
+//    engArr=[[NSMutableArray alloc] initWithObjects:@"UNITED STATES",@"UNITED KINGDOM",@"INDIA", nil];
+//    
+//     hindiArr=[[NSMutableArray alloc] initWithObjects:@"INDIA",@"PAKISTAN", nil];
+//    
+//      hebrewArr=[[NSMutableArray alloc] initWithObjects:@"ISRAEL", nil];
+//    
+//    [langDict setObject:engArr forKey:@"en"];
+//    
+//    [langDict setObject:hebrewArr forKey:@"he"] ;
+//    
+//     [langDict setObject:hindiArr forKey:@"hi"] ;
+//    
     [_LanguageLabel setText:AMLocalizedString(@"Choose Language", nil)];
     
         [_GoButton setTitle:AMLocalizedString(@"GO",nil) forState:UIControlStateNormal] ;
@@ -57,21 +61,178 @@
 [_languagePicker setDelegate:self];
     
     
-    if ([codeArr containsObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"language"]]) {
-        
-        rowSelected=(int)[codeArr indexOfObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"language"]];
-        
-        [_LanguageLabel setText:[langArr objectAtIndex:rowSelected]];
-        
-        CountryArray = [[langDict objectForKey:[codeArr objectAtIndex:rowSelected]] copy];
-        
-        [_CountryTable reloadData];
-        
-    }
- 
+    [self loadData];
+    
+    
+
 
     
 }
+
+-(void)loadData
+{
+    
+    
+    
+    if([self networkAvailable])
+    {
+        
+        
+        
+        [SVProgressHUD show];
+        
+        
+        
+        NSString *url;
+        
+        
+        url=[NSString stringWithFormat:@"%@%@Signup/fetchlanguage",GLOBALAPI,INDEX];
+        
+        
+        
+        NSLog(@"Url String..%@",url);
+        
+        
+        
+        NSURLSessionConfiguration *sessionConfig = [NSURLSessionConfiguration defaultSessionConfiguration];
+        session = [NSURLSession sessionWithConfiguration:sessionConfig delegate:nil delegateQueue:nil];
+        
+        [[session dataTaskWithURL:[NSURL URLWithString:url] completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+            
+            
+            //
+            //        NSURLSessionTask *task = [session uploadTaskWithRequest:request fromData:nil completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+            if (error) {
+                NSLog(@"error = %@", error);
+                
+                
+                [_GoButton setUserInteractionEnabled:YES];
+                return;
+            }
+            
+            if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
+                NSError *jsonError;
+                NSDictionary *jsonResponse = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
+                
+                
+                
+                
+                
+                
+                [_GoButton setUserInteractionEnabled:YES];
+                
+                if (jsonError) {
+                    // Error Parsing JSON
+                    
+                    NSString *responseString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                    
+                    NSLog(@"response = %@",responseString);
+                    
+                    [SVProgressHUD showInfoWithStatus:@"some error occured"];
+                    
+                } else {
+                    // Success Parsing JSON
+                    // Log NSDictionary response:
+                    NSLog(@"result = %@",jsonResponse);
+                    if ([jsonResponse objectForKey:@"status"]) {
+                        
+                        
+                        
+                        langjsonArr=[[jsonResponse objectForKey:@"details"] copy];
+                        
+                        totalCount=(int)langjsonArr.count;
+                        
+                        
+                        
+                        [SVProgressHUD dismiss];
+                        
+                        
+                        
+                        for (NSDictionary *Dict in langjsonArr) {
+                            
+                            [langArr addObject:[Dict objectForKey:@"name"]];
+                            [codeArr addObject:[Dict objectForKey:@"short_name"]];
+                            
+                            [langDict setObject:[Dict objectForKey:@"countryData"] forKey:[Dict objectForKey:@"short_name"]];
+                            
+                        }
+                        
+                    
+                        
+                        if (langArr.count>0) {
+                            
+                            if ([codeArr containsObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"language"]]) {
+                                
+                                rowSelected=(int)[codeArr indexOfObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"language"]];
+                                
+                                [_LanguageLabel setText:[langArr objectAtIndex:rowSelected]];
+                                
+                                CountryArray = [[langDict objectForKey:[codeArr objectAtIndex:rowSelected]] copy];
+                                
+                                [_CountryTable reloadData];
+                                
+                            }
+                            
+                        
+                        }
+                        else{
+                            
+                            [_GoButton setUserInteractionEnabled:NO];
+                            
+                            
+                        }
+                        
+                        
+                    }
+                    
+                    
+                    else{
+                        
+                        if (langArr.count==0) {
+                            
+                            [SVProgressHUD dismiss];
+                        }
+                        else{
+                            [SVProgressHUD showInfoWithStatus:[jsonResponse objectForKey:@"message"]];
+                        }
+                        
+                        
+                        
+                    }
+                    
+                    
+                    
+                    
+                }
+                
+                
+            }
+            
+            
+        }]resume ];
+        
+        
+        
+        
+        
+    }
+    
+    else{
+        
+        
+        [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
+        
+        
+    }
+    
+
+    
+    
+   
+    
+
+}
+
 #pragma mark - UITableView Delegates
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section;
@@ -92,17 +253,6 @@
       //  cell.CheckButton.tag=indexPath.row;
       //  [cell.CheckButton addTarget:self action:@selector(CheckButtonTap:) forControlEvents:UIControlEventTouchUpInside];
     
-    if ([countrySelected isEqualToString:[CountryArray objectAtIndex:indexPath.row]])
-    {
-        
-        cell.CheckImage.image = [UIImage imageNamed:@"tick"];
-   
-    }
-    else
-    {
-     
-        cell.CheckImage.image = [UIImage imageNamed:@"uncheck"];
-    }
     
         return cell;
    
@@ -126,13 +276,24 @@
 
 -(void) tableView:(UITableView *)tableView willDisplayCell:(CountryCell *) cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
+    if ([countrySelected isEqualToString:[[CountryArray objectAtIndex:indexPath.row]objectForKey:@"countryId"]])
+    {
+        
+        cell.CheckImage.image = [UIImage imageNamed:@"tick"];
+        
+        
+        
+    }
+    else
+    {
+        
+        cell.CheckImage.image = [UIImage imageNamed:@"uncheck"];
+    }
 
+
+      [cell.CountryImage sd_setImageWithURL:[NSURL URLWithString:[[CountryArray objectAtIndex:indexPath.row]objectForKey:@"image"]]];
     
-    
-        [cell.CountryImage setImage:[UIImage imageNamed:[CountryArray objectAtIndex:indexPath.row]]] ;
-    
-    [cell.CountryLabel setText:AMLocalizedString([[CountryArray objectAtIndex:indexPath.row]uppercaseString], nil) ];
+    [cell.CountryLabel setText:AMLocalizedString([[[CountryArray objectAtIndex:indexPath.row]objectForKey:@"countryName"] uppercaseString], nil) ];
     
     
 }
@@ -142,15 +303,17 @@
   //  CountryCell *cCell=[_CountryTable cellForRowAtIndexPath:indexPath];
     
     
-    if (![countrySelected isEqualToString:[CountryArray objectAtIndex:indexPath.row]])
+    if (![countrySelected isEqualToString:[[CountryArray objectAtIndex:indexPath.row]objectForKey:@"countryId"]])
     {
      
-          countrySelected=[CountryArray objectAtIndex:indexPath.row];
+          countrySelected=[[CountryArray objectAtIndex:indexPath.row]objectForKey:@"countryId"];
+        
+        countryImage=[[CountryArray objectAtIndex:indexPath.row]objectForKey:@"image"];
     }
     else
     {
        countrySelected=@"";
-       
+       countryImage=@"";
     }
 
     
@@ -197,7 +360,7 @@
     
     if (countrySelected.length>0) {
     
-        [[NSUserDefaults standardUserDefaults ]setObject:countrySelected forKey:@"flag"];
+        [[NSUserDefaults standardUserDefaults ]setObject:countryImage forKey:@"flag"];
         
     
     JMHomeViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMHomeViewController"];
@@ -286,6 +449,7 @@
  //   [[NSUserDefaults standardUserDefaults]setObject:[codeArr objectAtIndex:rowSelected] forKey:@"language"];
     
     countrySelected=@"";
+    countryImage=@"";
     
     CountryArray = [[langDict objectForKey:[codeArr objectAtIndex:rowSelected]] copy];
     

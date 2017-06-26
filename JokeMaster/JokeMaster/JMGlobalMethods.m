@@ -104,7 +104,7 @@
     
        [HeaderView.langBtn addTarget:self action:@selector(gotoCountrySelect) forControlEvents:UIControlEventTouchUpInside];
     
-    [HeaderView.langImage setImage:[UIImage imageNamed:[[NSUserDefaults standardUserDefaults] objectForKey:@"flag"]]];
+    [HeaderView.langImage sd_setImageWithURL:[NSURL URLWithString:[[NSUserDefaults standardUserDefaults] objectForKey:@"flag"]]];
     
     
     HeaderView.langView.hidden=NO;
