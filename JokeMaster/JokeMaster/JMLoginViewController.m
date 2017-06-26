@@ -97,6 +97,8 @@ fbM=[[FBSDKLoginManager alloc]init];
     [_signupBtn setAttributedTitle:attributedText forState:UIControlStateNormal];
     
     
+    urlobj=[[UrlconnectionObject alloc] init];
+    
     // Uncomment to automatically sign in the user.
     //[[GIDSignIn sharedInstance] signInSilently];
     
@@ -166,7 +168,9 @@ fbM=[[FBSDKLoginManager alloc]init];
                      return;
                  }
                  
-                    DebugLog(@"Details:%@",(NSDictionary *)result);
+                 NSString *fbAccessToken = [[FBSDKAccessToken currentAccessToken] tokenString];
+                 
+                    DebugLog(@"Details:%@ %@",(NSDictionary *)result,fbAccessToken);
                  
                     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"loggedIn"];
                  JMHomeViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMHomeViewController"];
@@ -373,7 +377,91 @@ dismissViewController:(UIViewController *)viewController {
     
     [self dismissViewControllerAnimated:YES completion:nil];
 }
-
+//#pragma mark -signup api call
+//-(void)SignUpApi
+//{
+//    
+//    
+//    BOOL net=[urlobj connectedToNetwork];
+//    if (net==YES)
+//    {
+//        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+//            
+//            [self checkLoader];
+//        }];
+//        [[NSOperationQueue new] addOperationWithBlock:^{
+//            
+//            NSMutableString *urlString;
+//            
+//            
+//            
+//            //   urlString=[NSMutableString stringWithFormat:@"%@index.php/Signup",GLOBALAPI];
+//            
+//            
+//            urlString=[NSMutableString stringWithFormat:@"%@index.php/Signup?register_type=1&name=%@&email=%@&password=%@&language=%@&device_token=%@&device_type=1",GLOBALAPI,[Nametxt.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[Emailtxt.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[Passwordtxt.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[LanguageLabel.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[[NSUserDefaults standardUserDefaults] objectForKey:@"deviceToken"]];
+//            
+//            
+//           
+//               [urlobj getSessionJsonResponse:urlString  success:^(NSDictionary *responseDict)
+//             {
+//                 
+//                 DebugLog(@"success %@ Status Code:%ld",responseDict,(long)urlobj.statusCode);
+//                 
+//                 
+//                 self.view.userInteractionEnabled = YES;
+//                 [self checkLoader];
+//                 
+//                 if (urlobj.statusCode==200)
+//                 {
+//                     if ([[responseDict objectForKey:@"status"] boolValue]==YES)
+//                     {
+//                         // userinfo=[[responseDict objectForKey:@"info"] copy];
+//                         AlertView = [[UIAlertView alloc] initWithTitle:@"Success"
+//                                                                message:@"Registration successful."
+//                                                               delegate:self
+//                                                      cancelButtonTitle:nil
+//                                                      otherButtonTitles:nil];
+//                         
+//                         [AlertView show];
+//                         
+//                         // (success message) dismiss delay of 1 sec
+//                         [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(GotoNextPageAfterSuccess) userInfo:nil repeats: NO];
+//                     }
+//                     else
+//                     {
+//                         [[[UIAlertView alloc]initWithTitle:@"Error!" message:[responseDict objectForKey:@"message"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
+//                     }
+//                     
+//                 }
+//                 else if (urlobj.statusCode==500 || urlobj.statusCode==400)
+//                 {
+//                     [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Server Failed to Respond" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
+//                     
+//                 }
+//                 else
+//                 {
+//                     [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Server Failed to Respond" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
+//                 }
+//                 
+//                 
+//             } failure:^(NSError *error) {
+//                 
+//                 [self checkLoader];
+//                 self.view.userInteractionEnabled = YES;
+//                 NSLog(@"Failure");
+//                 [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Server Failed to Respond" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
+//                 
+//             }];
+//            
+//            
+//        }];
+//    }
+//    else
+//    {
+//        
+//        [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Network Not Available." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
+//    }
+//}
 
 
 @end

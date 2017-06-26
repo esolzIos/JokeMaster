@@ -864,15 +864,36 @@
                 urlString=[NSMutableString stringWithFormat:@"%@index.php/Signup?register_type=1&name=%@&email=%@&password=%@&language=%@&device_token=%@&device_type=1",GLOBALAPI,[Nametxt.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[Emailtxt.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[Passwordtxt.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[LanguageLabel.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[[NSUserDefaults standardUserDefaults] objectForKey:@"deviceToken"]];
             
             
-           
-            NSString *strEncoded = [self encodeToBase64String:ProfileImage.image];
+            NSString *strEncoded,*requestBody;
             
-             NSString * requestBody= [NSString stringWithFormat:@"userimage=%@",strEncoded];
+            UIImage *secondImage = [UIImage imageNamed:@"no-image"];
+            
+            NSData *imgData = UIImagePNGRepresentation(ProfileImage.image);
+            NSData *imgData1 = UIImagePNGRepresentation(secondImage);
+            
+            BOOL isCompare =  [imgData1 isEqual:imgData];
+            if (!isCompare)
+            {
+                //             AttachmentImage.image=[self compressImage:AttachmentImage.image];
+                //
+                //            imgData = UIImageJPEGRepresentation(AttachmentImage.image, 1.0);
+              //  DebugLog(@"Size of Image(bytes):%lu",(unsigned long)[imgData length]);
+                
+                
+                strEncoded = [self encodeToBase64String:ProfileImage.image];
+                requestBody= [NSString stringWithFormat:@"userimage=%@",strEncoded];
+            }
+            else
+            {
+                requestBody= [NSString stringWithFormat:@"userimage="];
+            }
+           
             
             DebugLog(@"post string: %@",urlString);
+            DebugLog(@"requestBody string: %@",requestBody);
             
-//            [urlobj getSessionJsonResponseWithUploadImage :(NSString *)urlString Image :(NSString *)requestBody  success:^(NSDictionary *responseDict)
-            [urlobj getSessionJsonResponse:urlString  success:^(NSDictionary *responseDict)
+            [urlobj getSessionJsonResponseWithUploadImage :(NSString *)urlString Image :(NSString *)requestBody  success:^(NSDictionary *responseDict)
+         //   [urlobj getSessionJsonResponse:urlString  success:^(NSDictionary *responseDict)
              {
                  
                  DebugLog(@"success %@ Status Code:%ld",responseDict,(long)urlobj.statusCode);

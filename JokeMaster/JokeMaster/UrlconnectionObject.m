@@ -275,6 +275,10 @@
                                   {
                                       self.statusCode = [(NSHTTPURLResponse*)response statusCode];
                                       
+                                      NSString *Str= [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                                      
+                                      NSLog(@"strrrrr--%@ %@",Str, response);
+                                      
                                       NSDictionary * json  = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
                                       //  NSLog(@"session returned data-%@",json);
                                       

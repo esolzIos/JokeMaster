@@ -9,6 +9,9 @@
 #import "JMGlobalMethods.h"
 #import "JMRegistrationViewController.h"
 @interface JMLoginViewController : JMGlobalMethods
+{
+    UrlconnectionObject *urlobj;
+}
 @property (strong, nonatomic) IBOutlet UIView *emailView;
 @property (strong, nonatomic) IBOutlet UITextField *userEmail;
 @property (strong, nonatomic) IBOutlet UIView *passView;
