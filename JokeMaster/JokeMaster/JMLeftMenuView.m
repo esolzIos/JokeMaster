@@ -169,7 +169,7 @@
         }
         else if (indexPath.row==5)
         {
-            cell.menuName.text = AMLocalizedString(@"SETTINGS",nil);
+            cell.menuName.text = AMLocalizedString(@"UPLOAD A VIDEO",nil);
             cell.menuImg.image = [UIImage imageNamed:@"settings"];
         }
         else if (indexPath.row==6)

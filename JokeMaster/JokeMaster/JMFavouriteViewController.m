@@ -7,7 +7,7 @@
 //
 
 #import "JMFavouriteViewController.h"
-
+#import "JMProfileViewController.h"
 @interface JMFavouriteViewController ()
 {
     int listcount;
@@ -132,6 +132,13 @@
     rightgestureRecognizer.view.tag=cell.WhiteView.tag;
     [rightgestureRecognizer setDirection:(UISwipeGestureRecognizerDirectionRight)];
     [cell.WhiteView addGestureRecognizer:rightgestureRecognizer];
+}
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+JMProfileViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMProfile"];
+
+
+[self.navigationController pushViewController:VC animated:kCAMediaTimingFunctionEaseIn];
 }
 -(void)swipeHandler:(UISwipeGestureRecognizer *)recognizer {
     

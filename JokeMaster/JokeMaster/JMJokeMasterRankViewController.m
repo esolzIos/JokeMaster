@@ -7,7 +7,7 @@
 //
 
 #import "JMJokeMasterRankViewController.h"
-
+#import "JMProfileViewController.h"
 @interface JMJokeMasterRankViewController ()
 
 @end
@@ -102,7 +102,13 @@
     
    
 }
-
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    JMProfileViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMProfile"];
+    
+    
+    [self.navigationController pushViewController:VC animated:kCAMediaTimingFunctionEaseIn];
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

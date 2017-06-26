@@ -44,4 +44,5 @@
 - (IBAction)profileClicked:(id)sender;
 
 @property (strong, nonatomic) IBOutlet UIButton *profileBttn;
+@property(nonatomic) BOOL fromLeftMenu;
 @end

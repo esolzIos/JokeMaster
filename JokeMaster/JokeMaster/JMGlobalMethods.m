@@ -11,7 +11,7 @@
 #import "JMHeaderView.h"
 #import "AppDelegate.h"
 #import <SystemConfiguration/SCNetworkReachability.h>
-
+#import "JMProfileViewController.h"
 @interface JMGlobalMethods ()<UITabBarControllerDelegate,UITabBarDelegate,UISearchBarDelegate,UIGestureRecognizerDelegate>
 {
     
@@ -3162,8 +3162,12 @@
         {
 //            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Temp" bundle: nil];
             
-            JMGlobalMethods *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMProfile"];
+            JMProfileViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMProfile"];
+            VC.fromLeftMenu=true;
+            
             [self.navigationController pushViewController:VC animated:kCAMediaTimingFunctionEaseIn];
+            
+            
             //                if (userid.length==0)
             //                {
             //                    [[NSUserDefaults standardUserDefaults] setObject:@"DLAddPropertyViewController" forKey:@"DestinationPage"];

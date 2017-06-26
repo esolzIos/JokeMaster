@@ -55,6 +55,13 @@
     
        [_CategoryLabel setFont:[UIFont fontWithName:_CategoryLabel.font.fontName size:[self getFontSize:_CategoryLabel.font.pointSize]]];
     
+    if (_fromLeftMenu) {
+        [_followBtn.titleLabel setText:@"UPLOAD"];
+    }
+    else{
+           [_followBtn.titleLabel setText:@"FOLLOW"];
+    }
+    
     // Do any additional setup after loading the view.
 }
 
@@ -147,8 +154,13 @@
 
 
 - (IBAction)followClicked:(id)sender {
-    JMUploadVideoViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMUploadVideoViewController"];
-               [self.navigationController pushViewController:VC animated:YES];
+    if (_fromLeftMenu) {
+        JMUploadVideoViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMUploadVideoViewController"];
+        [self.navigationController pushViewController:VC animated:YES];
+    }
+    else{
+    
+    }
 }
 - (IBAction)categoryClicked:(id)sender {
     _TransparentView.hidden=NO;
