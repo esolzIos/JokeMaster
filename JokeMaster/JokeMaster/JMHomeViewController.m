@@ -9,7 +9,9 @@
 #import "JMHomeViewController.h"
 #import "JMRecentlyUploadedViewController.h"
 @interface JMHomeViewController ()
-
+{
+    BOOL liked;
+}
 @end
 
 @implementation JMHomeViewController
@@ -19,7 +21,7 @@
     
     [self setRoundCornertoView:_videoThumb withBorderColor:[UIColor clearColor] WithRadius:0.15];
     
-        [self setRoundCornertoView:_optionView withBorderColor:[UIColor clearColor] WithRadius:0.15];
+    [self setRoundCornertoView:_optionView withBorderColor:[UIColor clearColor] WithRadius:0.15];
     
     [self addMoreView:self.view];
     
@@ -40,14 +42,14 @@
     [_recentBtn setTitle:AMLocalizedString(@"RECENTLY UPLOADED VIDEOS", nil) forState:UIControlStateNormal];
     
     
-       [self.HeaderView.langBtn addTarget:self action:@selector(langClicked) forControlEvents:UIControlEventTouchUpInside];
+    [self.HeaderView.langBtn addTarget:self action:@selector(langClicked) forControlEvents:UIControlEventTouchUpInside];
     
-//    MenuViewY=_MenuBaseView.frame.origin.y;
-//    
-//    _TransparentView.frame = CGRectMake(0, self.view.frame.size.height, _TransparentView.frame.size.width, _TransparentView.frame.size.height);
-//    _MenuBaseView.frame = CGRectMake(0, self.view.frame.size.height, _MenuBaseView.frame.size.width, _MenuBaseView.frame.size.height);
-//    
-//    CategoryArray=[[NSMutableArray alloc] initWithObjects:@"LATEST",@"SEXUAL JOKES",@"ANIMAL JOKES",@"DOCTORS JOKES",@"GIRLFRIEND JOKES",@"STUPID JOKES", nil];
+    //    MenuViewY=_MenuBaseView.frame.origin.y;
+    //
+    //    _TransparentView.frame = CGRectMake(0, self.view.frame.size.height, _TransparentView.frame.size.width, _TransparentView.frame.size.height);
+    //    _MenuBaseView.frame = CGRectMake(0, self.view.frame.size.height, _MenuBaseView.frame.size.width, _MenuBaseView.frame.size.height);
+    //
+    //    CategoryArray=[[NSMutableArray alloc] initWithObjects:@"LATEST",@"SEXUAL JOKES",@"ANIMAL JOKES",@"DOCTORS JOKES",@"GIRLFRIEND JOKES",@"STUPID JOKES", nil];
     
     
     // Do any additional setup after loading the view.
@@ -59,14 +61,14 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 #pragma mark - status bar white color
 - (UIStatusBarStyle)preferredStatusBarStyle
 {
@@ -74,19 +76,19 @@
 }
 - (IBAction)categoryClicked:(id)sender
 {
-//    _TransparentView.hidden=NO;
-//    _MenuBaseView.hidden=NO;
-//    
-//    
-//    [UIView animateWithDuration:0.5
-//                          delay:0.1
-//                        options:(UIViewAnimationOptions) UIViewAnimationCurveEaseIn
-//                     animations:^{
-//                         _TransparentView.frame = CGRectMake(0, 0, _TransparentView.frame.size.width, _TransparentView.frame.size.height);
-//                         _MenuBaseView.frame = CGRectMake(0,MenuViewY, _MenuBaseView.frame.size.width, _MenuBaseView.frame.size.height);
-//                     }
-//                     completion:^(BOOL finished){
-//                     }];
+    //    _TransparentView.hidden=NO;
+    //    _MenuBaseView.hidden=NO;
+    //
+    //
+    //    [UIView animateWithDuration:0.5
+    //                          delay:0.1
+    //                        options:(UIViewAnimationOptions) UIViewAnimationCurveEaseIn
+    //                     animations:^{
+    //                         _TransparentView.frame = CGRectMake(0, 0, _TransparentView.frame.size.width, _TransparentView.frame.size.height);
+    //                         _MenuBaseView.frame = CGRectMake(0,MenuViewY, _MenuBaseView.frame.size.width, _MenuBaseView.frame.size.height);
+    //                     }
+    //                     completion:^(BOOL finished){
+    //                     }];
     
     JMJokesCategoryVideoListViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMJokesCategoryVideoListViewController"];
     
@@ -109,19 +111,19 @@
     return ccell;
 }
 
- - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
-    {
-        JMPlayVideoViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMPlayVideoViewController"];
-        
-        [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
-        
-    }
-
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    JMPlayVideoViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMPlayVideoViewController"];
     
+    [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
+    
+}
+
+
 - (void)collectionView:(UICollectionView *)collectionView willDisplayCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath NS_AVAILABLE_IOS(8_0){
-
-
-
+    
+    
+    
 }
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
@@ -148,75 +150,93 @@
 }
 - (IBAction)jokeDetailClicked:(id)sender {
     
-//    CABasicAnimation* anim = [CABasicAnimation animationWithKeyPath:@"transform.rotation"];
-//    [anim setToValue:[NSNumber numberWithFloat:0.0f]];
-//    [anim setFromValue:[NSNumber numberWithDouble:M_PI/16]]; // rotation angle
-//    [anim setDuration:0.1];
-//    [anim setRepeatCount:NSUIntegerMax];
-//    [anim setAutoreverses:YES];
-//    [[_ratingImage layer] addAnimation:anim forKey:@"iconShake"];
+    //    CABasicAnimation* anim = [CABasicAnimation animationWithKeyPath:@"transform.rotation"];
+    //    [anim setToValue:[NSNumber numberWithFloat:0.0f]];
+    //    [anim setFromValue:[NSNumber numberWithDouble:M_PI/16]]; // rotation angle
+    //    [anim setDuration:0.1];
+    //    [anim setRepeatCount:NSUIntegerMax];
+    //    [anim setAutoreverses:YES];
+    //    [[_ratingImage layer] addAnimation:anim forKey:@"iconShake"];
     
     CABasicAnimation* anim = [CABasicAnimation animationWithKeyPath:@"transform.scale"];
     anim.duration = 0.4;
     anim.toValue = [NSNumber numberWithFloat:0.8];
     anim.removedOnCompletion = NO;
     anim.fillMode = kCAFillModeForwards;
-
-     [anim setRepeatCount:NSUIntegerMax];
+    
+    [anim setRepeatCount:NSUIntegerMax];
     [anim setAutoreverses:YES];
-
+    
     [[_ratingImage layer] addAnimation:anim forKey:nil];
     
-
-
+    
+    if (liked) {
+        [_likeImage setImage:[UIImage imageNamed:@"like"]];
+        
+    }
+    else{
+        [_likeImage setImage:[UIImage imageNamed:@"unlike"]];
+    }
     [_optionView setHidden:NO];
     
 }
 - (IBAction)ratingClicked:(id)sender {
-       [_ratingImage.layer removeAllAnimations];
+    [_ratingImage.layer removeAllAnimations];
     
 }
 - (IBAction)likeClicked:(id)sender {
     
-    [_optionView setHidden:YES];
-    [_ratingImage.layer removeAllAnimations];
- 
+    
+    if (!liked) {
+        [_likeImage setImage:[UIImage imageNamed:@"like"]];
+        liked=true;
+        
+        
+    }
+    else{
+        [_likeImage setImage:[UIImage imageNamed:@"unlike"]];
+        
+        liked=false;
+    }
+    //[_optionView setHidden:YES];
+    //  [_ratingImage.layer removeAllAnimations];
+    
 }
 - (IBAction)playClicked:(id)sender {
     
     
-      [_optionView setHidden:YES];
-       [_ratingImage.layer removeAllAnimations];
+    [_optionView setHidden:YES];
+    [_ratingImage.layer removeAllAnimations];
     JMPlayVideoViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMPlayVideoViewController"];
     
     [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
 }
 - (IBAction)shareClicked:(id)sender {
-       [_ratingImage.layer removeAllAnimations];
-      [_optionView setHidden:YES];
+    [_ratingImage.layer removeAllAnimations];
+    [_optionView setHidden:YES];
 }
 
 -(void)langClicked
 {
-
-
+    
+    
 }
 //#pragma mark - Category view hide
 //- (IBAction)CategoryCrossTapped:(id)sender
 //{
-//    
+//
 //    [UIView animateWithDuration:0.5
 //                          delay:0.1
 //                        options:(UIViewAnimationOptions) UIViewAnimationCurveEaseIn
 //                     animations:^{
 //                         _TransparentView.frame = CGRectMake(0, self.view.frame.size.height, _TransparentView.frame.size.width, _TransparentView.frame.size.height);
 //                         _MenuBaseView.frame = CGRectMake(0, self.view.frame.size.height, _MenuBaseView.frame.size.width, _MenuBaseView.frame.size.height);
-//                         
+//
 //                     }
 //                     completion:^(BOOL finished){
-//                         
+//
 //                         JMJokesCategoryVideoListViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMJokesCategoryVideoListViewController"];
-//                         
+//
 //                         [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
 //                         
 //                     }];
