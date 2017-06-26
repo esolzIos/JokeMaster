@@ -308,7 +308,8 @@
         else
         {
             
-            [self SignUpApi];
+          //  [self SignUpApi];
+            [self SignUpAPI1];
             
         }
     
@@ -841,6 +842,94 @@
         [self.navigationController popViewControllerAnimated:NO];
 }
 #pragma mark -signup api call
+-(void)SignUpAPI1
+{
+    NSString *urlString = [NSMutableString stringWithFormat:@"%@index.php/Signup?register_type=1&name=%@&email=%@&password=%@&language=%@&device_token=%@&device_type=2",GLOBALAPI,[Nametxt.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[Emailtxt.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[Passwordtxt.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[LanguageLabel.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[[NSUserDefaults standardUserDefaults] objectForKey:@"deviceToken"]];
+    
+        urlString=[urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+    
+    NSString *strEncoded;
+    
+    UIImage *secondImage = [UIImage imageNamed:@"no-image"];
+    
+    NSData *imgData = UIImagePNGRepresentation(ProfileImage.image);
+    NSData *imgData1 = UIImagePNGRepresentation(secondImage);
+    
+    BOOL isCompare =  [imgData1 isEqual:imgData];
+    if (!isCompare)
+    {
+        //             AttachmentImage.image=[self compressImage:AttachmentImage.image];
+        //
+        //            imgData = UIImageJPEGRepresentation(AttachmentImage.image, 1.0);
+        //  DebugLog(@"Size of Image(bytes):%lu",(unsigned long)[imgData length]);
+        
+        
+        strEncoded = [self encodeToBase64String:ProfileImage.image];
+       
+    }
+    else
+    {
+        strEncoded =@"";
+    }
+    
+    BOOL net=[urlobj connectedToNetwork];
+    if (net==YES)
+    {
+        
+    self.view.userInteractionEnabled = NO;
+    [self checkLoader];
+    [urlobj globalImage:urlString ImageString:strEncoded ImageField:@"userimage" typerequest:@"array" withblock:^(id result, NSError *error,BOOL completed)
+    {
+        NSLog(@"event result----- %@", result);
+        DebugLog(@" Status Code:%ld",urlobj.statusCode);
+        
+        self.view.userInteractionEnabled = YES;
+        [self checkLoader];
+        
+        if (urlobj.statusCode==200)
+        {
+            if ([[result objectForKey:@"status"] boolValue]==YES)
+            {
+                
+                AlertView = [[UIAlertView alloc] initWithTitle:@"Success"
+                                                       message:@"Registration successful."
+                                                      delegate:self
+                                             cancelButtonTitle:nil
+                                             otherButtonTitles:nil];
+                
+                [AlertView show];
+                
+                [[NSUserDefaults standardUserDefaults] setObject:[[result objectForKey:@"Details"] valueForKey:@"user_id"] forKey:@"UserId"];
+                [[NSUserDefaults standardUserDefaults] setObject:[[result objectForKey:@"Details"] valueForKey:@"name"] forKey:@"Name"];
+                [[NSUserDefaults standardUserDefaults] setObject:[[result objectForKey:@"Details"] valueForKey:@"image"] forKey:@"Image"];
+                
+                // (success message) dismiss delay of 1 sec
+                [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(GotoNextPageAfterSuccess) userInfo:nil repeats: NO];
+            }
+            else
+            {
+                [[[UIAlertView alloc]initWithTitle:@"Error!" message:[result objectForKey:@"message"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
+            }
+            
+        }
+        else if (urlobj.statusCode==500 || urlobj.statusCode==400)
+        {
+            [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Server Failed to Respond" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
+            
+        }
+        else
+        {
+            [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Server Failed to Respond" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
+        }
+    }];
+    }
+    else
+    {
+        
+        [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Network Not Available." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
+    }
+}
+#pragma mark -signup api call-- not used
 -(void)SignUpApi
 {
    
@@ -892,8 +981,8 @@
             DebugLog(@"post string: %@",urlString);
             DebugLog(@"requestBody string: %@",requestBody);
             
-            [urlobj getSessionJsonResponseWithUploadImage :(NSString *)urlString Image :(NSString *)requestBody  success:^(NSDictionary *responseDict)
-         //   [urlobj getSessionJsonResponse:urlString  success:^(NSDictionary *responseDict)
+//            [urlobj getSessionJsonResponseWithUploadImage :(NSString *)urlString Image :(NSString *)requestBody  success:^(NSDictionary *responseDict)
+            [urlobj getSessionJsonResponse:urlString  success:^(NSDictionary *responseDict)
              {
                  
                  DebugLog(@"success %@ Status Code:%ld",responseDict,(long)urlobj.statusCode);
@@ -906,7 +995,7 @@
                  {
                      if ([[responseDict objectForKey:@"status"] boolValue]==YES)
                      {
-                        // userinfo=[[responseDict objectForKey:@"info"] copy];
+                        
                          AlertView = [[UIAlertView alloc] initWithTitle:@"Success"
                                                                 message:@"Registration successful."
                                                                delegate:self
@@ -960,8 +1049,10 @@
     
     [AlertView dismissWithClickedButtonIndex:0 animated:NO];
     
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"loggedIn"];
     JMHomeViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMHomeViewController"];
     
     [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
 }
+
 @end

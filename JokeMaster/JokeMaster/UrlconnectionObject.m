@@ -22,6 +22,7 @@
     // Furthermore, this method is called each time there is a redirect so reinitializing it
     // also serves to clear it
     _responseData = [[NSMutableData alloc] init];
+    self.statusCode = [(NSHTTPURLResponse*)response statusCode];
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
@@ -49,24 +50,28 @@
 -(void)globalImage:(NSString *)parameter ImageString:(NSString *)encodedString ImageField:(NSString *)FieldName typerequest:(NSString *)type withblock:(JsonBlock)responce
 {
     //  NSLog(@"url request=%@",request);
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:parameter]];
-    [request setHTTPMethod:@"POST"];
-    [request setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
-    [request setHTTPShouldHandleCookies:NO];
-    [request setTimeoutInterval:100];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init] ;
+        [request setURL:[NSURL URLWithString:parameter]];
+        [request setHTTPMethod:@"POST"];
+    
+    params = [[NSString alloc] initWithFormat:@"%@=%@",FieldName,encodedString];
+        [request setHTTPBody: [params dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    NSLog(@"parameter %@",parameter);
+    NSLog(@"params %@",params);
     
     
     
-    if (![encodedString isKindOfClass:[NSNull class]]&&encodedString.length>0&&![encodedString isEqualToString:@"nil"])
-    {
-       // NSLog(@"image data > 0");
-        params = [[NSString alloc] initWithFormat:@"%@=%@",FieldName,[encodedString stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"]];
-        
-        [request setHTTPBody:[params dataUsingEncoding:NSUTF8StringEncoding]];
-        [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
-        
-        
-    }
+//    if (![encodedString isKindOfClass:[NSNull class]]&&encodedString.length>0&&![encodedString isEqualToString:@"nil"])
+//    {
+//       // NSLog(@"image data > 0");
+//        params = [[NSString alloc] initWithFormat:@"%@=%@",FieldName,[encodedString stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"]];
+//        
+//        [request setHTTPBody:[params dataUsingEncoding:NSUTF8StringEncoding]];
+//        [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+//        
+//        
+//    }
  
     // Create url connection and fire request
     conn = [[NSURLConnection alloc] initWithRequest:request delegate:self];
@@ -99,6 +104,7 @@
     NSError *error = nil;
  //   NSLog(@"response data=%@",_responseData);
    //
+   
     
     if ([typerequestobj isEqualToString:@"string"])
     {
@@ -233,7 +239,7 @@
                                                            cachePolicy:NSURLRequestUseProtocolCachePolicy
                                                        timeoutInterval:60.0];
     [request setHTTPMethod:@"GET"];
-     [request setValue:[NSString stringWithFormat:@"Bearer %@", [[NSUserDefaults standardUserDefaults] objectForKey:@"access_token"]] forHTTPHeaderField:@"Authorization"];
+  //   [request setValue:[NSString stringWithFormat:@"Bearer %@", [[NSUserDefaults standardUserDefaults] objectForKey:@"access_token"]] forHTTPHeaderField:@"Authorization"];
     
    self.connectionSession = [defaultSession dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error)
                                                   {
@@ -247,6 +253,7 @@
                                                           success(json);
                                                       }
                                                       else
+                                                          // NSLog(@"session returned data-%@",error);
                                                           failure(error);
                                                         
                                                     }];
@@ -275,9 +282,9 @@
                                   {
                                       self.statusCode = [(NSHTTPURLResponse*)response statusCode];
                                       
-                                      NSString *Str= [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-                                      
-                                      NSLog(@"strrrrr--%@ %@",Str, response);
+//                                      NSString *Str= [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+//                                      
+//                                      NSLog(@"strrrrr--%@ %@",Str, response);
                                       
                                       NSDictionary * json  = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
                                       //  NSLog(@"session returned data-%@",json);

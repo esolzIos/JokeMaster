@@ -21,15 +21,15 @@
 @end
 
 @implementation JMLoginViewController
-
+@synthesize userEmail,password;
 - (void)viewDidLoad {
     [super viewDidLoad];
 fbM=[[FBSDKLoginManager alloc]init];
     
     [fbM logOut];
     
-    [_userEmail setFont:[UIFont fontWithName:_userEmail.font.fontName size:[self getFontSize:_userEmail.font.pointSize]]];
-     [_password setFont:[UIFont fontWithName:_password.font.fontName size:[self getFontSize:_password.font.pointSize]]];
+    [userEmail setFont:[UIFont fontWithName:userEmail.font.fontName size:[self getFontSize:userEmail.font.pointSize]]];
+     [password setFont:[UIFont fontWithName:password.font.fontName size:[self getFontSize:password.font.pointSize]]];
      [_loginBtn.titleLabel setFont:[UIFont fontWithName:_loginBtn.titleLabel.font.fontName size:[self getFontSize:_loginBtn.titleLabel.font.pointSize]]];
     
          [_fbBtn.titleLabel setFont:[UIFont fontWithName:_fbBtn.titleLabel.font.fontName size:[self getFontSize:_fbBtn.titleLabel.font.pointSize]]];
@@ -38,9 +38,9 @@ fbM=[[FBSDKLoginManager alloc]init];
     
      [_infoTxt setFont:[UIFont fontWithName:_infoTxt.font.fontName size:[self getFontSize:_infoTxt.font.pointSize]]];
     
-    _userEmail.attributedPlaceholder = [[NSAttributedString alloc] initWithString:AMLocalizedString(@"Email", nil) attributes:@{NSForegroundColorAttributeName: [UIColor whiteColor]}];
+    userEmail.attributedPlaceholder = [[NSAttributedString alloc] initWithString:AMLocalizedString(@"Email", nil) attributes:@{NSForegroundColorAttributeName: [UIColor whiteColor]}];
     
-    _password.attributedPlaceholder = [[NSAttributedString alloc] initWithString:AMLocalizedString(@"Password", nil) attributes:@{NSForegroundColorAttributeName: [UIColor whiteColor]}];
+    password.attributedPlaceholder = [[NSAttributedString alloc] initWithString:AMLocalizedString(@"Password", nil) attributes:@{NSForegroundColorAttributeName: [UIColor whiteColor]}];
 
     
     [_loginBtn setTitle:AMLocalizedString(@"LOG IN", nil) forState:UIControlStateNormal];
@@ -138,19 +138,100 @@ fbM=[[FBSDKLoginManager alloc]init];
     // Pass the selected object to the new view controller.
 }
 */
-
+#pragma mark -Login Clicked
 - (IBAction)loginClicked:(id)sender {
     
- //   UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Temp" bundle: nil];
+    [UIView animateWithDuration:0.0f animations:^{
+        
+        [userEmail resignFirstResponder];
+        [password resignFirstResponder];
+        
+        
+        
+        
+    } completion:^(BOOL finished) {
+        
+        
+        
+      if ([self textFieldBlankorNot:userEmail.text]==YES)
+        {
+            UIAlertController * alert=   [UIAlertController
+                                          alertControllerWithTitle:AMLocalizedString(@"Alert",nil)
+                                          message:AMLocalizedString(@"Enter Email Address",nil)
+                                          preferredStyle:UIAlertControllerStyleAlert];
+            
+            UIAlertAction* ok = [UIAlertAction
+                                 actionWithTitle:AMLocalizedString(@"OK",nil)
+                                 style:UIAlertActionStyleDefault
+                                 handler:^(UIAlertAction * action)
+                                 {
+                                     [alert dismissViewControllerAnimated:YES completion:nil];
+                                     
+                                     
+                                     
+                                     
+                                 }];
+            
+            [alert addAction:ok];
+            [self presentViewController:alert animated:YES completion:nil];
+        }
+        else if ([self validateEmailWithString:userEmail.text]==NO)
+        {
+            UIAlertController * alert=   [UIAlertController
+                                          alertControllerWithTitle:AMLocalizedString(@"Alert",nil)
+                                          message:AMLocalizedString(@"Enter Valid Email Address",nil)
+                                          preferredStyle:UIAlertControllerStyleAlert];
+            
+            UIAlertAction* ok = [UIAlertAction
+                                 actionWithTitle:AMLocalizedString(@"OK",nil)
+                                 style:UIAlertActionStyleDefault
+                                 handler:^(UIAlertAction * action)
+                                 {
+                                     [alert dismissViewControllerAnimated:YES completion:nil];
+                                     
+                                     
+                                     
+                                     
+                                 }];
+            
+            [alert addAction:ok];
+            [self presentViewController:alert animated:YES completion:nil];
+        }
+        else if ([self textFieldBlankorNot:password.text]==YES)
+        {
+            UIAlertController * alert=   [UIAlertController
+                                          alertControllerWithTitle:AMLocalizedString(@"Alert",nil)
+                                          message:AMLocalizedString(@"Enter Password", nil)
+                                          preferredStyle:UIAlertControllerStyleAlert];
+            
+            UIAlertAction* ok = [UIAlertAction
+                                 actionWithTitle:AMLocalizedString(@"OK",nil)
+                                 style:UIAlertActionStyleDefault
+                                 handler:^(UIAlertAction * action)
+                                 {
+                                     [alert dismissViewControllerAnimated:YES completion:nil];
+                                     
+                                     
+                                     
+                                     
+                                 }];
+            
+            [alert addAction:ok];
+            [self presentViewController:alert animated:YES completion:nil];
+        }
+        else
+        {
+            
+              [self LogInApi];
+           
+            
+        }
+        
+    }];
 
-       [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"loggedIn"];
-    JMHomeViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMHomeViewController"];
-    
-    [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
-
-    
   
 }
+#pragma mark -facebook Clicked
 - (IBAction)fbClicked:(id)sender {
     
     fbM = [[FBSDKLoginManager alloc] init];
@@ -172,16 +253,14 @@ fbM=[[FBSDKLoginManager alloc]init];
                  
                     DebugLog(@"Details:%@ %@",(NSDictionary *)result,fbAccessToken);
                  
-                    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"loggedIn"];
-                 JMHomeViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMHomeViewController"];
-                 
-                 [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
+                 [self FacebookLoginApi:[result objectForKey:@"name"] :[result objectForKey:@"email"] :[result objectForKey:@"id"] :fbAccessToken :[[[result objectForKey:@"picture"] objectForKey:@"data"] valueForKey:@"url"]];
              }];
         }
         
     }];
     
 }
+#pragma mark -google Clicked
 - (IBAction)googleClicked:(id)sender {
     
     [_googleBtn setUserInteractionEnabled:NO];
@@ -238,12 +317,14 @@ fbM=[[FBSDKLoginManager alloc]init];
 
     
 }
+#pragma mark -sign up button Clicked
 - (IBAction)signUpClicked:(id)sender
 {
     JMRegistrationViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMRegistrationViewController"];
     
     [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
 }
+#pragma mark -text field delegate
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [textField resignFirstResponder];
@@ -251,7 +332,7 @@ fbM=[[FBSDKLoginManager alloc]init];
     return YES;
     
 }
-
+#pragma mark -facebook delegate
 - (void)  loginButton:(FBSDKLoginButton *)loginButton
 didCompleteWithResult:(FBSDKLoginManagerLoginResult *)result
                 error:(NSError *)error
@@ -278,10 +359,10 @@ didCompleteWithResult:(FBSDKLoginManagerLoginResult *)result
              
              DebugLog(@"Details:%@",(NSDictionary *)result);
              
-             [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"loggedIn"];
-             JMHomeViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMHomeViewController"];
-             
-             [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
+//             [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"loggedIn"];
+//             JMHomeViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMHomeViewController"];
+//             
+//             [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
              
            //  fbDict=[result copy];
              
@@ -293,7 +374,7 @@ didCompleteWithResult:(FBSDKLoginManagerLoginResult *)result
     
 }
 
-
+#pragma mark -google delegate
 - (void)signIn:(GIDSignIn *)signIn
 didSignInForUser:(GIDGoogleUser *)user
      withError:(NSError *)error {
@@ -313,20 +394,30 @@ didSignInForUser:(GIDGoogleUser *)user
         
         //  NSString *email = @"vikas@esolzmail.com";
         
-        DebugLog(@"user email: %@",email);
+        
         
         NSString *userId = user.userID;                  // For client-side use only!
         NSString *idToken = user.authentication.idToken; // Safe to send to the server
         NSString *fullName = user.profile.name;
-        NSString *givenName = user.profile.givenName;
-        NSString *familyName = user.profile.familyName;
+//        NSString *givenName = user.profile.givenName;
+//        NSString *familyName = user.profile.familyName;
+        
+        NSString *imageurl;
+        if ([GIDSignIn sharedInstance].currentUser.profile.hasImage)
+        {
+            //  NSUInteger dimension = round(thumbSize.width * [[UIScreen mainScreen] scale]);
+            NSURL *imageURL = [user.profile imageURLWithDimension:200];
+            imageurl=[imageURL absoluteString];
+            NSLog(@"User image %@",imageURL);
+        }
+    else {
+        NSLog(@"error---%@", error.localizedDescription);
+        imageurl=@"";
+    }
+        
+        DebugLog(@"user email: %@ %@ %@ %@ %@",email,userId,idToken,fullName,user.profile);
 
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"loggedIn"];
-        JMHomeViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMHomeViewController"];
-        
-        [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
-     //   [self autoLogin:email];
-        
+       [self GoogleLoginApi:fullName :email :userId :idToken :imageurl];
     }
     
     else{
@@ -377,91 +468,251 @@ dismissViewController:(UIViewController *)viewController {
     
     [self dismissViewControllerAnimated:YES completion:nil];
 }
-//#pragma mark -signup api call
-//-(void)SignUpApi
-//{
-//    
-//    
-//    BOOL net=[urlobj connectedToNetwork];
-//    if (net==YES)
-//    {
-//        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-//            
-//            [self checkLoader];
-//        }];
-//        [[NSOperationQueue new] addOperationWithBlock:^{
-//            
-//            NSMutableString *urlString;
-//            
-//            
-//            
-//            //   urlString=[NSMutableString stringWithFormat:@"%@index.php/Signup",GLOBALAPI];
-//            
-//            
-//            urlString=[NSMutableString stringWithFormat:@"%@index.php/Signup?register_type=1&name=%@&email=%@&password=%@&language=%@&device_token=%@&device_type=1",GLOBALAPI,[Nametxt.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[Emailtxt.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[Passwordtxt.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[LanguageLabel.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[[NSUserDefaults standardUserDefaults] objectForKey:@"deviceToken"]];
-//            
-//            
-//           
-//               [urlobj getSessionJsonResponse:urlString  success:^(NSDictionary *responseDict)
-//             {
-//                 
-//                 DebugLog(@"success %@ Status Code:%ld",responseDict,(long)urlobj.statusCode);
-//                 
-//                 
-//                 self.view.userInteractionEnabled = YES;
-//                 [self checkLoader];
-//                 
-//                 if (urlobj.statusCode==200)
-//                 {
-//                     if ([[responseDict objectForKey:@"status"] boolValue]==YES)
-//                     {
-//                         // userinfo=[[responseDict objectForKey:@"info"] copy];
-//                         AlertView = [[UIAlertView alloc] initWithTitle:@"Success"
-//                                                                message:@"Registration successful."
-//                                                               delegate:self
-//                                                      cancelButtonTitle:nil
-//                                                      otherButtonTitles:nil];
-//                         
-//                         [AlertView show];
-//                         
-//                         // (success message) dismiss delay of 1 sec
-//                         [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(GotoNextPageAfterSuccess) userInfo:nil repeats: NO];
-//                     }
-//                     else
-//                     {
-//                         [[[UIAlertView alloc]initWithTitle:@"Error!" message:[responseDict objectForKey:@"message"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
-//                     }
-//                     
-//                 }
-//                 else if (urlobj.statusCode==500 || urlobj.statusCode==400)
-//                 {
-//                     [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Server Failed to Respond" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
-//                     
-//                 }
-//                 else
-//                 {
-//                     [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Server Failed to Respond" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
-//                 }
-//                 
-//                 
-//             } failure:^(NSError *error) {
-//                 
-//                 [self checkLoader];
-//                 self.view.userInteractionEnabled = YES;
-//                 NSLog(@"Failure");
-//                 [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Server Failed to Respond" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
-//                 
-//             }];
-//            
-//            
-//        }];
-//    }
-//    else
-//    {
-//        
-//        [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Network Not Available." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
-//    }
-//}
+#pragma mark -Login api call
+-(void)LogInApi
+{
+    
+    
+    BOOL net=[urlobj connectedToNetwork];
+    if (net==YES)
+    {
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+            
+            self.view.userInteractionEnabled = NO;
+            [self checkLoader];
+        }];
+        [[NSOperationQueue new] addOperationWithBlock:^{
+            
+            NSMutableString *urlString;
+            
+            
+            urlString=[NSMutableString stringWithFormat:@"%@index.php/Signup/login?email=%@&password=%@&device_token=%@&device_type=2",GLOBALAPI,[userEmail.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[password.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[[NSUserDefaults standardUserDefaults] objectForKey:@"deviceToken"]];
+            
+            
+            [urlobj getSessionJsonResponse:urlString  success:^(NSDictionary *responseDict)
+             {
+                 
+                 DebugLog(@"success %@ Status Code:%ld",responseDict,(long)urlobj.statusCode);
+                 
+                 
+                 self.view.userInteractionEnabled = YES;
+                 [self checkLoader];
+                 
+                 if (urlobj.statusCode==200)
+                 {
+                     if ([[responseDict objectForKey:@"status"] boolValue]==YES)
+                     {
+                         [[NSUserDefaults standardUserDefaults] setObject:[[responseDict objectForKey:@"Details"] valueForKey:@"user_id"] forKey:@"UserId"];
+                         [[NSUserDefaults standardUserDefaults] setObject:[[responseDict objectForKey:@"Details"] valueForKey:@"name"] forKey:@"Name"];
+                         [[NSUserDefaults standardUserDefaults] setObject:[[responseDict objectForKey:@"Details"] valueForKey:@"image"] forKey:@"Image"];
+                         
+                        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"loggedIn"];
+                         
+                             JMHomeViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMHomeViewController"];
+                         [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
+                         
+                     }
+                     else
+                     {
+                         [[[UIAlertView alloc]initWithTitle:@"Error!" message:[responseDict objectForKey:@"message"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
+                     }
+                     
+                 }
+                 else if (urlobj.statusCode==500 || urlobj.statusCode==400)
+                 {
+                     [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Server Failed to Respond" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
+                     
+                 }
+                 else
+                 {
+                     [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Server Failed to Respond" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
+                 }
+                 
+                 
+             } failure:^(NSError *error) {
+                 
+                 [self checkLoader];
+                 self.view.userInteractionEnabled = YES;
+                 NSLog(@"Failure");
+                 [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Server Failed to Respond" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
+                 
+             }];
+            
+            
+        }];
+    }
+    else
+    {
+        
+        [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Network Not Available." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
+    }
+}
+#pragma mark -Facebook Login api call
+-(void)FacebookLoginApi: (NSString *)name :(NSString *)email :(NSString *)fbid :(NSString *)accessToken :(NSString *)imageurl
+{
+    
+    
+    BOOL net=[urlobj connectedToNetwork];
+    if (net==YES)
+    {
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+            
+            self.view.userInteractionEnabled = NO;
+            [self checkLoader];
+        }];
+        [[NSOperationQueue new] addOperationWithBlock:^{
+            
+            NSString *urlString;
+            
+            
+            urlString=[NSString stringWithFormat:@"%@index.php/Signup/socialSignup?register_type=2&name=%@&email=%@&facebook_id=%@&facebook_token=%@&device_token=%@&device_type=2&userimage=%@",GLOBALAPI,[name stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[email stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[fbid stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[accessToken stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[[NSUserDefaults standardUserDefaults] objectForKey:@"deviceToken"],[imageurl stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
+            
+          
+            
+            urlString=[urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+            
+            DebugLog(@"Send string Url%@",urlString);
+            
 
-
+             [urlobj getSessionJsonResponse:urlString  success:^(NSDictionary *responseDict)
+             {
+                 
+                 DebugLog(@"success %@ Status Code:%ld",responseDict,(long)urlobj.statusCode);
+                 
+                 
+                 self.view.userInteractionEnabled = YES;
+                 [self checkLoader];
+                 
+                 if (urlobj.statusCode==200)
+                 {
+                     if ([[responseDict objectForKey:@"status"] boolValue]==YES)
+                     {
+                         [[NSUserDefaults standardUserDefaults] setObject:[[responseDict objectForKey:@"userinfo"] valueForKey:@"userid"] forKey:@"UserId"];
+                         [[NSUserDefaults standardUserDefaults] setObject:[[responseDict objectForKey:@"userinfo"] valueForKey:@"name"] forKey:@"Name"];
+                         [[NSUserDefaults standardUserDefaults] setObject:[[responseDict objectForKey:@"userinfo"] valueForKey:@"image"] forKey:@"Image"];
+                         
+                         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"loggedIn"];
+                         
+                         JMHomeViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMHomeViewController"];
+                         [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
+                         
+                     }
+                     else
+                     {
+                         [[[UIAlertView alloc]initWithTitle:@"Error!" message:[responseDict objectForKey:@"message"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
+                     }
+                     
+                 }
+                 else if (urlobj.statusCode==500 || urlobj.statusCode==400)
+                 {
+                     [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Server Failed to Respond" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
+                     
+                 }
+                 else
+                 {
+                     [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Server Failed to Respond" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
+                 }
+                 
+             }
+             failure:^(NSError *error) {
+                 
+                 [self checkLoader];
+                 self.view.userInteractionEnabled = YES;
+                 NSLog(@"Failure");
+                 [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Server Failed to Respond" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
+                 
+             }
+             ];
+        }];
+    }
+    else
+    {
+        
+        [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Network Not Available." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
+    }
+}
+#pragma mark -Google Login api call
+-(void)GoogleLoginApi: (NSString *)name :(NSString *)email :(NSString *)fbid :(NSString *)accessToken :(NSString *)imageurl
+{
+    
+    
+    BOOL net=[urlobj connectedToNetwork];
+    if (net==YES)
+    {
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+            
+            self.view.userInteractionEnabled = NO;
+            [self checkLoader];
+        }];
+        [[NSOperationQueue new] addOperationWithBlock:^{
+            
+            NSString *urlString;
+            
+            
+            urlString=[NSString stringWithFormat:@"%@index.php/Signup/socialSignup?register_type=3&name=%@&email=%@&facebook_id=%@&facebook_token=%@&device_token=%@&device_type=2&userimage=%@",GLOBALAPI,[name stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[email stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[fbid stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[accessToken stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[[NSUserDefaults standardUserDefaults] objectForKey:@"deviceToken"],[imageurl stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
+            
+            
+            
+            urlString=[urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+            
+            DebugLog(@"Send string Url%@",urlString);
+            
+            
+            [urlobj getSessionJsonResponse:urlString  success:^(NSDictionary *responseDict)
+             {
+                 
+                 DebugLog(@"success %@ Status Code:%ld",responseDict,(long)urlobj.statusCode);
+                 
+                 
+                 self.view.userInteractionEnabled = YES;
+                 [self checkLoader];
+                 
+                 if (urlobj.statusCode==200)
+                 {
+                     if ([[responseDict objectForKey:@"status"] boolValue]==YES)
+                     {
+                         [[NSUserDefaults standardUserDefaults] setObject:[[responseDict objectForKey:@"userinfo"] valueForKey:@"userid"] forKey:@"UserId"];
+                         [[NSUserDefaults standardUserDefaults] setObject:[[responseDict objectForKey:@"userinfo"] valueForKey:@"name"] forKey:@"Name"];
+                         [[NSUserDefaults standardUserDefaults] setObject:[[responseDict objectForKey:@"userinfo"] valueForKey:@"image"] forKey:@"Image"];
+                         
+                         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"loggedIn"];
+                         
+                         JMHomeViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMHomeViewController"];
+                         [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
+                         
+                     }
+                     else
+                     {
+                         [[[UIAlertView alloc]initWithTitle:@"Error!" message:[responseDict objectForKey:@"message"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
+                     }
+                     
+                 }
+                 else if (urlobj.statusCode==500 || urlobj.statusCode==400)
+                 {
+                     [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Server Failed to Respond" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
+                     
+                 }
+                 else
+                 {
+                     [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Server Failed to Respond" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
+                 }
+                 
+             }
+                                   failure:^(NSError *error) {
+                                       
+                                       [self checkLoader];
+                                       self.view.userInteractionEnabled = YES;
+                                       NSLog(@"Failure");
+                                       [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Server Failed to Respond" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
+                                       
+                                   }
+             ];
+        }];
+    }
+    else
+    {
+        
+        [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Network Not Available." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
+    }
+}
 @end
