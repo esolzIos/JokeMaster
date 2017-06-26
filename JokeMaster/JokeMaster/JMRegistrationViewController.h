@@ -8,7 +8,7 @@
 
 #import "JMGlobalMethods.h"
 #import "UrlconnectionObject.h"
-@interface JMRegistrationViewController : JMGlobalMethods<UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIActionSheetDelegate,UIPickerViewDataSource,UIPickerViewDelegate>
+@interface JMRegistrationViewController : JMGlobalMethods<UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIActionSheetDelegate,UIPickerViewDataSource,UIPickerViewDelegate,NSURLConnectionDelegate>
 {
     UIActionSheet *actionsheet;
     NSMutableArray *LangaugeArray;
@@ -19,6 +19,7 @@
     UIImageView *tipImage;
     UrlconnectionObject *urlobj;
     UIAlertView *AlertView;
+    
     
 }
 @property (weak, nonatomic) IBOutlet UIScrollView *mainscroll;
