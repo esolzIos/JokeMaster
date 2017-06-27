@@ -11,10 +11,12 @@
 #import "JMRecentUploadedCollectionViewCell.h"
 #import "JMJokesCategoryVideoListViewController.h"
 #import "JMPlayVideoViewController.h"
+#import "UrlconnectionObject.h"
 @interface JMRecentlyUploadedViewController : JMGlobalMethods<UICollectionViewDataSource,UICollectionViewDelegate>
 {
     float MenuViewY;
     NSMutableArray *CategoryArray;
+    UrlconnectionObject *urlobj;
 }
 @property (weak, nonatomic) IBOutlet UIScrollView *MainScroll;
 

@@ -11,10 +11,12 @@
 #import "JMRecentUploadedCollectionViewCell.h"
 #import "JMJokesCategoryVideoListViewController.h"
 #import "JMPlayVideoViewController.h"
+#import "UrlconnectionObject.h"
 @interface JMCategoryVideoListViewController : JMGlobalMethods
 {
     float MenuViewY;
     NSMutableArray *CategoryArray;
+    UrlconnectionObject *urlobj;
 }
 @property (weak, nonatomic) IBOutlet UIScrollView *MainScroll;
 
@@ -32,5 +34,6 @@
 - (IBAction)CategoryCrossTapped:(id)sender;
 
 @property (weak, nonatomic) IBOutlet UITableView *CategoryTable;
-
+@property (strong, nonatomic) NSString *CategoryId;
+@property (strong, nonatomic) NSString *CategoryName;
 @end

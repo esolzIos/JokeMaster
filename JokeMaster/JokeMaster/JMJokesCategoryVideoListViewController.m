@@ -39,13 +39,17 @@
     TransparentView.frame = CGRectMake(0, self.view.frame.size.height, TransparentView.frame.size.width, TransparentView.frame.size.height);
     MenuBaseView.frame = CGRectMake(0, self.view.frame.size.height, MenuBaseView.frame.size.width, MenuBaseView.frame.size.height);
     
-    CategoryArray=[[NSMutableArray alloc] initWithObjects:@"LATEST",@"SEXUAL",@"ANIMAL",@"DOCTOR",@"GIRLFRIEND",@"STUPID", nil];
     
     [RecentlyUploadedBtn.titleLabel setFont:[UIFont fontWithName:RecentlyUploadedBtn.titleLabel.font.fontName size:[self getFontSize:RecentlyUploadedBtn.titleLabel.font.pointSize]]];
     
     [ChooseCategoryLabel setFont:[UIFont fontWithName:ChooseCategoryLabel.font.fontName size:[self getFontSize:ChooseCategoryLabel.font.pointSize]]];
     
     [RecentlyUploadedBtn setTitle:AMLocalizedString(@"RECENTLY UPLOADED VIDEOS", nil) forState:UIControlStateNormal];
+    
+    urlobj=[[UrlconnectionObject alloc] init];
+    CategoryArray=[[NSMutableArray alloc] init];
+    
+    [self CategoryApi];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -80,7 +84,7 @@
 
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return 30;
+    return [CategoryArray count];;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
@@ -89,16 +93,16 @@
     
     JMRecentUploadedCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
     
-    cell.VideoThumpnailImage.layer.cornerRadius=12.0;
-    cell.VideoThumpnailImage.clipsToBounds=YES;
+    
     
     [cell.CategoryNameLabel setFont:[UIFont fontWithName:cell.CategoryNameLabel.font.fontName size:[self getFontSize:9.0]]];
     
-    //   NSLog(@"%@",[arrCategory objectAtIndex:indexPath.row]);
-    
-    //    cell.categoryLbl.text = [[[arrCategory objectAtIndex:indexPath.row]objectForKey:@"category_name" ] uppercaseString];
+    cell.CategoryNameLabel.text = [[[CategoryArray objectAtIndex:indexPath.row]objectForKey:@"name"] uppercaseString];
     //
-    //    [cell.categoryImage sd_setImageWithURL:[NSURL URLWithString:[[arrCategory objectAtIndex:indexPath.row]objectForKey:@"picture" ]] placeholderImage:[UIImage imageNamed: @"NoJob"]];
+    [cell.VideoThumpnailImage sd_setImageWithURL:[NSURL URLWithString:[[CategoryArray objectAtIndex:indexPath.row]objectForKey:@"image"]] placeholderImage:[UIImage imageNamed: @"NoJob"]];
+    
+    cell.VideoThumpnailImage.layer.cornerRadius=12.0;
+    cell.VideoThumpnailImage.clipsToBounds=YES;
     //
     //    cell.categoryImage.layer.masksToBounds = YES;
     //    cell.categoryImage.layer.cornerRadius=5.0;
@@ -113,7 +117,8 @@
 {
     
     JMCategoryVideoListViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMVideoList"];
-    
+    VC.CategoryId=[NSString stringWithFormat:@"%@",[[CategoryArray objectAtIndex:indexPath.row]objectForKey:@"id"]];
+    VC.CategoryName=[NSString stringWithFormat:@"%@",[[CategoryArray objectAtIndex:indexPath.row]objectForKey:@"name"]];
     [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
     
     
@@ -155,12 +160,12 @@
                      animations:^{
                          TransparentView.frame = CGRectMake(0, self.view.frame.size.height, TransparentView.frame.size.width, TransparentView.frame.size.height);
                          MenuBaseView.frame = CGRectMake(0, self.view.frame.size.height, MenuBaseView.frame.size.width, MenuBaseView.frame.size.height);
-                        
+                         
                      }
                      completion:^(BOOL finished){
                          
                          
-                        
+                         
                      }];
 }
 #pragma mark - UITableView Delegates
@@ -182,14 +187,14 @@
     
     [cell.CategoryLabel setFont:[UIFont fontWithName:cell.CategoryLabel.font.fontName size:[self getFontSize:cell.CategoryLabel.font.pointSize]]];
     
-//    if ([[NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] valueForKey:@"language"]] isEqualToString:@"he"])
-//    {
-//        cell.CategoryLabel.textAlignment=NSTextAlignmentRight;
-//    }
-//    else
-//    {
-//        cell.CategoryLabel.textAlignment=NSTextAlignmentLeft;
-//    }
+    //    if ([[NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] valueForKey:@"language"]] isEqualToString:@"he"])
+    //    {
+    //        cell.CategoryLabel.textAlignment=NSTextAlignmentRight;
+    //    }
+    //    else
+    //    {
+    //        cell.CategoryLabel.textAlignment=NSTextAlignmentLeft;
+    //    }
     
     cell.CheckImage.tag=indexPath.row+500;
     cell.CheckButton.tag=indexPath.row;
@@ -251,19 +256,114 @@
     
 }
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 - (IBAction)RecentlyUploadedVideoTapped:(id)sender
 {
     JMRecentlyUploadedViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMRecentlyUploadedViewController"];
     
     [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
+}
+#pragma mark -Category list API
+-(void)CategoryApi
+{
+    
+    
+    BOOL net=[urlobj connectedToNetwork];
+    if (net==YES)
+    {
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+            
+            self.view.userInteractionEnabled = NO;
+            [self checkLoader];
+        }];
+        [[NSOperationQueue new] addOperationWithBlock:^{
+            
+            NSString *urlString;
+            
+            
+            urlString=[NSString stringWithFormat:@"%@index.php/video/category",GLOBALAPI];
+            
+            
+            
+            urlString=[urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+            
+            DebugLog(@"Send string Url%@",urlString);
+            
+            
+            
+            
+            [urlobj getSessionJsonResponse:urlString  success:^(NSDictionary *responseDict)
+             {
+                 
+                 DebugLog(@"success %@ Status Code:%ld",responseDict,(long)urlobj.statusCode);
+                 
+                 
+                 self.view.userInteractionEnabled = YES;
+//                 [self checkLoader];
+                 
+                 if (urlobj.statusCode==200)
+                 {
+                     if ([[responseDict objectForKey:@"status"] boolValue]==YES)
+                     {
+                         CategoryArray=[[responseDict objectForKey:@"details"] mutableCopy];
+                         
+                         
+                         if (CategoryArray.count>0)
+                         {
+                             
+                             
+                             [RecentVideoCollectionView reloadData];
+                         }
+                         else
+                         {
+                             [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"No Category Found",nil)];
+                         }
+                         
+                     }
+                     else
+                     {
+                         [SVProgressHUD showInfoWithStatus:[responseDict objectForKey:@"message"]];
+                         
+                     }
+                     
+                 }
+                 else if (urlobj.statusCode==500 || urlobj.statusCode==400)
+                 {
+                     
+                     [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Server Failed to Respond",nil)];
+                     
+                 }
+                 else
+                 {
+                     
+                     [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Server Failed to Respond",nil)];
+                 }
+                 
+             }
+                                   failure:^(NSError *error) {
+                                       
+                                       [self checkLoader];
+                                       self.view.userInteractionEnabled = YES;
+                                       NSLog(@"Failure");
+                                       
+                                       [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Server Failed to Respond",nil)];
+                                       
+                                   }
+             ];
+        }];
+    }
+    else
+    {
+        [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
+        
+    }
 }
 @end
