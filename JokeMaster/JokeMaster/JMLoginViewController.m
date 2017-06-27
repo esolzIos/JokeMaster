@@ -27,8 +27,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-  app = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    
+    app=  app = (AppDelegate *)[[UIApplication sharedApplication] delegate];
 fbM=[[FBSDKLoginManager alloc]init];
     
     [fbM logOut];
@@ -589,7 +588,15 @@ dismissViewController:(UIViewController *)viewController {
             
             DebugLog(@"Send string Url%@",urlString);
             
-            NSString *postString=[NSString stringWithFormat:@"userimage=%@",[imageurl stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
+            
+            NSString *postString1 = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(
+                                                                                                          NULL,
+                                                                                                          (CFStringRef)imageurl,
+                                                                                                          NULL,
+                                                                                                          (CFStringRef)@"!*'();:@&=+$,/?%#[]",
+                                                                                                          kCFStringEncodingUTF8 ));
+            
+            NSString *postString=[NSString stringWithFormat:@"userimage=%@",postString1];
             
              postString=[postString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
             
@@ -688,9 +695,18 @@ dismissViewController:(UIViewController *)viewController {
             urlString=[urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
             
             DebugLog(@"Send string Url%@",urlString);
+         
+            NSString *postString1 = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(
+                                                                                                          NULL,
+                                                                                                          (CFStringRef)imageurl,
+                                                                                                          NULL,
+                                                                                                          (CFStringRef)@"!*'();:@&=+$,/?%#[]",
+                                                                                                          kCFStringEncodingUTF8 ));
             
+            NSString *postString=[NSString stringWithFormat:@"userimage=%@",postString1];
+
             
-            [urlobj getSessionJsonResponse:urlString  success:^(NSDictionary *responseDict)
+            [urlobj getSessionJsonResponse:urlString withPostData:postString typerequest:(NSString *)@"array" success:^(NSDictionary *responseDict)
              {
                  
                  DebugLog(@"success %@ Status Code:%ld",responseDict,(long)urlobj.statusCode);
