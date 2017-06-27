@@ -12,6 +12,7 @@
 #import "JMJokesCategoryVideoListViewController.h"
 #import "JMPlayVideoViewController.h"
 #import "UrlconnectionObject.h"
+#import "JMCategoryVideoListViewController.h"
 @interface JMRecentlyUploadedViewController : JMGlobalMethods<UICollectionViewDataSource,UICollectionViewDelegate>
 {
     float MenuViewY;

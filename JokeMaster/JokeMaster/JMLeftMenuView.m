@@ -40,7 +40,7 @@
         
         customView.NameLabel.text=[[NSUserDefaults standardUserDefaults] objectForKey:@"Name"];
        
-         [customView.ProfileImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"Image"]]] placeholderImage:[UIImage imageNamed: @"no-image"]];
+         [customView.ProfileImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"Image"]]] placeholderImage:[UIImage imageNamed: @"ProfilePic"]];
        
         
     }

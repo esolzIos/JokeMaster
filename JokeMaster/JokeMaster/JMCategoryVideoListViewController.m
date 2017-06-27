@@ -46,6 +46,12 @@
     
     [ChooseCategoryLabel setFont:[UIFont fontWithName:ChooseCategoryLabel.font.fontName size:[self getFontSize:ChooseCategoryLabel.font.pointSize]]];
 }
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -140,6 +146,7 @@
                          {
                              TransparentView.frame = CGRectMake(0, 0, TransparentView.frame.size.width, TransparentView.frame.size.height);
                              MenuBaseView.frame = CGRectMake(0,MenuViewY, MenuBaseView.frame.size.width, MenuBaseView.frame.size.height);
+                            
                          }
                          else
                          {
@@ -244,6 +251,26 @@
     
     [cell.CheckButton setHighlighted:YES];
     [cell.CheckButton sendActionsForControlEvents:UIControlEventTouchUpInside];
+    
+    [UIView animateWithDuration:0.5
+                          delay:0.1
+                        options:(UIViewAnimationOptions) UIViewAnimationCurveEaseIn
+                     animations:^{
+                         TransparentView.frame = CGRectMake(0, self.view.frame.size.height, TransparentView.frame.size.width, TransparentView.frame.size.height);
+                         MenuBaseView.frame = CGRectMake(0, self.view.frame.size.height, MenuBaseView.frame.size.width, MenuBaseView.frame.size.height);
+                     }
+                     completion:^(BOOL finished)
+     {
+         JMCategoryVideoListViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMVideoList"];
+         VC.CategoryId=[NSString stringWithFormat:@"%@",[[CategoryArray objectAtIndex:indexPath.row]objectForKey:@"id"]];
+         VC.CategoryName=[NSString stringWithFormat:@"%@",[[CategoryArray objectAtIndex:indexPath.row]objectForKey:@"name"]];
+         [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
+         
+         [cell.CheckButton setHighlighted:NO];
+         [cell.CheckButton sendActionsForControlEvents:UIControlEventTouchUpInside];
+     }];
+    
+   
 }
 #pragma mark - Check button tapped on table
 -(void)CheckButtonTap:(UIButton *)btn
