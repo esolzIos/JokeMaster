@@ -8,6 +8,7 @@
 
 #import "JMFavouriteViewController.h"
 #import "JMProfileViewController.h"
+#import "JMPlayVideoViewController.h"
 @interface JMFavouriteViewController ()
 {
     int listcount;
@@ -135,10 +136,9 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-JMProfileViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMProfile"];
-
-
-[self.navigationController pushViewController:VC animated:kCAMediaTimingFunctionEaseIn];
+    JMPlayVideoViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMPlayVideoViewController"];
+    
+    [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
 }
 -(void)swipeHandler:(UISwipeGestureRecognizer *)recognizer {
     

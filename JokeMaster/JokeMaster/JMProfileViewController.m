@@ -16,7 +16,7 @@
 #import "UIImagePickerController+Edit.h"
 #import "JTSImageViewController.h"
 #import "JTSImageInfo.h"
-
+#import "UrlconnectionObject.h"
 @interface JMProfileViewController ()<UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 {
 
@@ -26,7 +26,7 @@
     NSDictionary *jsonResponse;
         AppDelegate *appDelegate;
     UIImage *selectedImage;
-
+   UrlconnectionObject *urlobj;
 }
 @end
 
@@ -42,9 +42,10 @@
     _MenuBaseView.frame = CGRectMake(0, self.view.frame.size.height, _MenuBaseView.frame.size.width, _MenuBaseView.frame.size.height);
     
     appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-
     
-      CategoryArray=[[NSMutableArray alloc] initWithObjects:@"LATEST",@"SEXUAL",@"ANIMAL",@"DOCTOR",@"GIRLFRIEND",@"STUPID", nil];
+   urlobj=[[UrlconnectionObject alloc] init];
+    
+      CategoryArray=[[NSMutableArray alloc] init];
     
     [_userName setFont:[UIFont fontWithName:_userName.font.fontName size:[self getFontSize:_userName.font.pointSize]]];
     
@@ -58,10 +59,11 @@
     
     
     if (_fromLeftMenu) {
-        [_followBtn.titleLabel setText:@"UPLOAD"];
+           [_followBtn setTitle:@"UPLOAD A JOKE" forState:UIControlStateNormal];
+     
     }
     else{
-           [_followBtn.titleLabel setText:@"FOLLOW"];
+           [_followBtn setTitle:@"FOLLOW" forState:UIControlStateNormal];
     }
     
     // Do any additional setup after loading the view.
@@ -181,11 +183,21 @@
                           delay:0.1
                         options:(UIViewAnimationOptions) UIViewAnimationCurveEaseIn
                      animations:^{
-                         _TransparentView.frame = CGRectMake(0, 0, _TransparentView.frame.size.width, _TransparentView.frame.size.height);
-                         _MenuBaseView.frame = CGRectMake(0,MenuViewY, _MenuBaseView.frame.size.width, _MenuBaseView.frame.size.height);
+                         
+                         if (CategoryArray.count>0)
+                         {
+                             _TransparentView.frame = CGRectMake(0, 0, _TransparentView.frame.size.width, _TransparentView.frame.size.height);
+                             _MenuBaseView.frame = CGRectMake(0,MenuViewY, _MenuBaseView.frame.size.width, _MenuBaseView.frame.size.height);
+                         }
+                         else
+                         {
+                             [self CategoryApi];
+                         }
+                         
                      }
                      completion:^(BOOL finished){
                      }];
+
 
 }
 
@@ -221,7 +233,7 @@
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    cell.CategoryLabel.text=[CategoryArray objectAtIndex:indexPath.row];
+    cell.CategoryLabel.text=[[CategoryArray objectAtIndex:indexPath.row] valueForKey:@"name"];
     
     [cell.CategoryLabel setFont:[UIFont fontWithName:cell.CategoryLabel.font.fontName size:[self getFontSize:cell.CategoryLabel.font.pointSize]]];
     
@@ -267,7 +279,23 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    JMCategoryCell *cell = [_CategoryTable
+                            cellForRowAtIndexPath:indexPath];
     
+    [cell.CheckButton setHighlighted:YES];
+    [cell.CheckButton sendActionsForControlEvents:UIControlEventTouchUpInside];
+    
+    [UIView animateWithDuration:0.5
+                          delay:0.1
+                        options:(UIViewAnimationOptions) UIViewAnimationCurveEaseIn
+                     animations:^{
+                         _TransparentView.frame = CGRectMake(0, self.view.frame.size.height, _TransparentView.frame.size.width, _TransparentView.frame.size.height);
+                         _MenuBaseView.frame = CGRectMake(0, self.view.frame.size.height, _MenuBaseView.frame.size.width, _MenuBaseView.frame.size.height);
+                     }
+                     completion:^(BOOL finished)
+     {
+             }];
+
 }
 #pragma mark - Check button tapped on table
 -(void)CheckButtonTap:(UIButton *)btn
@@ -703,6 +731,112 @@
     }];
     
     
+}
+#pragma mark -Category list API
+-(void)CategoryApi
+{
+    
+    
+    BOOL net=[urlobj connectedToNetwork];
+    if (net==YES)
+    {
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+            
+            self.view.userInteractionEnabled = NO;
+            [self checkLoader];
+        }];
+        [[NSOperationQueue new] addOperationWithBlock:^{
+            
+            NSString *urlString;
+            
+            
+            urlString=[NSString stringWithFormat:@"%@index.php/video/category",GLOBALAPI];
+            
+            
+            
+            urlString=[urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+            
+            DebugLog(@"Send string Url%@",urlString);
+            
+            
+            
+            
+            [urlobj getSessionJsonResponse:urlString  success:^(NSDictionary *responseDict)
+             {
+                 
+                 DebugLog(@"success %@ Status Code:%ld",responseDict,(long)urlobj.statusCode);
+                 
+                 
+                 self.view.userInteractionEnabled = YES;
+                 [self checkLoader];
+                 
+                 if (urlobj.statusCode==200)
+                 {
+                     if ([[responseDict objectForKey:@"status"] boolValue]==YES)
+                     {
+                         CategoryArray=[[responseDict objectForKey:@"details"] mutableCopy];
+                         
+                         
+                         if (CategoryArray.count>0)
+                         {
+                             [UIView animateWithDuration:0.5
+                                                   delay:0.1
+                                                 options:(UIViewAnimationOptions) UIViewAnimationCurveEaseIn
+                                              animations:^{
+                             _TransparentView.frame = CGRectMake(0, 0, _TransparentView.frame.size.width, _TransparentView.frame.size.height);
+                             _MenuBaseView.frame = CGRectMake(0,MenuViewY, _MenuBaseView.frame.size.width, _MenuBaseView.frame.size.height);
+                             
+                             [_CategoryTable reloadData];
+                                              }
+                                              completion:^(BOOL finished){
+                                              }];
+                         }
+                         
+                         
+                   
+
+                         
+                     }
+                     else
+                     {
+                         [SVProgressHUD showInfoWithStatus:[responseDict objectForKey:@"message"]];
+                         //                         [[[UIAlertView alloc]initWithTitle:@"Error!" message:[responseDict objectForKey:@"message"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
+                     }
+                     
+                 }
+                 else if (urlobj.statusCode==500 || urlobj.statusCode==400)
+                 {
+                     //                     [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Server Failed to Respond" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
+                     
+                     [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Server Failed to Respond",nil)];
+                     
+                 }
+                 else
+                 {
+                     //                     [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Server Failed to Respond" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
+                     
+                     [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Server Failed to Respond",nil)];
+                 }
+                 
+             }
+                                   failure:^(NSError *error) {
+                                       
+                                       [self checkLoader];
+                                       self.view.userInteractionEnabled = YES;
+                                       NSLog(@"Failure");
+                                       //                                       [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Server Failed to Respond" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
+                                       
+                                       [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Server Failed to Respond",nil)];
+                                       
+                                   }
+             ];
+        }];
+    }
+    else
+    {
+        [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
+        //        [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Network Not Available." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
+    }
 }
 
 @end
