@@ -26,8 +26,6 @@
     NSIndexPath *indexpath=[NSIndexPath indexPathForRow:2 inSection:0];
     [customView.LeftMenuTable selectRowAtIndexPath:indexpath animated:YES  scrollPosition:UITableViewScrollPositionNone];
     
-    customView.ProfileImage.layer.cornerRadius=17;
-    customView.ProfileImage.clipsToBounds=YES;
     
     [customView.NameLabel setFont:[UIFont fontWithName:customView.NameLabel.font.fontName size:[customView getFontSize:customView.NameLabel.font.pointSize]]];
     [customView.ScoreLabel setFont:[UIFont fontWithName:customView.ScoreLabel.font.fontName size:[customView getFontSize:customView.ScoreLabel.font.pointSize]]];
@@ -42,7 +40,7 @@
         
         customView.NameLabel.text=[[NSUserDefaults standardUserDefaults] objectForKey:@"Name"];
        
-//         [customView.ProfileImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"Image"]]] placeholderImage:[UIImage imageNamed: @"no-image"]];
+         [customView.ProfileImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"Image"]]] placeholderImage:[UIImage imageNamed: @"no-image"]];
        
         
     }
@@ -54,6 +52,10 @@
         customView.NameLabel.text=@"Guest";
         
     }
+    
+    customView.ProfileImage.layer.cornerRadius=17;
+    customView.ProfileImage.clipsToBounds=YES;
+    
 //
 //    customView.lblUserName.text=[[NSUserDefaults standardUserDefaults] valueForKey:@"UserName"];
 //    
