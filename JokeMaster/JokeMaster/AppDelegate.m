@@ -60,18 +60,19 @@
     
 
 
-//    if ([[[NSUserDefaults standardUserDefaults] valueForKey:@"language"] length]==0)
-//    {
-//        LocalizationSetLanguage(@"en");
-//        
-//      //  LocalizationSetLanguage(@"he");
-//    }
-//    else
-//    {
-//        NSString *lang=[NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] valueForKey:@"language"]];
-//        LocalizationSetLanguage(lang);
-//    }
+    if ([[[NSUserDefaults standardUserDefaults] valueForKey:@"language"] length]==0)
+    {
+        LocalizationSetLanguage(@"en");
+        
+      //  LocalizationSetLanguage(@"he");
+    }
+    else
+    {
+        NSString *lang=[NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] valueForKey:@"language"]];
+        LocalizationSetLanguage(lang);
+    }
 
+   
     
     return YES;
 }

@@ -55,6 +55,8 @@
     
        [_CategoryLabel setFont:[UIFont fontWithName:_CategoryLabel.font.fontName size:[self getFontSize:_CategoryLabel.font.pointSize]]];
     
+    
+    
     if (_fromLeftMenu) {
         [_followBtn.titleLabel setText:@"UPLOAD"];
     }
@@ -154,9 +156,17 @@
 
 
 - (IBAction)followClicked:(id)sender {
-    if (_fromLeftMenu) {
-        JMUploadVideoViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMUploadVideoViewController"];
-        [self.navigationController pushViewController:VC animated:YES];
+    if (_fromLeftMenu ) {
+        
+        if (appDelegate.isLogged) {
+            JMUploadVideoViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMUploadVideoViewController"];
+            [self.navigationController pushViewController:VC animated:YES];
+        }
+        else{
+            [SVProgressHUD showInfoWithStatus:@"Login required to upload videos"];
+            
+        }
+
     }
     else{
     

@@ -10,13 +10,13 @@
 #import "JMHomeViewController.h"
 @interface JMChooseCountryViewController ()
 {
-    NSMutableArray *langArr,*codeArr,*engArr,*hindiArr,*hebrewArr,*flagArr;
+    NSMutableArray *langArr,*codeArr,*langCodeArr,*engArr,*hindiArr,*hebrewArr,*flagArr;
     
     NSMutableDictionary *langDict;
     
     
     int rowSelected;
-  NSString *  countrySelected,*countryImage;
+  NSString *  countrySelected,*countryImage,*langSelected;
     
     int totalCount;
     NSURLSession *session;
@@ -35,7 +35,7 @@
     langDict=[[NSMutableDictionary alloc]init];
     
     CountryArray=[[NSMutableArray alloc]init];
-    
+      langCodeArr=[[NSMutableArray alloc]init];
     
     
     langArr=[[NSMutableArray alloc] init];
@@ -151,9 +151,9 @@
                         for (NSDictionary *Dict in langjsonArr) {
                             
                             [langArr addObject:[Dict objectForKey:@"name"]];
-                            [codeArr addObject:[Dict objectForKey:@"short_name"]];
-                            
-                            [langDict setObject:[Dict objectForKey:@"countryData"] forKey:[Dict objectForKey:@"short_name"]];
+                            [codeArr addObject:[Dict objectForKey:@"id"]];
+                            [langCodeArr addObject:[Dict objectForKey:@"short_name"]];
+                            [langDict setObject:[Dict objectForKey:@"countryData"] forKey:[Dict objectForKey:@"id"]];
                             
                         }
                         
@@ -161,9 +161,9 @@
                         
                         if (langArr.count>0) {
                             
-                            if ([codeArr containsObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"language"]]) {
+                            if ([codeArr containsObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"]]) {
                                 
-                                rowSelected=(int)[codeArr indexOfObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"language"]];
+                                rowSelected=(int)[codeArr indexOfObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"]];
                                 
                                 [_LanguageLabel setText:[langArr objectAtIndex:rowSelected]];
                                 
@@ -309,6 +309,8 @@
           countrySelected=[[CountryArray objectAtIndex:indexPath.row]objectForKey:@"countryId"];
         
         countryImage=[[CountryArray objectAtIndex:indexPath.row]objectForKey:@"image"];
+        
+
     }
     else
     {
@@ -361,7 +363,13 @@
     if (countrySelected.length>0) {
     
         [[NSUserDefaults standardUserDefaults ]setObject:countryImage forKey:@"flag"];
+          [[NSUserDefaults standardUserDefaults ]setObject:countrySelected forKey:@"countryId"];
+        [[NSUserDefaults standardUserDefaults ]setObject:langSelected forKey:@"langId"];
         
+        LocalizationSetLanguage([langCodeArr objectAtIndex:rowSelected]);
+        
+        [[NSUserDefaults standardUserDefaults]setObject:[langCodeArr objectAtIndex:rowSelected] forKey:@"language"];
+     
     
     JMHomeViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMHomeViewController"];
     
@@ -442,11 +450,15 @@
     
     [_LanguageLabel setText:[langArr objectAtIndex:rowSelected]];
     
+    langSelected=[codeArr objectAtIndex:rowSelected];
+    
+    
+    
     DebugLog(@"%@",[codeArr objectAtIndex:rowSelected]);
 //
 //    LocalizationSetLanguage([codeArr objectAtIndex:rowSelected]);
     
- //   [[NSUserDefaults standardUserDefaults]setObject:[codeArr objectAtIndex:rowSelected] forKey:@"language"];
+
     
     countrySelected=@"";
     countryImage=@"";

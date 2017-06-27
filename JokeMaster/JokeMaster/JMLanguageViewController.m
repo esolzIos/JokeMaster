@@ -10,7 +10,7 @@
 #import "JMChooseCountryViewController.h"
 @interface JMLanguageViewController ()<UIPickerViewDelegate>
 {
-    NSMutableArray *langArr,*codeArr;
+    NSMutableArray *langArr,*codeArr,*langCodeArr;
     
     int rowSelected;
     
@@ -32,7 +32,7 @@
     langArr=[[NSMutableArray alloc] init];
    
    codeArr=[[NSMutableArray alloc] init];
-    
+          langCodeArr=[[NSMutableArray alloc]init];
     
     [_languageLbl setFont:[UIFont fontWithName:_languageLbl.font.fontName size:[self getFontSize:_languageLbl.font.pointSize]]];
     [_chooseBtn.titleLabel setFont:[UIFont fontWithName:_chooseBtn.titleLabel.font.fontName size:[self getFontSize:_chooseBtn.titleLabel.font.pointSize]]];
@@ -144,8 +144,8 @@
                             for (NSDictionary *langDict in langjsonArr) {
                                 
                                 [langArr addObject:[langDict objectForKey:@"name"]];
-                                      [codeArr addObject:[langDict objectForKey:@"short_name"]];
-                                
+                                      [codeArr addObject:[langDict objectForKey:@"id"]];
+                                      [langCodeArr addObject:[langDict objectForKey:@"short_name"]];
                             }
                             
                             if (langArr.count>0) {
@@ -248,9 +248,11 @@
     
     DebugLog(@"%@",[codeArr objectAtIndex:rowSelected]);
     
-         LocalizationSetLanguage([codeArr objectAtIndex:rowSelected]);
+         LocalizationSetLanguage([langCodeArr objectAtIndex:rowSelected]);
     
-     [[NSUserDefaults standardUserDefaults]setObject:[codeArr objectAtIndex:rowSelected] forKey:@"language"];
+     [[NSUserDefaults standardUserDefaults]setObject:[langCodeArr objectAtIndex:rowSelected] forKey:@"language"];
+    
+      [[NSUserDefaults standardUserDefaults ]setObject:[codeArr objectAtIndex:rowSelected] forKey:@"langId"];
     
     [_pickerView setHidden:YES];
 }

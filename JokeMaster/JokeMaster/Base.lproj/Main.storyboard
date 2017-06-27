@@ -3288,6 +3288,9 @@
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <fontDescription key="fontDescription" name="ComicSansMS-Bold" family="Comic Sans MS" pointSize="17"/>
                                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
+                                                <connections>
+                                                    <outlet property="delegate" destination="Y6a-Ef-ygp" id="ye7-As-s8U"/>
+                                                </connections>
                                             </textField>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TAP TO CHOOSE VIDEO" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="o2R-ik-PN2">
                                                 <rect key="frame" x="71" y="191" width="178" height="18"/>
@@ -3509,7 +3512,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
-                        <outlet property="HeaderView" destination="w7O-IK-TAx" id="WaZ-K8-MfY"/>
+                        <outlet property="HeaderView" destination="w7O-IK-TAx" id="wGh-W8-pMX"/>
                         <outlet property="MainView" destination="Ikc-je-bMp" id="hPS-XF-gbY"/>
                         <outlet property="cameraBtn" destination="816-sB-zQs" id="iJd-RK-eI8"/>
                         <outlet property="cameraLbl" destination="DvX-ma-MHt" id="tWl-YE-FYx"/>

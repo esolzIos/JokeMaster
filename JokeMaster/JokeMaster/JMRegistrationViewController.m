@@ -8,8 +8,13 @@
 
 #import "JMRegistrationViewController.h"
 #import "JMHomeViewController.h"
+#import "DZNPhotoEditorViewController.h"
+#import "UIImagePickerController+Edit.h"
 @interface JMRegistrationViewController ()
-
+{
+    AppDelegate *app;
+    
+}
 @end
 
 @implementation JMRegistrationViewController
@@ -19,7 +24,7 @@
     // Do any additional setup after loading the view.
     
     // sign in text view design
-    
+      app = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     
     NSString *titleText=AMLocalizedString(@"Back to Log in", nil);
     
@@ -430,7 +435,9 @@
     
     UIImagePickerController *picker = [[UIImagePickerController alloc]init];
     picker.delegate = (id)self;
+     picker.allowsEditing=YES;
     
+       picker.cropMode=DZNPhotoEditorViewControllerCropModeSquare;
     
     //  PHAuthorizationStatus authorizationStatus = [PHPhotoLibrary authorizationStatus];
     
@@ -480,9 +487,9 @@
     
     
  //   AttachImage=info[UIImagePickerControllerOriginalImage];
-    ProfileImage.image=info[UIImagePickerControllerOriginalImage];
+    ProfileImage.image=info[UIImagePickerControllerEditedImage];
     
-  //  ProfileImage.contentMode = UIViewContentModeScaleAspectFit;
+    ProfileImage.contentMode = UIViewContentModeScaleAspectFill;
     
     ProfileImage.layer.cornerRadius=ProfileImage.frame.size.height/2;
     
@@ -903,6 +910,11 @@
                 [[NSUserDefaults standardUserDefaults] setObject:[[result objectForKey:@"Details"] valueForKey:@"name"] forKey:@"Name"];
                 [[NSUserDefaults standardUserDefaults] setObject:[[result objectForKey:@"Details"] valueForKey:@"image"] forKey:@"Image"];
                 
+                app.userId=[[result objectForKey:@"Details"] valueForKey:@"user_id"];
+                app.userName=[[result objectForKey:@"Details"] valueForKey:@"name"];
+                app.userImage=[[result objectForKey:@"Details"] valueForKey:@"image"];
+                
+                
                 // (success message) dismiss delay of 1 sec
                 [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(GotoNextPageAfterSuccess) userInfo:nil repeats: NO];
             }
@@ -1049,7 +1061,7 @@
 -(void)GotoNextPageAfterSuccess
 {
     
-    
+       app.isLogged=true;
     [AlertView dismissWithClickedButtonIndex:0 animated:NO];
     
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"loggedIn"];

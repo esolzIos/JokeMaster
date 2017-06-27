@@ -8,6 +8,8 @@
 
 #import "JMSplashViewController.h"
 #import "JMLanguageViewController.h"
+#import "JMHomeViewController.h"
+#import "JMChooseCountryViewController.h"
 @interface JMSplashViewController ()
 {
     NSURLSession *session;
@@ -30,9 +32,27 @@
 {
  
     
-    JMLanguageViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMLanguage"];
+    if ([[[NSUserDefaults standardUserDefaults]valueForKey:@"langId"] length]>0) {
+        
+     
     
-    [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
+        if ([[[NSUserDefaults standardUserDefaults]valueForKey:@"countryId"] length]>0) {
+            JMHomeViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMHomeViewController"];
+            
+            [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
+        }
+        else{
+            JMChooseCountryViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMChooseCountryViewController"];
+            
+            [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
+        }
+    }
+    else{
+    
+        JMLanguageViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMLanguage"];
+        
+        [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
+    }
 }
 
 - (void)didReceiveMemoryWarning {

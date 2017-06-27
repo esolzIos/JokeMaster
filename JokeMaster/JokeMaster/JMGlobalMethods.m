@@ -76,7 +76,7 @@
     }
 
 }
--(void)viewWillAppear:(BOOL)animated
+-(void)viewDidAppear:(BOOL)animated
 {
     [SVProgressHUD dismiss];
     
@@ -192,26 +192,23 @@
 
         
     }
+    else if ([CurrentViewController isEqualToString:@"JMUploadVideoViewController"] )
+    {
+        
+        HeaderView.HeaderLabel.text=@"Upload a Joke";
+        
+        
+        
+        
+    }
     else if ([CurrentViewController isEqualToString:@"JMFollowingViewController"] )
     {
 
         HeaderView.HeaderLabel.text=@"Following";
 
      
-
-        
-        
-        
-    }
-    else if ([CurrentViewController isEqualToString:@"JMUploadVideoViewController"] )
-    {
-
-        HeaderView.HeaderLabel.text=@"Upload a Joke";
-     
-
-        
-        
-    }
+ }
+    
     
     if (HeaderView.HeaderLabel.text.length>0) {
         UIFont *font1 = [UIFont fontWithName:@"GROBOLD" size:HeaderView.HeaderLabel.font.pointSize];
@@ -3207,9 +3204,17 @@
         }
         else
         {
-            
-            JMGlobalMethods *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMUploadVideoViewController"];
-            [self.navigationController pushViewController:VC animated:kCAMediaTimingFunctionEaseIn];
+            if (app.isLogged) {
+                JMGlobalMethods *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMUploadVideoViewController"];
+                [self.navigationController pushViewController:VC animated:YES];
+            }
+            else{
+                [SVProgressHUD showInfoWithStatus:@"Login required to upload videos"];
+                
+            }
+//
+//            JMGlobalMethods *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMUploadVideoViewController"];
+//            [self.navigationController pushViewController:VC animated:kCAMediaTimingFunctionEaseIn];
             //                if (userid.length==0)
             //                {
             //                    [[NSUserDefaults standardUserDefaults] setObject:@"DLAddPropertyViewController" forKey:@"DestinationPage"];
@@ -3235,7 +3240,7 @@
                             NSString *deviceToken;
                             NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
                             deviceToken=[prefs valueForKey:@"deviceToken"];
-                            
+                        NSString     *flagImage=[prefs valueForKey:@"deviceToken"];
                             NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
                             [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
                             [[NSUserDefaults standardUserDefaults] synchronize];

@@ -12,7 +12,10 @@
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
-
+@property(strong,nonatomic)  NSString *userId,*userName,*userImage,*userTypeId,*authToken,*password ;
+@property(strong,nonatomic) NSString *userDeviceToken,*userDesignation;
+@property(nonatomic) int badgeCount;
+@property(nonatomic) BOOL isLogged,socialLogin;
 @property (readonly, strong) NSPersistentContainer *persistentContainer;
 
 - (void)saveContext;

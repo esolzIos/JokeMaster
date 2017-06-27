@@ -17,6 +17,8 @@
 @interface JMLoginViewController ()<UITextFieldDelegate,FBSDKLoginButtonDelegate,GIDSignInUIDelegate,GIDSignInDelegate,SFSafariViewControllerDelegate>
 {
     FBSDKLoginManager *fbM;
+    
+    AppDelegate *app;
 }
 @end
 
@@ -24,6 +26,9 @@
 @synthesize userEmail,password;
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+  app = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    
 fbM=[[FBSDKLoginManager alloc]init];
     
     [fbM logOut];
@@ -506,6 +511,11 @@ dismissViewController:(UIViewController *)viewController {
                          [[NSUserDefaults standardUserDefaults] setObject:[[responseDict objectForKey:@"Details"] valueForKey:@"name"] forKey:@"Name"];
                          [[NSUserDefaults standardUserDefaults] setObject:[[responseDict objectForKey:@"Details"] valueForKey:@"image"] forKey:@"Image"];
                          
+                         app.userId=[[responseDict objectForKey:@"Details"] valueForKey:@"user_id"];
+                         app.userName=[[responseDict objectForKey:@"Details"] valueForKey:@"name"];
+                         app.userImage=[[responseDict objectForKey:@"Details"] valueForKey:@"image"];
+                         app.isLogged=true;
+                         
                         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"loggedIn"];
                          
                              JMHomeViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMHomeViewController"];
@@ -603,6 +613,10 @@ dismissViewController:(UIViewController *)viewController {
                          [[NSUserDefaults standardUserDefaults] setObject:[[responseDict objectForKey:@"userinfo"] valueForKey:@"name"] forKey:@"Name"];
                          [[NSUserDefaults standardUserDefaults] setObject:[[responseDict objectForKey:@"userinfo"] valueForKey:@"image"] forKey:@"Image"];
                          
+                         app.userId=[[responseDict objectForKey:@"Details"] valueForKey:@"user_id"];
+                         app.userName=[[responseDict objectForKey:@"Details"] valueForKey:@"name"];
+                         app.userImage=[[responseDict objectForKey:@"Details"] valueForKey:@"image"];
+                            app.isLogged=true;
                          DebugLog(@"image----%@",[NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"Image"]]);
                          
                          [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"loggedIn"];
@@ -693,6 +707,10 @@ dismissViewController:(UIViewController *)viewController {
                          [[NSUserDefaults standardUserDefaults] setObject:[[responseDict objectForKey:@"userinfo"] valueForKey:@"name"] forKey:@"Name"];
                          [[NSUserDefaults standardUserDefaults] setObject:[[responseDict objectForKey:@"userinfo"] valueForKey:@"image"] forKey:@"Image"];
                          
+                         app.userId=[[responseDict objectForKey:@"Details"] valueForKey:@"user_id"];
+                         app.userName=[[responseDict objectForKey:@"Details"] valueForKey:@"name"];
+                         app.userImage=[[responseDict objectForKey:@"Details"] valueForKey:@"image"];
+                            app.isLogged=true;
                          [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"loggedIn"];
                          
                          JMHomeViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMHomeViewController"];
