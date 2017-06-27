@@ -565,7 +565,7 @@ dismissViewController:(UIViewController *)viewController {
             NSString *urlString;
             
             
-            urlString=[NSString stringWithFormat:@"%@index.php/Signup/socialSignup?register_type=2&name=%@&email=%@&facebook_id=%@&facebook_token=%@&device_token=%@&device_type=2&userimage=%@",GLOBALAPI,[name stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[email stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[fbid stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[accessToken stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[[NSUserDefaults standardUserDefaults] objectForKey:@"deviceToken"],[imageurl stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
+            urlString=[NSString stringWithFormat:@"%@index.php/Signup/socialSignup?register_type=2&name=%@&email=%@&facebook_id=%@&facebook_token=%@&device_token=%@&device_type=2",GLOBALAPI,[name stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[email stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[fbid stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[accessToken stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[[NSUserDefaults standardUserDefaults] objectForKey:@"deviceToken"]];
             
           
             
@@ -573,8 +573,10 @@ dismissViewController:(UIViewController *)viewController {
             
             DebugLog(@"Send string Url%@",urlString);
             
+            NSString *postString=[NSString stringWithFormat:@"userimage=%@",[imageurl stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
+            
 
-             [urlobj getSessionJsonResponse:urlString  success:^(NSDictionary *responseDict)
+             [urlobj getSessionJsonResponse:urlString withPostData:postString typerequest:(NSString *)@"array" success:^(NSDictionary *responseDict)
              {
                  
                  DebugLog(@"success %@ Status Code:%ld",responseDict,(long)urlobj.statusCode);
