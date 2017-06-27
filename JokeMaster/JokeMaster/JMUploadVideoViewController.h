@@ -9,6 +9,12 @@
 #import "JMGlobalMethods.h"
 
 @interface JMUploadVideoViewController : JMGlobalMethods
+{
+    NSURLSession *session;
+    
+    NSMutableArray *langjsonArr;
+    int totalCount;
+}
 @property (weak, nonatomic) IBOutlet UIScrollView *mainScroll;
 - (IBAction)Test:(id)sender;
 @property (strong, nonatomic) IBOutlet UIView *tvView;
