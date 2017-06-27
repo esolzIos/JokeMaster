@@ -64,7 +64,10 @@
       [_galleryLbl setFont:[UIFont fontWithName:_galleryLbl.font.fontName size:[self getFontSize:_galleryLbl.font.pointSize]]];
     // Do any additional setup after loading the view.
     
+     [_mainScroll setContentSize:CGSizeMake(FULLWIDTH,  465.0/480.0*FULLHEIGHT)];
+    
     [self loadData];
+    
 }
 
 - (void)didReceiveMemoryWarning {

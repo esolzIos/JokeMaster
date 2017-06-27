@@ -60,5 +60,6 @@
 @property (strong, nonatomic) IBOutlet UILabel *tapInfo;
 @property (strong, nonatomic) IBOutlet UILabel *cameraLbl;
 @property (strong, nonatomic) IBOutlet UILabel *galleryLbl;
+@property (strong, nonatomic) IBOutlet UITextField *videoName;
 
 @end
