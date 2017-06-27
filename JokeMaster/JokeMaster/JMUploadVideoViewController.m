@@ -61,6 +61,8 @@
     [_categoryLbl setFont:[UIFont fontWithName:_categoryLbl.font.fontName size:[self getFontSize:_categoryLbl.font.pointSize]]];
 [_cancelLabl setFont:[UIFont fontWithName:_cancelLabl.font.fontName size:[self getFontSize:_cancelLabl.font.pointSize]]];
    [_warningLbl setFont:[UIFont fontWithName:_warningLbl.font.fontName size:[self getFontSize:_warningLbl.font.pointSize]]];
+    
+       [_warningInfo setFont:[UIFont fontWithName:_warningInfo.font.fontName size:[self getFontSize:_warningInfo.font.pointSize]]];
       [_okLbl setFont:[UIFont fontWithName:_okLbl.font.fontName size:[self getFontSize:_okLbl.font.pointSize]]];
       [_cancelLabl setFont:[UIFont fontWithName:_cancelLabl.font.fontName size:[self getFontSize:_cancelLabl.font.pointSize]]];
     
@@ -499,14 +501,12 @@
             
             
             
-            NSString *sendData;
+     
             
        
-            
-            
-            
-            sendData = [sendData stringByAppendingString:@"&user_id="];
+             NSString *sendData = @"user_id=";
             sendData = [sendData stringByAppendingString:[NSString stringWithFormat:@"%@", app.userId]];
+            
             
             sendData = [sendData stringByAppendingString:@"&language="];
             sendData = [sendData stringByAppendingString:[NSString stringWithFormat:@"%@", langSelected]];
@@ -721,7 +721,7 @@
                         for (NSDictionary *langDict in langjsonArr) {
                             
                             [langArr addObject:[langDict objectForKey:@"name"]];
-                            [codeArr addObject:[langDict objectForKey:@"short_name"]];
+                            [codeArr addObject:[langDict objectForKey:@"id"]];
                             
                         }
                         

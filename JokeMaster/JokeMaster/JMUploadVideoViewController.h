@@ -61,5 +61,6 @@
 @property (strong, nonatomic) IBOutlet UILabel *cameraLbl;
 @property (strong, nonatomic) IBOutlet UILabel *galleryLbl;
 @property (strong, nonatomic) IBOutlet UITextField *videoName;
+@property (strong, nonatomic) IBOutlet UILabel *warningInfo;
 
 @end

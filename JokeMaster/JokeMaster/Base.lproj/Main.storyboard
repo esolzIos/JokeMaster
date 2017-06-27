@@ -3457,8 +3457,8 @@
                                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="It might take a while to upload the video.  Please wait." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="7" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="R6L-Dj-z3k">
-                                                        <rect key="frame" x="0.0" y="77" width="280" height="70"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="It might take a while to upload the video.  Please wait." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="7" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="R6L-Dj-z3k">
+                                                        <rect key="frame" x="30" y="77" width="220" height="70"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -3545,6 +3545,7 @@
                         <outlet property="videoThumb" destination="bfS-yX-YmV" id="5TB-bI-mLK"/>
                         <outlet property="warnOkBtn" destination="XD3-UX-ydW" id="QyY-MI-nyg"/>
                         <outlet property="warncancelBtn" destination="dOF-Hg-EjO" id="gt7-8U-tyt"/>
+                        <outlet property="warningInfo" destination="R6L-Dj-z3k" id="SNj-Aa-rdH"/>
                         <outlet property="warningLbl" destination="KJf-1D-Mga" id="HGZ-cE-ciW"/>
                         <outlet property="warningView" destination="TrB-iR-PqB" id="qTC-GM-9pi"/>
                     </connections>
