@@ -9,7 +9,7 @@
 #import "JMPlayVideoViewController.h"
 #import "ReviewsTableViewCell.h"
 #import "JMReviewViewController.h"
-
+#import "JMProfileViewController.h"
 @interface JMPlayVideoViewController ()<AVPlayerViewControllerDelegate>
 {
 AVPlayer *player;
@@ -322,6 +322,14 @@ AVPlayer *player;
 }
 - (IBAction)reportClicked:(id)sender {
 }
+- (IBAction)gotoProfile:(id)sender {
+    
+    JMProfileViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMProfile"];
+    
+    
+    [self.navigationController pushViewController:VC animated:kCAMediaTimingFunctionEaseIn];
+}
+
 - (IBAction)resizeClicked:(id)sender {
     
     AVPlayerViewController *controller = [[AVPlayerViewController alloc]init];

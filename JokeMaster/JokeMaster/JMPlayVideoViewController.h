@@ -65,6 +65,8 @@
 @property (strong, nonatomic) IBOutlet UIButton *shareBttn;
 - (IBAction)sharedClicked:(id)sender;
 @property (strong, nonatomic) IBOutlet UIImageView *playPauseImg;
+@property (strong, nonatomic) IBOutlet UIButton *profileBttn;
+- (IBAction)gotoProfile:(id)sender;
 
 - (IBAction)resizeClicked:(id)sender;
 - (IBAction)commentClicked:(id)sender;
