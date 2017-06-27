@@ -72,6 +72,16 @@
         LocalizationSetLanguage(lang);
     }
 
+    
+    
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"loggedIn"]) {
+        
+            _isLogged=true;
+        _userId=[[NSUserDefaults standardUserDefaults] valueForKey:@"UserId"];
+        _userName=[[NSUserDefaults standardUserDefaults] valueForKey:@"Name"];
+        _userImage=[[NSUserDefaults standardUserDefaults] valueForKey:@"Image"];
+
+           };
    
     
     return YES;

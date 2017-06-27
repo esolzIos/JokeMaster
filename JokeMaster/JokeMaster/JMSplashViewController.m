@@ -31,12 +31,17 @@
 -(void)LoadHome
 {
  
+ 
     
     if ([[[NSUserDefaults standardUserDefaults]valueForKey:@"langId"] length]>0) {
         
      
     
         if ([[[NSUserDefaults standardUserDefaults]valueForKey:@"countryId"] length]>0) {
+            
+            
+            
+            
             JMHomeViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMHomeViewController"];
             
             [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
