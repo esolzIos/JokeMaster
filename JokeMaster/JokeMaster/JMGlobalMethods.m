@@ -3234,7 +3234,7 @@
         else if (sender==6)
         {
                         if ([[NSUserDefaults standardUserDefaults]boolForKey:@"loggedIn"]) {
-                            [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"loggedIn"];
+                          
                             
                             
                             NSString *deviceToken;
@@ -3246,12 +3246,13 @@
                             [[NSUserDefaults standardUserDefaults] synchronize];
                             
                             [[NSUserDefaults standardUserDefaults] setObject:deviceToken  forKey:@"deviceToken"];
+                              [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"loggedIn"];
                             
                             LocalizationSetLanguage(@"en");
                             
-                            JMGlobalMethods *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMHomeViewController"];
+                JMGlobalMethods *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMHomeViewController"];
                             
-                         [self.navigationController pushViewController:VC animated:kCAMediaTimingFunctionEaseIn];
+                         [self.navigationController pushViewController:VC animated:YES];
                             
                         }
          
@@ -3261,7 +3262,7 @@
             
             
             JMGlobalMethods *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMLogin"];
-            [self.navigationController pushViewController:VC animated:kCAMediaTimingFunctionEaseIn];
+        [self.navigationController pushViewController:VC animated:YES];
                         }
         }
 //    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];

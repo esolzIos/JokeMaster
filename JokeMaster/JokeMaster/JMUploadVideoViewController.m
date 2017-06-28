@@ -15,6 +15,7 @@
 #import <AVFoundation/AVPlayer.h>
 #import <AVFoundation/AVPlayerItem.h>
 #import <CoreMedia/CoreMedia.h>
+#import "JMProfileViewController.h"
 @interface JMUploadVideoViewController ()<UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIPickerViewDelegate,UITextFieldDelegate>
 {
     UIImagePickerController *ipc;
@@ -37,6 +38,8 @@
             [self setRoundCornertoView:_optionView withBorderColor:[UIColor clearColor] WithRadius:0.15];
     
                 [self setRoundCornertoView:_videoThumb withBorderColor:[UIColor clearColor] WithRadius:0.15];
+    
+       [self setRoundCornertoView:_loadingView withBorderColor:[UIColor clearColor] WithRadius:0.15];
     
       app = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     
@@ -126,7 +129,7 @@
         
         ipc.sourceType = UIImagePickerControllerSourceTypeCamera;
                                                    ipc.videoQuality = UIImagePickerControllerQualityTypeMedium;
-                                                   ipc.videoMaximumDuration = 180;
+                                                   ipc.videoMaximumDuration = 60;
                                                    ipc.mediaTypes = [[NSArray alloc] initWithObjects: (NSString *) kUTTypeMovie, nil];
         [self presentViewController:ipc animated:YES completion:^{
             
@@ -156,7 +159,7 @@
     
     ipc.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
                                             ipc.videoQuality = UIImagePickerControllerQualityTypeMedium;
-                                            ipc.videoMaximumDuration = 180;
+                                            ipc.videoMaximumDuration = 60;
                                             ipc.mediaTypes = [[NSArray alloc] initWithObjects: (NSString *) kUTTypeMovie, nil];
     [self presentViewController:ipc animated:YES completion:^{
         
@@ -194,6 +197,7 @@
                 
                 
                 
+                [_loadingView setHidden:NO];
                 
                 
                 AVURLAsset *asset=[[AVURLAsset alloc] initWithURL:urlvideo options:nil];
@@ -201,6 +205,8 @@
                 generator.appliesPreferredTrackTransform=TRUE;
                 
                 CMTime thumbTime = CMTimeMakeWithSeconds(0,30);
+                
+                
                 
                 AVAssetImageGeneratorCompletionHandler handler = ^(CMTime requestedTime, CGImageRef im, CMTime actualTime, AVAssetImageGeneratorResult result, NSError *error){
                     if (result != AVAssetImageGeneratorSucceeded) {
@@ -228,6 +234,7 @@
                         
                         
                         [_optionView setHidden:YES];
+                        [_loadingView setHidden:YES];
                         
                         
                         [_uploadBtn setUserInteractionEnabled:YES];
@@ -589,10 +596,10 @@
                                 
                               
                                 
-                                [SVProgressHUD showInfoWithStatus:@"Video upload Successful"];
+                                [SVProgressHUD showInfoWithStatus:@"Video uploaded Successfully"];
                                 
-                     
-                                
+                         [self performSelector:@selector(loadProfile) withObject:nil afterDelay:3.0];
+                          
                               
                                 
                                 
@@ -638,6 +645,14 @@
     
 
 
+}
+
+-(void)loadProfile
+{
+    JMProfileViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMProfile"];
+    VC.fromLeftMenu=true;
+    
+    [self.navigationController pushViewController:VC animated:kCAMediaTimingFunctionEaseIn];
 }
 
 -(void)loadData

@@ -53,4 +53,8 @@
 //- (IBAction)CategoryCrossTapped:(id)sender;
 //@property (weak, nonatomic) IBOutlet UITableView *CategoryTable;
 
+@property (strong, nonatomic) IBOutlet UIView *ratingView;
+@property (strong, nonatomic) IBOutlet UIButton *crossBtn;
+- (IBAction)crossClicked:(id)sender;
+
 @end

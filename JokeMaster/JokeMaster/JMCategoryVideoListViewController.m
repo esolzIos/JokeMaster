@@ -338,11 +338,20 @@
                          
                          if (CategoryArray.count>0)
                          {
-                             TransparentView.frame = CGRectMake(0, 0, TransparentView.frame.size.width, TransparentView.frame.size.height);
-                             MenuBaseView.frame = CGRectMake(0,MenuViewY, MenuBaseView.frame.size.width, MenuBaseView.frame.size.height);
-                             
-                             [CategoryTable reloadData];
+                             [UIView animateWithDuration:0.5
+                                                   delay:0.1
+                                                 options:(UIViewAnimationOptions) UIViewAnimationCurveEaseIn
+                                              animations:^{
+                                                  TransparentView.frame = CGRectMake(0, 0, TransparentView.frame.size.width, TransparentView.frame.size.height);
+                                                  MenuBaseView.frame = CGRectMake(0,MenuViewY, MenuBaseView.frame.size.width, MenuBaseView.frame.size.height);
+                                                  
+                                                  [CategoryTable reloadData];
+                                              }
+                                              completion:^(BOOL finished){
+                                              }];
                          }
+                         
+
                          
                      }
                      else

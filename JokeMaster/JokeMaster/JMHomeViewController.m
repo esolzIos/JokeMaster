@@ -183,6 +183,9 @@
 - (IBAction)ratingClicked:(id)sender {
     [_ratingImage.layer removeAllAnimations];
     
+    [_ratingView setHidden:NO];
+    
+    
 }
 - (IBAction)likeClicked:(id)sender {
     
@@ -241,4 +244,9 @@
 //                         
 //                     }];
 //}
+- (IBAction)crossClicked:(id)sender {
+    
+    [_ratingView setHidden:YES];
+    
+}
 @end

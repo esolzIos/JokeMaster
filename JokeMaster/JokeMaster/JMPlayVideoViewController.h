@@ -71,4 +71,8 @@
 - (IBAction)resizeClicked:(id)sender;
 - (IBAction)commentClicked:(id)sender;
 
+@property (strong, nonatomic) IBOutlet UIView *rateView;
+@property (strong, nonatomic) IBOutlet UIButton *crossBtn;
+- (IBAction)crossClicked:(id)sender;
+
 @end

@@ -949,7 +949,7 @@
                                                                 <rect key="frame" x="40" y="63" width="40" height="40"/>
                                                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                                 <subviews>
-                                                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="like" id="s4e-XJ-hpL">
+                                                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="unlike" id="s4e-XJ-hpL">
                                                                         <rect key="frame" x="0.0" y="1" width="40" height="37"/>
                                                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                                     </imageView>
@@ -1151,7 +1151,7 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
-                            <view contentMode="scaleToFill" id="NeT-8a-cBA">
+                            <view hidden="YES" contentMode="scaleToFill" id="NeT-8a-cBA">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <subviews>
@@ -1169,6 +1169,25 @@
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
+                            <view hidden="YES" contentMode="scaleToFill" id="Th8-pS-eFJ">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ratingPage" id="NV6-S7-wIS">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="6xY-jP-azD">
+                                        <rect key="frame" x="230" y="0.0" width="90" height="80"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                        <connections>
+                                            <action selector="crossClicked:" destination="4QB-vW-zXu" eventType="touchUpInside" id="c5e-Dy-AtT"/>
+                                            <action selector="tutorialClicked:" destination="4QB-vW-zXu" eventType="touchUpInside" id="XrJ-Cc-G2Y"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -1178,6 +1197,7 @@
                         <outlet property="categoryBtn" destination="Xer-gN-1E1" id="f18-uY-j9N"/>
                         <outlet property="categoryBtnView" destination="1vG-Jw-iVg" id="HO1-CT-LnL"/>
                         <outlet property="categoryBtnlbl" destination="HqO-H2-ILc" id="ukD-WZ-tqy"/>
+                        <outlet property="crossBtn" destination="6xY-jP-azD" id="7W3-uR-Xmj"/>
                         <outlet property="jokeCollectionView" destination="kEs-X7-RN6" id="bCe-9Y-i9V"/>
                         <outlet property="jokeDetailBtn" destination="uWI-mJ-ara" id="CTW-zq-r7i"/>
                         <outlet property="jokeTitle" destination="Pd4-qK-9bi" id="7yB-jm-l7G"/>
@@ -1191,6 +1211,7 @@
                         <outlet property="playView" destination="ReQ-Uf-Lhm" id="xUj-Mr-kpM"/>
                         <outlet property="ratingBtn" destination="Xpa-KG-1dl" id="cia-oU-dVV"/>
                         <outlet property="ratingImage" destination="Xmw-3r-vw9" id="fxm-1n-v0E"/>
+                        <outlet property="ratingView" destination="Th8-pS-eFJ" id="PEY-Gb-RA1"/>
                         <outlet property="recentBtn" destination="VUS-P0-nKM" id="0PN-VM-moe"/>
                         <outlet property="shareBtn" destination="hn5-TO-f5T" id="Ikk-bI-l2Z"/>
                         <outlet property="shareImg" destination="XMn-Va-Asb" id="SE1-iT-E3I"/>
@@ -1864,6 +1885,26 @@
                                             </view>
                                         </subviews>
                                     </scrollView>
+                                    <view hidden="YES" contentMode="scaleToFill" id="GyC-5K-ZUz">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                        <subviews>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ratingPage" id="qxk-rv-y2b">
+                                                <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                            </imageView>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="bmb-eN-Azq">
+                                                <rect key="frame" x="230" y="0.0" width="90" height="80"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                                <connections>
+                                                    <action selector="crossClicked:" destination="ZmV-bS-DVO" eventType="touchUpInside" id="KlX-oK-qeu"/>
+                                                    <action selector="crossClicked:" destination="4QB-vW-zXu" eventType="touchUpInside" id="iac-qZ-Vkh"/>
+                                                    <action selector="tutorialClicked:" destination="4QB-vW-zXu" eventType="touchUpInside" id="ojM-9F-Itb"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
@@ -1873,6 +1914,7 @@
                     <connections>
                         <outlet property="commentTitle" destination="cyk-hf-69g" id="h40-N6-hdx"/>
                         <outlet property="commentView" destination="yhb-FD-0Td" id="h5U-ab-YD4"/>
+                        <outlet property="crossBtn" destination="bmb-eN-Azq" id="VRm-Db-aTp"/>
                         <outlet property="gobackBtn" destination="bHm-kL-mXW" id="CfB-r3-cOM"/>
                         <outlet property="gobackView" destination="4Yr-VY-CMT" id="zYh-SK-zxT"/>
                         <outlet property="likeBtn" destination="sz9-oe-RKX" id="JrS-fr-6DO"/>
@@ -1891,6 +1933,7 @@
                         <outlet property="playerView" destination="vgz-tP-F2i" id="C69-rp-34z"/>
                         <outlet property="profileBttn" destination="Ozu-WJ-cd1" id="tDu-ci-fVR"/>
                         <outlet property="rankLbl" destination="tIm-Dc-JEq" id="028-fp-RjY"/>
+                        <outlet property="rateView" destination="GyC-5K-ZUz" id="6Ul-fp-kAh"/>
                         <outlet property="rating1" destination="QSq-Ob-90A" id="jaA-gH-uBK"/>
                         <outlet property="rating2" destination="fnM-UY-WkN" id="bcH-e4-leq"/>
                         <outlet property="rating3" destination="NcI-AP-6ET" id="J7r-wc-R2M"/>
@@ -3205,7 +3248,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6uY-BV-1Fk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2412" y="660"/>
+            <point key="canvasLocation" x="2443" y="660"/>
         </scene>
         <!--Upload Video View Controller-->
         <scene sceneID="JCM-fi-QHg">
@@ -3383,6 +3426,25 @@
                                                         </subviews>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     </view>
+                                                    <view hidden="YES" contentMode="scaleToFill" misplaced="YES" id="0iB-ls-7eM">
+                                                        <rect key="frame" x="46" y="20" width="227" height="130"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                                        <subviews>
+                                                            <view alpha="0.55000000000000004" contentMode="scaleToFill" misplaced="YES" id="rVV-v5-rj1">
+                                                                <rect key="frame" x="0.0" y="0.0" width="227" height="130"/>
+                                                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                                            </view>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="PLEASE WAIT" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="MZb-nh-Zuz">
+                                                                <rect key="frame" x="37" y="54" width="152" height="21"/>
+                                                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                                                <fontDescription key="fontDescription" name="ComicBook" family="Comic Book" pointSize="20"/>
+                                                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                        </subviews>
+                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                    </view>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tv-frame" id="EKj-tb-w34">
                                                         <rect key="frame" x="28" y="8" width="261" height="178"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
@@ -3538,6 +3600,7 @@
                         <outlet property="langBtn" destination="9Dr-Zl-X95" id="afi-Oc-kyo"/>
                         <outlet property="languagePicker" destination="XYP-3Y-JzS" id="pxn-p5-icj"/>
                         <outlet property="languageView" destination="BU5-io-zrr" id="hu4-Rz-hQg"/>
+                        <outlet property="loadingView" destination="0iB-ls-7eM" id="mMv-Du-6lW"/>
                         <outlet property="mainScroll" destination="USy-6z-mhw" id="f3h-CZ-cEw"/>
                         <outlet property="okLbl" destination="eQu-pK-cv3" id="04g-HK-diE"/>
                         <outlet property="optionView" destination="3CQ-y1-nQ7" id="yha-xx-0Wh"/>
@@ -3597,6 +3660,7 @@
         <image name="play" width="107" height="105"/>
         <image name="popup" width="543" height="478"/>
         <image name="profile-pic-frame" width="621" height="440"/>
+        <image name="ratingPage" width="621" height="1104"/>
         <image name="report" width="17" height="27"/>
         <image name="share" width="49" height="52"/>
         <image name="share-1" width="27" height="24"/>
@@ -3607,6 +3671,7 @@
         <image name="tv-frame1" width="197" height="162"/>
         <image name="uncheck" width="26" height="26"/>
         <image name="underline" width="149" height="21"/>
+        <image name="unlike" width="61" height="55"/>
         <image name="video" width="58" height="42"/>
         <image name="zigzag" width="149" height="21"/>
     </resources>

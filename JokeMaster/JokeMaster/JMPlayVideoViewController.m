@@ -117,8 +117,9 @@ AVPlayer *player;
         }];
         
         [player seekToTime:kCMTimeZero];
-
-        [player play];
+        paused=true;
+        [_playPauseImg setImage:[UIImage imageNamed:@"play-1"]];
+       // [player play];
     }
     
 }
@@ -240,6 +241,7 @@ AVPlayer *player;
 - (IBAction)ratingClicked:(id)sender
 {
 [_ratingImage.layer removeAllAnimations];
+        [_rateView setHidden:NO];
 }
 
 - (IBAction)backClicked:(id)sender {
@@ -327,7 +329,7 @@ AVPlayer *player;
     JMProfileViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMProfile"];
     
     
-    [self.navigationController pushViewController:VC animated:kCAMediaTimingFunctionEaseIn];
+    [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
 }
 
 - (IBAction)resizeClicked:(id)sender {
@@ -392,5 +394,11 @@ AVPlayer *player;
     
    
 
+}
+
+- (IBAction)crossClicked:(id)sender {
+    
+    [_rateView setHidden:YES];
+    
 }
 @end
