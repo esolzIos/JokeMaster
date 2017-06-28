@@ -313,7 +313,7 @@
         else
         {
             
-          //  [self SignUpApi];
+           // [self SignUpApi];
             [self SignUpAPI1];
             
         }
@@ -898,13 +898,14 @@
             if ([[result objectForKey:@"status"] boolValue]==YES)
             {
                 
-                AlertView = [[UIAlertView alloc] initWithTitle:@"Success"
-                                                       message:@"Registration successful."
-                                                      delegate:self
-                                             cancelButtonTitle:nil
-                                             otherButtonTitles:nil];
-                
-                [AlertView show];
+                [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Registration successful.",nil)];
+//                AlertView = [[UIAlertView alloc] initWithTitle:@"Success"
+//                                                       message:@"Registration successful."
+//                                                      delegate:self
+//                                             cancelButtonTitle:nil
+//                                             otherButtonTitles:nil];
+//                
+//                [AlertView show];
                 
                 [[NSUserDefaults standardUserDefaults] setObject:[[result objectForKey:@"Details"] valueForKey:@"user_id"] forKey:@"UserId"];
                 [[NSUserDefaults standardUserDefaults] setObject:[[result objectForKey:@"Details"] valueForKey:@"name"] forKey:@"Name"];
@@ -940,8 +941,9 @@
     }
     else
     {
+        [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
         
-        [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Network Not Available." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
+//        [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Network Not Available." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
     }
 }
 #pragma mark -signup api call-- not used
@@ -996,8 +998,7 @@
             DebugLog(@"post string: %@",urlString);
             DebugLog(@"requestBody string: %@",requestBody);
             
-//            [urlobj getSessionJsonResponseWithUploadImage :(NSString *)urlString Image :(NSString *)requestBody  success:^(NSDictionary *responseDict)
-            [urlobj getSessionJsonResponse:urlString  success:^(NSDictionary *responseDict)
+            [urlobj getSessionJsonResponseWithUploadImage :(NSString *)urlString Image :(NSString *)requestBody  success:^(NSDictionary *responseDict)
              {
                  
                  DebugLog(@"success %@ Status Code:%ld",responseDict,(long)urlobj.statusCode);
@@ -1010,32 +1011,44 @@
                  {
                      if ([[responseDict objectForKey:@"status"] boolValue]==YES)
                      {
-                        
-                         AlertView = [[UIAlertView alloc] initWithTitle:@"Success"
-                                                                message:@"Registration successful."
-                                                               delegate:self
-                                                      cancelButtonTitle:nil
-                                                      otherButtonTitles:nil];
+                         [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Registration successful.",nil)];
+//                         AlertView = [[UIAlertView alloc] initWithTitle:@"Success"
+//                                                                message:@"Registration successful."
+//                                                               delegate:self
+//                                                      cancelButtonTitle:nil
+//                                                      otherButtonTitles:nil];
+//                         
+//                         [AlertView show];
                          
-                         [AlertView show];
+                         [[NSUserDefaults standardUserDefaults] setObject:[[responseDict objectForKey:@"Details"] valueForKey:@"user_id"] forKey:@"UserId"];
+                         [[NSUserDefaults standardUserDefaults] setObject:[[responseDict objectForKey:@"Details"] valueForKey:@"name"] forKey:@"Name"];
+                         [[NSUserDefaults standardUserDefaults] setObject:[[responseDict objectForKey:@"Details"] valueForKey:@"image"] forKey:@"Image"];
+                         
+                         app.userId=[[responseDict objectForKey:@"Details"] valueForKey:@"user_id"];
+                         app.userName=[[responseDict objectForKey:@"Details"] valueForKey:@"name"];
+                         app.userImage=[[responseDict objectForKey:@"Details"] valueForKey:@"image"];
+                         
                          
                          // (success message) dismiss delay of 1 sec
                          [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(GotoNextPageAfterSuccess) userInfo:nil repeats: NO];
                      }
                      else
                      {
-                         [[[UIAlertView alloc]initWithTitle:@"Error!" message:[responseDict objectForKey:@"message"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
+                         [SVProgressHUD showInfoWithStatus:[responseDict objectForKey:@"message"]];
+                         //                [[[UIAlertView alloc]initWithTitle:@"Error!" message:[result objectForKey:@"message"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
                      }
                      
                  }
                  else if (urlobj.statusCode==500 || urlobj.statusCode==400)
                  {
-                     [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Server Failed to Respond" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
+                     [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Server Failed to Respond",nil)];
+                     //            [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Server Failed to Respond" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
                      
                  }
                  else
                  {
-                     [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Server Failed to Respond" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
+                     [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Server Failed to Respond",nil)];
+                     //            [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Server Failed to Respond" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
                  }
                  
                  
@@ -1044,7 +1057,9 @@
                  [self checkLoader];
                  self.view.userInteractionEnabled = YES;
                  NSLog(@"Failure");
-                 [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Server Failed to Respond" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
+//                 [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Server Failed to Respond" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
+                 
+                 [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Server Failed to Respond",nil)];
                  
              }];
             
@@ -1054,7 +1069,8 @@
     else
     {
         
-        [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Network Not Available." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
+        [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
+//        [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Network Not Available." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
     }
 }
 #pragma mark -After registration go to Home screen

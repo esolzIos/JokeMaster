@@ -273,7 +273,9 @@
                                                            cachePolicy:NSURLRequestUseProtocolCachePolicy
                                                        timeoutInterval:60.0];
     [request setHTTPMethod:@"POST"];
-    [request setHTTPBody: [PostString dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    NSData *data=[PostString dataUsingEncoding:NSUTF8StringEncoding];
+    [request setHTTPBody:data];
   //  [request setValue:[NSString stringWithFormat:@"Bearer %@", [[NSUserDefaults standardUserDefaults] objectForKey:@"access_token"]] forHTTPHeaderField:@"Authorization"];
     
     self.connectionSession = [defaultSession dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error)
