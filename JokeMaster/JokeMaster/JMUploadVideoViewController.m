@@ -26,11 +26,11 @@
     UIImage *selectedImage;
     int rowSelected;
     bool langPickerOpen,catPickerOpen,videoPicked;
-        NSMutableArray *langArr,*codeArr,*categoryArr;
+    NSMutableArray *langArr,*codeArr,*categoryArr;
     NSData *videoData;
     NSData* imageData;
     NSString *langSelected,*categorySelected;
-        AppDelegate *app;
+    AppDelegate *app;
 }
 @end
 
@@ -38,58 +38,58 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-            [self setRoundCornertoView:_optionView withBorderColor:[UIColor clearColor] WithRadius:0.15];
+    [self setRoundCornertoView:_optionView withBorderColor:[UIColor clearColor] WithRadius:0.15];
     
-                [self setRoundCornertoView:_videoThumb withBorderColor:[UIColor clearColor] WithRadius:0.15];
+    [self setRoundCornertoView:_videoThumb withBorderColor:[UIColor clearColor] WithRadius:0.15];
     
-       [self setRoundCornertoView:_loadingView withBorderColor:[UIColor clearColor] WithRadius:0.15];
+    [self setRoundCornertoView:_loadingView withBorderColor:[UIColor clearColor] WithRadius:0.15];
     
-      app = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    app = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     
-     _videoName.attributedPlaceholder = [[NSAttributedString alloc] initWithString:AMLocalizedString(@"Video Name",nil) attributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
+    _videoName.attributedPlaceholder = [[NSAttributedString alloc] initWithString:AMLocalizedString(@"Video Name",nil) attributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
     
-        [self addMoreView:self.view];
+    [self addMoreView:self.view];
     
     categoryArr=[[NSMutableArray alloc] init];
     
-//    langArr=[[NSMutableArray alloc] initWithObjects:@"English",@"Hebrew",@"Hindi",@"Chinese",@"Spanish", nil];
-//    
-//    codeArr=[[NSMutableArray alloc] initWithObjects:@"en",@"he",@"hi",@"zh",@"es", nil];
+    //    langArr=[[NSMutableArray alloc] initWithObjects:@"English",@"Hebrew",@"Hindi",@"Chinese",@"Spanish", nil];
+    //
+    //    codeArr=[[NSMutableArray alloc] initWithObjects:@"en",@"he",@"hi",@"zh",@"es", nil];
     
     langArr=[[NSMutableArray alloc] init];
     
     codeArr=[[NSMutableArray alloc] init];
     
-     [_languagePicker setDelegate:self];
+    [_languagePicker setDelegate:self];
     
     
     [_jokeLang setFont:[UIFont fontWithName:_jokeLang.font.fontName size:[self getFontSize:_jokeLang.font.pointSize]]];
     [_categoryLbl setFont:[UIFont fontWithName:_categoryLbl.font.fontName size:[self getFontSize:_categoryLbl.font.pointSize]]];
-[_cancelLabl setFont:[UIFont fontWithName:_cancelLabl.font.fontName size:[self getFontSize:_cancelLabl.font.pointSize]]];
-   [_warningLbl setFont:[UIFont fontWithName:_warningLbl.font.fontName size:[self getFontSize:_warningLbl.font.pointSize]]];
+    [_cancelLabl setFont:[UIFont fontWithName:_cancelLabl.font.fontName size:[self getFontSize:_cancelLabl.font.pointSize]]];
+    [_warningLbl setFont:[UIFont fontWithName:_warningLbl.font.fontName size:[self getFontSize:_warningLbl.font.pointSize]]];
     
-       [_warningInfo setFont:[UIFont fontWithName:_warningInfo.font.fontName size:[self getFontSize:_warningInfo.font.pointSize]]];
-      [_okLbl setFont:[UIFont fontWithName:_okLbl.font.fontName size:[self getFontSize:_okLbl.font.pointSize]]];
-      [_cancelLabl setFont:[UIFont fontWithName:_cancelLabl.font.fontName size:[self getFontSize:_cancelLabl.font.pointSize]]];
+    [_warningInfo setFont:[UIFont fontWithName:_warningInfo.font.fontName size:[self getFontSize:_warningInfo.font.pointSize]]];
+    [_okLbl setFont:[UIFont fontWithName:_okLbl.font.fontName size:[self getFontSize:_okLbl.font.pointSize]]];
+    [_cancelLabl setFont:[UIFont fontWithName:_cancelLabl.font.fontName size:[self getFontSize:_cancelLabl.font.pointSize]]];
     
-          [_tapInfo setFont:[UIFont fontWithName:_tapInfo.font.fontName size:[self getFontSize:_tapInfo.font.pointSize]]];
+    [_tapInfo setFont:[UIFont fontWithName:_tapInfo.font.fontName size:[self getFontSize:_tapInfo.font.pointSize]]];
     
-      [_cameraLbl setFont:[UIFont fontWithName:_cameraLbl.font.fontName size:[self getFontSize:_cameraLbl.font.pointSize]]];
+    [_cameraLbl setFont:[UIFont fontWithName:_cameraLbl.font.fontName size:[self getFontSize:_cameraLbl.font.pointSize]]];
     
-      [_galleryLbl setFont:[UIFont fontWithName:_galleryLbl.font.fontName size:[self getFontSize:_galleryLbl.font.pointSize]]];
-     [_uploadBtn.titleLabel setFont:[UIFont fontWithName:_uploadBtn.titleLabel.font.fontName size:[self getFontSize:_uploadBtn.titleLabel.font.pointSize]]];
+    [_galleryLbl setFont:[UIFont fontWithName:_galleryLbl.font.fontName size:[self getFontSize:_galleryLbl.font.pointSize]]];
+    [_uploadBtn.titleLabel setFont:[UIFont fontWithName:_uploadBtn.titleLabel.font.fontName size:[self getFontSize:_uploadBtn.titleLabel.font.pointSize]]];
     
     // Do any additional setup after loading the view.
     
-     [_mainScroll setContentSize:CGSizeMake(FULLWIDTH,  465.0/480.0*FULLHEIGHT)];
+    [_mainScroll setContentSize:CGSizeMake(FULLWIDTH,  465.0/480.0*FULLHEIGHT)];
     
-   
+    
     
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
- [self loadData];
+    [self loadData];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -98,14 +98,14 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 - (IBAction)Test:(id)sender
 {
@@ -123,17 +123,17 @@
     
     ipc.allowsEditing=YES;
     
-
-
+    
+    
     
     if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
         
     {
         
         ipc.sourceType = UIImagePickerControllerSourceTypeCamera;
-                                                   ipc.videoQuality = UIImagePickerControllerQualityTypeMedium;
-                                                   ipc.videoMaximumDuration = 60;
-                                                   ipc.mediaTypes = [[NSArray alloc] initWithObjects: (NSString *) kUTTypeMovie, nil];
+        ipc.videoQuality = UIImagePickerControllerQualityTypeMedium;
+        ipc.videoMaximumDuration = 60;
+        ipc.mediaTypes = [[NSArray alloc] initWithObjects: (NSString *) kUTTypeMovie, nil];
         [self presentViewController:ipc animated:YES completion:^{
             
             
@@ -151,7 +151,7 @@
         
         
     }
-
+    
 }
 - (IBAction)galleryClicked:(id)sender {
     ipc = [[UIImagePickerController alloc] init];
@@ -161,15 +161,15 @@
     ipc.allowsEditing=YES;
     
     ipc.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
-                                            ipc.videoQuality = UIImagePickerControllerQualityTypeMedium;
-                                            ipc.videoMaximumDuration = 60;
-                                            ipc.mediaTypes = [[NSArray alloc] initWithObjects: (NSString *) kUTTypeMovie, nil];
+    ipc.videoQuality = UIImagePickerControllerQualityTypeMedium;
+    ipc.videoMaximumDuration = 60;
+    ipc.mediaTypes = [[NSArray alloc] initWithObjects: (NSString *) kUTTypeMovie, nil];
     [self presentViewController:ipc animated:YES completion:^{
         
         
     }];
-
-
+    
+    
 }
 
 
@@ -194,8 +194,8 @@
             }
             else  if ([mediaType isEqualToString:(NSString *)kUTTypeMovie])
             {
-                NSURL *urlvideo = [info objectForKey:UIImagePickerControllerMediaURL];
-      
+                NSURL *urlvideo = [info objectForKey:UIImagePickerControllerReferenceURL];
+                
                 
                 PHFetchResult *refResult = [PHAsset fetchAssetsWithALAssetURLs:@[urlvideo] options:nil];
                 PHVideoRequestOptions *videoRequestOptions = [[PHVideoRequestOptions alloc] init];
@@ -205,84 +205,87 @@
                 [[PHImageManager defaultManager] requestAVAssetForVideo:[refResult firstObject] options:videoRequestOptions resultHandler:^(AVAsset *asset, AVAudioMix *audioMix, NSDictionary *info) {
                     if ([asset isKindOfClass:[AVURLAsset class]]) {
                         NSURL *compressedUrl = [(AVURLAsset *)asset URL];
-                       videoData = [NSData dataWithContentsOfURL:[NSURL fileURLWithPath:[compressedUrl path]]];
+                        videoData = [NSData dataWithContentsOfURL:[NSURL fileURLWithPath:[compressedUrl path]]];
                         
                         
-                        [_loadingView setHidden:NO];
-                        
-                        
-                        AVURLAsset *asset=[[AVURLAsset alloc] initWithURL:compressedUrl options:nil];
-                        AVAssetImageGenerator *generator = [[AVAssetImageGenerator alloc] initWithAsset:asset];
-                        generator.appliesPreferredTrackTransform=TRUE;
-                        
-                        CMTime thumbTime = CMTimeMakeWithSeconds(0,30);
-                        
-                        
-                        
-                        AVAssetImageGeneratorCompletionHandler handler = ^(CMTime requestedTime, CGImageRef im, CMTime actualTime, AVAssetImageGeneratorResult result, NSError *error){
-                            if (result != AVAssetImageGeneratorSucceeded) {
-                                DebugLog(@"couldn't generate thumbnail, error:%@", error);
-                                
-                                
-                                
-                                // [SVProgressHUD showInfoWithStatus:@"Something went wrong"];
-                                
-                            }
+                        dispatch_async(dispatch_get_main_queue(), ^{
                             
-                            imageData = UIImagePNGRepresentation([UIImage imageWithCGImage:im]);
+                            [_loadingView setHidden:NO];
                             
-                            if ( imageData!=nil )
-                            {
-                                // selectedImage=[UIImage imageWithCGImage:im];
-                                
-                                videoPicked=true;
-                                
-                                [_videoThumb setImage:[UIImage imageWithCGImage:im]];
-                                
-                                
-                                _videoThumb.contentMode = UIViewContentModeScaleAspectFill;
-                                _videoThumb.clipsToBounds = YES;
-                                
-                                
-                                [_optionView setHidden:YES];
-                                [_loadingView setHidden:YES];
-                                
-                                
-                                [_uploadBtn setUserInteractionEnabled:YES];
-                                
-                                
-                                
-                                [SVProgressHUD dismiss];
-                            }
-                            else{
-                                
-                                [SVProgressHUD showInfoWithStatus:@"Something went wrong"];
-                                
-                            }
+                            
+                            AVURLAsset *asset=[[AVURLAsset alloc] initWithURL:compressedUrl options:nil];
+                            AVAssetImageGenerator *generator = [[AVAssetImageGenerator alloc] initWithAsset:asset];
+                            generator.appliesPreferredTrackTransform=TRUE;
+                            
+                            CMTime thumbTime = CMTimeMakeWithSeconds(0,30);
                             
                             
                             
-                        };
+                            AVAssetImageGeneratorCompletionHandler handler = ^(CMTime requestedTime, CGImageRef im, CMTime actualTime, AVAssetImageGeneratorResult result, NSError *error){
+                                if (result != AVAssetImageGeneratorSucceeded) {
+                                    DebugLog(@"couldn't generate thumbnail, error:%@", error);
+                                    
+                                    
+                                    
+                                    // [SVProgressHUD showInfoWithStatus:@"Something went wrong"];
+                                    
+                                }
+                                
+                                imageData = UIImagePNGRepresentation([UIImage imageWithCGImage:im]);
+                                
+                                if ( imageData!=nil )
+                                {
+                                    // selectedImage=[UIImage imageWithCGImage:im];
+                                    
+                                    videoPicked=true;
+                                    
+                                    [_videoThumb setImage:[UIImage imageWithCGImage:im]];
+                                    
+                                    
+                                    _videoThumb.contentMode = UIViewContentModeScaleAspectFill;
+                                    _videoThumb.clipsToBounds = YES;
+                                    
+                                    
+                                    [_optionView setHidden:YES];
+                                    [_loadingView setHidden:YES];
+                                    
+                                    
+                                    [_uploadBtn setUserInteractionEnabled:YES];
+                                    
+                                    
+                                    
+                                    [SVProgressHUD dismiss];
+                                }
+                                else{
+                                    
+                                    [SVProgressHUD showInfoWithStatus:@"Something went wrong"];
+                                    
+                                }
+                                
+                                
+                                
+                            };
+                            
+                            CGSize maxSize = CGSizeMake(320, 180);
+                            generator.maximumSize = maxSize;
+                            [generator generateCGImagesAsynchronouslyForTimes:[NSArray arrayWithObject:[NSValue valueWithCMTime:thumbTime]] completionHandler:handler];
+                            
+                            
+                        });
                         
-                        CGSize maxSize = CGSizeMake(320, 180);
-                        generator.maximumSize = maxSize;
-                        [generator generateCGImagesAsynchronouslyForTimes:[NSArray arrayWithObject:[NSValue valueWithCMTime:thumbTime]] completionHandler:handler];
                         
-                        
-                        
-                        
-                    }   
+                    }
                 }];
                 
                 
                 
                 
                 
-
                 
                 
                 
-
+                
+                
                 
             }
             
@@ -330,19 +333,19 @@
 {
     
     [picker dismissViewControllerAnimated:YES completion:^{
-     
-            [_uploadBtn setUserInteractionEnabled:YES];
-         
-   
         
-          }];
+        [_uploadBtn setUserInteractionEnabled:YES];
+        
+        
+        
+    }];
     
     
 }
 
 - (IBAction)selectClicked:(id)sender {
     
-   // selected=true;
+    // selected=true;
     
     if (langPickerOpen) {
         [_jokeLang setText:[langArr objectAtIndex:rowSelected]];
@@ -352,14 +355,14 @@
         DebugLog(@"%@",[codeArr objectAtIndex:rowSelected]);
     }
     else if (catPickerOpen) {
-    
+        
         [_categoryLbl setText:[[categoryArr objectAtIndex:rowSelected] objectForKey:@"name"]];
         
         categorySelected=[[categoryArr objectAtIndex:rowSelected] objectForKey:@"id"];
         
         
     }
-
+    
     
     
     [_pickerView setHidden:YES];
@@ -381,9 +384,9 @@
 -(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
 {
     if (langPickerOpen) {
-         return langArr.count;
+        return langArr.count;
     }
-   
+    
     else if(catPickerOpen)
     {
         return categoryArr.count;
@@ -402,7 +405,7 @@
         pickerLabel.font = [UIFont fontWithName:@"ComicSansMS-Bold" size:24];
         
         if (langPickerOpen) {
-                    [pickerLabel setText:[langArr objectAtIndex:row]];
+            [pickerLabel setText:[langArr objectAtIndex:row]];
         }
         else if (catPickerOpen) {
             [pickerLabel setText:[[categoryArr objectAtIndex:row] objectForKey:@"name"]];
@@ -458,22 +461,22 @@
     langPickerOpen=false;
     [_pickerView setHidden:NO];
     
-
+    
     
     [_languagePicker reloadAllComponents];
 }
 - (IBAction)warnCancelled:(id)sender {
     
-       [_warningView setHidden:YES];
+    [_warningView setHidden:YES];
 }
 - (IBAction)warnOkClicked:(id)sender {
-          [_warningView setHidden:YES];
+    [_warningView setHidden:YES];
     
     [self fireUrl];
     
 }
 - (IBAction)crossClicked:(id)sender {
-          [_warningView setHidden:YES];
+    [_warningView setHidden:YES];
 }
 
 -(void)fireUrl
@@ -488,7 +491,7 @@
     else if ([self textFieldBlankorNot:categorySelected]) {
         [SVProgressHUD showInfoWithStatus:@"Select joke Category"];
     }
-
+    
     else if (!videoPicked) {
         [SVProgressHUD showInfoWithStatus:@"Please select a video to continue"];
     }
@@ -512,18 +515,18 @@
             
             
             
-//            NSData *imageData =  UIImagePNGRepresentation(selectedImage);
+            //            NSData *imageData =  UIImagePNGRepresentation(selectedImage);
             
             NSString  *encodedImgString = [self base64forData:imageData];
             
-                        NSString  *encodedVidString = [self base64forData:videoData];
+            NSString  *encodedVidString = [self base64forData:videoData];
             
             NSURL *url;
             
             
-        
-                url =[NSURL URLWithString:[NSString stringWithFormat:@"%@%@Video/AddVideo",GLOBALAPI,INDEX]];
-         
+            
+            url =[NSURL URLWithString:[NSString stringWithFormat:@"%@%@Video/AddVideo",GLOBALAPI,INDEX]];
+            
             
             
             // configure the request
@@ -533,10 +536,10 @@
             
             
             
-     
             
-       
-             NSString *sendData = @"user_id=";
+            
+            
+            NSString *sendData = @"user_id=";
             sendData = [sendData stringByAppendingString:[NSString stringWithFormat:@"%@", app.userId]];
             
             
@@ -600,32 +603,32 @@
                         
                         if ([[jsonResponse objectForKey:@"status_code"]intValue]==406) {
                             
-//                            app.userId=@"";
-//                            
-//                            app.authToken=@"";
-//                            
-//                          
-//                            
-//                            NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
-//                            [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
-//                            
-//                            
-//                            
-//                            ADLoginViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"ADLogin"];
-//                            VC.forcedToLogin=true;
-//                            [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
+                            //                            app.userId=@"";
+                            //
+                            //                            app.authToken=@"";
+                            //
+                            //
+                            //
+                            //                            NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
+                            //                            [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
+                            //
+                            //
+                            //
+                            //                            ADLoginViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"ADLogin"];
+                            //                            VC.forcedToLogin=true;
+                            //                            [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
                             
                         }
                         else
                             if ([[jsonResponse objectForKey:@"code"]intValue]==200) {
                                 
-                              
+                                
                                 
                                 [SVProgressHUD showInfoWithStatus:@"Video uploaded Successfully"];
                                 
-                         [self performSelector:@selector(loadProfile) withObject:nil afterDelay:3.0];
-                          
-                              
+                                [self performSelector:@selector(loadProfile) withObject:nil afterDelay:3.0];
+                                
+                                
                                 
                                 
                                 
@@ -668,14 +671,14 @@
         
     }
     
-
-
+    
+    
 }
 
 -(void)loadProfile
 {
     JMHomeViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMHomeViewController"];
- 
+    
     
     [self.navigationController pushViewController:VC animated:kCAMediaTimingFunctionEaseIn];
 }
@@ -701,7 +704,7 @@
         
         NSLog(@"Url String..%@",url);
         
-       
+        
         
         
         NSURLSessionConfiguration *sessionConfig = [NSURLSessionConfiguration defaultSessionConfiguration];
@@ -766,7 +769,7 @@
                         }
                         
                         if (langArr.count>0) {
-                             [_langBtn setUserInteractionEnabled:YES];
+                            [_langBtn setUserInteractionEnabled:YES];
                         }
                         else{
                             
@@ -902,11 +905,11 @@
                         
                         
                         
-                  
+                        
                         
                         if (categoryArr.count>0) {
                             
-                             [_langBtn setUserInteractionEnabled:YES];
+                            [_langBtn setUserInteractionEnabled:YES];
                             //[_languagePicker reloadAllComponents];
                         }
                         else{
@@ -943,7 +946,7 @@
             }
             
             
-        
+            
             
             
             
@@ -964,13 +967,13 @@
     }
     
     
-
+    
 }
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [textField resignFirstResponder];
-   
- 
+    
+    
     return YES;
 }
 
