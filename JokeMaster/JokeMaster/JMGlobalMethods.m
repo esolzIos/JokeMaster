@@ -3243,7 +3243,7 @@
                             NSString *countryImage=[prefs valueForKey:@"flag"];
                              NSString *countrySelected=[prefs valueForKey:@"countryId"];
                              NSString *langSelected=[prefs valueForKey:@"langId"];
-                            BOOL homevisited=[prefs boolForKey:@"HomeVisied"];
+                            BOOL homevisited=[prefs boolForKey:@"HomeVisited"];
                             
                             deviceToken=[prefs valueForKey:@"deviceToken"];
                         NSString     *flagImage=[prefs valueForKey:@"deviceToken"];
@@ -3257,7 +3257,7 @@
                             [[NSUserDefaults standardUserDefaults ]setObject:countryImage forKey:@"flag"];
                             [[NSUserDefaults standardUserDefaults ]setObject:countrySelected forKey:@"countryId"];
                             [[NSUserDefaults standardUserDefaults ]setObject:langSelected forKey:@"langId"];
-                            [[NSUserDefaults standardUserDefaults] setBool:homevisited forKey:@"HomeVisied"];
+                            [[NSUserDefaults standardUserDefaults] setBool:homevisited forKey:@"HomeVisited"];
                             
                 JMGlobalMethods *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMHomeViewController"];
                             

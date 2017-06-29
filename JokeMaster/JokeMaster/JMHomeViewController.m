@@ -34,6 +34,12 @@
     
     [_recentBtn.titleLabel setFont:[UIFont fontWithName:_recentBtn.titleLabel.font.fontName size:[self getFontSize:_recentBtn.titleLabel.font.pointSize]]];
     
+    [_VideoNameLabel setFont:[UIFont fontWithName:_VideoNameLabel.font.fontName size:[self getFontSize:_VideoNameLabel.font.pointSize]]];
+    
+    [_VideoCreaterNameLabel setFont:[UIFont fontWithName:_VideoCreaterNameLabel.font.fontName size:[self getFontSize:_VideoCreaterNameLabel.font.pointSize]]];
+    
+    [_VideoRatingLabel setFont:[UIFont fontWithName:_VideoRatingLabel.font.fontName size:[self getFontSize:_VideoRatingLabel.font.pointSize]]];
+    
     
     [_jokeTitle setText:AMLocalizedString(@"JOKE OF THE DAY", nil)];
     
