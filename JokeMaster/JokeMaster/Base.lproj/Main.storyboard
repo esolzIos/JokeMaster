@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" colorMatched="YES" initialViewController="aJH-Kf-IIM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" colorMatched="YES" initialViewController="aJH-Kf-IIM">
     <device id="retina3_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -920,7 +920,7 @@
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <view contentMode="scaleToFill" id="u5S-UH-xlv">
+                                            <view hidden="YES" contentMode="scaleToFill" id="u5S-UH-xlv">
                                                 <rect key="frame" x="0.0" y="27" width="320" height="210"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                 <subviews>
@@ -1024,27 +1024,27 @@
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <view contentMode="scaleToFill" id="VJI-t4-khx">
+                                                    <view contentMode="scaleToFill" id="VJI-t4-khx" customClass="HCSStarRatingView">
                                                         <rect key="frame" x="189" y="164" width="82" height="21"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                         <subviews>
-                                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="emotion2" id="71N-qr-tCJ">
+                                                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="emotion2" id="71N-qr-tCJ">
                                                                 <rect key="frame" x="0.0" y="4" width="15" height="15"/>
                                                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                             </imageView>
-                                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="emotion2" id="s6d-2E-QPP">
+                                                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="emotion2" id="s6d-2E-QPP">
                                                                 <rect key="frame" x="16" y="4" width="15" height="15"/>
                                                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                             </imageView>
-                                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="emotion2" id="7mx-Vq-Qjy">
+                                                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="emotion2" id="7mx-Vq-Qjy">
                                                                 <rect key="frame" x="32" y="3" width="15" height="15"/>
                                                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                             </imageView>
-                                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="emotion2" id="CyB-SZ-4fW">
+                                                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="emotion2" id="CyB-SZ-4fW">
                                                                 <rect key="frame" x="48" y="3" width="15" height="15"/>
                                                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                             </imageView>
-                                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="emotion1" id="WZf-Sr-JBJ">
+                                                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="emotion1" id="WZf-Sr-JBJ">
                                                                 <rect key="frame" x="63" y="2" width="15" height="15"/>
                                                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                             </imageView>
@@ -1194,6 +1194,10 @@
                     <connections>
                         <outlet property="HeaderView" destination="br6-Ux-Isa" id="1cC-Hn-yD0"/>
                         <outlet property="MainView" destination="FOC-pQ-AQn" id="gQ6-Yl-334"/>
+                        <outlet property="VideoCreaterNameLabel" destination="sEb-zI-UZT" id="NJa-sx-mdK"/>
+                        <outlet property="VideoNameLabel" destination="tbP-Fd-m93" id="sf2-Gi-QLc"/>
+                        <outlet property="VideoRatingLabel" destination="n72-mF-cVu" id="3V9-RV-Ptb"/>
+                        <outlet property="VideoRatingView" destination="VJI-t4-khx" id="MKh-5j-XKQ"/>
                         <outlet property="categoryBtn" destination="Xer-gN-1E1" id="f18-uY-j9N"/>
                         <outlet property="categoryBtnView" destination="1vG-Jw-iVg" id="HO1-CT-LnL"/>
                         <outlet property="categoryBtnlbl" destination="HqO-H2-ILc" id="ukD-WZ-tqy"/>
@@ -1485,7 +1489,7 @@
                                                 <rect key="frame" x="0.0" y="27" width="320" height="210"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                 <subviews>
-                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="smiling" id="y1J-9W-Xqr">
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="noimage" id="y1J-9W-Xqr">
                                                         <rect key="frame" x="29" y="16" width="260" height="166"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -1640,27 +1644,27 @@
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <view contentMode="scaleToFill" id="MOJ-jU-ByC">
+                                            <view hidden="YES" contentMode="scaleToFill" id="MOJ-jU-ByC" customClass="HCSStarRatingView">
                                                 <rect key="frame" x="224" y="242" width="82" height="21"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                 <subviews>
-                                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="emotion2" id="QSq-Ob-90A">
+                                                    <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="emotion2" id="QSq-Ob-90A">
                                                         <rect key="frame" x="0.0" y="4" width="15" height="15"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                     </imageView>
-                                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="emotion2" id="fnM-UY-WkN">
+                                                    <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="emotion2" id="fnM-UY-WkN">
                                                         <rect key="frame" x="16" y="4" width="15" height="15"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                     </imageView>
-                                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="emotion2" id="NcI-AP-6ET">
+                                                    <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="emotion2" id="NcI-AP-6ET">
                                                         <rect key="frame" x="32" y="4" width="15" height="15"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                     </imageView>
-                                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="emotion2" id="4hs-yI-rq0">
+                                                    <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="emotion2" id="4hs-yI-rq0">
                                                         <rect key="frame" x="48" y="4" width="15" height="15"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                     </imageView>
-                                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="emotion1" id="J6q-Za-oMh">
+                                                    <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="emotion1" id="J6q-Za-oMh">
                                                         <rect key="frame" x="63" y="4" width="15" height="15"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                     </imageView>
@@ -1782,7 +1786,7 @@
                                                         <rect key="frame" x="0.0" y="1" width="320" height="100"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="l7j-Xx-Wml" id="Gk0-vs-OnH">
-                                                            <rect key="frame" x="0.0" y="0.0" width="320" height="99"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="320" height="99.5"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ALEX MONDAL" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="2wF-UW-3d0">
@@ -1912,6 +1916,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
+                        <outlet property="VideoNameLabel" destination="Yr2-xr-7NG" id="czd-dG-vDJ"/>
                         <outlet property="commentTitle" destination="cyk-hf-69g" id="h40-N6-hdx"/>
                         <outlet property="commentView" destination="yhb-FD-0Td" id="h5U-ab-YD4"/>
                         <outlet property="crossBtn" destination="bmb-eN-Azq" id="VRm-Db-aTp"/>
@@ -3655,6 +3660,7 @@
         <image name="like" width="61" height="55"/>
         <image name="maximise" width="27" height="20"/>
         <image name="no-image" width="96" height="93"/>
+        <image name="noimage" width="137" height="94"/>
         <image name="overlay-bg" width="621" height="635"/>
         <image name="pause" width="16" height="25"/>
         <image name="play" width="107" height="105"/>

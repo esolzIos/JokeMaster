@@ -11,7 +11,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "AVFoundation/AVFoundation.h"
 #import "JMGlobalMethods.h"
-
+#import "HCSStarRatingView.h"
 @interface JMPlayVideoViewController : JMGlobalMethods<UITableViewDelegate,UITableViewDataSource>
 @property (strong, nonatomic) IBOutlet UITableView *reviewTable;
 @property (strong, nonatomic) IBOutlet UIView *playerView;
@@ -42,7 +42,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *reviewsLbl;
 @property (strong, nonatomic) IBOutlet UIView *commentView;
 @property (strong, nonatomic) IBOutlet UILabel *commentTitle;
-@property (strong, nonatomic) IBOutlet UIView *ratingView;
+@property (weak, nonatomic) IBOutlet HCSStarRatingView *ratingView;
 @property (strong, nonatomic) IBOutlet UIImageView *rating1;
 @property (strong, nonatomic) IBOutlet UIImageView *rating2;
 @property (strong, nonatomic) IBOutlet UIImageView *rating3;
@@ -74,5 +74,7 @@
 @property (strong, nonatomic) IBOutlet UIView *rateView;
 @property (strong, nonatomic) IBOutlet UIButton *crossBtn;
 - (IBAction)crossClicked:(id)sender;
+@property (strong, nonatomic) NSMutableDictionary *VideoDictionary;
 
+@property (weak, nonatomic) IBOutlet UILabel *VideoNameLabel;
 @end

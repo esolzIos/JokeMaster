@@ -8,10 +8,14 @@
 
 #import "JMGlobalMethods.h"
 #import "JokeCollectionViewCell.h"
+#import "UrlconnectionObject.h"
+#import "HCSStarRatingView.h"
 @interface JMHomeViewController : JMGlobalMethods<UICollectionViewDelegate,UICollectionViewDataSource,UIScrollViewDelegate>
 {
     float MenuViewY;
     NSMutableArray *CategoryArray;
+    UrlconnectionObject *urlobj;
+    NSMutableArray *RecentVideoArray;
 }
 @property (strong, nonatomic) IBOutlet UIScrollView *mainScroll;
 @property (strong, nonatomic) IBOutlet UILabel *jokeTitle;
@@ -57,4 +61,8 @@
 @property (strong, nonatomic) IBOutlet UIButton *crossBtn;
 - (IBAction)crossClicked:(id)sender;
 
+@property (weak, nonatomic) IBOutlet UILabel *VideoNameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *VideoCreaterNameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *VideoRatingLabel;
+@property (weak, nonatomic) IBOutlet HCSStarRatingView *VideoRatingView;
 @end

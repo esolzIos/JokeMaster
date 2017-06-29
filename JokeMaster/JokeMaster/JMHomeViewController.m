@@ -53,6 +53,12 @@
     
     
     // Do any additional setup after loading the view.
+    
+    urlobj=[[UrlconnectionObject alloc] init];
+    
+    RecentVideoArray=[[NSMutableArray alloc] init];
+    
+    [self RecentVideoApi];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -99,7 +105,7 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return 10;
+    return [RecentVideoArray count];
     
 }
 
@@ -107,6 +113,8 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath;
 {
     JokeCollectionViewCell *ccell = [collectionView dequeueReusableCellWithReuseIdentifier:@"jokeCell" forIndexPath:indexPath];
+    
+    [ccell.jokeThumb sd_setImageWithURL:[NSURL URLWithString:[[RecentVideoArray objectAtIndex:indexPath.row]objectForKey:@"videoimagename"]] placeholderImage:[UIImage imageNamed: @"noimage"]];
     
     return ccell;
 }
@@ -211,7 +219,7 @@
     [_optionView setHidden:YES];
     [_ratingImage.layer removeAllAnimations];
     JMPlayVideoViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMPlayVideoViewController"];
-    
+     VC.VideoDictionary=[RecentVideoArray objectAtIndex:0];
     [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
 }
 - (IBAction)shareClicked:(id)sender {
@@ -248,5 +256,126 @@
     
     [_ratingView setHidden:YES];
     
+}
+#pragma mark -Recent Video list API
+-(void)RecentVideoApi
+{
+    
+    
+    BOOL net=[urlobj connectedToNetwork];
+    if (net==YES)
+    {
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+            
+            self.view.userInteractionEnabled = NO;
+            [self checkLoader];
+        }];
+        [[NSOperationQueue new] addOperationWithBlock:^{
+            
+            NSString *urlString;
+            
+            
+            urlString=[NSString stringWithFormat:@"%@index.php/Videolisting?pageno=1&limit=10",GLOBALAPI];
+            
+            
+            
+            urlString=[urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+            
+            DebugLog(@"Send string Url%@",urlString);
+            
+            
+            
+            
+            [urlobj getSessionJsonResponse:urlString  success:^(NSDictionary *responseDict)
+             {
+                 
+                 DebugLog(@"success %@ Status Code:%ld",responseDict,(long)urlobj.statusCode);
+                 
+                 
+                 self.view.userInteractionEnabled = YES;
+                 //  [self checkLoader];
+                 
+                 if (urlobj.statusCode==200)
+                 {
+                     if ([[NSString stringWithFormat:@"%@",[responseDict objectForKey:@"status"]] isEqualToString:@"Success"])
+                     {
+                         RecentVideoArray=[[responseDict objectForKey:@"details"] mutableCopy];
+                         
+                         
+                         if (RecentVideoArray.count>0)
+                         {
+                             _tvView.hidden=NO;
+                             _tutorialView.hidden=NO;
+                             
+                             _VideoNameLabel.text=[[RecentVideoArray objectAtIndex:0]objectForKey:@"videoname"];
+                             _VideoCreaterNameLabel.text=[[RecentVideoArray objectAtIndex:0]objectForKey:@"username"];
+                             _VideoRatingLabel.text=[NSString stringWithFormat:@"%@/5",[[RecentVideoArray objectAtIndex:0]objectForKey:@"rating"]];
+                             
+                             
+                             _VideoRatingView.maximumValue = 5;
+                             _VideoRatingView.minimumValue = 0;
+                             _VideoRatingView.value =[[[RecentVideoArray objectAtIndex:0]objectForKey:@"rating"] floatValue];
+                             _VideoRatingView.userInteractionEnabled=NO;
+                             //    _RatingView.tintColor = [UIColor clearColor];
+                             _VideoRatingView.allowsHalfStars = YES;
+                             _VideoRatingView.emptyStarImage = [[UIImage imageNamed:@"emotion"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+                             _VideoRatingView.filledStarImage = [[UIImage imageNamed:@"emotion2"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+                             
+                             
+                             [_videoThumb sd_setImageWithURL:[NSURL URLWithString:[[RecentVideoArray objectAtIndex:0]objectForKey:@"videoimagename"]] placeholderImage:[UIImage imageNamed: @"noimage"]];
+                             
+                             [_jokeCollectionView reloadData];
+                         }
+                         
+                     }
+                     else
+                     {
+                         _tvView.hidden=YES;
+                         _tutorialView.hidden=YES;
+                         
+                         [SVProgressHUD showInfoWithStatus:[responseDict objectForKey:@"message"]];
+                         
+                     }
+                     
+                 }
+                 else if (urlobj.statusCode==500 || urlobj.statusCode==400)
+                 {
+                     //                     [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Server Failed to Respond" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
+                     _tvView.hidden=YES;
+                     _tutorialView.hidden=YES;
+                     
+                     [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Server Failed to Respond",nil)];
+                     
+                 }
+                 else
+                 {
+                     //                     [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Server Failed to Respond" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
+                     _tvView.hidden=YES;
+                     _tutorialView.hidden=YES;
+                     [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Server Failed to Respond",nil)];
+                 }
+                 
+             }
+                                   failure:^(NSError *error) {
+                                       
+                                       // [self checkLoader];
+                                       self.view.userInteractionEnabled = YES;
+                                       _tutorialView.hidden=YES;
+                                       NSLog(@"Failure");
+                                       //                                       [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Server Failed to Respond" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
+                                       _tvView.hidden=YES;
+                                       [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Server Failed to Respond",nil)];
+                                       
+                                   }
+             ];
+        }];
+    }
+    else
+    {
+        _tvView.hidden=YES;
+        _tutorialView.hidden=YES;
+        [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
+        
+    }
 }
 @end

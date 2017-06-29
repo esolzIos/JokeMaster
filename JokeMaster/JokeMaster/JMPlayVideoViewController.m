@@ -24,11 +24,11 @@ AVPlayer *player;
 @end
 
 @implementation JMPlayVideoViewController
-
+@synthesize VideoDictionary;
 -(void)viewDidAppear:(BOOL)animated
 {
     
-   
+   DebugLog(@"video details %@",VideoDictionary);
 
       if (inFullscreen) {
         [_optionView setHidden:NO];
@@ -72,7 +72,24 @@ AVPlayer *player;
     }
     else{
         
-        NSURL *videoURL = [NSURL URLWithString:@"http://clips.vorwaerts-gmbh.de/VfE_html5.mp4"];
+        _VideoNameLabel.text=[VideoDictionary objectForKey:@"videoname"];
+        _ratingLbl.text=[NSString stringWithFormat:@"%@/5",[VideoDictionary objectForKey:@"rating"]];
+        
+        
+        _ratingView.maximumValue = 5;
+        _ratingView.minimumValue = 0;
+        _ratingView.value =[[VideoDictionary objectForKey:@"rating"] floatValue];
+        _ratingView.userInteractionEnabled=NO;
+        //    _RatingView.tintColor = [UIColor clearColor];
+        _ratingView.allowsHalfStars = YES;
+        _ratingView.emptyStarImage = [[UIImage imageNamed:@"emotion"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+        _ratingView.filledStarImage = [[UIImage imageNamed:@"emotion2"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+        _ratingView.hidden=NO;
+        
+        [_videoThumb sd_setImageWithURL:[NSURL URLWithString:[VideoDictionary objectForKey:@"videoimagename"]] placeholderImage:[UIImage imageNamed: @"noimage"]];
+        
+        //   NSURL *videoURL = [NSURL URLWithString:@"http://clips.vorwaerts-gmbh.de/VfE_html5.mp4"];
+        NSURL *videoURL = [NSURL URLWithString:[VideoDictionary objectForKey:@"video_file"]];
         
         
         AVPlayerItem *item = [AVPlayerItem playerItemWithURL:videoURL];
@@ -146,6 +163,24 @@ AVPlayer *player;
       [self setRoundCornertoView:_playerView withBorderColor:[UIColor clearColor] WithRadius:0.15];
 
     // Do any additional setup after loading the view.
+    
+    _VideoNameLabel.text=[VideoDictionary objectForKey:@"videoname"];
+    _ratingLbl.text=[NSString stringWithFormat:@"%@/5",[VideoDictionary objectForKey:@"rating"]];
+    
+    
+    _ratingView.maximumValue = 5;
+    _ratingView.minimumValue = 0;
+    _ratingView.value =[[VideoDictionary objectForKey:@"rating"] floatValue];
+    _ratingView.userInteractionEnabled=NO;
+    //    _RatingView.tintColor = [UIColor clearColor];
+    _ratingView.allowsHalfStars = YES;
+    _ratingView.emptyStarImage = [[UIImage imageNamed:@"emotion"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    _ratingView.filledStarImage = [[UIImage imageNamed:@"emotion2"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    _ratingView.hidden=NO;
+    
+    [_videoThumb sd_setImageWithURL:[NSURL URLWithString:[VideoDictionary objectForKey:@"videoimagename"]] placeholderImage:[UIImage imageNamed: @"noimage"]];
+    
+    _seekSlider.value = 0.0;
 }
 
 
@@ -411,5 +446,10 @@ AVPlayer *player;
     
     [_rateView setHidden:YES];
     
+}
+#pragma mark - status bar white color
+- (UIStatusBarStyle)preferredStatusBarStyle
+{
+    return UIStatusBarStyleLightContent;
 }
 @end
