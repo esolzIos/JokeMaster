@@ -99,7 +99,7 @@
     
     cell.CategoryNameLabel.text = [[[CategoryArray objectAtIndex:indexPath.row]objectForKey:@"name"] uppercaseString];
     //
-    [cell.VideoThumpnailImage sd_setImageWithURL:[NSURL URLWithString:[[CategoryArray objectAtIndex:indexPath.row]objectForKey:@"image"]] placeholderImage:[UIImage imageNamed: @"NoJob"]];
+    [cell.VideoThumpnailImage sd_setImageWithURL:[NSURL URLWithString:[[CategoryArray objectAtIndex:indexPath.row]objectForKey:@"image"]] placeholderImage:[UIImage imageNamed: @"noimage"]];
     
     cell.VideoThumpnailImage.layer.cornerRadius=12.0;
     cell.VideoThumpnailImage.clipsToBounds=YES;

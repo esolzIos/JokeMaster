@@ -181,6 +181,9 @@ AVPlayer *player;
     [_videoThumb sd_setImageWithURL:[NSURL URLWithString:[VideoDictionary objectForKey:@"videoimagename"]] placeholderImage:[UIImage imageNamed: @"noimage"]];
     
     _seekSlider.value = 0.0;
+    
+    paused=true;
+    [_playPauseImg setImage:[UIImage imageNamed:@"play-1"]];
 }
 
 

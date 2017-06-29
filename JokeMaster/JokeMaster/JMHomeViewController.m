@@ -59,6 +59,8 @@
     RecentVideoArray=[[NSMutableArray alloc] init];
     
     [self RecentVideoApi];
+    
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -80,6 +82,7 @@
 {
     return UIStatusBarStyleLightContent;
 }
+#pragma mark - Category button click
 - (IBAction)categoryClicked:(id)sender
 {
     //    _TransparentView.hidden=NO;
@@ -122,7 +125,7 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     JMPlayVideoViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMPlayVideoViewController"];
-    
+    VC.VideoDictionary=[RecentVideoArray objectAtIndex:indexPath.row];
     [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
     
 }
@@ -144,12 +147,13 @@
     // Adjust cell size for orientation
     return CGSizeMake(125.0f/320.0*FULLWIDTH, 90.0f/480.0*FULLHEIGHT);
 }
-
+#pragma mark - tutorial view click
 - (IBAction)tutorialClicked:(id)sender {
     
     [_tutorialView setHidden:YES];
     
 }
+#pragma mark - recent button click
 - (IBAction)recentClicked:(id)sender {
     
     JMRecentlyUploadedViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMRecentlyUploadedViewController"];
@@ -213,6 +217,7 @@
     //  [_ratingImage.layer removeAllAnimations];
     
 }
+#pragma mark - play button click
 - (IBAction)playClicked:(id)sender {
     
     
@@ -307,6 +312,19 @@
                              _tvView.hidden=NO;
                              _tutorialView.hidden=NO;
                              
+                             if ([[[NSUserDefaults standardUserDefaults] valueForKey:@"HomeVisited"] boolValue]==YES)
+                             {
+                                 _tutorialView.hidden=YES;
+                             }
+                             else
+                             {
+                                 _tutorialView.hidden=NO;
+                             }
+                             
+                             [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"HomeVisited"];
+                             
+                             
+                             
                              _VideoNameLabel.text=[[RecentVideoArray objectAtIndex:0]objectForKey:@"videoname"];
                              _VideoCreaterNameLabel.text=[[RecentVideoArray objectAtIndex:0]objectForKey:@"username"];
                              _VideoRatingLabel.text=[NSString stringWithFormat:@"%@/5",[[RecentVideoArray objectAtIndex:0]objectForKey:@"rating"]];
@@ -332,6 +350,8 @@
                      {
                          _tvView.hidden=YES;
                          _tutorialView.hidden=YES;
+                         
+                         
                          
                          [SVProgressHUD showInfoWithStatus:[responseDict objectForKey:@"message"]];
                          
