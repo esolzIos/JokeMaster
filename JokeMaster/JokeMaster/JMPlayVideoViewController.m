@@ -88,8 +88,19 @@ AVPlayer *player;
         
         [_videoThumb sd_setImageWithURL:[NSURL URLWithString:[VideoDictionary objectForKey:@"videoimagename"]] placeholderImage:[UIImage imageNamed: @"noimage"]];
         
-        //   NSURL *videoURL = [NSURL URLWithString:@"http://clips.vorwaerts-gmbh.de/VfE_html5.mp4"];
-        NSURL *videoURL = [NSURL URLWithString:[VideoDictionary objectForKey:@"video_file"]];
+        NSURL *videoURL;
+        if ([VideoDictionary count] == 0)
+        {
+            _VideoNameLabel.text=@"FUNNY LINNA";
+            videoURL = [NSURL URLWithString:@"http://clips.vorwaerts-gmbh.de/VfE_html5.mp4"];
+            _ratingLbl.text=[NSString stringWithFormat:@"0/5"];
+        }
+        else
+        {
+            videoURL = [NSURL URLWithString:[VideoDictionary objectForKey:@"video_file"]];
+        }
+       
+        
         
         
         AVPlayerItem *item = [AVPlayerItem playerItemWithURL:videoURL];

@@ -16,8 +16,9 @@
 @interface JMRecentlyUploadedViewController : JMGlobalMethods<UICollectionViewDataSource,UICollectionViewDelegate>
 {
     float MenuViewY;
-    NSMutableArray *CategoryArray;
+    NSMutableArray *CategoryArray,*RecentVideoArray;
     UrlconnectionObject *urlobj;
+    NSInteger Page;
 }
 @property (weak, nonatomic) IBOutlet UIScrollView *MainScroll;
 
