@@ -408,11 +408,11 @@ AVPlayer *player;
     
 
 }
-
+#pragma mark - status bar white color
 - (IBAction)commentClicked:(id)sender {
     
     JMReviewViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMReview"];
-    
+    VC.VideoId=[VideoDictionary objectForKey:@"video_id"];
     [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
 }
 

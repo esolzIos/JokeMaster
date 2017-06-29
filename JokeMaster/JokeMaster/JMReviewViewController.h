@@ -7,8 +7,12 @@
 //
 
 #import "JMGlobalMethods.h"
-
-@interface JMReviewViewController : JMGlobalMethods
+#import "UrlconnectionObject.h"
+@interface JMReviewViewController : JMGlobalMethods<UITextViewDelegate>
+{
+    NSInteger Rate;
+    UrlconnectionObject *urlobj;
+}
 @property (strong, nonatomic) IBOutlet UIScrollView *mainScroll;
 @property (strong, nonatomic) IBOutlet UIView *rateView;
 @property (strong, nonatomic) IBOutlet UIView *oneView;
@@ -41,5 +45,6 @@
 - (IBAction)fourClicked:(id)sender;
 - (IBAction)fiveClicked:(id)sender;
 
+@property (strong, nonatomic) NSString *VideoId;
 
 @end
