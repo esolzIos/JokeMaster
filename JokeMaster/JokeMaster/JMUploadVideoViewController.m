@@ -16,6 +16,9 @@
 #import <AVFoundation/AVPlayerItem.h>
 #import <CoreMedia/CoreMedia.h>
 #import "JMHomeViewController.h"
+@import Photos;
+@import PhotosUI;
+
 @interface JMUploadVideoViewController ()<UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIPickerViewDelegate,UITextFieldDelegate>
 {
     UIImagePickerController *ipc;
@@ -192,72 +195,94 @@
             else  if ([mediaType isEqualToString:(NSString *)kUTTypeMovie])
             {
                 NSURL *urlvideo = [info objectForKey:UIImagePickerControllerMediaURL];
+      
                 
-                videoData = [NSData dataWithContentsOfURL:[NSURL fileURLWithPath:[urlvideo path]]];
+                PHFetchResult *refResult = [PHAsset fetchAssetsWithALAssetURLs:@[urlvideo] options:nil];
+                PHVideoRequestOptions *videoRequestOptions = [[PHVideoRequestOptions alloc] init];
+                videoRequestOptions.version = PHVideoRequestOptionsVersionCurrent;
+                videoRequestOptions.deliveryMode=PHVideoRequestOptionsDeliveryModeFastFormat;
+                
+                [[PHImageManager defaultManager] requestAVAssetForVideo:[refResult firstObject] options:videoRequestOptions resultHandler:^(AVAsset *asset, AVAudioMix *audioMix, NSDictionary *info) {
+                    if ([asset isKindOfClass:[AVURLAsset class]]) {
+                        NSURL *compressedUrl = [(AVURLAsset *)asset URL];
+                       videoData = [NSData dataWithContentsOfURL:[NSURL fileURLWithPath:[compressedUrl path]]];
+                        
+                        
+                        [_loadingView setHidden:NO];
+                        
+                        
+                        AVURLAsset *asset=[[AVURLAsset alloc] initWithURL:compressedUrl options:nil];
+                        AVAssetImageGenerator *generator = [[AVAssetImageGenerator alloc] initWithAsset:asset];
+                        generator.appliesPreferredTrackTransform=TRUE;
+                        
+                        CMTime thumbTime = CMTimeMakeWithSeconds(0,30);
+                        
+                        
+                        
+                        AVAssetImageGeneratorCompletionHandler handler = ^(CMTime requestedTime, CGImageRef im, CMTime actualTime, AVAssetImageGeneratorResult result, NSError *error){
+                            if (result != AVAssetImageGeneratorSucceeded) {
+                                DebugLog(@"couldn't generate thumbnail, error:%@", error);
+                                
+                                
+                                
+                                // [SVProgressHUD showInfoWithStatus:@"Something went wrong"];
+                                
+                            }
+                            
+                            imageData = UIImagePNGRepresentation([UIImage imageWithCGImage:im]);
+                            
+                            if ( imageData!=nil )
+                            {
+                                // selectedImage=[UIImage imageWithCGImage:im];
+                                
+                                videoPicked=true;
+                                
+                                [_videoThumb setImage:[UIImage imageWithCGImage:im]];
+                                
+                                
+                                _videoThumb.contentMode = UIViewContentModeScaleAspectFill;
+                                _videoThumb.clipsToBounds = YES;
+                                
+                                
+                                [_optionView setHidden:YES];
+                                [_loadingView setHidden:YES];
+                                
+                                
+                                [_uploadBtn setUserInteractionEnabled:YES];
+                                
+                                
+                                
+                                [SVProgressHUD dismiss];
+                            }
+                            else{
+                                
+                                [SVProgressHUD showInfoWithStatus:@"Something went wrong"];
+                                
+                            }
+                            
+                            
+                            
+                        };
+                        
+                        CGSize maxSize = CGSizeMake(320, 180);
+                        generator.maximumSize = maxSize;
+                        [generator generateCGImagesAsynchronouslyForTimes:[NSArray arrayWithObject:[NSValue valueWithCMTime:thumbTime]] completionHandler:handler];
+                        
+                        
+                        
+                        
+                    }   
+                }];
                 
                 
                 
-                [_loadingView setHidden:NO];
                 
                 
-                AVURLAsset *asset=[[AVURLAsset alloc] initWithURL:urlvideo options:nil];
-                AVAssetImageGenerator *generator = [[AVAssetImageGenerator alloc] initWithAsset:asset];
-                generator.appliesPreferredTrackTransform=TRUE;
-                
-                CMTime thumbTime = CMTimeMakeWithSeconds(0,30);
+
                 
                 
                 
-                AVAssetImageGeneratorCompletionHandler handler = ^(CMTime requestedTime, CGImageRef im, CMTime actualTime, AVAssetImageGeneratorResult result, NSError *error){
-                    if (result != AVAssetImageGeneratorSucceeded) {
-                        DebugLog(@"couldn't generate thumbnail, error:%@", error);
-                        
-                        
-                        
-                        // [SVProgressHUD showInfoWithStatus:@"Something went wrong"];
-                        
-                    }
-                    
-                imageData = UIImagePNGRepresentation([UIImage imageWithCGImage:im]);
-                    
-                    if ( imageData!=nil )
-                    {
-                        // selectedImage=[UIImage imageWithCGImage:im];
-                        
-                        videoPicked=true;
-                        
-                        [_videoThumb setImage:[UIImage imageWithCGImage:im]];
-                        
-                        
-                        _videoThumb.contentMode = UIViewContentModeScaleAspectFill;
-                        _videoThumb.clipsToBounds = YES;
-                        
-                        
-                        [_optionView setHidden:YES];
-                        [_loadingView setHidden:YES];
-                        
-                        
-                        [_uploadBtn setUserInteractionEnabled:YES];
-                        
-                    
-                        
-                        [SVProgressHUD dismiss];
-                    }
-                    else{
-                        
-                        [SVProgressHUD showInfoWithStatus:@"Something went wrong"];
-                        
-                    }
-                    
-                    
-                    
-                };
-                
-                CGSize maxSize = CGSizeMake(320, 180);
-                generator.maximumSize = maxSize;
-                [generator generateCGImagesAsynchronouslyForTimes:[NSArray arrayWithObject:[NSValue valueWithCMTime:thumbTime]] completionHandler:handler];
-                
-                
+
                 
             }
             

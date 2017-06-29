@@ -61,14 +61,17 @@
 [_languagePicker setDelegate:self];
     
     
-    [self loadData];
+  
     
     
 
 
     
 }
-
+-(void)viewDidAppear:(BOOL)animated
+{
+  [self loadData];
+}
 -(void)loadData
 {
     
