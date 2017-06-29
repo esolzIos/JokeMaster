@@ -178,7 +178,7 @@
     {
 
 
-        HeaderView.HeaderLabel.text=@"Profile";
+        HeaderView.HeaderLabel.text=@"My Channel";
 
     
         
@@ -3239,6 +3239,12 @@
                             
                             NSString *deviceToken;
                             NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+                            
+                            NSString *countryImage=[prefs valueForKey:@"flag"];
+                             NSString *countrySelected=[prefs valueForKey:@"countryId"];
+                             NSString *langSelected=[prefs valueForKey:@"langId"];
+                            
+                            
                             deviceToken=[prefs valueForKey:@"deviceToken"];
                         NSString     *flagImage=[prefs valueForKey:@"deviceToken"];
                             NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
@@ -3248,7 +3254,9 @@
                             [[NSUserDefaults standardUserDefaults] setObject:deviceToken  forKey:@"deviceToken"];
                               [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"loggedIn"];
                             
-                            LocalizationSetLanguage(@"en");
+                            [[NSUserDefaults standardUserDefaults ]setObject:countryImage forKey:@"flag"];
+                            [[NSUserDefaults standardUserDefaults ]setObject:countrySelected forKey:@"countryId"];
+                            [[NSUserDefaults standardUserDefaults ]setObject:langSelected forKey:@"langId"];
                             
                 JMGlobalMethods *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMHomeViewController"];
                             

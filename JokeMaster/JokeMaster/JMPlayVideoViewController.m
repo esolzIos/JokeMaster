@@ -16,7 +16,9 @@ AVPlayer *player;
     
     BOOL paused,inFullscreen,fontSet;
     
-    
+
+        BOOL liked;
+ 
     
 }
 @end
@@ -302,8 +304,17 @@ AVPlayer *player;
 }
 - (IBAction)likeClicked:(id)sender {
     
-    [_optionView setHidden:YES];
-     [_ratingImage.layer removeAllAnimations];
+    if (!liked) {
+        [_likeImage setImage:[UIImage imageNamed:@"like"]];
+        liked=true;
+        
+        
+    }
+    else{
+        [_likeImage setImage:[UIImage imageNamed:@"unlike"]];
+        
+        liked=false;
+    }
     
 }
 - (IBAction)playClicked:(id)sender {

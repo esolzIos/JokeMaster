@@ -17,6 +17,7 @@
 #import "JTSImageViewController.h"
 #import "JTSImageInfo.h"
 #import "UrlconnectionObject.h"
+#import "JMCategoryVideoListViewController.h"
 @interface JMProfileViewController ()<UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 {
 
@@ -142,7 +143,9 @@
 {
     
     
-    
+    JMCategoryVideoListViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMVideoList"];
+     VC.CategoryName=@"Animal";
+    [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
     
 }
 /*

@@ -15,7 +15,7 @@
 #import <AVFoundation/AVPlayer.h>
 #import <AVFoundation/AVPlayerItem.h>
 #import <CoreMedia/CoreMedia.h>
-#import "JMProfileViewController.h"
+#import "JMHomeViewController.h"
 @interface JMUploadVideoViewController ()<UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIPickerViewDelegate,UITextFieldDelegate>
 {
     UIImagePickerController *ipc;
@@ -47,7 +47,7 @@
     
         [self addMoreView:self.view];
     
-    categoryArr=[[NSMutableArray alloc] initWithObjects:@"LATEST",@"SEXUAL",@"ANIMAL",@"DOCTOR",@"GIRLFRIEND",@"STUPID", nil];
+    categoryArr=[[NSMutableArray alloc] init];
     
 //    langArr=[[NSMutableArray alloc] initWithObjects:@"English",@"Hebrew",@"Hindi",@"Chinese",@"Spanish", nil];
 //    
@@ -649,8 +649,8 @@
 
 -(void)loadProfile
 {
-    JMProfileViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMProfile"];
-    VC.fromLeftMenu=true;
+    JMHomeViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMHomeViewController"];
+ 
     
     [self.navigationController pushViewController:VC animated:kCAMediaTimingFunctionEaseIn];
 }
