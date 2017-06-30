@@ -19,6 +19,7 @@
     NSMutableArray *CategoryArray,*RecentVideoArray;
     UrlconnectionObject *urlobj;
     NSInteger Page;
+    BOOL MoreDataAvailable;
 }
 @property (weak, nonatomic) IBOutlet UIScrollView *MainScroll;
 

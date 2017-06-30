@@ -24,9 +24,11 @@
     
     ChooseCategoryLabel.text=AMLocalizedString(@"CHOOSE CATEGORY",nil);
     
+    LoaderView.layer.cornerRadius=8.0;
+    
     if (IsIphone6)
     {
-        RecentVideoCollectionView.frame=CGRectMake(RecentVideoCollectionView.frame.origin.x, RecentVideoCollectionView.frame.origin.y+10, RecentVideoCollectionView.frame.size.width, RecentVideoCollectionView.frame.size.height);
+        RecentVideoCollectionView.frame=CGRectMake(RecentVideoCollectionView.frame.origin.x, RecentVideoCollectionView.frame.origin.y+10, RecentVideoCollectionView.frame.size.width,RecentVideoCollectionView.frame.size.height);
     }
     else if (IsIphone6plus)
     {
@@ -43,6 +45,8 @@
     RecentVideoArray=[[NSMutableArray alloc] init];
     
     [ChooseCategoryLabel setFont:[UIFont fontWithName:ChooseCategoryLabel.font.fontName size:[self getFontSize:ChooseCategoryLabel.font.pointSize]]];
+    
+   
     
     Page=1;
     [self RecentVideoApi];
@@ -118,6 +122,41 @@
     
     
     
+}
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    
+    
+    if (scrollView==RecentVideoCollectionView)
+    {
+        CGPoint offset = scrollView.contentOffset;
+        CGRect bounds = scrollView.bounds;
+        CGSize size = scrollView.contentSize;
+        UIEdgeInsets inset = scrollView.contentInset;
+        float y = offset.y + bounds.size.height - inset.bottom;
+        float h = size.height;
+        
+        float reload_distance = -10.0f;
+        
+        
+        if(y > h + reload_distance)
+        {
+            
+            if (MoreDataAvailable==YES)
+            {
+                LoaderView.hidden=NO;
+                Page += 1;
+                [self RecentVideoApi];
+                
+            }
+            else
+            {
+               
+                
+            }
+        
+        }
+    }
 }
 /*
  #pragma mark - Navigation
@@ -438,23 +477,42 @@
                  {
                      if ([[NSString stringWithFormat:@"%@",[responseDict objectForKey:@"status"]] isEqualToString:@"Success"])
                      {
-                         RecentVideoArray=[[responseDict objectForKey:@"details"] mutableCopy];
+                       //  RecentVideoArray=[[responseDict objectForKey:@"details"] mutableCopy];
+                         
+                         NSMutableArray *TempArray=[[NSMutableArray alloc] init];
+                         TempArray=[[responseDict objectForKey:@"details"] mutableCopy];
                          
                          
-                         if (RecentVideoArray.count>0)
+                         
+                         if (TempArray.count>0)
                          {
-                             
-                             
-                            
-                             
+                             MoreDataAvailable=YES;
+                             LoaderView.hidden=YES;
+                             for ( NSDictionary *tempDict1 in  [responseDict objectForKey:@"details"])
+                             {
+                                 [RecentVideoArray addObject:tempDict1];
+                                 
+                             }
+                         //    [RecentVideoArray addObject:[responseDict objectForKey:@"details"]];
                              [RecentVideoCollectionView reloadData];
+                         }
+                         else
+                         {
+                             MoreDataAvailable=NO;
+                             LoaderView.hidden=YES;
                          }
                          
                      }
                      else
                      {
+                         MoreDataAvailable=NO;
+                         LoaderView.hidden=YES;
                          
-                         [SVProgressHUD showInfoWithStatus:[responseDict objectForKey:@"message"]];
+                         if (Page==1)
+                         {
+                             [SVProgressHUD showInfoWithStatus:[responseDict objectForKey:@"message"]];
+                         }
+                         
                          
                      }
                      
