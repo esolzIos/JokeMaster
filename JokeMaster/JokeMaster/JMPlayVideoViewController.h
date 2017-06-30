@@ -12,7 +12,12 @@
 #import "AVFoundation/AVFoundation.h"
 #import "JMGlobalMethods.h"
 #import "HCSStarRatingView.h"
+#import "UrlconnectionObject.h"
 @interface JMPlayVideoViewController : JMGlobalMethods<UITableViewDelegate,UITableViewDataSource>
+{
+    UrlconnectionObject *urlobj;
+    NSMutableDictionary *VideoDictionary;
+}
 @property (strong, nonatomic) IBOutlet UITableView *reviewTable;
 @property (strong, nonatomic) IBOutlet UIView *playerView;
 @property (strong, nonatomic) IBOutlet UIView *tvView;
@@ -74,7 +79,10 @@
 @property (strong, nonatomic) IBOutlet UIView *rateView;
 @property (strong, nonatomic) IBOutlet UIButton *crossBtn;
 - (IBAction)crossClicked:(id)sender;
-@property (strong, nonatomic) NSMutableDictionary *VideoDictionary;
+
+@property (strong, nonatomic) NSString *VideoId;
 
 @property (weak, nonatomic) IBOutlet UILabel *VideoNameLabel;
+@property (weak, nonatomic) IBOutlet UIScrollView *mainscroll;
+
 @end

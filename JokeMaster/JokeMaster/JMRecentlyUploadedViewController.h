@@ -36,5 +36,6 @@
 - (IBAction)CategoryCrossTapped:(id)sender;
 
 @property (weak, nonatomic) IBOutlet UITableView *CategoryTable;
+@property (weak, nonatomic) IBOutlet UIView *LoaderView;
 
 @end

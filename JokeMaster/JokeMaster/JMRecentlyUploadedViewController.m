@@ -13,7 +13,7 @@
 @end
 
 @implementation JMRecentlyUploadedViewController
-@synthesize ChooseCatImage,ChooseCategoryBtn,ChooseCategoryView,ChooseCategoryLabel,MainScroll,RecentVideoCollectionView,MenuBaseView,TransparentView,CategoryTable,CrossView;
+@synthesize ChooseCatImage,ChooseCategoryBtn,ChooseCategoryView,ChooseCategoryLabel,MainScroll,RecentVideoCollectionView,MenuBaseView,TransparentView,CategoryTable,CrossView,LoaderView;
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -44,6 +44,7 @@
     
     [ChooseCategoryLabel setFont:[UIFont fontWithName:ChooseCategoryLabel.font.fontName size:[self getFontSize:ChooseCategoryLabel.font.pointSize]]];
     
+    Page=1;
     [self RecentVideoApi];
     
 }
@@ -112,7 +113,7 @@
 
 {
     JMPlayVideoViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMPlayVideoViewController"];
-    VC.VideoDictionary=[RecentVideoArray objectAtIndex:indexPath.row];
+    VC.VideoId=[[RecentVideoArray objectAtIndex:indexPath.row] valueForKey:@"video_id"];
     [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
     
     
@@ -401,15 +402,19 @@
     {
         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
             
-            self.view.userInteractionEnabled = NO;
-            [self checkLoader];
+            if (Page==1)
+            {
+                self.view.userInteractionEnabled = NO;
+                [self checkLoader];
+            }
+            
         }];
         [[NSOperationQueue new] addOperationWithBlock:^{
             
             NSString *urlString;
             
             
-            urlString=[NSString stringWithFormat:@"%@index.php/Videolisting?pageno=1&limit=10",GLOBALAPI];
+            urlString=[NSString stringWithFormat:@"%@index.php/Videolisting?pageno=%ld&limit=10",GLOBALAPI,(long)Page];
             
             
             

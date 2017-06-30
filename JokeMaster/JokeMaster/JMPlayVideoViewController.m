@@ -24,7 +24,7 @@ AVPlayer *player;
 @end
 
 @implementation JMPlayVideoViewController
-@synthesize VideoDictionary;
+@synthesize VideoId,mainscroll;
 -(void)viewDidAppear:(BOOL)animated
 {
     
@@ -72,85 +72,11 @@ AVPlayer *player;
     }
     else{
         
-        _VideoNameLabel.text=[VideoDictionary objectForKey:@"videoname"];
-        _ratingLbl.text=[NSString stringWithFormat:@"%@/5",[VideoDictionary objectForKey:@"rating"]];
+        urlobj=[[UrlconnectionObject alloc] init];
         
+        [self VideoDetailsApi];
         
-        _ratingView.maximumValue = 5;
-        _ratingView.minimumValue = 0;
-        _ratingView.value =[[VideoDictionary objectForKey:@"rating"] floatValue];
-        _ratingView.userInteractionEnabled=NO;
-        //    _RatingView.tintColor = [UIColor clearColor];
-        _ratingView.allowsHalfStars = YES;
-        _ratingView.emptyStarImage = [[UIImage imageNamed:@"emotion"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-        _ratingView.filledStarImage = [[UIImage imageNamed:@"emotion2"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-        _ratingView.hidden=NO;
-        
-        [_videoThumb sd_setImageWithURL:[NSURL URLWithString:[VideoDictionary objectForKey:@"videoimagename"]] placeholderImage:[UIImage imageNamed: @"noimage"]];
-        
-        NSURL *videoURL;
-        if ([VideoDictionary count] == 0)
-        {
-            _VideoNameLabel.text=@"FUNNY LINNA";
-            videoURL = [NSURL URLWithString:@"http://clips.vorwaerts-gmbh.de/VfE_html5.mp4"];
-            _ratingLbl.text=[NSString stringWithFormat:@"0/5"];
         }
-        else
-        {
-            videoURL = [NSURL URLWithString:[VideoDictionary objectForKey:@"video_file"]];
-        }
-       
-        
-        
-        
-        AVPlayerItem *item = [AVPlayerItem playerItemWithURL:videoURL];
-        
-        player = [AVPlayer playerWithPlayerItem:item];
-        
-        
-        CALayer *superlayer = _playerView.layer;
-        
-        AVPlayerLayer *playerLayer = [AVPlayerLayer playerLayerWithPlayer:player];
-        [playerLayer setFrame:self.playerView.bounds];
-        playerLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
-        [superlayer addSublayer:playerLayer];
-        
-        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(playerDidFinishPlaying:) name:AVPlayerItemDidPlayToEndTimeNotification object:item];
-        
-        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(playerDidFinishPlaying:) name:AVPlayerItemPlaybackStalledNotification object:item];
-        
-        
-        // create a player view controller
-        
-        
-        _seekSlider.maximumValue = CMTimeGetSeconds(player.currentItem.asset.duration);
-        _seekSlider.value = 0.0;
-        
-        //  [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(updateTime:) userInfo:nil repeats:YES];
-        
-        CMTime interval = CMTimeMakeWithSeconds(1.0, NSEC_PER_SEC);
-        
-        [player addPeriodicTimeObserverForInterval:interval queue:NULL usingBlock:^(CMTime time) {
-            _seekSlider.value = CMTimeGetSeconds( player.currentItem.currentTime);
-            
-            AVPlayerItem *currentItem = player.currentItem;
-            NSUInteger dTotalSeconds = CMTimeGetSeconds(currentItem.currentTime);
-            
-            NSUInteger dMinutes = floor(dTotalSeconds % 3600 / 60);
-            NSUInteger dSeconds = floor(dTotalSeconds % 3600 % 60);
-            
-            NSString *videoDurationText = [NSString stringWithFormat:@"%02lu:%02lu", (unsigned long)dMinutes, (unsigned long)dSeconds];
-            
-                  DebugLog(@" tracking time: %@",videoDurationText);
-            
-            [_timeLbl setText:[NSString stringWithFormat:@"%@",videoDurationText]];
-        }];
-        
-        [player seekToTime:kCMTimeZero];
-        paused=true;
-        [_playPauseImg setImage:[UIImage imageNamed:@"play-1"]];
-       // [player play];
-    }
     
 }
 
@@ -175,26 +101,7 @@ AVPlayer *player;
 
     // Do any additional setup after loading the view.
     
-    _VideoNameLabel.text=[VideoDictionary objectForKey:@"videoname"];
-    _ratingLbl.text=[NSString stringWithFormat:@"%@/5",[VideoDictionary objectForKey:@"rating"]];
     
-    
-    _ratingView.maximumValue = 5;
-    _ratingView.minimumValue = 0;
-    _ratingView.value =[[VideoDictionary objectForKey:@"rating"] floatValue];
-    _ratingView.userInteractionEnabled=NO;
-    //    _RatingView.tintColor = [UIColor clearColor];
-    _ratingView.allowsHalfStars = YES;
-    _ratingView.emptyStarImage = [[UIImage imageNamed:@"emotion"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    _ratingView.filledStarImage = [[UIImage imageNamed:@"emotion2"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    _ratingView.hidden=NO;
-    
-    [_videoThumb sd_setImageWithURL:[NSURL URLWithString:[VideoDictionary objectForKey:@"videoimagename"]] placeholderImage:[UIImage imageNamed: @"noimage"]];
-    
-    _seekSlider.value = 0.0;
-    
-    paused=true;
-    [_playPauseImg setImage:[UIImage imageNamed:@"play-1"]];
 }
 
 
@@ -466,4 +373,270 @@ AVPlayer *player;
 {
     return UIStatusBarStyleLightContent;
 }
+#pragma mark -Video Details API
+-(void)VideoDetailsApi
+{
+    
+    
+    BOOL net=[urlobj connectedToNetwork];
+    if (net==YES)
+    {
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+            
+   
+                self.view.userInteractionEnabled = NO;
+                [self checkLoader];
+
+            
+        }];
+        [[NSOperationQueue new] addOperationWithBlock:^{
+            
+            NSString *urlString;
+            
+            
+            urlString=[NSString stringWithFormat:@"%@index.php/Videodetails?videoid=%@",GLOBALAPI,VideoId];
+            
+            
+            
+            urlString=[urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+            
+            DebugLog(@"Send string Url%@",urlString);
+            
+            
+            
+            
+            [urlobj getSessionJsonResponse:urlString  success:^(NSDictionary *responseDict)
+             {
+                 
+                 DebugLog(@"success %@ Status Code:%ld",responseDict,(long)urlobj.statusCode);
+                 
+                 
+                 self.view.userInteractionEnabled = YES;
+                   [self checkLoader];
+                 
+                 if (urlobj.statusCode==200)
+                 {
+//                     if ([[NSString stringWithFormat:@"%@",[responseDict objectForKey:@"status"]] isEqualToString:@"Success"])
+//                     {
+                     
+                     if ([[responseDict objectForKey:@"details"] count]!=0)
+                     {
+                         VideoDictionary=[[responseDict objectForKey:@"details"] mutableCopy];
+                         
+                         
+                         _VideoNameLabel.text=[VideoDictionary objectForKey:@"videoname"];
+                         
+                         _ownerName.text=[VideoDictionary objectForKey:@"username"];
+                         
+                         
+                         _ratingLbl.text=[NSString stringWithFormat:@"%@/5",[VideoDictionary objectForKey:@"video_rating"]];
+                         
+                         
+                         _ratingView.maximumValue = 5;
+                         _ratingView.minimumValue = 0;
+                         _ratingView.value =[[VideoDictionary objectForKey:@"video_rating"] floatValue];
+                         _ratingView.userInteractionEnabled=NO;
+                         //    _RatingView.tintColor = [UIColor clearColor];
+                         _ratingView.allowsHalfStars = YES;
+                         _ratingView.emptyStarImage = [[UIImage imageNamed:@"emotion"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+                         _ratingView.filledStarImage = [[UIImage imageNamed:@"emotion2"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+                         _ratingView.hidden=NO;
+                         
+                         [_videoThumb sd_setImageWithURL:[NSURL URLWithString:[VideoDictionary objectForKey:@"videoimagename"]] placeholderImage:[UIImage imageNamed: @"noimage"]];
+                         
+                         NSURL *videoURL;
+                        
+                             videoURL = [NSURL URLWithString:[VideoDictionary objectForKey:@"video_file"]];
+                         
+                         AVPlayerItem *item = [AVPlayerItem playerItemWithURL:videoURL];
+                         
+                         player = [AVPlayer playerWithPlayerItem:item];
+                         
+                         
+                         CALayer *superlayer = _playerView.layer;
+                         
+                         AVPlayerLayer *playerLayer = [AVPlayerLayer playerLayerWithPlayer:player];
+                         [playerLayer setFrame:self.playerView.bounds];
+                         playerLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
+                         [superlayer addSublayer:playerLayer];
+                         
+                         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(playerDidFinishPlaying:) name:AVPlayerItemDidPlayToEndTimeNotification object:item];
+                         
+                         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(playerDidFinishPlaying:) name:AVPlayerItemPlaybackStalledNotification object:item];
+                         
+                         
+                         // create a player view controller
+                         
+                         
+                         _seekSlider.maximumValue = CMTimeGetSeconds(player.currentItem.asset.duration);
+                         _seekSlider.value = 0.0;
+                         
+                         //  [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(updateTime:) userInfo:nil repeats:YES];
+                         
+                         CMTime interval = CMTimeMakeWithSeconds(1.0, NSEC_PER_SEC);
+                         
+                         [player addPeriodicTimeObserverForInterval:interval queue:NULL usingBlock:^(CMTime time) {
+                             _seekSlider.value = CMTimeGetSeconds( player.currentItem.currentTime);
+                             
+                             AVPlayerItem *currentItem = player.currentItem;
+                             NSUInteger dTotalSeconds = CMTimeGetSeconds(currentItem.currentTime);
+                             
+                             NSUInteger dMinutes = floor(dTotalSeconds % 3600 / 60);
+                             NSUInteger dSeconds = floor(dTotalSeconds % 3600 % 60);
+                             
+                             NSString *videoDurationText = [NSString stringWithFormat:@"%02lu:%02lu", (unsigned long)dMinutes, (unsigned long)dSeconds];
+                             
+                             DebugLog(@" tracking time: %@",videoDurationText);
+                             
+                             [_timeLbl setText:[NSString stringWithFormat:@"%@",videoDurationText]];
+                         }];
+                         
+                         [player seekToTime:kCMTimeZero];
+                         paused=true;
+                         [_playPauseImg setImage:[UIImage imageNamed:@"play-1"]];
+                         // [player play];
+
+                         mainscroll.hidden=NO;
+                         
+                     }
+                     else
+                     {
+                         // kept for testing purpose-------------------
+                         
+                        
+                         
+                         
+                         _VideoNameLabel.text=[VideoDictionary objectForKey:@"videoname"];
+                         _ratingLbl.text=[NSString stringWithFormat:@"%@/5",[VideoDictionary objectForKey:@"rating"]];
+                         
+                         
+                         _ratingView.maximumValue = 5;
+                         _ratingView.minimumValue = 0;
+                         _ratingView.value =[[VideoDictionary objectForKey:@"rating"] floatValue];
+                         _ratingView.userInteractionEnabled=NO;
+                         //    _RatingView.tintColor = [UIColor clearColor];
+                         _ratingView.allowsHalfStars = YES;
+                         _ratingView.emptyStarImage = [[UIImage imageNamed:@"emotion"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+                         _ratingView.filledStarImage = [[UIImage imageNamed:@"emotion2"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+                         _ratingView.hidden=NO;
+                         
+                         [_videoThumb sd_setImageWithURL:[NSURL URLWithString:[VideoDictionary objectForKey:@"videoimagename"]] placeholderImage:[UIImage imageNamed: @"noimage"]];
+                         
+                         NSURL *videoURL;
+                         if ([VideoDictionary count] == 0)
+                         {
+                             _VideoNameLabel.text=@"FUNNY LINNA";
+                             videoURL = [NSURL URLWithString:@"http://clips.vorwaerts-gmbh.de/VfE_html5.mp4"];
+                             _ratingLbl.text=[NSString stringWithFormat:@"0/5"];
+                             
+                         }
+                         else
+                         {
+                             videoURL = [NSURL URLWithString:[VideoDictionary objectForKey:@"video_file"]];
+                         }
+                         
+                         
+                         
+                         
+                         AVPlayerItem *item = [AVPlayerItem playerItemWithURL:videoURL];
+                         
+                         player = [AVPlayer playerWithPlayerItem:item];
+                         
+                         
+                         CALayer *superlayer = _playerView.layer;
+                         
+                         AVPlayerLayer *playerLayer = [AVPlayerLayer playerLayerWithPlayer:player];
+                         [playerLayer setFrame:self.playerView.bounds];
+                         playerLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
+                         [superlayer addSublayer:playerLayer];
+                         
+                         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(playerDidFinishPlaying:) name:AVPlayerItemDidPlayToEndTimeNotification object:item];
+                         
+                         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(playerDidFinishPlaying:) name:AVPlayerItemPlaybackStalledNotification object:item];
+                         
+                         
+                         // create a player view controller
+                         
+                         
+                         _seekSlider.maximumValue = CMTimeGetSeconds(player.currentItem.asset.duration);
+                         _seekSlider.value = 0.0;
+                         
+                         //  [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(updateTime:) userInfo:nil repeats:YES];
+                         
+                         CMTime interval = CMTimeMakeWithSeconds(1.0, NSEC_PER_SEC);
+                         
+                         [player addPeriodicTimeObserverForInterval:interval queue:NULL usingBlock:^(CMTime time) {
+                             _seekSlider.value = CMTimeGetSeconds( player.currentItem.currentTime);
+                             
+                             AVPlayerItem *currentItem = player.currentItem;
+                             NSUInteger dTotalSeconds = CMTimeGetSeconds(currentItem.currentTime);
+                             
+                             NSUInteger dMinutes = floor(dTotalSeconds % 3600 / 60);
+                             NSUInteger dSeconds = floor(dTotalSeconds % 3600 % 60);
+                             
+                             NSString *videoDurationText = [NSString stringWithFormat:@"%02lu:%02lu", (unsigned long)dMinutes, (unsigned long)dSeconds];
+                             
+                             DebugLog(@" tracking time: %@",videoDurationText);
+                             
+                             [_timeLbl setText:[NSString stringWithFormat:@"%@",videoDurationText]];
+                         }];
+                         
+                         [player seekToTime:kCMTimeZero];
+                         paused=true;
+                         [_playPauseImg setImage:[UIImage imageNamed:@"play-1"]];
+                         
+                         mainscroll.hidden=NO;
+                         
+                     }
+                     
+                     
+                     
+                     
+                     
+//                     }
+//                     else
+//                     {
+//                         
+//                         [SVProgressHUD showInfoWithStatus:[responseDict objectForKey:@"message"]];
+//                         
+//                     }
+                     
+                 }
+                 else if (urlobj.statusCode==500 || urlobj.statusCode==400)
+                 {
+                     //                     [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Server Failed to Respond" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
+                     
+                     
+                     [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Server Failed to Respond",nil)];
+                     
+                 }
+                 else
+                 {
+                     //                     [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Server Failed to Respond" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
+                     
+                     [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Server Failed to Respond",nil)];
+                 }
+                 
+             }
+                                   failure:^(NSError *error) {
+                                       
+                                        [self checkLoader];
+                                       self.view.userInteractionEnabled = YES;
+                                       NSLog(@"Failure");
+                                       //                                       [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Server Failed to Respond" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
+                                       
+                                       [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Server Failed to Respond",nil)];
+                                       
+                                   }
+             ];
+        }];
+    }
+    else
+    {
+        
+        [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
+        
+    }
+}
+
 @end

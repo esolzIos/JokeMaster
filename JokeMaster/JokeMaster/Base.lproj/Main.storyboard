@@ -778,6 +778,18 @@
                                                     <outlet property="delegate" destination="Mdn-rx-qlK" id="Pvn-PZ-UtQ"/>
                                                 </connections>
                                             </collectionView>
+                                            <view hidden="YES" alpha="0.5" contentMode="scaleToFill" misplaced="YES" id="NT7-MU-rPd">
+                                                <rect key="frame" x="135" y="370" width="50" height="50"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                                <subviews>
+                                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="whiteLarge" id="f5X-De-Rsf">
+                                                        <rect key="frame" x="7" y="8" width="37" height="37"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        <color key="color" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    </activityIndicatorView>
+                                                </subviews>
+                                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                            </view>
                                         </subviews>
                                     </scrollView>
                                     <view hidden="YES" alpha="0.55000001192092896" contentMode="scaleToFill" id="Mps-29-FBh">
@@ -877,6 +889,7 @@
                         <outlet property="ChooseCategoryLabel" destination="O1K-ow-cRl" id="Yzo-kT-PRs"/>
                         <outlet property="ChooseCategoryView" destination="IAj-Xf-fsj" id="Mi8-C0-EID"/>
                         <outlet property="HeaderView" destination="vmh-Kb-mzR" id="xXf-Mk-GSS"/>
+                        <outlet property="LoaderView" destination="NT7-MU-rPd" id="43k-GK-f8u"/>
                         <outlet property="MainScroll" destination="vmk-TT-s8b" id="43r-aq-W1J"/>
                         <outlet property="MainView" destination="8xh-Z8-txT" id="LIB-DV-xWv"/>
                         <outlet property="MenuBaseView" destination="auw-4H-hRS" id="TLG-ZF-66O"/>
@@ -1481,7 +1494,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     </imageView>
-                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="iT5-tf-8LJ">
+                                    <scrollView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="iT5-tf-8LJ">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <subviews>
@@ -1786,7 +1799,7 @@
                                                         <rect key="frame" x="0.0" y="1" width="320" height="100"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="l7j-Xx-Wml" id="Gk0-vs-OnH">
-                                                            <rect key="frame" x="0.0" y="0.0" width="320" height="99"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="320" height="99.5"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ALEX MONDAL" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="2wF-UW-3d0">
@@ -1925,6 +1938,7 @@
                         <outlet property="likeBtn" destination="sz9-oe-RKX" id="JrS-fr-6DO"/>
                         <outlet property="likeImage" destination="Nh2-5e-lr8" id="MgL-N0-yUZ"/>
                         <outlet property="likeVIew" destination="L9A-DU-BZA" id="WgR-XQ-vAF"/>
+                        <outlet property="mainscroll" destination="iT5-tf-8LJ" id="aIh-mP-LsP"/>
                         <outlet property="optionView" destination="eZq-uP-o69" id="Gpc-pX-2Yw"/>
                         <outlet property="ownerImage" destination="Sf3-Hh-zij" id="arr-9u-rl0"/>
                         <outlet property="ownerName" destination="9kN-UM-qob" id="h4d-TM-jlF"/>

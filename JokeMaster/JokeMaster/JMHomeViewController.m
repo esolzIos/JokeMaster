@@ -131,7 +131,7 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     JMPlayVideoViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMPlayVideoViewController"];
-    VC.VideoDictionary=[RecentVideoArray objectAtIndex:indexPath.row];
+    VC.VideoId=[[RecentVideoArray objectAtIndex:indexPath.row] valueForKey:@"video_id"];
     [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
     
 }
@@ -230,7 +230,7 @@
     [_optionView setHidden:YES];
     [_ratingImage.layer removeAllAnimations];
     JMPlayVideoViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMPlayVideoViewController"];
-     VC.VideoDictionary=[RecentVideoArray objectAtIndex:0];
+     VC.VideoId=[[RecentVideoArray objectAtIndex:0] valueForKey:@"video_id"];
     [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
 }
 - (IBAction)shareClicked:(id)sender {
