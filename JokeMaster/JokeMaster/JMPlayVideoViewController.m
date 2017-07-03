@@ -291,10 +291,11 @@ AVPlayer *player;
 }
 - (IBAction)reportClicked:(id)sender {
 }
+#pragma mark -Go to Profile Page
 - (IBAction)gotoProfile:(id)sender {
     
     JMProfileViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMProfile"];
-    
+    VC.ProfileUserId=VideoPosterId;
     
     [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
 }
@@ -427,6 +428,7 @@ AVPlayer *player;
                          _VideoNameLabel.text=[VideoDictionary objectForKey:@"videoname"];
                          
                          _ownerName.text=[VideoDictionary objectForKey:@"username"];
+                         VideoPosterId=[VideoDictionary objectForKey:@"user_id"];
                          
                          
                          _ratingLbl.text=[NSString stringWithFormat:@"%@/5",[VideoDictionary objectForKey:@"video_rating"]];

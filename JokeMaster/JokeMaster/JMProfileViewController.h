@@ -45,4 +45,5 @@
 
 @property (strong, nonatomic) IBOutlet UIButton *profileBttn;
 @property(nonatomic) BOOL fromLeftMenu;
+@property (strong, nonatomic) NSString *ProfileUserId;
 @end

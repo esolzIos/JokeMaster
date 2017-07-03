@@ -67,6 +67,19 @@
            [_followBtn setTitle:@"FOLLOW" forState:UIControlStateNormal];
     }
     
+//    if (_ProfileUserId==nil)
+//    {
+//        self.HeaderView.HeaderLabel.text=@"My Channel";
+//    }
+//    else if (_ProfileUserId==[[NSUserDefaults standardUserDefaults] valueForKey:@"UserId"])
+//    {
+//        self.HeaderView.HeaderLabel.text=@"My Channel";
+//    }
+//    else
+//    {
+//        self.HeaderView.HeaderLabel.text=@"Profile";
+//    }
+    
     // Do any additional setup after loading the view.
 }
 

@@ -17,6 +17,7 @@
 {
     UrlconnectionObject *urlobj;
     NSMutableDictionary *VideoDictionary;
+    NSString *VideoPosterId;
 }
 @property (strong, nonatomic) IBOutlet UITableView *reviewTable;
 @property (strong, nonatomic) IBOutlet UIView *playerView;

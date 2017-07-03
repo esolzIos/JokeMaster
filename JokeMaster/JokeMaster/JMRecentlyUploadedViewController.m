@@ -453,7 +453,7 @@
             NSString *urlString;
             
             
-            urlString=[NSString stringWithFormat:@"%@index.php/Videolisting?pageno=%ld&limit=10",GLOBALAPI,(long)Page];
+            urlString=[NSString stringWithFormat:@"%@index.php/Videolisting?pageno=%ld&limit=15",GLOBALAPI,(long)Page];
             
             
             
