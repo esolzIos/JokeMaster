@@ -88,7 +88,13 @@
 }
 
 -(void)viewWillAppear:(BOOL)animated
+
 {
+    
+    [_langBtn setUserInteractionEnabled:NO];
+    [_categoryBtn setUserInteractionEnabled:NO];
+    
+    
     [self loadData];
 }
 
@@ -123,7 +129,7 @@
     
     ipc.allowsEditing=YES;
     
-    
+
     
     
     if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
@@ -194,100 +200,203 @@
             }
             else  if ([mediaType isEqualToString:(NSString *)kUTTypeMovie])
             {
-                NSURL *urlvideo = [info objectForKey:UIImagePickerControllerReferenceURL];
+                NSURL *urlvideo = [info objectForKey:UIImagePickerControllerMediaURL];
                 
                 
-                PHFetchResult *refResult = [PHAsset fetchAssetsWithALAssetURLs:@[urlvideo] options:nil];
-                PHVideoRequestOptions *videoRequestOptions = [[PHVideoRequestOptions alloc] init];
-                videoRequestOptions.version = PHVideoRequestOptionsVersionCurrent;
-                videoRequestOptions.deliveryMode=PHVideoRequestOptionsDeliveryModeFastFormat;
                 
-                [[PHImageManager defaultManager] requestAVAssetForVideo:[refResult firstObject] options:videoRequestOptions resultHandler:^(AVAsset *asset, AVAudioMix *audioMix, NSDictionary *info) {
-                    if ([asset isKindOfClass:[AVURLAsset class]]) {
-                        NSURL *compressedUrl = [(AVURLAsset *)asset URL];
-                        videoData = [NSData dataWithContentsOfURL:[NSURL fileURLWithPath:[compressedUrl path]]];
-                        
-                        
-                        dispatch_async(dispatch_get_main_queue(), ^{
-                            
-                            [_loadingView setHidden:NO];
-                            
-                            
-                            AVURLAsset *asset=[[AVURLAsset alloc] initWithURL:compressedUrl options:nil];
-                            AVAssetImageGenerator *generator = [[AVAssetImageGenerator alloc] initWithAsset:asset];
-                            generator.appliesPreferredTrackTransform=TRUE;
-                            
-                            CMTime thumbTime = CMTimeMakeWithSeconds(0,30);
-                            
-                            
-                            
-                            AVAssetImageGeneratorCompletionHandler handler = ^(CMTime requestedTime, CGImageRef im, CMTime actualTime, AVAssetImageGeneratorResult result, NSError *error){
-                                if (result != AVAssetImageGeneratorSucceeded) {
-                                    DebugLog(@"couldn't generate thumbnail, error:%@", error);
-                                    
-                                    
-                                    
-                                    // [SVProgressHUD showInfoWithStatus:@"Something went wrong"];
-                                    
-                                }
-                                
-                                imageData = UIImagePNGRepresentation([UIImage imageWithCGImage:im]);
-                                
-                                if ( imageData!=nil )
-                                {
-                                    // selectedImage=[UIImage imageWithCGImage:im];
-                                    
-                                    videoPicked=true;
-                                    
-                                    [_videoThumb setImage:[UIImage imageWithCGImage:im]];
-                                    
-                                    
-                                    _videoThumb.contentMode = UIViewContentModeScaleAspectFill;
-                                    _videoThumb.clipsToBounds = YES;
-                                    
-                                    
-                                    [_optionView setHidden:YES];
-                                    [_loadingView setHidden:YES];
-                                    
-                                    
-                                    [_uploadBtn setUserInteractionEnabled:YES];
-                                    
-                                    
-                                    
-                                    [SVProgressHUD dismiss];
-                                }
-                                else{
-                                    
-                                    [SVProgressHUD showInfoWithStatus:@"Something went wrong"];
-                                    
-                                }
+                // If mediaURL is not null this should be a video
+                if(urlvideo) {
+                    
+                    // This video is new just recorded with camera
+                 //   if (picker.sourceType == UIImagePickerControllerSourceTypeCamera) {
+                        // First save the video to photos album
+                        ALAssetsLibrary *library = [ALAssetsLibrary new];
+                        [library writeVideoAtPathToSavedPhotosAlbum:urlvideo completionBlock:^(NSURL *assetURL, NSError *error){
+                            if (error) {
+                                DebugLog(@"Failed to save the photo to photos album...");
+                            } else {
+                                // Get the name of the video
+                            //    [self getMediaName:nil url:assetURL];
                                 
                                 
+                                PHFetchResult *refResult = [PHAsset fetchAssetsWithALAssetURLs:@[assetURL] options:nil];
+                                PHVideoRequestOptions *videoRequestOptions = [[PHVideoRequestOptions alloc] init];
+                                videoRequestOptions.version = PHVideoRequestOptionsVersionCurrent;
+                                videoRequestOptions.deliveryMode=PHVideoRequestOptionsDeliveryModeFastFormat;
                                 
-                            };
-                            
-                            CGSize maxSize = CGSizeMake(320, 180);
-                            generator.maximumSize = maxSize;
-                            [generator generateCGImagesAsynchronouslyForTimes:[NSArray arrayWithObject:[NSValue valueWithCMTime:thumbTime]] completionHandler:handler];
-                            
-                            
-                        });
-                        
-                        
-                    }
-                }];
+                                [[PHImageManager defaultManager] requestAVAssetForVideo:[refResult firstObject] options:videoRequestOptions resultHandler:^(AVAsset *asset, AVAudioMix *audioMix, NSDictionary *info) {
+                                    if ([asset isKindOfClass:[AVURLAsset class]]) {
+                                        NSURL *compressedUrl = [(AVURLAsset *)asset URL];
+                                        videoData = [NSData dataWithContentsOfURL:[NSURL fileURLWithPath:[compressedUrl path]]];
+                                        
+                                        
+                                        dispatch_async(dispatch_get_main_queue(), ^{
+                                            
+                                            [_loadingView setHidden:NO];
+                                            
+                                            
+                                            AVURLAsset *asset=[[AVURLAsset alloc] initWithURL:compressedUrl options:nil];
+                                            AVAssetImageGenerator *generator = [[AVAssetImageGenerator alloc] initWithAsset:asset];
+                                            generator.appliesPreferredTrackTransform=TRUE;
+                                            
+                                            CMTime thumbTime = CMTimeMakeWithSeconds(0,30);
+                                            
+                                            
+                                            
+                                            AVAssetImageGeneratorCompletionHandler handler = ^(CMTime requestedTime, CGImageRef im, CMTime actualTime, AVAssetImageGeneratorResult result, NSError *error){
+                                                if (result != AVAssetImageGeneratorSucceeded) {
+                                                    DebugLog(@"couldn't generate thumbnail, error:%@", error);
+                                                    
+                                                    
+                                                    
+                                                    // [SVProgressHUD showInfoWithStatus:@"Something went wrong"];
+                                                    
+                                                }
+                                                
+                                                imageData = UIImagePNGRepresentation([UIImage imageWithCGImage:im]);
+                                                
+                                                if ( imageData!=nil )
+                                                {
+                                                    // selectedImage=[UIImage imageWithCGImage:im];
+                                                    
+                                                    videoPicked=true;
+                                                    
+                                                    [_videoThumb setImage:[UIImage imageWithCGImage:im]];
+                                                    
+                                                    
+                                                    _videoThumb.contentMode = UIViewContentModeScaleAspectFill;
+                                                    _videoThumb.clipsToBounds = YES;
+                                                    
+                                                    
+                                                    [_optionView setHidden:YES];
+                                                    [_loadingView setHidden:YES];
+                                                    
+                                                    
+                                                    [_uploadBtn setUserInteractionEnabled:YES];
+                                                    
+                                                    
+                                                    
+                                                    [SVProgressHUD dismiss];
+                                                }
+                                                else{
+                                                    
+                                                    [SVProgressHUD showInfoWithStatus:@"Something went wrong"];
+                                                    
+                                                }
+                                                
+                                                
+                                                
+                                            };
+                                            
+                                            CGSize maxSize = CGSizeMake(320, 180);
+                                            generator.maximumSize = maxSize;
+                                            [generator generateCGImagesAsynchronouslyForTimes:[NSArray arrayWithObject:[NSValue valueWithCMTime:thumbTime]] completionHandler:handler];
+                                            
+                                            
+                                        });
+                                        
+                                        
+                                    }
+                                }];
+                                
+                                
+
+                                
+                            }
+                        }];
+//                    } else { // This is a video that recorded before
+//                        // Get the name of the video
+//                     NSURL *urlvideo = [info objectForKey:UIImagePickerControllerReferenceURL];
+//                        
+//                        
+//                        
+//                        PHFetchResult *refResult = [PHAsset fetchAssetsWithALAssetURLs:@[urlvideo] options:nil];
+//                        PHVideoRequestOptions *videoRequestOptions = [[PHVideoRequestOptions alloc] init];
+//                        videoRequestOptions.version = PHVideoRequestOptionsVersionCurrent;
+//                        videoRequestOptions.deliveryMode=PHVideoRequestOptionsDeliveryModeFastFormat;
+//                        
+//                        [[PHImageManager defaultManager] requestAVAssetForVideo:[refResult firstObject] options:videoRequestOptions resultHandler:^(AVAsset *asset, AVAudioMix *audioMix, NSDictionary *info) {
+//                            if ([asset isKindOfClass:[AVURLAsset class]]) {
+//                                NSURL *compressedUrl = [(AVURLAsset *)asset URL];
+//                                videoData = [NSData dataWithContentsOfURL:[NSURL fileURLWithPath:[compressedUrl path]]];
+//                                
+//                                
+//                                dispatch_async(dispatch_get_main_queue(), ^{
+//                                    
+//                                    [_loadingView setHidden:NO];
+//                                    
+//                                    
+//                                    AVURLAsset *asset=[[AVURLAsset alloc] initWithURL:compressedUrl options:nil];
+//                                    AVAssetImageGenerator *generator = [[AVAssetImageGenerator alloc] initWithAsset:asset];
+//                                    generator.appliesPreferredTrackTransform=TRUE;
+//                                    
+//                                    CMTime thumbTime = CMTimeMakeWithSeconds(0,30);
+//                                    
+//                                    
+//                                    
+//                                    AVAssetImageGeneratorCompletionHandler handler = ^(CMTime requestedTime, CGImageRef im, CMTime actualTime, AVAssetImageGeneratorResult result, NSError *error){
+//                                        if (result != AVAssetImageGeneratorSucceeded) {
+//                                            DebugLog(@"couldn't generate thumbnail, error:%@", error);
+//                                            
+//                                            
+//                                            
+//                                            // [SVProgressHUD showInfoWithStatus:@"Something went wrong"];
+//                                            
+//                                        }
+//                                        
+//                                        imageData = UIImagePNGRepresentation([UIImage imageWithCGImage:im]);
+//                                        
+//                                        if ( imageData!=nil )
+//                                        {
+//                                            // selectedImage=[UIImage imageWithCGImage:im];
+//                                            
+//                                            videoPicked=true;
+//                                            
+//                                            [_videoThumb setImage:[UIImage imageWithCGImage:im]];
+//                                            
+//                                            
+//                                            _videoThumb.contentMode = UIViewContentModeScaleAspectFill;
+//                                            _videoThumb.clipsToBounds = YES;
+//                                            
+//                                            
+//                                            [_optionView setHidden:YES];
+//                                            [_loadingView setHidden:YES];
+//                                            
+//                                            
+//                                            [_uploadBtn setUserInteractionEnabled:YES];
+//                                            
+//                                            
+//                                            
+//                                            [SVProgressHUD dismiss];
+//                                        }
+//                                        else{
+//                                            
+//                                            [SVProgressHUD showInfoWithStatus:@"Something went wrong"];
+//                                            
+//                                        }
+//                                        
+//                                        
+//                                        
+//                                    };
+//                                    
+//                                    CGSize maxSize = CGSizeMake(320, 180);
+//                                    generator.maximumSize = maxSize;
+//                                    [generator generateCGImagesAsynchronouslyForTimes:[NSArray arrayWithObject:[NSValue valueWithCMTime:thumbTime]] completionHandler:handler];
+//                                    
+//                                    
+//                                });
+//                                
+//                                
+//                            }
+//                        }];
+//                        
+//                        
+//
+//                    }
+                }
+
                 
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-            }
+              }
             
             
             
@@ -327,6 +436,28 @@
     }
     
     
+}
+
+
+- (void)getMediaName:(UIImage*)originalImage url:(NSURL*)url {
+    @try {
+        ALAssetsLibraryAssetForURLResultBlock resultblock = ^(ALAsset *asset) {
+            if (asset == nil) return;
+            ALAssetRepresentation *assetRep = [asset defaultRepresentation];
+            NSString *fileName = [assetRep filename];
+            // Do what you need with the file name here
+        };
+        
+        ALAssetsLibraryAccessFailureBlock failureblock  = ^(NSError *error) {
+            DebugLog(@"Failed to get image or video name : %@", error);
+        };
+        
+        ALAssetsLibrary *library = [ALAssetsLibrary new];
+        [library assetForURL:url resultBlock:resultblock failureBlock:failureblock];
+    }
+    @catch (NSException *exception) {
+        DebugLog(@"%@", [exception description]);
+    }
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
@@ -592,9 +723,9 @@
                         // Error Parsing JSON
                         NSString *responseString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
                         
-                        [SVProgressHUD showInfoWithStatus:@"some error occured"];
+                        [SVProgressHUD showInfoWithStatus:@"some error occured 2"];
                         
-                        NSLog(@"response = %@",responseString);
+                        NSLog(@"response = %@ %@",responseString,jsonError.description);
                     } else {
                         // Success Parsing JSON
                         // Log NSDictionary response:
@@ -741,7 +872,7 @@
                     
                     NSLog(@"response = %@",responseString);
                     
-                    [SVProgressHUD showInfoWithStatus:@"some error occured"];
+                    [SVProgressHUD showInfoWithStatus:@"some error occured 3"];
                     
                 } else {
                     // Success Parsing JSON
@@ -759,7 +890,8 @@
                         
                         [SVProgressHUD dismiss];
                         
-                        
+                        [_langBtn setUserInteractionEnabled:YES];
+                    
                         
                         for (NSDictionary *langDict in langjsonArr) {
                             
@@ -885,7 +1017,7 @@
                     
                     NSLog(@"response = %@",responseString);
                     
-                    [SVProgressHUD showInfoWithStatus:@"some error occured"];
+                    [SVProgressHUD showInfoWithStatus:@"some error occured 1"];
                     
                 } else {
                     // Success Parsing JSON
@@ -899,7 +1031,7 @@
                         
                         //totalCount=(int)categoryArr.count;
                         
-                        
+                            [_categoryBtn setUserInteractionEnabled:YES];
                         
                         [SVProgressHUD dismiss];
                         

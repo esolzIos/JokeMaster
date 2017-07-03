@@ -68,23 +68,7 @@
         
         // configure the request
         
-      //  NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
-     //   [request setHTTPMethod:@"POST"];
-        
-        
-        
-        //        NSString *boundary = @"---------------------------14737809831466499882746641449";
-        //        NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@", boundary];
-        //        [request addValue:contentType forHTTPHeaderField:@"Content-Type"];
-        
 
-      //   [request setValue:@"gzip" forHTTPHeaderField:@"Accept-Encoding"];
-        
-
-        
-        //  self.session = [NSURLSession sharedSession];  // use sharedSession or create your own
-        
-//        session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
         
         
         NSURLSessionConfiguration *sessionConfig = [NSURLSessionConfiguration defaultSessionConfiguration];

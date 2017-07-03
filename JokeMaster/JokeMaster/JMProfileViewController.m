@@ -23,7 +23,7 @@
 
     UIImagePickerController *ipc;
     NSURLSession *session;
-    
+    BOOL firedOnce;
     NSDictionary *jsonResponse;
         AppDelegate *appDelegate;
     UIImage *selectedImage;
@@ -35,6 +35,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    jsonResponse=[[NSDictionary alloc]init];
+    
     
         [self addMoreView:self.view];
     MenuViewY=_MenuBaseView.frame.origin.y;
@@ -81,6 +84,176 @@
 //    }
     
     // Do any additional setup after loading the view.
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+
+[self loadData];
+}
+
+-(void)loadData
+{
+
+    if([self networkAvailable])
+    {
+        
+        firedOnce=true;
+        
+        [SVProgressHUD show];
+        
+        
+        //     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+        
+        
+        //http://ec2-13-58-196-4.us-east-2.compute.amazonaws.com/jokemaster/index.php/Userprofile?loggedin_id=1&user_id=1
+        
+        NSURL *url=[NSURL URLWithString:[NSString stringWithFormat:@"%@%@Userprofile",GLOBALAPI,INDEX]];
+        
+        
+        
+        // configure the request
+        
+        NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
+        [request setHTTPMethod:@"POST"];
+        
+        
+        
+        //        NSString *boundary = @"---------------------------14737809831466499882746641449";
+        //        NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@", boundary];
+        //        [request addValue:contentType forHTTPHeaderField:@"Content-Type"];
+        
+        
+        appDelegate.authToken=[[NSUserDefaults standardUserDefaults]objectForKey:@"authToken"];
+        
+        NSString *sendData = @"loggedin_id=";
+        sendData = [sendData stringByAppendingString:[NSString stringWithFormat:@"%@", appDelegate.userId]];
+        
+        sendData = [sendData stringByAppendingString:@"&user_id="];
+        sendData = [sendData stringByAppendingString:[NSString stringWithFormat:@"%@",@""]];
+
+
+        
+        
+        
+        [request setValue:@"gzip" forHTTPHeaderField:@"Accept-Encoding"];
+        
+        NSMutableData *theBodyData = [NSMutableData data];
+        
+        theBodyData = [[sendData dataUsingEncoding:NSUTF8StringEncoding] mutableCopy];
+        
+        
+        //  self.session = [NSURLSession sharedSession];  // use sharedSession or create your own
+        
+        session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
+        
+        NSURLSessionTask *task = [session uploadTaskWithRequest:request fromData:theBodyData completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+            if (error) {
+                NSLog(@"error = %@", error);
+                firedOnce=false;
+      
+                return;
+            }
+            
+            if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
+                NSError *jsonError;
+                jsonResponse = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
+                
+                firedOnce=false;
+                
+                
+                
+      
+                
+                if (jsonError) {
+                    // Error Parsing JSON
+                    
+                    
+                    
+                    NSString *responseString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                    
+                    NSLog(@"response = %@",responseString);
+                    
+                    //   [SVProgressHUD showInfoWithStatus:sendData];
+                    
+                    [SVProgressHUD showInfoWithStatus:@"some error occured"];
+                    
+                } else {
+                    // Success Parsing JSON
+                    // Log NSDictionary response:
+                    NSLog(@"result = %@",jsonResponse);
+                    
+                   
+                    
+                    
+                    [SVProgressHUD dismiss];
+                    if ([[jsonResponse objectForKey:@"status_code"]intValue]==406) {
+                        
+                    
+                        
+                    }
+                    else
+                        if ([[jsonResponse objectForKey:@"status_code"]intValue]==200) {
+                            
+                            
+                       NSDictionary *userDetails=[jsonResponse objectForKey:@"userdetails"];
+                            
+                            
+                            [_userName setText:[[NSString stringWithFormat:@"%@",[userDetails objectForKey:@"username"]] capitalizedString]];
+                            
+                            
+                            
+                            
+                            [_profileImage sd_setImageWithURL:[NSURL URLWithString:[userDetails objectForKey:@"user_image"]] placeholderImage:[UIImage imageNamed:@"noimage"]];
+                            
+//                            if ([[jsonResponse objectForKey:@"followerstatus"]boolValue]) {
+//                                
+//                                [_followBtn setImage:[UIImage imageNamed:@"unfollow"] forState:UIControlStateNormal];
+//                            }
+//                            else{
+//                                [_followBtn setImage:[UIImage imageNamed:@"follow"] forState:UIControlStateNormal];
+//                            }
+//                            
+                          
+                            
+                            
+                            
+                        }
+                    
+                        else{
+                            
+                            [SVProgressHUD showInfoWithStatus:[jsonResponse objectForKey:@"message"]];
+                            
+                            
+                        }
+                    
+                    
+                    
+                    
+                }
+                
+                
+                
+            }
+            
+            
+        }];
+        
+        
+        [task resume];
+        
+        
+    }
+    
+    else{
+        
+        [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
+        
+       }
+
+    
+    
+
 }
 
 - (void)didReceiveMemoryWarning {
@@ -554,152 +727,150 @@
                 if ([mediaType isEqualToString:(NSString *)kUTTypeImage])
                 {
         
-                    selectedImage=[info valueForKey:UIImagePickerControllerEditedImage];
-                    
-                    [_profileImage setImage:selectedImage];
-                    _profileImage.contentMode = UIViewContentModeScaleAspectFill;
-                     //_profileImage.clipsToBounds = YES;
-                    
-                }
-        
-//        [SVProgressHUD showWithStatus:@"Processing"];
-//        
-//        NSString *mediaType = [info objectForKey:UIImagePickerControllerMediaType];
-//        if ([mediaType isEqualToString:(NSString *)kUTTypeImage])
-//        {
-//            
-//            selectedImage=[info valueForKey:UIImagePickerControllerEditedImage];
-//            
-//            
-//            
-//            if ([self networkAvailable])
-//                
-//            {
-//                
-//                
-//                
-//                [SVProgressHUD showWithStatus:@"Uploading Please wait"];
-//                
-//                
-//                //  AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-//                
-//                
-//                
-//                
-//                
-//                NSData *imageData =  UIImagePNGRepresentation(selectedImage);
-//                
-//                NSString  *encodedString = [self base64forData:imageData];
-//                
-//                
-//                
-//                
-//                
-//                NSURL *url=[NSURL URLWithString:[NSString stringWithFormat:@"%@user_imageupload",GLOBALAPI]];
-//                
-//                // configure the request
-//                
-//                NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
-//                [request setHTTPMethod:@"POST"];
-//                
-//                
-//                
-//                NSString *sendData;
-//                
-//                
-//                sendData = @"authtoken=";
-//                sendData = [sendData stringByAppendingString:[NSString stringWithFormat:@"%@", appDelegate.authToken]];
-//                
-//                
-//                
-//                sendData = [sendData stringByAppendingString:@"&profile_image="];
-//                sendData = [sendData stringByAppendingString:[NSString stringWithFormat:@"%@", encodedString]];
-//                
-//                [request setValue:@"gzip" forHTTPHeaderField:@"Accept-Encoding"];
-//                
-//                NSMutableData *theBodyData = [NSMutableData data];
-//                
-//                theBodyData = [[sendData dataUsingEncoding:NSUTF8StringEncoding] mutableCopy];
-//                
-//                
-//                //  self.session = [NSURLSession sharedSession];  // use sharedSession or create your own
-//                
-//                session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
-//                
-//                NSURLSessionTask *task = [session uploadTaskWithRequest:request fromData:theBodyData completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-//                    if (error) {
-//                        NSLog(@"error = %@", error);
-//                        return;
-//                    }
+//                    selectedImage=[info valueForKey:UIImagePickerControllerEditedImage];
 //                    
-//                    if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
-//                        NSError *jsonError;
-//                        NSDictionary *Response = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
-//                        
-//                        
-//                        
-//                        if (jsonError) {
-//                            // Error Parsing JSON
-//                            NSString *responseString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-//                            
-//                            [SVProgressHUD showInfoWithStatus:@"some error occured"];
-//                            
-//                            NSLog(@"response = %@",responseString);
-//                        } else {
-//                            // Success Parsing JSON
-//                            // Log NSDictionary response:
-//                            NSLog(@"result = %@",jsonResponse);
-//                            if ([[jsonResponse objectForKey:@"status_code"]intValue]==406) {
-//                                
-//                                appDelegate.userId=@"";
-//                                
-//                                appDelegate.authToken=@"";
-//                                
-//                                NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
-//                                [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
-//                                
-//                                
-//                          
-//                                
-//                            }
-//                            else
-//                                if ([[Response objectForKey:@"status_code"]intValue]==200) {
-//                                    
-//                                    
-//                                    
-//                                    [SVProgressHUD dismiss];
-//                                    
-//                                    [_profileImage setImage:selectedImage];
-//                                    
-//                                    
-//                                    _profileImage.contentMode = UIViewContentModeScaleAspectFill;
-//                                    _profileImage.clipsToBounds = YES;
-//                                    
-//                                   
-//                                    
-//                                    
-//                                }
-//                            
-//                                else{
-//                                    
-//                                    [SVProgressHUD showInfoWithStatus:[jsonResponse objectForKey:@"message"]];
-//                                    
-//                                }
-//                        }
-//                    }
-//                }];
-//                [task resume];
-//                
-//            }
-//            
-//            else
-//                
-//            {
-//                
-//                [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
-//            }
-//        }
+//                    [_profileImage setImage:selectedImage];
+//                    _profileImage.contentMode = UIViewContentModeScaleAspectFill;
+//                     //_profileImage.clipsToBounds = YES;
+//                    
+//                }
         
+        [SVProgressHUD showWithStatus:@"Processing"];
+        
+        NSString *mediaType = [info objectForKey:UIImagePickerControllerMediaType];
+        if ([mediaType isEqualToString:(NSString *)kUTTypeImage])
+        {
+            
+            selectedImage=[info valueForKey:UIImagePickerControllerEditedImage];
+            
+            
+            
+            if ([self networkAvailable])
+                
+            {
+                
+                
+                
+                [SVProgressHUD showWithStatus:@"Uploading Please wait"];
+                
+                
+                //  AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+                
+                
+                
+                
+                
+                NSData *imageData =  UIImagePNGRepresentation(selectedImage);
+                
+                NSString  *encodedString = [self base64forData:imageData];
+                
+                
+                
+               // http://ec2-13-58-196-4.us-east-2.compute.amazonaws.com/jokemaster/index.php/Userprofile/change_profile?user_id=1
+                
+                NSURL *url=[NSURL URLWithString:[NSString stringWithFormat:@"%@%@Userprofile/change_profile",GLOBALAPI,INDEX]];
+                
+                // configure the request
+                
+                NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
+                [request setHTTPMethod:@"POST"];
+                
+                
+                
+                NSString *sendData;
+                
+                
+                sendData = @"user_id=";
+          sendData = [sendData stringByAppendingString:[NSString stringWithFormat:@"%@", appDelegate.userId]];
+                
+                sendData = [sendData stringByAppendingString:@"&userimage="];
+                sendData = [sendData stringByAppendingString:[NSString stringWithFormat:@"%@", encodedString]];
+                
+                [request setValue:@"gzip" forHTTPHeaderField:@"Accept-Encoding"];
+                
+                NSMutableData *theBodyData = [NSMutableData data];
+                
+                theBodyData = [[sendData dataUsingEncoding:NSUTF8StringEncoding] mutableCopy];
+                
+                
+                //  self.session = [NSURLSession sharedSession];  // use sharedSession or create your own
+                
+                session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
+                
+                NSURLSessionTask *task = [session uploadTaskWithRequest:request fromData:theBodyData completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+                    if (error) {
+                        NSLog(@"error = %@", error);
+                        return;
+                    }
+                    
+                    if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
+                        NSError *jsonError;
+                        NSDictionary *Response = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
+                        
+                        
+                        
+                        if (jsonError) {
+                            // Error Parsing JSON
+                            NSString *responseString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                            
+                            [SVProgressHUD showInfoWithStatus:@"some error occured"];
+                            
+                            NSLog(@"response = %@",responseString);
+                        } else {
+                            // Success Parsing JSON
+                            // Log NSDictionary response:
+                            NSLog(@"result = %@",Response);
+                            if ([[Response objectForKey:@"status_code"]intValue]==406) {
+                                
+                                appDelegate.userId=@"";
+                                
+                                appDelegate.authToken=@"";
+                                
+                                NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
+                                [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
+                                
+                                
+                          
+                                
+                            }
+                            else
+                                if ([[Response objectForKey:@"code"]intValue]==200) {
+                                    
+                                    
+                                    
+                                    [SVProgressHUD dismiss];
+                                    
+                                    [_profileImage setImage:selectedImage];
+                                    
+                                    
+                                    _profileImage.contentMode = UIViewContentModeScaleAspectFill;
+                                    _profileImage.clipsToBounds = YES;
+                                    
+                                       [[NSUserDefaults standardUserDefaults] setObject:[Response objectForKey:@"image"] forKey:@"Image"];
+                                       appDelegate.userImage=[Response objectForKey:@"image"];
+                                    
+                                }
+                            
+                                else{
+                                    
+                                    [SVProgressHUD showInfoWithStatus:[jsonResponse objectForKey:@"message"]];
+                                    
+                                }
+                        }
+                    }
+                }];
+                [task resume];
+                
+            }
+            
+            else
+                
+            {
+                
+                [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
+            }
+        }
+                }
     }];
     
     

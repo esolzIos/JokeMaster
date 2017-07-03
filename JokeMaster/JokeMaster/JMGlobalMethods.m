@@ -3164,7 +3164,7 @@
             JMProfileViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMProfile"];
             VC.fromLeftMenu=true;
             
-            [self.navigationController pushViewController:VC animated:kCAMediaTimingFunctionEaseIn];
+  [self.navigationController pushViewController:VC animated:YES];
             
             
             //                if (userid.length==0)
