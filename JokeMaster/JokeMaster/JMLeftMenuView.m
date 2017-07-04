@@ -93,7 +93,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section;
 {
     
-    return 7;
+    return 6;
 //    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
 //    NSString *userid=[prefs valueForKey:@"UserId"];
 //    if (userid.length==0)
@@ -159,12 +159,12 @@
         
         if (indexPath.row==0)
         {
-            cell.menuName.text = AMLocalizedString(@"MY CHANNEL",nil);
+            cell.menuName.text = [AMLocalizedString(@"My Channel",nil) uppercaseString];
             cell.menuImg.image = [UIImage imageNamed:@"my-chanel"];
         }
         else if (indexPath.row==1)
         {
-            cell.menuName.text = AMLocalizedString(@"MY FAVOURITES",nil);
+            cell.menuName.text = [AMLocalizedString(@"MY FAVOURITES",nil)uppercaseString];;
             cell.menuImg.image = [UIImage imageNamed:@"favourite"];
             
            
@@ -185,17 +185,17 @@
 //            cell.menuName.text = AMLocalizedString(@"HISTORY",nil);
 //            cell.menuImg.image = [UIImage imageNamed:@"history"];
 //        }
+//        else if (indexPath.row==4)
+//        {
+//            cell.menuName.text = AMLocalizedString(@"PROFILE",nil);
+//            cell.menuImg.image = [UIImage imageNamed:@"profile"];
+//        }
         else if (indexPath.row==4)
-        {
-            cell.menuName.text = AMLocalizedString(@"PROFILE",nil);
-            cell.menuImg.image = [UIImage imageNamed:@"profile"];
-        }
-        else if (indexPath.row==5)
         {
             cell.menuName.text = AMLocalizedString(@"UPLOAD A VIDEO",nil);
             cell.menuImg.image = [UIImage imageNamed:@"settings"];
         }
-        else if (indexPath.row==6)
+        else if (indexPath.row==5)
         {
             if ([[NSUserDefaults standardUserDefaults]boolForKey:@"loggedIn"]) {
                 cell.menuName.text = AMLocalizedString(@"LOG OUT",nil);

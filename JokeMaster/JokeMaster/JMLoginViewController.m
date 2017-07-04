@@ -627,9 +627,9 @@ dismissViewController:(UIViewController *)viewController {
                          
                          DebugLog(@"image----%@",[NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"Image"]]);
                          
-                         app.userId=[[responseDict objectForKey:@"Details"] valueForKey:@"user_id"];
-                         app.userName=[[responseDict objectForKey:@"Details"] valueForKey:@"name"];
-                         app.userImage=[[responseDict objectForKey:@"Details"] valueForKey:@"image"];
+                         app.userId=[[responseDict objectForKey:@"userinfo"] valueForKey:@"userid"] ;
+                         app.userName=[[responseDict objectForKey:@"userinfo"] valueForKey:@"name"] ;
+                         app.userImage=[[responseDict objectForKey:@"userinfo"] valueForKey:@"image"];
                          app.isLogged=true;
                          
                          [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"loggedIn"];

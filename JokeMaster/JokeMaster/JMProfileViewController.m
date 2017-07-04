@@ -23,11 +23,15 @@
 
     UIImagePickerController *ipc;
     NSURLSession *session;
-    BOOL firedOnce;
+    BOOL firedOnce,catFonteSet;
     NSDictionary *jsonResponse;
         AppDelegate *appDelegate;
     UIImage *selectedImage;
    UrlconnectionObject *urlobj;
+    NSMutableArray *videoArr;
+    NSString *categoryId;
+    int totalCount,page;
+    UIFont *catFont,*videoFont;
 }
 @end
 
@@ -36,9 +40,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    jsonResponse=[[NSDictionary alloc]init];
-    
-    
+
         [self addMoreView:self.view];
     MenuViewY=_MenuBaseView.frame.origin.y;
     
@@ -88,7 +90,11 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
-
+    jsonResponse=[[NSDictionary alloc]init];
+    videoArr=[[NSMutableArray alloc]init];
+      categoryId=@"";
+    page=1;
+    totalCount=0;
 [self loadData];
 }
 
@@ -201,7 +207,9 @@
                             
                             [_userName setText:[[NSString stringWithFormat:@"%@",[userDetails objectForKey:@"username"]] capitalizedString]];
                             
+                            [_scoreLbl setText:[NSString stringWithFormat:@"%@ : %@/5 | %@: %@",AMLocalizedString(@"SCORE", nil),[userDetails objectForKey:@"score"],AMLocalizedString(@"JOKE MASTER RANK", nil),[userDetails objectForKey:@"rank"]]];
                             
+                            [_membershipDate setText:[NSString stringWithFormat:@"%@ %@",AMLocalizedString(@"MEMBER SINCE", nil),[userDetails objectForKey:@"memberSince"]]];
                             
                             
                             [_profileImage sd_setImageWithURL:[NSURL URLWithString:[userDetails objectForKey:@"user_image"]] placeholderImage:[UIImage imageNamed:@"noimage"]];
@@ -215,7 +223,7 @@
 //                            }
 //                            
                           
-                            
+                            [self loadVideos];
                             
                             
                         }
@@ -296,7 +304,7 @@
 
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return 30;
+    return videoArr.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
@@ -312,9 +320,9 @@
     
     //   NSLog(@"%@",[arrCategory objectAtIndex:indexPath.row]);
     
-    //    cell.categoryLbl.text = [[[arrCategory objectAtIndex:indexPath.row]objectForKey:@"category_name" ] uppercaseString];
-    //
-    //    [cell.categoryImage sd_setImageWithURL:[NSURL URLWithString:[[arrCategory objectAtIndex:indexPath.row]objectForKey:@"picture" ]] placeholderImage:[UIImage imageNamed: @"NoJob"]];
+        cell.CategoryNameLabel.text = [[[videoArr objectAtIndex:indexPath.row]objectForKey:@"videoname" ] uppercaseString];
+    
+        [cell.VideoThumpnailImage sd_setImageWithURL:[NSURL URLWithString:[[videoArr objectAtIndex:indexPath.row]objectForKey:@"videoimagename" ]] placeholderImage:[UIImage imageNamed: @"Noimage"]];
     //
     //    cell.categoryImage.layer.masksToBounds = YES;
     //    cell.categoryImage.layer.cornerRadius=5.0;
@@ -329,8 +337,8 @@
 {
     
     
-    JMCategoryVideoListViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMVideoList"];
-     VC.CategoryName=@"Animal";
+    JMPlayVideoViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMPlayVideoViewController"];
+    VC.VideoId=[[videoArr objectAtIndex:indexPath.row] valueForKey:@"id"];
     [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
     
 }
@@ -377,6 +385,8 @@
                          {
                              _TransparentView.frame = CGRectMake(0, 0, _TransparentView.frame.size.width, _TransparentView.frame.size.height);
                              _MenuBaseView.frame = CGRectMake(0,MenuViewY, _MenuBaseView.frame.size.width, _MenuBaseView.frame.size.height);
+                             
+                             [_CategoryTable reloadData];
                          }
                          else
                          {
@@ -422,22 +432,7 @@
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    cell.CategoryLabel.text=[[CategoryArray objectAtIndex:indexPath.row] valueForKey:@"name"];
     
-    [cell.CategoryLabel setFont:[UIFont fontWithName:cell.CategoryLabel.font.fontName size:[self getFontSize:cell.CategoryLabel.font.pointSize]]];
-    
-    //    if ([[NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] valueForKey:@"language"]] isEqualToString:@"he"])
-    //    {
-    //        cell.CategoryLabel.textAlignment=NSTextAlignmentRight;
-    //    }
-    //    else
-    //    {
-    //        cell.CategoryLabel.textAlignment=NSTextAlignmentLeft;
-    //    }
-    
-    cell.CheckImage.tag=indexPath.row+500;
-    cell.CheckButton.tag=indexPath.row;
-    [cell.CheckButton addTarget:self action:@selector(CheckButtonTap:) forControlEvents:UIControlEventTouchUpInside];
     
     return cell;
     
@@ -464,6 +459,43 @@
 -(void) tableView:(UITableView *)tableView willDisplayCell:(JMCategoryCell *) cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
+    cell.CategoryLabel.text=[[CategoryArray objectAtIndex:indexPath.row] valueForKey:@"name"];
+    
+    
+    if (!catFonteSet) {
+        catFont=[UIFont fontWithName:cell.CategoryLabel.font.fontName size:[self getFontSize:cell.CategoryLabel.font.pointSize]];
+        
+        catFonteSet=true;
+    }
+    [cell.CategoryLabel setFont:catFont];
+    
+    //    if ([[NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] valueForKey:@"language"]] isEqualToString:@"he"])
+    //    {
+    //        cell.CategoryLabel.textAlignment=NSTextAlignmentRight;
+    //    }
+    //    else
+    //    {
+    //        cell.CategoryLabel.textAlignment=NSTextAlignmentLeft;
+    //    }
+    
+    //    cell.CheckImage.tag=indexPath.row+500;
+    //    cell.CheckButton.tag=indexPath.row;
+    //    [cell.CheckButton addTarget:self action:@selector(CheckButtonTap:) forControlEvents:UIControlEventTouchUpInside];
+    
+    
+    if ([categoryId isEqualToString:[[CategoryArray objectAtIndex:indexPath.row] valueForKey:@"id"]])
+    {
+        
+        cell.CheckImage.image = [UIImage imageNamed:@"tick"];
+    }
+    else
+    {
+        
+        cell.CheckImage.image = [UIImage imageNamed:@"uncheck"];
+    }
+    
+
+    
     
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -471,8 +503,20 @@
     JMCategoryCell *cell = [_CategoryTable
                             cellForRowAtIndexPath:indexPath];
     
-    [cell.CheckButton setHighlighted:YES];
-    [cell.CheckButton sendActionsForControlEvents:UIControlEventTouchUpInside];
+    if (![categoryId isEqualToString:[[CategoryArray objectAtIndex:indexPath.row] valueForKey:@"id"]])
+    {
+         categoryId=[[CategoryArray objectAtIndex:indexPath.row] valueForKey:@"id"];
+       cell.CheckImage.image = [UIImage imageNamed:@"tick"];
+    }
+    else
+    {
+            categoryId=@"";
+        cell.CheckImage.image = [UIImage imageNamed:@"uncheck"];
+    }
+    
+    
+ //   [cell.CheckButton setHighlighted:YES];
+   // [cell.CheckButton sendActionsForControlEvents:UIControlEventTouchUpInside];
     
     [UIView animateWithDuration:0.5
                           delay:0.1
@@ -483,6 +527,13 @@
                      }
                      completion:^(BOOL finished)
      {
+         
+
+         [videoArr removeAllObjects];
+         page=1;
+         totalCount=0;
+         [self loadVideos];
+         
              }];
 
 }
@@ -919,6 +970,120 @@
     
     
 }
+
+#pragma mark - video list API
+
+-(void)loadVideos
+{
+    
+    BOOL net=[urlobj connectedToNetwork];
+    if (net==YES)
+    {
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+            
+            self.view.userInteractionEnabled = NO;
+            [self checkLoader];
+        }];
+        [[NSOperationQueue new] addOperationWithBlock:^{
+            
+            NSString *urlString;
+            
+            
+            urlString=[NSString stringWithFormat:@"%@%@Video?categoryid=%@&language=%@&country=%@&userid=%@&page=%d&limit=10",GLOBALAPI,INDEX,categoryId,[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"],[[NSUserDefaults standardUserDefaults] objectForKey:@"countryId"],appDelegate.userId,page];
+            
+            
+            
+            urlString=[urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+            
+            DebugLog(@"Send string Url%@",urlString);
+            
+            
+            
+            
+            [urlobj getSessionJsonResponse:urlString  success:^(NSDictionary *responseDict)
+             {
+                 
+                 firedOnce=false;
+                 
+                 DebugLog(@"success %@ Status Code:%ld",responseDict,(long)urlobj.statusCode);
+                 
+                 
+                 self.view.userInteractionEnabled = YES;
+                 //  [self checkLoader];
+                 
+                 if (urlobj.statusCode==200)
+                 {
+                     if ([[responseDict objectForKey:@"status"] boolValue])
+                     {
+                         
+                         [SVProgressHUD dismiss];
+                         
+                         totalCount=[[responseDict objectForKey:@"totalcount"] intValue];
+                         
+                    NSArray     *resultArr=[[responseDict objectForKey:@"videoDetails"] mutableCopy];
+                         
+                         
+                         for(NSDictionary *dict in resultArr) {
+                             [videoArr addObject:dict];
+                             
+                         }
+                         
+                         
+                         if (videoArr.count>0)
+                         {
+                      
+                             
+                            
+    
+                             [_categoryCollectionView  reloadData];
+                         }
+                         
+                     }
+                     else
+                     {
+                     
+                                [_categoryCollectionView  reloadData];
+                         
+                         
+                         [SVProgressHUD showInfoWithStatus:[responseDict objectForKey:@"message"]];
+                         
+                     }
+                     
+                 }
+                 else if (urlobj.statusCode==500 || urlobj.statusCode==400)
+                 {
+                          [_categoryCollectionView  reloadData];
+                     
+                     [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Server Failed to Respond",nil)];
+                     
+                 }
+                 else
+                 {
+                            [_categoryCollectionView  reloadData];
+                     [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Server Failed to Respond",nil)];
+                 }
+                 
+             }
+                                   failure:^(NSError *error) {
+                                       
+                                       // [self checkLoader];
+                                       self.view.userInteractionEnabled = YES;
+                                    [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Server Failed to Respond",nil)];
+                                       
+                                   }
+             ];
+        }];
+    }
+    else
+    {
+     
+        [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
+        
+    }
+
+
+}
+
 #pragma mark -Category list API
 -(void)CategoryApi
 {
@@ -1023,6 +1188,37 @@
     {
         [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
         //        [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Network Not Available." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
+    }
+}
+-(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    // DebugLog(@"Table Y Position:%f",_StockTable.frame.origin.y);
+    if (scrollView==_categoryCollectionView && totalCount>videoArr.count)
+    {
+        
+        CGPoint offset = scrollView.contentOffset;
+        CGRect bounds = scrollView.bounds;
+        CGSize size = scrollView.contentSize;
+        UIEdgeInsets inset = scrollView.contentInset;
+        float y = offset.y + bounds.size.height - inset.bottom;
+        float h = size.height;
+        
+        float reload_distance = -60.0f;
+        if(y > h + reload_distance)
+        {
+            
+            
+            
+            if (!firedOnce) {
+                [_categoryCollectionView setUserInteractionEnabled:NO];
+                
+                firedOnce=true;
+                page++;
+                
+                [self loadVideos];
+                
+            }
+        }
     }
 }
 

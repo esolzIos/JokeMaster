@@ -214,7 +214,17 @@
 }
 - (IBAction)goClicked:(id)sender {
     
+    
+    
     if (selected) {
+        
+        LocalizationSetLanguage([langCodeArr objectAtIndex:rowSelected]);
+        
+        [[NSUserDefaults standardUserDefaults]setObject:[langCodeArr objectAtIndex:rowSelected] forKey:@"language"];
+        
+        [[NSUserDefaults standardUserDefaults ]setObject:[codeArr objectAtIndex:rowSelected] forKey:@"langId"];
+
+        
         JMChooseCountryViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMChooseCountryViewController"];
         
         [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
@@ -232,11 +242,6 @@
     
     DebugLog(@"%@",[codeArr objectAtIndex:rowSelected]);
     
-         LocalizationSetLanguage([langCodeArr objectAtIndex:rowSelected]);
-    
-     [[NSUserDefaults standardUserDefaults]setObject:[langCodeArr objectAtIndex:rowSelected] forKey:@"language"];
-    
-      [[NSUserDefaults standardUserDefaults ]setObject:[codeArr objectAtIndex:rowSelected] forKey:@"langId"];
     
     [_pickerView setHidden:YES];
 }

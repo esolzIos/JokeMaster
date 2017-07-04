@@ -9,7 +9,19 @@
 #import "JMCategoryVideoListViewController.h"
 
 @interface JMCategoryVideoListViewController ()
+{
+    NSURLSession *session;
+    BOOL firedOnce,catFonteSet;
+    NSDictionary *jsonResponse;
+    AppDelegate *appDelegate;
+    
+    
+    NSMutableArray *videoArr;
 
+    int totalCount,page;
+    UIFont *catFont,*videoFont;
+    
+}
 @end
 
 @implementation JMCategoryVideoListViewController
@@ -53,6 +65,140 @@
     
 }
 
+#pragma mark -Video list API
+-(void)loadVideos
+{
+    
+    
+    BOOL net=[urlobj connectedToNetwork];
+    if (net==YES)
+    {
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+            
+            if (page==1)
+            {
+                self.view.userInteractionEnabled = NO;
+                [self checkLoader];
+            }
+            
+        }];
+        [[NSOperationQueue new] addOperationWithBlock:^{
+            
+            NSString *urlString;
+            
+            
+            
+            urlString=[NSString stringWithFormat:@"%@%@Video?categoryid=%@&language=%@&country=%@&userid=&page=%d&limit=10",GLOBALAPI,INDEX,CategoryId,[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"],[[NSUserDefaults standardUserDefaults] objectForKey:@"countryId"],page];
+            
+            
+            
+            urlString=[urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+            
+            DebugLog(@"Send string Url%@",urlString);
+            
+            
+            
+            
+            [urlobj getSessionJsonResponse:urlString  success:^(NSDictionary *responseDict)
+             {
+                 
+                 DebugLog(@"success %@ Status Code:%ld",responseDict,(long)urlobj.statusCode);
+                 
+                 
+                 self.view.userInteractionEnabled = YES;
+                 [SVProgressHUD dismiss];
+                 
+                 if (urlobj.statusCode==200)
+                 {
+                     if ([[responseDict objectForKey:@"status"] boolValue])
+                     {
+                         //  RecentVideoArray=[[responseDict objectForKey:@"details"] mutableCopy];
+                         
+                         totalCount=[[responseDict objectForKey:@"totalcount"]intValue];
+                         
+                         NSMutableArray *TempArray=[[NSMutableArray alloc] init];
+                         TempArray=[[responseDict objectForKey:@"videoDetails"] mutableCopy];
+                         
+                         
+                         
+                         if (TempArray.count>0)
+                         {
+                             for ( NSDictionary *tempDict1 in  TempArray)
+                             {
+                                 [videoArr addObject:tempDict1];
+                                 
+                             }
+                             //    [RecentVideoArray addObject:[responseDict objectForKey:@"details"]];
+                             [RecentVideoCollectionView reloadData];
+                         }
+                         else
+                         {
+                             
+                         }
+                         
+                     }
+                     else
+                     {
+                  
+                         
+                         if (page==1)
+                         {
+                             [SVProgressHUD showInfoWithStatus:[responseDict objectForKey:@"message"]];
+                         }
+                         
+                         
+                     }
+                     
+                 }
+                 else if (urlobj.statusCode==500 || urlobj.statusCode==400)
+                 {
+                     //                     [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Server Failed to Respond" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
+                     
+                     
+                     [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Server Failed to Respond",nil)];
+                     
+                 }
+                 else
+                 {
+                     //                     [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Server Failed to Respond" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
+                     
+                     [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Server Failed to Respond",nil)];
+                 }
+                 
+             }
+                                   failure:^(NSError *error) {
+                                       
+                                       // [self checkLoader];
+                                       self.view.userInteractionEnabled = YES;
+                                       NSLog(@"Failure");
+                                       //                                       [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Server Failed to Respond" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
+                                       
+                                       [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Server Failed to Respond",nil)];
+                                       
+                                   }
+             ];
+        }];
+    }
+    else
+    {
+        
+        [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
+        
+    }
+}
+-(void)viewWillAppear:(BOOL)animated
+{
+    
+ 
+    CategoryArray=[[NSMutableArray alloc] init];
+    videoArr=[[NSMutableArray alloc] init];
+    page=1;
+    totalCount=0;
+    
+    [self loadVideos];
+    
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -85,7 +231,7 @@
 
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return 30;
+    return videoArr.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
@@ -93,6 +239,8 @@
     
     
     JMRecentUploadedCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
+    
+        [cell.VideoThumpnailImage sd_setImageWithURL:[NSURL URLWithString:[[videoArr objectAtIndex:indexPath.row]objectForKey:@"videoimagename"]] placeholderImage:[UIImage imageNamed: @"noimage"]];
     
     cell.VideoThumpnailImage.layer.cornerRadius=12.0;
     cell.VideoThumpnailImage.clipsToBounds=YES;
@@ -115,11 +263,38 @@
 
 {
     JMPlayVideoViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMPlayVideoViewController"];
-    
+    VC.VideoId=[[videoArr objectAtIndex:indexPath.row] valueForKey:@"id"];
     [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
     
     
     
+}
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    
+    
+    if (scrollView==RecentVideoCollectionView && totalCount>videoArr.count)
+    {
+        CGPoint offset = scrollView.contentOffset;
+        CGRect bounds = scrollView.bounds;
+        CGSize size = scrollView.contentSize;
+        UIEdgeInsets inset = scrollView.contentInset;
+        float y = offset.y + bounds.size.height - inset.bottom;
+        float h = size.height;
+        
+        float reload_distance = -10.0f;
+        
+        
+        if(y > h + reload_distance)
+        {
+        
+          
+                page += 1;
+                [self loadVideos];
+          
+            
+        }
+    }
 }
 /*
  #pragma mark - Navigation

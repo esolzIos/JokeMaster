@@ -1976,6 +1976,7 @@
                         <outlet property="transView" destination="KaK-dT-hfv" id="ySC-RL-EtY"/>
                         <outlet property="tvView" destination="ubT-rf-RIi" id="fOh-uf-v2b"/>
                         <outlet property="videoThumb" destination="y1J-9W-Xqr" id="uM3-iN-Lat"/>
+                        <outlet property="viewCountLbl" destination="aXI-GE-ffL" id="KMW-ph-ke0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uJW-44-1Rk" userLabel="First Responder" sceneMemberID="firstResponder"/>

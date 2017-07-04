@@ -16,9 +16,10 @@ AVPlayer *player;
     
     BOOL paused,inFullscreen,fontSet;
     
-
-        BOOL liked;
- 
+    AppDelegate *app;
+        BOOL liked,viewed;
+    int totalCount;
+    NSURLSession *session;
     
 }
 @end
@@ -83,6 +84,9 @@ AVPlayer *player;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    app=(AppDelegate *)[[UIApplication sharedApplication]delegate];
+    
     
         [_reviewTable setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     
@@ -251,6 +255,9 @@ AVPlayer *player;
         [_playPauseImg setImage:[UIImage imageNamed:@"pause"]];
         
         [player play];
+        
+        [self addViewCount];
+        
         [_ratingImage.layer removeAllAnimations];
            [_optionView setHidden:YES];
     }
@@ -281,6 +288,9 @@ AVPlayer *player;
     [_playPauseImg setImage:[UIImage imageNamed:@"pause"]];
   //  [player seekToTime:kCMTimeZero];
     [player play];
+    
+     [self addViewCount];
+    
 }
 - (IBAction)sharedClicked:(id)sender {
      [_ratingImage.layer removeAllAnimations];
@@ -394,8 +404,13 @@ AVPlayer *player;
             
             NSString *urlString;
             
-            
-            urlString=[NSString stringWithFormat:@"%@index.php/Videodetails?videoid=%@",GLOBALAPI,VideoId];
+            if (app.isLogged) {
+                  urlString=[NSString stringWithFormat:@"%@index.php/Videodetails?videoid=%@&loggedinid=%@",GLOBALAPI,VideoId,app.userId];
+            }
+            else{
+                  urlString=[NSString stringWithFormat:@"%@index.php/Videodetails?videoid=%@&loggedinid=",GLOBALAPI,VideoId];
+            }
+          
             
             
             
@@ -431,20 +446,28 @@ AVPlayer *player;
                          VideoPosterId=[VideoDictionary objectForKey:@"user_id"];
                          
                          
-                         _ratingLbl.text=[NSString stringWithFormat:@"%@/5",[VideoDictionary objectForKey:@"video_rating"]];
+                         _ratingLbl.text=[NSString stringWithFormat:@"%@/5",[VideoDictionary objectForKey:@"video_average_rating"]];
                          
+                         _viewCountLbl.text=[NSString stringWithFormat:@"%@ VIEWS",[VideoDictionary objectForKey:@"views"]];
+                         
+                         _rankLbl.text=[NSString stringWithFormat:@"RANK %@",[VideoDictionary objectForKey:@"rank"]];
                          
                          _ratingView.maximumValue = 5;
                          _ratingView.minimumValue = 0;
-                         _ratingView.value =[[VideoDictionary objectForKey:@"video_rating"] floatValue];
+                         _ratingView.allowsHalfStars = YES;
+                         _ratingView.value =[[VideoDictionary objectForKey:@"video_average_rating"] floatValue];
                          _ratingView.userInteractionEnabled=NO;
                          //    _RatingView.tintColor = [UIColor clearColor];
                          _ratingView.allowsHalfStars = YES;
+                         _ratingView.accurateHalfStars = YES;
+                         _ratingView.halfStarImage = [[UIImage imageNamed:@"emotion1"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
                          _ratingView.emptyStarImage = [[UIImage imageNamed:@"emotion"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
                          _ratingView.filledStarImage = [[UIImage imageNamed:@"emotion2"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
                          _ratingView.hidden=NO;
                          
                          [_videoThumb sd_setImageWithURL:[NSURL URLWithString:[VideoDictionary objectForKey:@"videoimagename"]] placeholderImage:[UIImage imageNamed: @"noimage"]];
+                         
+                          [_ownerImage sd_setImageWithURL:[NSURL URLWithString:[VideoDictionary objectForKey:@"userimage"]] placeholderImage:[UIImage imageNamed: @"noimage"]];
                          
                          NSURL *videoURL;
                         
@@ -603,6 +626,10 @@ AVPlayer *player;
 //                         
 //                     }
                      
+                     
+                  //   [self getReviews];
+                     
+                     
                  }
                  else if (urlobj.statusCode==500 || urlobj.statusCode==400)
                  {
@@ -639,6 +666,282 @@ AVPlayer *player;
         [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
         
     }
+}
+//-(void)getReviews
+//{
+//    
+//    if([self networkAvailable])
+//    {
+//        
+//        
+//        
+//        [SVProgressHUD show];
+//        
+//        
+//        
+//        NSString *url;
+//        
+//        
+//        url=[NSString stringWithFormat:@"%@%@Signup/fetchlanguage",GLOBALAPI,INDEX];
+//        
+//        
+//        
+//        NSLog(@"Url String..%@",url);
+//        
+//        
+//        
+//        NSURLSessionConfiguration *sessionConfig = [NSURLSessionConfiguration defaultSessionConfiguration];
+//        session = [NSURLSession sessionWithConfiguration:sessionConfig delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
+//        
+//        [[session dataTaskWithURL:[NSURL URLWithString:url] completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+//            
+//            
+//            //
+//            //        NSURLSessionTask *task = [session uploadTaskWithRequest:request fromData:nil completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+//            if (error) {
+//                NSLog(@"error = %@", error);
+//                
+//                
+//                [_GoButton setUserInteractionEnabled:YES];
+//                return;
+//            }
+//            
+//            if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
+//                NSError *jsonError;
+//                NSDictionary *jsonResponse = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
+//                
+//                
+//                
+//                
+//                
+//                
+//                [_GoButton setUserInteractionEnabled:YES];
+//                
+//                if (jsonError) {
+//                    // Error Parsing JSON
+//                    
+//                    NSString *responseString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+//                    
+//                    NSLog(@"response = %@",responseString);
+//                    
+//                    [SVProgressHUD showInfoWithStatus:@"some error occured"];
+//                    
+//                } else {
+//                    // Success Parsing JSON
+//                    // Log NSDictionary response:
+//                    NSLog(@"result = %@",jsonResponse);
+//                    if ([jsonResponse objectForKey:@"status"]) {
+//                        
+//                        
+//                        
+//                        langjsonArr=[[jsonResponse objectForKey:@"details"] copy];
+//                        
+//                        totalCount=(int)langjsonArr.count;
+//                        
+//                        
+//                        
+//                        [SVProgressHUD dismiss];
+//                        
+//                        
+//                        
+//                        for (NSDictionary *Dict in langjsonArr) {
+//                            
+//                            [langArr addObject:[Dict objectForKey:@"name"]];
+//                            [codeArr addObject:[Dict objectForKey:@"id"]];
+//                            [langCodeArr addObject:[Dict objectForKey:@"short_name"]];
+//                            [langDict setObject:[Dict objectForKey:@"countryData"] forKey:[Dict objectForKey:@"id"]];
+//                            
+//                        }
+//                        
+//                        
+//                        
+//                        if (langArr.count>0) {
+//                            
+//                            if ([codeArr containsObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"]]) {
+//                                
+//                                rowSelected=(int)[codeArr indexOfObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"]];
+//                                
+//                                [_LanguageLabel setText:AMLocalizedString([langArr objectAtIndex:rowSelected], nil)];
+//                                
+//                                CountryArray = [[langDict objectForKey:[codeArr objectAtIndex:rowSelected]] copy];
+//                                
+//                                [_CountryTable reloadData];
+//                                
+//                            }
+//                            
+//                            
+//                        }
+//                        else{
+//                            
+//                            [_GoButton setUserInteractionEnabled:NO];
+//                            
+//                            
+//                        }
+//                        
+//                        
+//                    }
+//                    
+//                    
+//                    else{
+//                        
+//                        if (langArr.count==0) {
+//                            
+//                            [SVProgressHUD dismiss];
+//                        }
+//                        else{
+//                            [SVProgressHUD showInfoWithStatus:[jsonResponse objectForKey:@"message"]];
+//                        }
+//                        
+//                        
+//                        
+//                    }
+//                    
+//                    
+//                    
+//                    
+//                }
+//                
+//                
+//            }
+//            
+//            
+//        }]resume ];
+//        
+//        
+//        
+//        
+//        
+//    }
+//    
+//    else{
+//        
+//        
+//        [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
+//        
+//        
+//    }
+//    
+//
+//    
+//}
+
+-(void)addViewCount
+{
+
+    if([self networkAvailable] && !viewed)
+    {
+        
+        
+        
+        [SVProgressHUD show];
+        
+        
+        
+        NSString *url;
+        
+        
+        url=[NSString stringWithFormat:@"%@%@useraction/videoviewcount?videoid=%@",GLOBALAPI,INDEX,VideoId];
+        
+        
+        
+        NSLog(@"Url String..%@",url);
+        
+        
+        
+        NSURLSessionConfiguration *sessionConfig = [NSURLSessionConfiguration defaultSessionConfiguration];
+        session = [NSURLSession sessionWithConfiguration:sessionConfig delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
+        
+        [[session dataTaskWithURL:[NSURL URLWithString:url] completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+            
+            
+            //
+            //        NSURLSessionTask *task = [session uploadTaskWithRequest:request fromData:nil completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+            if (error) {
+                NSLog(@"error = %@", error);
+                
+                
+          
+                return;
+            }
+            
+            if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
+                NSError *jsonError;
+                NSDictionary *jsonResponse = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
+                
+                
+                
+                
+                
+                
+          
+                
+                if (jsonError) {
+                    // Error Parsing JSON
+                    
+                    NSString *responseString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                    
+                    NSLog(@"response = %@",responseString);
+                    
+                    [SVProgressHUD showInfoWithStatus:@"some error occured"];
+                    
+                } else {
+                    // Success Parsing JSON
+                    // Log NSDictionary response:
+                    NSLog(@"result = %@",jsonResponse);
+                    if ([[jsonResponse objectForKey:@"status"]boolValue]) {
+                        
+                        
+                        viewed=true;
+                     [SVProgressHUD dismiss];
+                        
+                        
+                        
+                    }
+                    
+                    
+                    else{
+                        
+                    
+                            
+                            [SVProgressHUD dismiss];
+                     
+                       
+                            [SVProgressHUD showInfoWithStatus:[jsonResponse objectForKey:@"message"]];
+                     
+                        
+                        
+                        
+                    }
+                    
+                    
+                    
+                    
+                }
+                
+                
+            }
+            
+            
+        }]resume ];
+        
+        
+        
+        
+        
+    }
+    
+    else{
+        
+        
+        [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
+        
+        
+    }
+    
+    
+    
+    
+
 }
 
 @end

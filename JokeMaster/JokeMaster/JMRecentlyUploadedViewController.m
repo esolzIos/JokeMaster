@@ -7,9 +7,21 @@
 //
 
 #import "JMRecentlyUploadedViewController.h"
-
+#import "UrlconnectionObject.h"
 @interface JMRecentlyUploadedViewController ()
+{
+    NSURLSession *session;
+    BOOL firedOnce,catFonteSet;
+    NSDictionary *jsonResponse;
+    AppDelegate *appDelegate;
 
+
+    NSMutableArray *videoArr;
+    NSString *categoryId;
+    int totalCount,page;
+    UIFont *catFont,*videoFont;
+
+}
 @end
 
 @implementation JMRecentlyUploadedViewController
@@ -41,14 +53,24 @@
     MenuBaseView.frame = CGRectMake(0, self.view.frame.size.height, MenuBaseView.frame.size.width, MenuBaseView.frame.size.height);
     
     urlobj=[[UrlconnectionObject alloc] init];
-    CategoryArray=[[NSMutableArray alloc] init];
-    RecentVideoArray=[[NSMutableArray alloc] init];
+
     
     [ChooseCategoryLabel setFont:[UIFont fontWithName:ChooseCategoryLabel.font.fontName size:[self getFontSize:ChooseCategoryLabel.font.pointSize]]];
     
-   
+       appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     
-    Page=1;
+  
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+ 
+    categoryId=@"";
+  CategoryArray=[[NSMutableArray alloc] init];
+    RecentVideoArray=[[NSMutableArray alloc] init];
+    page=1;
+    totalCount=0;
+    
     [self RecentVideoApi];
     
 }
@@ -116,8 +138,9 @@
 - (void)collectionView:(UICollectionViewCell *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 
 {
+    
     JMPlayVideoViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMPlayVideoViewController"];
-    VC.VideoId=[[RecentVideoArray objectAtIndex:indexPath.row] valueForKey:@"video_id"];
+     VC.VideoId=[[RecentVideoArray objectAtIndex:indexPath.row] valueForKey:@"id"];
     [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
     
     
@@ -127,7 +150,7 @@
 {
     
     
-    if (scrollView==RecentVideoCollectionView)
+    if (scrollView==RecentVideoCollectionView && totalCount>RecentVideoArray.count)
     {
         CGPoint offset = scrollView.contentOffset;
         CGRect bounds = scrollView.bounds;
@@ -142,18 +165,12 @@
         if(y > h + reload_distance)
         {
             
-            if (MoreDataAvailable==YES)
-            {
+       
                 LoaderView.hidden=NO;
-                Page += 1;
+                page += 1;
                 [self RecentVideoApi];
                 
-            }
-            else
-            {
-               
-                
-            }
+           
         
         }
     }
@@ -183,6 +200,8 @@
                          {
                              TransparentView.frame = CGRectMake(0, 0, TransparentView.frame.size.width, TransparentView.frame.size.height);
                              MenuBaseView.frame = CGRectMake(0,MenuViewY, MenuBaseView.frame.size.width, MenuBaseView.frame.size.height);
+                             
+                              [CategoryTable reloadData];
                          }
                          else
                          {
@@ -227,24 +246,24 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     
-    
-    cell.CategoryLabel.text=[[CategoryArray objectAtIndex:indexPath.row] valueForKey:@"name"];
-    
-    //    [cell.CategoryLabel setFont:[UIFont fontWithName:cell.CategoryLabel.font.fontName size:[self getFontSize:cell.CategoryLabel.font.pointSize]]];
-    
-    if (IsIphone5)
-    {
-        [cell.CategoryLabel setFont:[UIFont fontWithName:cell.CategoryLabel.font.fontName size:16]];
-    }
-    else if (IsIphone6)
-    {
-        [cell.CategoryLabel setFont:[UIFont fontWithName:cell.CategoryLabel.font.fontName size:18]];
-    }
-    else if (IsIphone6plus)
-    {
-        [cell.CategoryLabel setFont:[UIFont fontWithName:cell.CategoryLabel.font.fontName size:20]];
-    }
-    
+//    
+//    cell.CategoryLabel.text=[[CategoryArray objectAtIndex:indexPath.row] valueForKey:@"name"];
+//    
+//    //    [cell.CategoryLabel setFont:[UIFont fontWithName:cell.CategoryLabel.font.fontName size:[self getFontSize:cell.CategoryLabel.font.pointSize]]];
+//    
+//    if (IsIphone5)
+//    {
+//        [cell.CategoryLabel setFont:[UIFont fontWithName:cell.CategoryLabel.font.fontName size:16]];
+//    }
+//    else if (IsIphone6)
+//    {
+//        [cell.CategoryLabel setFont:[UIFont fontWithName:cell.CategoryLabel.font.fontName size:18]];
+//    }
+//    else if (IsIphone6plus)
+//    {
+//        [cell.CategoryLabel setFont:[UIFont fontWithName:cell.CategoryLabel.font.fontName size:20]];
+//    }
+//    
     //    if ([[NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] valueForKey:@"language"]] isEqualToString:@"he"])
     //    {
     //        cell.CategoryLabel.textAlignment=NSTextAlignmentRight;
@@ -282,6 +301,27 @@
 
 -(void) tableView:(UITableView *)tableView willDisplayCell:(JMCategoryCell *) cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    cell.CategoryLabel.text=[[CategoryArray objectAtIndex:indexPath.row] valueForKey:@"name"];
+    
+    
+    if (!catFonteSet) {
+        catFont=[UIFont fontWithName:cell.CategoryLabel.font.fontName size:[self getFontSize:cell.CategoryLabel.font.pointSize]];
+        
+        catFonteSet=true;
+    }
+    [cell.CategoryLabel setFont:catFont];
+    
+    
+    if ([categoryId isEqualToString:[[CategoryArray objectAtIndex:indexPath.row] valueForKey:@"id"]])
+    {
+        
+        cell.CheckImage.image = [UIImage imageNamed:@"tick"];
+    }
+    else
+    {
+        
+        cell.CheckImage.image = [UIImage imageNamed:@"uncheck"];
+    }
     
     
 }
@@ -289,8 +329,34 @@
 {
     JMCategoryCell *cell = [CategoryTable cellForRowAtIndexPath:indexPath];
     
-    [cell.CheckButton setHighlighted:YES];
-    [cell.CheckButton sendActionsForControlEvents:UIControlEventTouchUpInside];
+    if (![categoryId isEqualToString:[[CategoryArray objectAtIndex:indexPath.row] valueForKey:@"id"]])
+    {
+        categoryId=[[CategoryArray objectAtIndex:indexPath.row] valueForKey:@"id"];
+        cell.CheckImage.image = [UIImage imageNamed:@"tick"];
+    }
+    else
+    {
+        categoryId=@"";
+        cell.CheckImage.image = [UIImage imageNamed:@"uncheck"];
+    }
+    
+//    [UIView animateWithDuration:0.5
+//                          delay:0.1
+//                        options:(UIViewAnimationOptions) UIViewAnimationCurveEaseIn
+//                     animations:^{
+//                         TransparentView.frame = CGRectMake(0, self.view.frame.size.height, TransparentView.frame.size.width, TransparentView.frame.size.height);
+//                         MenuBaseView.frame = CGRectMake(0, self.view.frame.size.height, MenuBaseView.frame.size.width, MenuBaseView.frame.size.height);
+//                     }
+//                     completion:^(BOOL finished)
+//     {
+//         JMCategoryVideoListViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMVideoList"];
+//         VC.CategoryId=[NSString stringWithFormat:@"%@",[[CategoryArray objectAtIndex:indexPath.row]objectForKey:@"id"]];
+//         VC.CategoryName=[NSString stringWithFormat:@"%@",[[CategoryArray objectAtIndex:indexPath.row]objectForKey:@"name"]];
+//         [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
+    
+//         [cell.CheckButton setHighlighted:NO];
+//         [cell.CheckButton sendActionsForControlEvents:UIControlEventTouchUpInside];
+    // }];
     
     [UIView animateWithDuration:0.5
                           delay:0.1
@@ -301,14 +367,16 @@
                      }
                      completion:^(BOOL finished)
      {
-         JMCategoryVideoListViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMVideoList"];
-         VC.CategoryId=[NSString stringWithFormat:@"%@",[[CategoryArray objectAtIndex:indexPath.row]objectForKey:@"id"]];
-         VC.CategoryName=[NSString stringWithFormat:@"%@",[[CategoryArray objectAtIndex:indexPath.row]objectForKey:@"name"]];
-         [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
          
-         [cell.CheckButton setHighlighted:NO];
-         [cell.CheckButton sendActionsForControlEvents:UIControlEventTouchUpInside];
+         
+         [RecentVideoArray removeAllObjects];
+         page=1;
+         totalCount=0;
+         [self RecentVideoApi];
+         
      }];
+
+    
 }
 #pragma mark - Check button tapped on table
 -(void)CheckButtonTap:(UIButton *)btn
@@ -441,7 +509,7 @@
     {
         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
             
-            if (Page==1)
+            if (page==1)
             {
                 self.view.userInteractionEnabled = NO;
                 [self checkLoader];
@@ -453,7 +521,8 @@
             NSString *urlString;
             
             
-            urlString=[NSString stringWithFormat:@"%@index.php/Videolisting?pageno=%ld&limit=15",GLOBALAPI,(long)Page];
+            
+            urlString=[NSString stringWithFormat:@"%@%@Video?categoryid=%@&language=%@&country=%@&userid=&page=%d&limit=10",GLOBALAPI,INDEX,categoryId,[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"],[[NSUserDefaults standardUserDefaults] objectForKey:@"countryId"],page];
             
             
             
@@ -471,16 +540,18 @@
                  
                  
                  self.view.userInteractionEnabled = YES;
-                 //  [self checkLoader];
+                 [SVProgressHUD dismiss];
                  
                  if (urlobj.statusCode==200)
                  {
-                     if ([[NSString stringWithFormat:@"%@",[responseDict objectForKey:@"status"]] isEqualToString:@"Success"])
+                     if ([[responseDict objectForKey:@"status"] boolValue])
                      {
                        //  RecentVideoArray=[[responseDict objectForKey:@"details"] mutableCopy];
                          
+                         totalCount=[[responseDict objectForKey:@"totalcount"]intValue];
+                         
                          NSMutableArray *TempArray=[[NSMutableArray alloc] init];
-                         TempArray=[[responseDict objectForKey:@"details"] mutableCopy];
+                         TempArray=[[responseDict objectForKey:@"videoDetails"] mutableCopy];
                          
                          
                          
@@ -488,7 +559,7 @@
                          {
                              MoreDataAvailable=YES;
                              LoaderView.hidden=YES;
-                             for ( NSDictionary *tempDict1 in  [responseDict objectForKey:@"details"])
+                             for ( NSDictionary *tempDict1 in  TempArray)
                              {
                                  [RecentVideoArray addObject:tempDict1];
                                  
@@ -508,7 +579,7 @@
                          MoreDataAvailable=NO;
                          LoaderView.hidden=YES;
                          
-                         if (Page==1)
+                         if (page==1)
                          {
                              [SVProgressHUD showInfoWithStatus:[responseDict objectForKey:@"message"]];
                          }

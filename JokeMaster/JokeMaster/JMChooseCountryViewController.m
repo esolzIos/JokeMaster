@@ -61,10 +61,12 @@
 [_languagePicker setDelegate:self];
     
     
-  
+     langSelected=[[NSUserDefaults standardUserDefaults ]objectForKey:@"langId"];
+    countrySelected= [[NSUserDefaults standardUserDefaults ]objectForKey:@"countryId"];
     
+    countryImage=[[NSUserDefaults standardUserDefaults ]objectForKey:@"flag"];
     
-
+ 
 
     
 }
@@ -168,7 +170,7 @@
                                 
                                 rowSelected=(int)[codeArr indexOfObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"]];
                                 
-                                [_LanguageLabel setText:[langArr objectAtIndex:rowSelected]];
+                                [_LanguageLabel setText:AMLocalizedString([langArr objectAtIndex:rowSelected], nil)];
                                 
                                 CountryArray = [[langDict objectForKey:[codeArr objectAtIndex:rowSelected]] copy];
                                 
@@ -393,6 +395,9 @@
     [_pickerView setHidden:NO];
     
     [_languagePicker reloadAllComponents];
+    
+    
+    [_languagePicker selectRow:rowSelected inComponent:0 animated:NO];
 }
 
 #pragma mark picker delegates
@@ -421,7 +426,7 @@
         pickerLabel.textAlignment = NSTextAlignmentCenter;
         pickerLabel.backgroundColor = [UIColor clearColor];
         pickerLabel.font = [UIFont fontWithName:@"ComicSansMS-Bold" size:24];
-        [pickerLabel setText:[langArr objectAtIndex:row]];
+        [pickerLabel setText:AMLocalizedString([langArr objectAtIndex:row], nil) ];
     }
     pickerLabel.textColor = [UIColor whiteColor];
     return pickerLabel;
@@ -436,7 +441,7 @@
 -(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
     
-    return [langArr objectAtIndex:row];
+    return AMLocalizedString([langArr objectAtIndex:row], nil) ;
     
     
 }
@@ -451,15 +456,15 @@
 }
 - (IBAction)selectClicked:(id)sender {
     
-    [_LanguageLabel setText:[langArr objectAtIndex:rowSelected]];
+    [_LanguageLabel setText:AMLocalizedString([langArr objectAtIndex:rowSelected], nil)];
     
     langSelected=[codeArr objectAtIndex:rowSelected];
     
     
     
     DebugLog(@"%@",[codeArr objectAtIndex:rowSelected]);
-//
-//    LocalizationSetLanguage([codeArr objectAtIndex:rowSelected]);
+
+
     
 
     

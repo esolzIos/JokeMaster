@@ -18,7 +18,7 @@
     float MenuViewY;
     NSMutableArray *CategoryArray,*RecentVideoArray;
     UrlconnectionObject *urlobj;
-    NSInteger Page;
+   // NSInteger Page;
     BOOL MoreDataAvailable;
 }
 @property (weak, nonatomic) IBOutlet UIScrollView *MainScroll;

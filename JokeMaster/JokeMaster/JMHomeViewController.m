@@ -62,13 +62,16 @@
     
     urlobj=[[UrlconnectionObject alloc] init];
     
-    RecentVideoArray=[[NSMutableArray alloc] init];
-    
-    [self RecentVideoApi];
+
     
     
 }
-
+-(void)viewWillAppear:(BOOL)animated
+{
+    RecentVideoArray=[[NSMutableArray alloc] init];
+    
+    [self RecentVideoApi];
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -131,7 +134,7 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     JMPlayVideoViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMPlayVideoViewController"];
-    VC.VideoId=[[RecentVideoArray objectAtIndex:indexPath.row] valueForKey:@"video_id"];
+    VC.VideoId=[[RecentVideoArray objectAtIndex:indexPath.row] valueForKey:@"id"];
     [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
     
 }
@@ -230,7 +233,7 @@
     [_optionView setHidden:YES];
     [_ratingImage.layer removeAllAnimations];
     JMPlayVideoViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMPlayVideoViewController"];
-     VC.VideoId=[[RecentVideoArray objectAtIndex:0] valueForKey:@"video_id"];
+     VC.VideoId=[[RecentVideoArray objectAtIndex:0] valueForKey:@"id"];
     [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
 }
 - (IBAction)shareClicked:(id)sender {
@@ -286,7 +289,7 @@
             NSString *urlString;
             
             
-            urlString=[NSString stringWithFormat:@"%@index.php/Videolisting?pageno=1&limit=10",GLOBALAPI];
+            urlString=[NSString stringWithFormat:@"%@%@Video?categoryid=&language=%@&country=%@&userid=&page=1&limit=10",GLOBALAPI,INDEX,[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"],[[NSUserDefaults standardUserDefaults] objectForKey:@"countryId"]];
             
             
             
@@ -308,9 +311,9 @@
                  
                  if (urlobj.statusCode==200)
                  {
-                     if ([[NSString stringWithFormat:@"%@",[responseDict objectForKey:@"status"]] isEqualToString:@"Success"])
+                     if ([[responseDict objectForKey:@"status"] boolValue])
                      {
-                         RecentVideoArray=[[responseDict objectForKey:@"details"] mutableCopy];
+                         RecentVideoArray=[[responseDict objectForKey:@"videoDetails"] mutableCopy];
                          
                          
                          if (RecentVideoArray.count>0)
@@ -333,7 +336,7 @@
                              
                              _VideoNameLabel.text=[[RecentVideoArray objectAtIndex:0]objectForKey:@"videoname"];
                              _VideoCreaterNameLabel.text=[[RecentVideoArray objectAtIndex:0]objectForKey:@"username"];
-                             _VideoRatingLabel.text=[NSString stringWithFormat:@"%@/5",[[RecentVideoArray objectAtIndex:0]objectForKey:@"rating"]];
+                             _VideoRatingLabel.text=[NSString stringWithFormat:@"%@/5",[[RecentVideoArray objectAtIndex:0]objectForKey:@"averagerating"]];
                              
                              
                              _VideoRatingView.maximumValue = 5;
@@ -354,7 +357,7 @@
                      }
                      else
                      {
-                         _tvView.hidden=YES;
+                         _tvView.hidden=NO;
                          _tutorialView.hidden=YES;
                          
                          
@@ -367,7 +370,7 @@
                  else if (urlobj.statusCode==500 || urlobj.statusCode==400)
                  {
                      //                     [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Server Failed to Respond" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
-                     _tvView.hidden=YES;
+                     _tvView.hidden=NO;
                      _tutorialView.hidden=YES;
                      
                      [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Server Failed to Respond",nil)];
@@ -376,7 +379,7 @@
                  else
                  {
                      //                     [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Server Failed to Respond" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
-                     _tvView.hidden=YES;
+                     _tvView.hidden=NO;
                      _tutorialView.hidden=YES;
                      [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Server Failed to Respond",nil)];
                  }
@@ -398,7 +401,7 @@
     }
     else
     {
-        _tvView.hidden=YES;
+        _tvView.hidden=NO;
         _tutorialView.hidden=YES;
         [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
         

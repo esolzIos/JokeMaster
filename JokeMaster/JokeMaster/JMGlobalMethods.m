@@ -159,14 +159,14 @@
 
     else if ([CurrentViewController isEqualToString:@"JMJokesCategoryVideoListViewController"])
     {
-        HeaderView.HeaderLabel.text=@"Joke Category";
+        HeaderView.HeaderLabel.text=AMLocalizedString(@"Joke Category", nil) ;
 
         
    }
     else if ([CurrentViewController isEqualToString:@"JMFavouriteViewController"] )
     {
 
-        HeaderView.HeaderLabel.text=@"Favourite";
+        HeaderView.HeaderLabel.text=AMLocalizedString(@"Favourite", nil) ;
 
         
 
@@ -178,7 +178,7 @@
     {
 
 
-        HeaderView.HeaderLabel.text=@"My Channel";
+        HeaderView.HeaderLabel.text=AMLocalizedString(@"My Channel", nil) ;
 
     
         
@@ -188,14 +188,14 @@
     else if ([CurrentViewController isEqualToString:@"JMJokeMasterRankViewController"] )
     {
 
-        HeaderView.HeaderLabel.text=@"Joke Master Rank";
+        HeaderView.HeaderLabel.text=AMLocalizedString(@"Joke Master Rank", nil) ;
 
         
     }
     else if ([CurrentViewController isEqualToString:@"JMUploadVideoViewController"] )
     {
         
-        HeaderView.HeaderLabel.text=@"Upload a Joke";
+        HeaderView.HeaderLabel.text=AMLocalizedString(@"Upload a Joke", nil) ;
         
         
         
@@ -204,7 +204,7 @@
     else if ([CurrentViewController isEqualToString:@"JMFollowingViewController"] )
     {
 
-        HeaderView.HeaderLabel.text=@"Following";
+        HeaderView.HeaderLabel.text=AMLocalizedString(@"Following", nil) ;
 
      
  }
@@ -3020,9 +3020,9 @@
     
         if (sender==3)
         {
-            if ([CurrentViewController isEqualToString:@"JMJokeMasterRankViewController"])
-            {
-                [UIView animateWithDuration:0.5 animations:^{
+//            if ([CurrentViewController isEqualToString:@"JMJokeMasterRankViewController"])
+//            {
+                [UIView animateWithDuration:0.0 animations:^{
     
     
                     MainView.center = CGPointMake(self.view.center.x,self.view.center.y);
@@ -3035,13 +3035,15 @@
                     [leftmenu removeFromSuperview];
                     [UIView commitAnimations];
                     [MainView removeGestureRecognizer:tapRecognizer];
+                    
+                    JMGlobalMethods *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMJokeMasterRankViewController"];
+                    [self.navigationController pushViewController:VC animated:kCAMediaTimingFunctionEaseIn];
                 }];
-            }
-            else
-            {
+//            }
+//            else
+//            {
     
-                JMGlobalMethods *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMJokeMasterRankViewController"];
-                [self.navigationController pushViewController:VC animated:kCAMediaTimingFunctionEaseIn];
+    
 //                if (userid.length==0)
 //                {
 //                    [[NSUserDefaults standardUserDefaults] setObject:@"DLAddPropertyViewController" forKey:@"DestinationPage"];
@@ -3056,13 +3058,13 @@
 //                    GlobalViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"DLAddPropertyViewController"];
 //                    [self.navigationController pushViewController:VC animated:kCAMediaTimingFunctionEaseIn];
 //                }
-            }
+           // }
         }
     else if (sender==1)
     {
-        if ([CurrentViewController isEqualToString:@"JMFavouriteViewController"])
-        {
-            [UIView animateWithDuration:0.5 animations:^{
+//        if ([CurrentViewController isEqualToString:@"JMFavouriteViewController"])
+//        {
+            [UIView animateWithDuration:0.0 animations:^{
                 
                 
                 MainView.center = CGPointMake(self.view.center.x,self.view.center.y);
@@ -3075,35 +3077,37 @@
                 [leftmenu removeFromSuperview];
                 [UIView commitAnimations];
                 [MainView removeGestureRecognizer:tapRecognizer];
+                
+                JMGlobalMethods *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMFavouriteViewController"];
+                [self.navigationController pushViewController:VC animated:kCAMediaTimingFunctionEaseIn];
             }];
-        }
-        else
-        {
-            
-            JMGlobalMethods *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMFavouriteViewController"];
-            [self.navigationController pushViewController:VC animated:kCAMediaTimingFunctionEaseIn];
-            //                if (userid.length==0)
-            //                {
-            //                    [[NSUserDefaults standardUserDefaults] setObject:@"DLAddPropertyViewController" forKey:@"DestinationPage"];
-            //                    GlobalViewController *obj=[self.storyboard instantiateViewControllerWithIdentifier:@"DLLoginViewController"];
-            //                    [self PushViewController:obj WithAnimation:kCAMediaTimingFunctionEaseIn];
-            //                }
-            //                else
-            //                {
-            //                    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"AddPropertyDictionary"];
-            //                    [[NSUserDefaults standardUserDefaults] synchronize];
-            //
-            //                    GlobalViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"DLAddPropertyViewController"];
-            //                    [self.navigationController pushViewController:VC animated:kCAMediaTimingFunctionEaseIn];
-            //                }
-        }
+//        }
+//        else
+//        {
+//            
+//
+//            //                if (userid.length==0)
+//            //                {
+//            //                    [[NSUserDefaults standardUserDefaults] setObject:@"DLAddPropertyViewController" forKey:@"DestinationPage"];
+//            //                    GlobalViewController *obj=[self.storyboard instantiateViewControllerWithIdentifier:@"DLLoginViewController"];
+//            //                    [self PushViewController:obj WithAnimation:kCAMediaTimingFunctionEaseIn];
+//            //                }
+//            //                else
+//            //                {
+//            //                    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"AddPropertyDictionary"];
+//            //                    [[NSUserDefaults standardUserDefaults] synchronize];
+//            //
+//            //                    GlobalViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"DLAddPropertyViewController"];
+//            //                    [self.navigationController pushViewController:VC animated:kCAMediaTimingFunctionEaseIn];
+//            //                }
+//        }
     }
     else if (sender==2)
     {
-        if ([CurrentViewController isEqualToString:@"JMFollowingViewController"])
-        {
-            [UIView animateWithDuration:0.5 animations:^{
-                
+//        if ([CurrentViewController isEqualToString:@"JMFollowingViewController"])
+//        {
+            [UIView animateWithDuration:0.0 animations:^{
+        
                 
                 MainView.center = CGPointMake(self.view.center.x,self.view.center.y);
                 
@@ -3115,34 +3119,36 @@
                 [leftmenu removeFromSuperview];
                 [UIView commitAnimations];
                 [MainView removeGestureRecognizer:tapRecognizer];
-            }];
-        }
-        else
-        {
-            
-            JMGlobalMethods *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMFollowingViewController"];
-            [self.navigationController pushViewController:VC animated:kCAMediaTimingFunctionEaseIn];
-            //                if (userid.length==0)
-            //                {
-            //                    [[NSUserDefaults standardUserDefaults] setObject:@"DLAddPropertyViewController" forKey:@"DestinationPage"];
-            //                    GlobalViewController *obj=[self.storyboard instantiateViewControllerWithIdentifier:@"DLLoginViewController"];
-            //                    [self PushViewController:obj WithAnimation:kCAMediaTimingFunctionEaseIn];
-            //                }
-            //                else
-            //                {
-            //                    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"AddPropertyDictionary"];
-            //                    [[NSUserDefaults standardUserDefaults] synchronize];
-            //
-            //                    GlobalViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"DLAddPropertyViewController"];
-            //                    [self.navigationController pushViewController:VC animated:kCAMediaTimingFunctionEaseIn];
-            //                }
-        }
+                
+                JMGlobalMethods *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMFollowingViewController"];
+                [self.navigationController pushViewController:VC animated:kCAMediaTimingFunctionEaseIn];
+           }];
+//        }
+//        else
+//        {
+//            
+//       
+//            //                if (userid.length==0)
+//            //                {
+//            //                    [[NSUserDefaults standardUserDefaults] setObject:@"DLAddPropertyViewController" forKey:@"DestinationPage"];
+//            //                    GlobalViewController *obj=[self.storyboard instantiateViewControllerWithIdentifier:@"DLLoginViewController"];
+//            //                    [self PushViewController:obj WithAnimation:kCAMediaTimingFunctionEaseIn];
+//            //                }
+//            //                else
+//            //                {
+//            //                    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"AddPropertyDictionary"];
+//            //                    [[NSUserDefaults standardUserDefaults] synchronize];
+//            //
+//            //                    GlobalViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"DLAddPropertyViewController"];
+//            //                    [self.navigationController pushViewController:VC animated:kCAMediaTimingFunctionEaseIn];
+//            //                }
+//        }
     }
     else if ( sender==0)
     {
-        if ([CurrentViewController isEqualToString:@"JMProfileViewController"])
-        {
-            [UIView animateWithDuration:0.5 animations:^{
+//        if ([CurrentViewController isEqualToString:@"JMProfileViewController"])
+//        {
+            [UIView animateWithDuration:0.0 animations:^{
                 
                 
                 MainView.center = CGPointMake(self.view.center.x,self.view.center.y);
@@ -3155,16 +3161,25 @@
                 [leftmenu removeFromSuperview];
                 [UIView commitAnimations];
                 [MainView removeGestureRecognizer:tapRecognizer];
+                if (app.isLogged) {
+                    JMProfileViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMProfile"];
+                    VC.fromLeftMenu=true;
+                               [self.navigationController pushViewController:VC animated:YES];
+                }
+                else{
+                    [SVProgressHUD showInfoWithStatus:@"Login required to create your channel"];
+                    
+                }
+            
+                
+     
             }];
-        }
-        else
-        {
+//        }
+//        else
+//        {
 //            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Temp" bundle: nil];
             
-            JMProfileViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMProfile"];
-            VC.fromLeftMenu=true;
-            
-  [self.navigationController pushViewController:VC animated:YES];
+          
             
             
             //                if (userid.length==0)
@@ -3181,13 +3196,13 @@
             //                    GlobalViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"DLAddPropertyViewController"];
             //                    [self.navigationController pushViewController:VC animated:kCAMediaTimingFunctionEaseIn];
             //                }
-        }
+     //   }
     }
-    else if (sender==5)
+    else if (sender==4)
     {
-        if ([CurrentViewController isEqualToString:@"JMUploadVideoViewController"])
-        {
-            [UIView animateWithDuration:0.5 animations:^{
+//        if ([CurrentViewController isEqualToString:@"JMUploadVideoViewController"])
+//        {
+            [UIView animateWithDuration:0.0 animations:^{
                 
                 
                 MainView.center = CGPointMake(self.view.center.x,self.view.center.y);
@@ -3200,18 +3215,20 @@
                 [leftmenu removeFromSuperview];
                 [UIView commitAnimations];
                 [MainView removeGestureRecognizer:tapRecognizer];
-            }];
-        }
-        else
-        {
-            if (app.isLogged) {
-                JMGlobalMethods *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMUploadVideoViewController"];
-                [self.navigationController pushViewController:VC animated:YES];
-            }
-            else{
-                [SVProgressHUD showInfoWithStatus:@"Login required to upload videos"];
                 
-            }
+                if (app.isLogged) {
+                    JMGlobalMethods *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMUploadVideoViewController"];
+                    [self.navigationController pushViewController:VC animated:YES];
+                }
+                else{
+                    [SVProgressHUD showInfoWithStatus:@"Login required to upload videos"];
+                    
+                }
+            }];
+//        }
+//        else
+//        {
+           
 //
 //            JMGlobalMethods *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMUploadVideoViewController"];
 //            [self.navigationController pushViewController:VC animated:kCAMediaTimingFunctionEaseIn];
@@ -3229,9 +3246,9 @@
             //                    GlobalViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"DLAddPropertyViewController"];
             //                    [self.navigationController pushViewController:VC animated:kCAMediaTimingFunctionEaseIn];
             //                }
-        }
+      //  }
     }
-        else if (sender==6)
+        else if (sender==5)
         {
                         if ([[NSUserDefaults standardUserDefaults]boolForKey:@"loggedIn"]) {
                           

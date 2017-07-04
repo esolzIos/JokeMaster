@@ -73,6 +73,7 @@
 @property (strong, nonatomic) IBOutlet UIImageView *playPauseImg;
 @property (strong, nonatomic) IBOutlet UIButton *profileBttn;
 - (IBAction)gotoProfile:(id)sender;
+@property (strong, nonatomic) IBOutlet UILabel *viewCountLbl;
 
 - (IBAction)resizeClicked:(id)sender;
 - (IBAction)commentClicked:(id)sender;

@@ -53,16 +53,20 @@
 "PAKISTAN" = "पाकिस्तान";
 "ISRAEL"="इजराइल";
 "INDIA"="इंडिया";
-
+"My Channel" ="मेरा चैनल";
 "MY CHANNEL" ="मेरा चैनल";
 "MY FAVOURITES" ="मेरे पसंदीदा";
-"FOLLOWING" ="निम्नलिखित";
+"Favourite" ="मेरे पसंदीदा";
+"FOLLOWING" ="पसंद व्यक्तियों";
+"Following" ="पसंद व्यक्तियों";
 "LATEST" ="नवीनतम";
 "HISTORY" ="इतिहास";
 "PROFILE" ="शख्सियत";
 "SETTINGS" ="सेटिंग्स";
+"RANKINGS" ="रैंकिंग";
+"UPLOAD A VIDEO" ="वीडियो अपलोड करें";
 "LOG OUT" ="लोग आउट";
-"SCORE: 4.5/5"= "स्कोर: 4.5 / 5";
+"SCORE"= "स्कोर";
 "JOHN DOE" = "जॉन डो";
 "LATEST"="नवीनतम";
 "SEXUAL"="लैंगिक";
