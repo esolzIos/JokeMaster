@@ -557,7 +557,7 @@
                          
                          if (TempArray.count>0)
                          {
-                             MoreDataAvailable=YES;
+                  
                              LoaderView.hidden=YES;
                              for ( NSDictionary *tempDict1 in  TempArray)
                              {
@@ -569,14 +569,14 @@
                          }
                          else
                          {
-                             MoreDataAvailable=NO;
+                        
                              LoaderView.hidden=YES;
                          }
                          
                      }
                      else
                      {
-                         MoreDataAvailable=NO;
+                   
                          LoaderView.hidden=YES;
                          
                          if (page==1)

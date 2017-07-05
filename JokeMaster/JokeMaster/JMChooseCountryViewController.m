@@ -139,7 +139,7 @@
                     // Success Parsing JSON
                     // Log NSDictionary response:
                     NSLog(@"result = %@",jsonResponse);
-                    if ([jsonResponse objectForKey:@"status"]) {
+                    if ([[jsonResponse objectForKey:@"status"]boolValue]) {
                         
                         
                         

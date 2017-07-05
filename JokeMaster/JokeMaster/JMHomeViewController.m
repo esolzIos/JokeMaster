@@ -11,6 +11,10 @@
 @interface JMHomeViewController ()
 {
     BOOL liked;
+    
+    NSDictionary *jokeDict;
+    NSURLSession *session;
+    AppDelegate *appDelegate;
 }
 @end
 
@@ -26,7 +30,7 @@
     [self addMoreView:self.view];
     
     
-    
+    appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     
     [_jokeTitle setFont:[UIFont fontWithName:_jokeTitle.font.fontName size:[self getFontSize:_jokeTitle.font.pointSize]]];
     
@@ -69,9 +73,153 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     RecentVideoArray=[[NSMutableArray alloc] init];
+    jokeDict=[[NSDictionary alloc]init];
     
-    [self RecentVideoApi];
+    [self getJokeOftheDay];
+    
+ 
 }
+
+-(void)getJokeOftheDay
+{
+    BOOL net=[urlobj connectedToNetwork];
+    if (net==YES)
+    {
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+            
+            self.view.userInteractionEnabled = NO;
+            [self checkLoader];
+        }];
+        [[NSOperationQueue new] addOperationWithBlock:^{
+            
+            NSString *urlString;
+            
+            
+            urlString=[NSString stringWithFormat:@"%@%@Video/jokeoftheday?language=%@&country=%@&userid=%@",GLOBALAPI,INDEX,[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"],[[NSUserDefaults standardUserDefaults] objectForKey:@"countryId"],appDelegate.userId];
+            
+            
+            
+            urlString=[urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+            
+            DebugLog(@"Send string Url%@",urlString);
+            
+            
+            
+            
+            [urlobj getSessionJsonResponse:urlString  success:^(NSDictionary *responseDict)
+             {
+                 
+                 DebugLog(@"success %@ Status Code:%ld",responseDict,(long)urlobj.statusCode);
+                 
+                 
+                 
+                 self.view.userInteractionEnabled = YES;
+                 //  [self checkLoader];
+                 
+                 if (urlobj.statusCode==200)
+                 {
+                     [SVProgressHUD dismiss];
+                     
+                     if ([[responseDict objectForKey:@"status"] boolValue])
+                     {
+                    
+                         jokeDict=[responseDict objectForKey:@"videoDetails"];
+                         
+                         
+                             if ([[[NSUserDefaults standardUserDefaults] valueForKey:@"HomeVisited"] boolValue]==YES)
+                             {
+                                 _tutorialView.hidden=YES;
+                             }
+                             else
+                             {
+                                 _tutorialView.hidden=NO;
+                             }
+                             
+                             [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"HomeVisited"];
+                             
+                             
+                             
+                             _VideoNameLabel.text=[jokeDict objectForKey:@"videoname"];
+                             _VideoCreaterNameLabel.text=[jokeDict objectForKey:@"username"];
+                             _VideoRatingLabel.text=[NSString stringWithFormat:@"%@/5",[jokeDict objectForKey:@"averagerating"]];
+                             
+                             
+                             _VideoRatingView.maximumValue = 5;
+                             _VideoRatingView.minimumValue = 0;
+                             _VideoRatingView.value =[[jokeDict objectForKey:@"averagerating"] floatValue];
+                             _VideoRatingView.userInteractionEnabled=NO;
+                             //    _RatingView.tintColor = [UIColor clearColor];
+                             _VideoRatingView.allowsHalfStars = YES;
+                             _VideoRatingView.emptyStarImage = [[UIImage imageNamed:@"emotion"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+                             _VideoRatingView.filledStarImage = [[UIImage imageNamed:@"emotion2"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+                         _VideoRatingView.accurateHalfStars = YES;
+                         _VideoRatingView.halfStarImage = [[UIImage imageNamed:@"emotion1"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+                             
+                             [_videoThumb sd_setImageWithURL:[NSURL URLWithString:[jokeDict objectForKey:@"videoimagename"] ] placeholderImage:[UIImage imageNamed: @"noimage"]];
+                         
+                         
+                         liked=[[jokeDict objectForKey:@"like"]boolValue];
+                         
+                         
+                            [self RecentVideoApi];
+                      
+                         
+                     }
+                     else
+                     {
+                         _tvView.hidden=YES;
+                         _tutorialView.hidden=YES;
+                         
+                         
+                         
+                         [SVProgressHUD showInfoWithStatus:[responseDict objectForKey:@"message"]];
+                         
+                     }
+                     
+                 }
+                 else if (urlobj.statusCode==500 || urlobj.statusCode==400)
+                 {
+                     //                     [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Server Failed to Respond" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
+                     _tvView.hidden=YES;
+                     _tutorialView.hidden=YES;
+                     
+                     [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Server Failed to Respond",nil)];
+                     
+                 }
+                 else
+                 {
+                     //                     [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Server Failed to Respond" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
+                     _tvView.hidden=YES;
+                     _tutorialView.hidden=YES;
+                     [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Server Failed to Respond",nil)];
+                 }
+                 
+             }
+                                   failure:^(NSError *error) {
+                                       
+                                       // [self checkLoader];
+                                       self.view.userInteractionEnabled = YES;
+                                       _tutorialView.hidden=YES;
+                                       NSLog(@"Failure");
+                                       //                                       [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Server Failed to Respond" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
+                                       _tvView.hidden=YES;
+                                       [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Server Failed to Respond",nil)];
+                                       
+                                   }
+             ];
+        }];
+    }
+    else
+    {
+        _tvView.hidden=YES;
+        _tutorialView.hidden=YES;
+        [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
+        
+    }
+
+
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -211,17 +359,135 @@
 - (IBAction)likeClicked:(id)sender {
     
     
-    if (!liked) {
-        [_likeImage setImage:[UIImage imageNamed:@"like"]];
-        liked=true;
+    
+    if([self networkAvailable])
+    {
+        
+        [_likeBtn setUserInteractionEnabled:NO];
+        
+        
+        
+        
+        [SVProgressHUD show];
+        
+        //http://ec2-13-58-196-4.us-east-2.compute.amazonaws.com/jokemaster/index.php/useraction/likeunlikevideo?videoid=21&userid=1
+        
+        NSURL *url=[NSURL URLWithString:[NSString stringWithFormat:@"%@%@useraction/likeunlikevideo",GLOBALAPI,INDEX]];
+        
+        // configure the request
+        
+        NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
+        [request setHTTPMethod:@"POST"];
+        
+        
+        
+        //        NSString *boundary = @"---------------------------14737809831466499882746641449";
+        //        NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@", boundary];
+        //        [request addValue:contentType forHTTPHeaderField:@"Content-Type"];
+        
+        NSString *sendData = @"videoid=";
+        sendData = [sendData stringByAppendingString:[NSString stringWithFormat:@"%@",[jokeDict objectForKey:@"id"]]];
+        
+        sendData = [sendData stringByAppendingString:@"&userid="];
+        sendData = [sendData stringByAppendingString:[NSString stringWithFormat:@"%@",appDelegate.userId]];
+        
+        
+        
+        [request setValue:@"gzip" forHTTPHeaderField:@"Accept-Encoding"];
+        
+        NSMutableData *theBodyData = [NSMutableData data];
+        
+        theBodyData = [[sendData dataUsingEncoding:NSUTF8StringEncoding] mutableCopy];
+        
+        
+        //  self.session = [NSURLSession sharedSession];  // use sharedSession or create your own
+        
+        session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
+        
+        NSURLSessionTask *task = [session uploadTaskWithRequest:request fromData:theBodyData completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+            if (error) {
+                NSLog(@"error = %@", error);
+                
+                [SVProgressHUD showErrorWithStatus:@"Some error occured"];
+                
+                return;
+            }
+            
+            if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
+                NSError *jsonError;
+                NSDictionary *Response = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
+                
+                [_likeBtn setUserInteractionEnabled:YES];
+                
+                if (jsonError) {
+                    // Error Parsing JSON
+                    
+                    NSString *responseString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                    
+                    NSLog(@"response = %@",responseString);
+                    
+                    [SVProgressHUD showInfoWithStatus:@"Some error occured"];
+                    
+                    
+                    
+                } else {
+                    // Success Parsing JSON
+                    // Log NSDictionary response:
+                    
+                    [SVProgressHUD dismiss];
+                    
+                    NSLog(@"result = %@",Response);
+                    
+                    
+                    if ([[Response objectForKey:@"status"]boolValue]) {
+                        
+                        
+                        if (liked) {
+                            [_likeImage setImage:[UIImage imageNamed:@"unlike"]];
+                            liked=false;
+                            
+                            
+                        }
+                        else{
+                            [_likeImage setImage:[UIImage imageNamed:@"like"]];
+                            
+                            liked=true;
+                        }                        
+                        
+                    }
+                    
+                    else{
+                        
+                        [SVProgressHUD showInfoWithStatus:[Response objectForKey:@"message"]];
+                        
+                        
+                    }
+                    
+                    
+                    
+                    
+                }
+                
+                
+                
+                
+                
+            }
+        }];
+        
+        
+        [task resume];
         
         
     }
     else{
-        [_likeImage setImage:[UIImage imageNamed:@"unlike"]];
-        
-        liked=false;
+        [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
     }
+    
+
+    
+    
+ 
     //[_optionView setHidden:YES];
     //  [_ratingImage.layer removeAllAnimations];
     
@@ -233,7 +499,7 @@
     [_optionView setHidden:YES];
     [_ratingImage.layer removeAllAnimations];
     JMPlayVideoViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMPlayVideoViewController"];
-     VC.VideoId=[[RecentVideoArray objectAtIndex:0] valueForKey:@"id"];
+     VC.VideoId=[jokeDict valueForKey:@"id"];
     [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
 }
 - (IBAction)shareClicked:(id)sender {
@@ -311,6 +577,8 @@
                  
                  if (urlobj.statusCode==200)
                  {
+                     [SVProgressHUD dismiss];
+                     
                      if ([[responseDict objectForKey:@"status"] boolValue])
                      {
                          RecentVideoArray=[[responseDict objectForKey:@"videoDetails"] mutableCopy];
@@ -319,38 +587,9 @@
                          if (RecentVideoArray.count>0)
                          {
                              _tvView.hidden=NO;
-                             _tutorialView.hidden=NO;
+                         
                              
-                             if ([[[NSUserDefaults standardUserDefaults] valueForKey:@"HomeVisited"] boolValue]==YES)
-                             {
-                                 _tutorialView.hidden=YES;
-                             }
-                             else
-                             {
-                                 _tutorialView.hidden=NO;
-                             }
-                             
-                             [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"HomeVisited"];
-                             
-                             
-                             
-                             _VideoNameLabel.text=[[RecentVideoArray objectAtIndex:0]objectForKey:@"videoname"];
-                             _VideoCreaterNameLabel.text=[[RecentVideoArray objectAtIndex:0]objectForKey:@"username"];
-                             _VideoRatingLabel.text=[NSString stringWithFormat:@"%@/5",[[RecentVideoArray objectAtIndex:0]objectForKey:@"averagerating"]];
-                             
-                             
-                             _VideoRatingView.maximumValue = 5;
-                             _VideoRatingView.minimumValue = 0;
-                             _VideoRatingView.value =[[[RecentVideoArray objectAtIndex:0]objectForKey:@"rating"] floatValue];
-                             _VideoRatingView.userInteractionEnabled=NO;
-                             //    _RatingView.tintColor = [UIColor clearColor];
-                             _VideoRatingView.allowsHalfStars = YES;
-                             _VideoRatingView.emptyStarImage = [[UIImage imageNamed:@"emotion"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-                             _VideoRatingView.filledStarImage = [[UIImage imageNamed:@"emotion2"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-                             
-                             
-                             [_videoThumb sd_setImageWithURL:[NSURL URLWithString:[[RecentVideoArray objectAtIndex:0]objectForKey:@"videoimagename"]] placeholderImage:[UIImage imageNamed: @"noimage"]];
-                             
+                    
                              [_jokeCollectionView reloadData];
                          }
                          

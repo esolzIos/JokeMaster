@@ -229,14 +229,22 @@
                             
                             [_profileImage sd_setImageWithURL:[NSURL URLWithString:[userDetails objectForKey:@"user_image"]] placeholderImage:[UIImage imageNamed:@"noimage"]];
                             
-//                            if ([[jsonResponse objectForKey:@"followerstatus"]boolValue]) {
-//                                
-//                                [_followBtn setImage:[UIImage imageNamed:@"unfollow"] forState:UIControlStateNormal];
-//                            }
-//                            else{
-//                                [_followBtn setImage:[UIImage imageNamed:@"follow"] forState:UIControlStateNormal];
-//                            }
-//                            
+                            if ([_ProfileUserId isEqualToString:appDelegate.userId]) {
+                                [_followBtn setTitle:@"UPLOAD A JOKE" forState:UIControlStateNormal];
+                                
+                            }
+                            else{
+                          
+
+                            
+                            if ([[userDetails objectForKey:@"follow_status"]boolValue]) {
+                                
+                                [_followBtn setTitle:@"UNFOLLOW" forState:UIControlStateNormal];
+                            }
+                            else{
+                                            [_followBtn setTitle:@"FOLLOW" forState:UIControlStateNormal];
+                            }
+                            }
                           
                             [self loadVideos];
                             
@@ -373,8 +381,17 @@
  
         
         if (appDelegate.isLogged) {
-            JMUploadVideoViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMUploadVideoViewController"];
-            [self.navigationController pushViewController:VC animated:YES];
+            
+            if ([_ProfileUserId isEqualToString:appDelegate.userId]) {
+                JMUploadVideoViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMUploadVideoViewController"];
+                [self.navigationController pushViewController:VC animated:YES];
+            }
+            else{
+            
+                [self followUser];
+                
+            }
+         
         }
         else{
             [SVProgressHUD showInfoWithStatus:@"You need to login first"];
@@ -383,6 +400,134 @@
 
  
 }
+
+-(void)followUser
+{
+
+
+    if([self networkAvailable])
+    {
+        
+        [_followBtn setUserInteractionEnabled:NO];
+        
+        
+//        AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+        
+        [SVProgressHUD show];
+        
+        //http://ec2-13-58-196-4.us-east-2.compute.amazonaws.com/jokemaster/index.php/follow/followunfollowvideo?follower_id=32&following_id=40
+        
+        NSURL *url=[NSURL URLWithString:[NSString stringWithFormat:@"%@%@follow/followunfollowvideo",GLOBALAPI,INDEX]];
+        
+        // configure the request
+        
+        NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
+        [request setHTTPMethod:@"POST"];
+        
+        
+        
+        //        NSString *boundary = @"---------------------------14737809831466499882746641449";
+        //        NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@", boundary];
+        //        [request addValue:contentType forHTTPHeaderField:@"Content-Type"];
+        
+        NSString *sendData = @"following_id=";
+        sendData = [sendData stringByAppendingString:[NSString stringWithFormat:@"%@",_ProfileUserId]];
+        
+        sendData = [sendData stringByAppendingString:@"&follower_id="];
+        sendData = [sendData stringByAppendingString:[NSString stringWithFormat:@"%@", appDelegate.userId]];
+  
+        
+        
+        [request setValue:@"gzip" forHTTPHeaderField:@"Accept-Encoding"];
+        
+        NSMutableData *theBodyData = [NSMutableData data];
+        
+        theBodyData = [[sendData dataUsingEncoding:NSUTF8StringEncoding] mutableCopy];
+        
+        
+        //  self.session = [NSURLSession sharedSession];  // use sharedSession or create your own
+        
+        session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
+        
+        NSURLSessionTask *task = [session uploadTaskWithRequest:request fromData:theBodyData completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+            if (error) {
+                NSLog(@"error = %@", error);
+                
+                [SVProgressHUD showErrorWithStatus:@"Some error occured"];
+                
+                return;
+            }
+            
+            if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
+                NSError *jsonError;
+                NSDictionary *Response = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
+                
+                [_followBtn setUserInteractionEnabled:YES];
+                
+                if (jsonError) {
+                    // Error Parsing JSON
+                    
+                    NSString *responseString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                    
+                    NSLog(@"response = %@",responseString);
+                    
+                    [SVProgressHUD showInfoWithStatus:@"Some error occured"];
+                    
+                    
+                    
+                } else {
+                    // Success Parsing JSON
+                    // Log NSDictionary response:
+                    NSLog(@"result = %@",Response);
+                    
+                 
+                        if ([[Response objectForKey:@"status"]boolValue]) {
+                            
+                            [SVProgressHUD dismiss];
+                            
+                            jsonResponse=[[NSDictionary alloc]init];
+                            videoArr=[[NSMutableArray alloc]init];
+                            categoryId=@"";
+                            page=1;
+                            totalCount=0;
+
+                            
+                            [self loadData];
+                            
+                            
+                                }
+                            
+                            else{
+                                
+                                [SVProgressHUD showInfoWithStatus:[Response objectForKey:@"message"]];
+                                
+                                
+                            }
+                            
+                            
+                            
+                            
+                        }
+                    
+                    
+                    
+              
+                
+            }
+        }];
+        
+        
+        [task resume];
+        
+        
+    }
+    else{
+        [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
+    }
+ 
+    
+}
+
 - (IBAction)categoryClicked:(id)sender {
     _TransparentView.hidden=NO;
     _MenuBaseView.hidden=NO;

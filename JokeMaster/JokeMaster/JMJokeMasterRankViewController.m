@@ -88,7 +88,8 @@
     cell.RatingView.allowsHalfStars = YES;
     cell.RatingView.emptyStarImage = [[UIImage imageNamed:@"emotion"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     cell.RatingView.filledStarImage = [[UIImage imageNamed:@"emotion2"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    
+     cell.RatingView.accurateHalfStars = YES;
+     cell.RatingView.halfStarImage = [[UIImage imageNamed:@"emotion1"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     if (indexPath.row==0)
     {
         cell.CrownImage.hidden=NO;

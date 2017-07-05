@@ -21,6 +21,8 @@ AVPlayer *player;
     int totalCount;
     NSURLSession *session;
     
+    UIFont *nameFont,*dateFont,*reviewFont,*ratingFont;
+    
 }
 @end
 
@@ -102,6 +104,21 @@ AVPlayer *player;
     
           [self setRoundCornertoView:_optionView withBorderColor:[UIColor clearColor] WithRadius:0.15];
       [self setRoundCornertoView:_playerView withBorderColor:[UIColor clearColor] WithRadius:0.15];
+    
+    
+    [_VideoNameLabel setFont:[UIFont fontWithName:_VideoNameLabel.font.fontName size:[self getFontSize:_VideoNameLabel.font.pointSize]]];
+    
+    [_viewCountLbl setFont:[UIFont fontWithName:_viewCountLbl.font.fontName size:[self getFontSize:_viewCountLbl.font.pointSize]]];
+    
+      [_ratingLbl setFont:[UIFont fontWithName:_ratingLbl.font.fontName size:[self getFontSize:_ratingLbl.font.pointSize]]];
+    
+        [_ownerName setFont:[UIFont fontWithName:_ownerName.font.fontName size:[self getFontSize:_ownerName.font.pointSize]]];
+    
+            [_rankLbl setFont:[UIFont fontWithName:_rankLbl.font.fontName size:[self getFontSize:_rankLbl.font.pointSize]]];
+    
+        [_reviewsLbl setFont:[UIFont fontWithName:_reviewsLbl.font.fontName size:[self getFontSize:_reviewsLbl.font.pointSize]]];
+    
+        [_commentTitle setFont:[UIFont fontWithName:_commentTitle.font.fontName size:[self getFontSize:_commentTitle.font.pointSize]]];
 
     // Do any additional setup after loading the view.
     
@@ -125,18 +142,7 @@ AVPlayer *player;
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    
-    
-    if (!fontSet) {
-        
-        [cell.userName setFont:[UIFont fontWithName:cell.userName.font.fontName size:[self getFontSize:cell.userName.font.pointSize]]];
-        [cell.reviewDate setFont:[UIFont fontWithName:cell.reviewDate.font.fontName size:[self getFontSize:cell.reviewDate.font.pointSize]]];
-        [cell.ratingLbl setFont:[UIFont fontWithName:cell.ratingLbl.font.fontName size:[self getFontSize:cell.ratingLbl.font.pointSize]]];
-           [cell.reviewTxt setFont:[UIFont fontWithName:cell.reviewTxt.font.fontName size:[self getFontSize:cell.reviewTxt.font.pointSize]]];
-        
-        fontSet=true;
-        
-    }
+
     
     return cell;
     
@@ -169,15 +175,18 @@ AVPlayer *player;
     
     if (!fontSet) {
         
-        [cell.userName setFont:[UIFont fontWithName:cell.userName.font.fontName size:[self getFontSize:cell.userName.font.pointSize]]];
-        [cell.reviewDate setFont:[UIFont fontWithName:cell.reviewDate.font.fontName size:[self getFontSize:cell.reviewDate.font.pointSize]]];
-        [cell.ratingLbl setFont:[UIFont fontWithName:cell.ratingLbl.font.fontName size:[self getFontSize:cell.ratingLbl.font.pointSize]]];
-        [cell.reviewTxt setFont:[UIFont fontWithName:cell.reviewTxt.font.fontName size:[self getFontSize:cell.reviewTxt.font.pointSize]]];
+     nameFont =[UIFont fontWithName:cell.userName.font.fontName size:[self getFontSize:cell.userName.font.pointSize]];
+       dateFont =[UIFont fontWithName:cell.reviewDate.font.fontName size:[self getFontSize:cell.reviewDate.font.pointSize]];
+        ratingFont=[UIFont fontWithName:cell.ratingLbl.font.fontName size:[self getFontSize:cell.ratingLbl.font.pointSize]];
+        reviewFont=[UIFont fontWithName:cell.reviewTxt.font.fontName size:[self getFontSize:cell.reviewTxt.font.pointSize]];
         
         fontSet=true;
         
     }
-
+    [cell.userName setFont:nameFont];
+    [cell.reviewDate setFont:dateFont];
+    [cell.ratingLbl setFont:ratingFont];
+    [cell.reviewTxt setFont:reviewFont];
     
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -267,17 +276,132 @@ AVPlayer *player;
 }
 - (IBAction)likeClicked:(id)sender {
     
-    if (!liked) {
-        [_likeImage setImage:[UIImage imageNamed:@"like"]];
-        liked=true;
+    
+    if([self networkAvailable])
+    {
+        
+        [_likeBtn setUserInteractionEnabled:NO];
+        
+        
+        
+        
+        [SVProgressHUD show];
+        
+        //http://ec2-13-58-196-4.us-east-2.compute.amazonaws.com/jokemaster/index.php/useraction/likeunlikevideo?videoid=21&userid=1
+        
+        NSURL *url=[NSURL URLWithString:[NSString stringWithFormat:@"%@%@useraction/likeunlikevideo",GLOBALAPI,INDEX]];
+        
+        // configure the request
+        
+        NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
+        [request setHTTPMethod:@"POST"];
+        
+        
+        
+        //        NSString *boundary = @"---------------------------14737809831466499882746641449";
+        //        NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@", boundary];
+        //        [request addValue:contentType forHTTPHeaderField:@"Content-Type"];
+        
+        NSString *sendData = @"videoid=";
+        sendData = [sendData stringByAppendingString:[NSString stringWithFormat:@"%@",[VideoDictionary objectForKey:@"video_id"]]];
+        
+        sendData = [sendData stringByAppendingString:@"&userid="];
+        sendData = [sendData stringByAppendingString:[NSString stringWithFormat:@"%@",app.userId]];
+        
+        
+        
+        [request setValue:@"gzip" forHTTPHeaderField:@"Accept-Encoding"];
+        
+        NSMutableData *theBodyData = [NSMutableData data];
+        
+        theBodyData = [[sendData dataUsingEncoding:NSUTF8StringEncoding] mutableCopy];
+        
+        
+        //  self.session = [NSURLSession sharedSession];  // use sharedSession or create your own
+        
+        session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
+        
+        NSURLSessionTask *task = [session uploadTaskWithRequest:request fromData:theBodyData completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+            if (error) {
+                NSLog(@"error = %@", error);
+                
+                [SVProgressHUD showErrorWithStatus:@"Some error occured"];
+                
+                return;
+            }
+            
+            if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
+                NSError *jsonError;
+                NSDictionary *Response = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
+                
+                [_likeBtn setUserInteractionEnabled:YES];
+                
+                if (jsonError) {
+                    // Error Parsing JSON
+                    
+                    NSString *responseString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                    
+                    NSLog(@"response = %@",responseString);
+                    
+                    [SVProgressHUD showInfoWithStatus:@"Some error occured"];
+                    
+                    
+                    
+                } else {
+                    // Success Parsing JSON
+                    // Log NSDictionary response:
+                    
+                    [SVProgressHUD dismiss];
+                    
+                    NSLog(@"result = %@",Response);
+                    
+                    
+                    if ([[Response objectForKey:@"status"]boolValue]) {
+                        
+                        
+                        if (liked) {
+                            [_likeImage setImage:[UIImage imageNamed:@"unlike"]];
+                            liked=false;
+                            
+                            
+                        }
+                        else{
+                            [_likeImage setImage:[UIImage imageNamed:@"like"]];
+                            
+                            liked=true;
+                        }
+                        
+                    }
+                    
+                    else{
+                        
+                        [SVProgressHUD showInfoWithStatus:[Response objectForKey:@"message"]];
+                        
+                        
+                    }
+                    
+                    
+                    
+                    
+                }
+                
+                
+                
+                
+                
+            }
+        }];
+        
+        
+        [task resume];
         
         
     }
     else{
-        [_likeImage setImage:[UIImage imageNamed:@"unlike"]];
-        
-        liked=false;
+        [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
     }
+    
+    
     
 }
 - (IBAction)playClicked:(id)sender {
@@ -439,6 +563,16 @@ AVPlayer *player;
                      {
                          VideoDictionary=[[responseDict objectForKey:@"details"] mutableCopy];
                          
+                         liked=[[VideoDictionary objectForKey:@"like"]boolValue];
+                         
+                         if (liked) {
+                             [_likeImage setImage:[UIImage imageNamed:@"like"]];
+                             
+                         }
+                         else{
+                             [_likeImage setImage:[UIImage imageNamed:@"unlike"]];
+                         }
+
                          
                          _VideoNameLabel.text=[VideoDictionary objectForKey:@"videoname"];
                          
@@ -458,7 +592,7 @@ AVPlayer *player;
                          _ratingView.value =[[VideoDictionary objectForKey:@"video_average_rating"] floatValue];
                          _ratingView.userInteractionEnabled=NO;
                          //    _RatingView.tintColor = [UIColor clearColor];
-                         _ratingView.allowsHalfStars = YES;
+                       
                          _ratingView.accurateHalfStars = YES;
                          _ratingView.halfStarImage = [[UIImage imageNamed:@"emotion1"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
                          _ratingView.emptyStarImage = [[UIImage imageNamed:@"emotion"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
@@ -827,8 +961,10 @@ AVPlayer *player;
 
 -(void)addViewCount
 {
-
-    if([self networkAvailable] && !viewed)
+    if (!viewed) {
+       
+  
+    if([self networkAvailable]  )
     {
         
         
@@ -939,7 +1075,7 @@ AVPlayer *player;
     }
     
     
-    
+    }
     
 
 }
