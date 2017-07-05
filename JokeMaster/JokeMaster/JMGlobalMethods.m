@@ -3163,7 +3163,7 @@
                 [MainView removeGestureRecognizer:tapRecognizer];
                 if (app.isLogged) {
                     JMProfileViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMProfile"];
-                    VC.fromLeftMenu=true;
+                    VC.ProfileUserId=app.userId;
                                [self.navigationController pushViewController:VC animated:YES];
                 }
                 else{

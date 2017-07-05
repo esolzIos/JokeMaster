@@ -62,28 +62,30 @@
     
        [_CategoryLabel setFont:[UIFont fontWithName:_CategoryLabel.font.fontName size:[self getFontSize:_CategoryLabel.font.pointSize]]];
     
+
+        if ([_ProfileUserId isEqualToString:appDelegate.userId]) {
+            [_followBtn setTitle:@"UPLOAD A JOKE" forState:UIControlStateNormal];
+            
+        }
+        else{
+            [_followBtn setTitle:@"FOLLOW" forState:UIControlStateNormal];
+        }
+
     
+  
     
-    if (_fromLeftMenu) {
-           [_followBtn setTitle:@"UPLOAD A JOKE" forState:UIControlStateNormal];
-     
+    if (_ProfileUserId==nil)
+    {
+        self.HeaderView.HeaderLabel.text=@"My Channel";
     }
-    else{
-           [_followBtn setTitle:@"FOLLOW" forState:UIControlStateNormal];
+    else if (_ProfileUserId==[[NSUserDefaults standardUserDefaults] valueForKey:@"UserId"])
+    {
+        self.HeaderView.HeaderLabel.text=@"My Channel";
     }
-    
-//    if (_ProfileUserId==nil)
-//    {
-//        self.HeaderView.HeaderLabel.text=@"My Channel";
-//    }
-//    else if (_ProfileUserId==[[NSUserDefaults standardUserDefaults] valueForKey:@"UserId"])
-//    {
-//        self.HeaderView.HeaderLabel.text=@"My Channel";
-//    }
-//    else
-//    {
-//        self.HeaderView.HeaderLabel.text=@"Profile";
-//    }
+    else
+    {
+        self.HeaderView.HeaderLabel.text=@"Profile";
+    }
     
     // Do any additional setup after loading the view.
 }
@@ -133,10 +135,23 @@
         appDelegate.authToken=[[NSUserDefaults standardUserDefaults]objectForKey:@"authToken"];
         
         NSString *sendData = @"loggedin_id=";
-        sendData = [sendData stringByAppendingString:[NSString stringWithFormat:@"%@", appDelegate.userId]];
+
         
-        sendData = [sendData stringByAppendingString:@"&user_id="];
-        sendData = [sendData stringByAppendingString:[NSString stringWithFormat:@"%@",@""]];
+        if (appDelegate.isLogged) {
+                    sendData = [sendData stringByAppendingString:[NSString stringWithFormat:@"%@", appDelegate.userId]];
+                     sendData = [sendData stringByAppendingString:@"&user_id="];
+            if (![_ProfileUserId isEqualToString:appDelegate.userId]) {
+       
+                sendData = [sendData stringByAppendingString:[NSString stringWithFormat:@"%@",_ProfileUserId]];
+            }
+            
+        }
+        else{
+            sendData = [sendData stringByAppendingString:@"&user_id="];
+            sendData = [sendData stringByAppendingString:[NSString stringWithFormat:@"%@",_ProfileUserId]];
+        }
+    
+
 
 
         
@@ -355,21 +370,18 @@
 
 
 - (IBAction)followClicked:(id)sender {
-    if (_fromLeftMenu ) {
+ 
         
         if (appDelegate.isLogged) {
             JMUploadVideoViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMUploadVideoViewController"];
             [self.navigationController pushViewController:VC animated:YES];
         }
         else{
-            [SVProgressHUD showInfoWithStatus:@"Login required to upload videos"];
+            [SVProgressHUD showInfoWithStatus:@"You need to login first"];
             
         }
 
-    }
-    else{
-    
-    }
+ 
 }
 - (IBAction)categoryClicked:(id)sender {
     _TransparentView.hidden=NO;
@@ -989,7 +1001,7 @@
             NSString *urlString;
             
             
-            urlString=[NSString stringWithFormat:@"%@%@Video?categoryid=%@&language=%@&country=%@&userid=%@&page=%d&limit=10",GLOBALAPI,INDEX,categoryId,[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"],[[NSUserDefaults standardUserDefaults] objectForKey:@"countryId"],appDelegate.userId,page];
+            urlString=[NSString stringWithFormat:@"%@%@Video?categoryid=%@&language=%@&country=%@&userid=%@&page=%d&limit=10",GLOBALAPI,INDEX,categoryId,[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"],[[NSUserDefaults standardUserDefaults] objectForKey:@"countryId"],_ProfileUserId,page];
             
             
             
