@@ -3276,6 +3276,13 @@
                             [[NSUserDefaults standardUserDefaults ]setObject:langSelected forKey:@"langId"];
                             [[NSUserDefaults standardUserDefaults] setBool:homevisited forKey:@"HomeVisited"];
                             
+                            
+                            app.userId=@"";
+                            app.userName=@"";
+                            app.userImage=@"";
+                            app.isLogged=false;
+                            
+                            
                 JMGlobalMethods *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMHomeViewController"];
                             
                          [self.navigationController pushViewController:VC animated:YES];

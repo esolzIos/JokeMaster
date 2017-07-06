@@ -171,7 +171,7 @@
                      if ([[responseDict objectForKey:@"status"] boolValue]==1)
                      {
                         
-                         [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Review Sent.",nil)];
+                         [SVProgressHUD dismiss];
                          [NSTimer scheduledTimerWithTimeInterval:2.0 target:self selector:@selector(GotoNextPageAfterSuccess) userInfo:nil repeats: NO];
                          
                      }

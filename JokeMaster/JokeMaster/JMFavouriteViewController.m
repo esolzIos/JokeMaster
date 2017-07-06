@@ -304,8 +304,10 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    JMPlayVideoViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMPlayVideoViewController"];
+      NSDictionary *videoDict=[videoArr objectAtIndex:indexPath.row];
     
+    JMPlayVideoViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMPlayVideoViewController"];
+       VC.VideoId=[videoDict valueForKey:@"id"];
     [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
 }
 -(void)swipeHandler:(UISwipeGestureRecognizer *)recognizer {
@@ -379,11 +381,130 @@
     
     NSIndexPath *index=[FavouriteTable indexPathForCell:cCell];
     
-    //  NSIndexPath *index=[NSIndexPath indexPathWithIndex:btn.tag];
-    [FavouriteTable beginUpdates];
-    [FavouriteTable deleteRowsAtIndexPaths:[NSArray arrayWithObject:index] withRowAnimation:UITableViewRowAnimationFade];
     
-    [FavouriteTable endUpdates];
+     NSDictionary *videoDict=[videoArr objectAtIndex:index.row];
+    
+    if([self networkAvailable])
+    {
+        
+        [btn setUserInteractionEnabled:NO];
+        
+        
+        
+        
+        [SVProgressHUD show];
+        
+        //http://ec2-13-58-196-4.us-east-2.compute.amazonaws.com/jokemaster/index.php/useraction/likeunlikevideo?videoid=21&userid=1
+        
+        NSURL *url=[NSURL URLWithString:[NSString stringWithFormat:@"%@%@useraction/likeunlikevideo",GLOBALAPI,INDEX]];
+        
+        // configure the request
+        
+        NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
+        [request setHTTPMethod:@"POST"];
+        
+
+        
+        NSString *sendData = @"videoid=";
+        sendData = [sendData stringByAppendingString:[NSString stringWithFormat:@"%@",[videoDict objectForKey:@"id"]]];
+        
+        sendData = [sendData stringByAppendingString:@"&userid="];
+        sendData = [sendData stringByAppendingString:[NSString stringWithFormat:@"%@",appDelegate.userId]];
+        
+        
+        
+        [request setValue:@"gzip" forHTTPHeaderField:@"Accept-Encoding"];
+        
+        NSMutableData *theBodyData = [NSMutableData data];
+        
+        theBodyData = [[sendData dataUsingEncoding:NSUTF8StringEncoding] mutableCopy];
+        
+        
+        //  self.session = [NSURLSession sharedSession];  // use sharedSession or create your own
+        
+        session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
+        
+        NSURLSessionTask *task = [session uploadTaskWithRequest:request fromData:theBodyData completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+            if (error) {
+                NSLog(@"error = %@", error);
+                
+                [SVProgressHUD showErrorWithStatus:@"Some error occured"];
+                
+                return;
+            }
+            
+            if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
+                NSError *jsonError;
+                NSDictionary *Response = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
+                
+                [btn setUserInteractionEnabled:YES];
+                
+                if (jsonError) {
+                    // Error Parsing JSON
+                    
+                    NSString *responseString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                    
+                    NSLog(@"response = %@",responseString);
+                    
+                    [SVProgressHUD showInfoWithStatus:@"Some error occured"];
+                    
+                    
+                    
+                } else {
+                    // Success Parsing JSON
+                    // Log NSDictionary response:
+                    
+                    [SVProgressHUD dismiss];
+                    
+                    NSLog(@"result = %@",Response);
+                    
+                    
+                    if ([[Response objectForKey:@"status"]boolValue]) {
+                        
+                        
+                        [FavouriteTable beginUpdates];
+                        [FavouriteTable deleteRowsAtIndexPaths:[NSArray arrayWithObject:index] withRowAnimation:UITableViewRowAnimationFade];
+                        
+                        
+                        [videoArr removeObjectAtIndex:index.row];
+                        
+                        [FavouriteTable endUpdates];
+                    }
+                    
+                    else{
+                        
+                        [SVProgressHUD showInfoWithStatus:[Response objectForKey:@"message"]];
+                        
+                        
+                    }
+                    
+                    
+                    
+                    
+                }
+                
+                
+                
+                
+                
+            }
+        }];
+        
+        
+        [task resume];
+        
+        
+    }
+    else{
+        [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
+    }
+    
+
+    
+    
+    
+    //  NSIndexPath *index=[NSIndexPath indexPathWithIndex:btn.tag];
+
     
     
 }

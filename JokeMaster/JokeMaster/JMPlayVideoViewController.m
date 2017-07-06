@@ -438,7 +438,7 @@ AVPlayer *player;
     
     AVPlayerViewController *controller = [[AVPlayerViewController alloc]init];
     controller.player = player;
-   // [controller setVideoGravity:AVLayerVideoGravityResizeAspectFill];
+    [controller setVideoGravity:AVLayerVideoGravityResizeAspectFill];
     
     AVPlayerItem *currentItem = player.currentItem;
     NSUInteger dTotalSeconds = CMTimeGetSeconds(currentItem.currentTime);

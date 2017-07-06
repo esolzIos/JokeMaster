@@ -304,95 +304,7 @@
                                 
                             }
                         }];
-//                    } else { // This is a video that recorded before
-//                        // Get the name of the video
-//                     NSURL *urlvideo = [info objectForKey:UIImagePickerControllerReferenceURL];
-//                        
-//                        
-//                        
-//                        PHFetchResult *refResult = [PHAsset fetchAssetsWithALAssetURLs:@[urlvideo] options:nil];
-//                        PHVideoRequestOptions *videoRequestOptions = [[PHVideoRequestOptions alloc] init];
-//                        videoRequestOptions.version = PHVideoRequestOptionsVersionCurrent;
-//                        videoRequestOptions.deliveryMode=PHVideoRequestOptionsDeliveryModeFastFormat;
-//                        
-//                        [[PHImageManager defaultManager] requestAVAssetForVideo:[refResult firstObject] options:videoRequestOptions resultHandler:^(AVAsset *asset, AVAudioMix *audioMix, NSDictionary *info) {
-//                            if ([asset isKindOfClass:[AVURLAsset class]]) {
-//                                NSURL *compressedUrl = [(AVURLAsset *)asset URL];
-//                                videoData = [NSData dataWithContentsOfURL:[NSURL fileURLWithPath:[compressedUrl path]]];
-//                                
-//                                
-//                                dispatch_async(dispatch_get_main_queue(), ^{
-//                                    
-//                                    [_loadingView setHidden:NO];
-//                                    
-//                                    
-//                                    AVURLAsset *asset=[[AVURLAsset alloc] initWithURL:compressedUrl options:nil];
-//                                    AVAssetImageGenerator *generator = [[AVAssetImageGenerator alloc] initWithAsset:asset];
-//                                    generator.appliesPreferredTrackTransform=TRUE;
-//                                    
-//                                    CMTime thumbTime = CMTimeMakeWithSeconds(0,30);
-//                                    
-//                                    
-//                                    
-//                                    AVAssetImageGeneratorCompletionHandler handler = ^(CMTime requestedTime, CGImageRef im, CMTime actualTime, AVAssetImageGeneratorResult result, NSError *error){
-//                                        if (result != AVAssetImageGeneratorSucceeded) {
-//                                            DebugLog(@"couldn't generate thumbnail, error:%@", error);
-//                                            
-//                                            
-//                                            
-//                                            // [SVProgressHUD showInfoWithStatus:@"Something went wrong"];
-//                                            
-//                                        }
-//                                        
-//                                        imageData = UIImagePNGRepresentation([UIImage imageWithCGImage:im]);
-//                                        
-//                                        if ( imageData!=nil )
-//                                        {
-//                                            // selectedImage=[UIImage imageWithCGImage:im];
-//                                            
-//                                            videoPicked=true;
-//                                            
-//                                            [_videoThumb setImage:[UIImage imageWithCGImage:im]];
-//                                            
-//                                            
-//                                            _videoThumb.contentMode = UIViewContentModeScaleAspectFill;
-//                                            _videoThumb.clipsToBounds = YES;
-//                                            
-//                                            
-//                                            [_optionView setHidden:YES];
-//                                            [_loadingView setHidden:YES];
-//                                            
-//                                            
-//                                            [_uploadBtn setUserInteractionEnabled:YES];
-//                                            
-//                                            
-//                                            
-//                                            [SVProgressHUD dismiss];
-//                                        }
-//                                        else{
-//                                            
-//                                            [SVProgressHUD showInfoWithStatus:@"Something went wrong"];
-//                                            
-//                                        }
-//                                        
-//                                        
-//                                        
-//                                    };
-//                                    
-//                                    CGSize maxSize = CGSizeMake(320, 180);
-//                                    generator.maximumSize = maxSize;
-//                                    [generator generateCGImagesAsynchronouslyForTimes:[NSArray arrayWithObject:[NSValue valueWithCMTime:thumbTime]] completionHandler:handler];
-//                                    
-//                                    
-//                                });
-//                                
-//                                
-//                            }
-//                        }];
-//                        
-//                        
-//
-//                    }
+                                                                                                                                                                                                               
                 }
 
                 
@@ -403,35 +315,7 @@
         }];
         
         
-        
-        //        [picker dismissViewControllerAnimated:YES completion:^{
-        //            selectedImage=[info valueForKey:UIImagePickerControllerEditedImage];
-        //
-        //
-        ////
-        ////                CGRect rect = CGRectMake(0,0,200,200);
-        ////                UIGraphicsBeginImageContext( rect.size );
-        ////                [[info
-        ////                  objectForKey:@"UIImagePickerControllerEditedImage"] drawInRect:rect];
-        ////                UIImage *picture1 = UIGraphicsGetImageFromCurrentImageContext();
-        ////                UIGraphicsEndImageContext();
-        ////                NSData *imageData = UIImagePNGRepresentation(picture1);
-        ////                  UIImage *image=[UIImage imageWithData:imageData];
-        //
-        //            [_selectedImageView setImage:selectedImage];
-        //
-        //
-        //          _selectedImageView.contentMode = UIViewContentModeScaleAspectFit;
-        //           _selectedImageView.clipsToBounds = NO;
-        //
-        //
-        //            [_imagePlaceHolder setHidden:YES];
-        //
-        //            [postBtn setUserInteractionEnabled:YES];
-        //
-        //            [postBtn.titleLabel setTextColor:[UIColor darkGrayColor]];
-        //
-        //        }];
+ 
         
     }
     

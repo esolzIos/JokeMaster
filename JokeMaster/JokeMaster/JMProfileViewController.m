@@ -140,10 +140,10 @@
         if (appDelegate.isLogged) {
                     sendData = [sendData stringByAppendingString:[NSString stringWithFormat:@"%@", appDelegate.userId]];
                      sendData = [sendData stringByAppendingString:@"&user_id="];
-            if (![_ProfileUserId isEqualToString:appDelegate.userId]) {
+           // if (![_ProfileUserId isEqualToString:appDelegate.userId]) {
        
                 sendData = [sendData stringByAppendingString:[NSString stringWithFormat:@"%@",_ProfileUserId]];
-            }
+            //}
             
         }
         else{
