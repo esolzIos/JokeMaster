@@ -88,7 +88,7 @@
             
             
             
-            urlString=[NSString stringWithFormat:@"%@%@Video?categoryid=%@&language=%@&country=%@&userid=&page=%d&limit=10",GLOBALAPI,INDEX,CategoryId,[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"],[[NSUserDefaults standardUserDefaults] objectForKey:@"countryId"],page];
+            urlString=[NSString stringWithFormat:@"%@%@Video?categoryid=%@&language=%@&country=%@&userid=&page=%d&limit=15",GLOBALAPI,INDEX,CategoryId,[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"],[[NSUserDefaults standardUserDefaults] objectForKey:@"countryId"],page];
             
             
             
@@ -216,15 +216,15 @@
 {
     if (IsIphone5)
     {
-        return CGSizeMake(self.view.frame.size.width/3,90);
+        return CGSizeMake(self.view.frame.size.width/3,105);
     }
     else if (IsIphone6)
     {
-        return CGSizeMake(self.view.frame.size.width/3,104);
+        return CGSizeMake(self.view.frame.size.width/3,123);
     }
     else
     {
-        return CGSizeMake(self.view.frame.size.width/3,112);
+        return CGSizeMake(self.view.frame.size.width/3,135);
     }
     
 }
@@ -239,6 +239,10 @@
     
     
     JMRecentUploadedCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
+    
+    [cell.CategoryNameLabel setFont:[UIFont fontWithName:cell.CategoryNameLabel.font.fontName size:[self getFontSize:9.0]]];
+    
+    cell.CategoryNameLabel.text = [[[videoArr objectAtIndex:indexPath.row]objectForKey:@"videoname"] uppercaseString];
     
         [cell.VideoThumpnailImage sd_setImageWithURL:[NSURL URLWithString:[[videoArr objectAtIndex:indexPath.row]objectForKey:@"videoimagename"]] placeholderImage:[UIImage imageNamed: @"noimage"]];
     

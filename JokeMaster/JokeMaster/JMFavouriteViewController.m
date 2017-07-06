@@ -79,7 +79,7 @@
         NSString *url;
         
         //http://ec2-13-58-196-4.us-east-2.compute.amazonaws.com/jokemaster/index.php/useraction/favouritelisting?userid=1&page=1&limit=1
-        url=[NSString stringWithFormat:@"%@%@useraction/favouritelisting?userid=%@&page=%d&limit=10",GLOBALAPI,INDEX,appDelegate.userId,page];
+        url=[NSString stringWithFormat:@"%@%@useraction/favouritelisting?userid=%@&page=%d&limit=15",GLOBALAPI,INDEX,appDelegate.userId,page];
         
         
         
@@ -264,13 +264,16 @@
     [cell.deleteBtn addTarget:self action:@selector(deleteRow:) forControlEvents:UIControlEventTouchUpInside];
     
     
-    [self setRoundCornertoView:cell.ProfileImage withBorderColor:[UIColor clearColor] WithRadius:0.36];
+    [self setRoundCornertoView:cell.profileFrame withBorderColor:[UIColor clearColor] WithRadius:0.2];
+    [self setRoundCornertoView:cell.ProfileImage withBorderColor:[UIColor clearColor] WithRadius:0.15];
     
 //    [cell.ProfileNameLabel setFont:[UIFont fontWithName:cell.ProfileNameLabel.font.fontName size:[self getFontSize:cell.ProfileNameLabel.font.pointSize]]];
 //    [cell.JokesNameLabel setFont:[UIFont fontWithName:cell.JokesNameLabel.font.fontName size:[self getFontSize:cell.JokesNameLabel.font.pointSize]]];
 //    [cell.RatingLabel setFont:[UIFont fontWithName:cell.RatingLabel.font.fontName size:[self getFontSize:cell.RatingLabel.font.pointSize]]];
     
-    [cell.ProfileImage sd_setImageWithURL:[NSURL URLWithString:[videoDict objectForKey:@"videoimagename"]]];
+
+    
+      [cell.ProfileImage sd_setImageWithURL:[NSURL URLWithString:[videoDict objectForKey:@"videoimagename"]] placeholderImage:[UIImage imageNamed:@"noimage"]];
     
     [cell.JokesNameLabel setText:[videoDict objectForKey:@"videoname"]];
     

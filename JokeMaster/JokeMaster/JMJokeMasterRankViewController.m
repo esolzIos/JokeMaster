@@ -9,7 +9,21 @@
 #import "JMJokeMasterRankViewController.h"
 #import "JMProfileViewController.h"
 @interface JMJokeMasterRankViewController ()
-
+{
+    // int listcount;
+    
+    NSMutableArray *swipedRows;
+    
+    NSURLSession *session;
+    BOOL firedOnce,fontSet;
+    NSDictionary *jsonResponse;
+    AppDelegate *appDelegate;
+    
+    
+    NSMutableArray *videoArr;
+    int totalCount,page;
+    
+}
 @end
 
 @implementation JMJokeMasterRankViewController
@@ -17,13 +31,165 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
         [self addMoreView:self.view];
+    appDelegate=(AppDelegate *)[[UIApplication sharedApplication]delegate];
+    swipedRows=[[NSMutableArray alloc]init];
     // Do any additional setup after loading the view.
 }
+-(void)viewWillAppear:(BOOL)animated
+{
+    
+    videoArr=[[NSMutableArray alloc]init];
+    
+    page=1;
+    totalCount=0;
+    
+    [self loadData];
+    
+    
+}
+-(void)loadData
+{
+    
+    if([self networkAvailable])
+    {
+        
+        
+        
+        [SVProgressHUD show];
+        
+        
+        
+        NSString *url;
+        
+        //http://ec2-13-58-196-4.us-east-2.compute.amazonaws.com/jokemaster/index.php/Useraction/userankinglisting?page=1&limit=15
+        
+        url=[NSString stringWithFormat:@"%@%@Useraction/userankinglisting?page=%d&limit=15",GLOBALAPI,INDEX,page];
+        
+        
+        
+        NSLog(@"Url String..%@",url);
+        
+        
+        
+        NSURLSessionConfiguration *sessionConfig = [NSURLSessionConfiguration defaultSessionConfiguration];
+        session = [NSURLSession sessionWithConfiguration:sessionConfig delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
+        
+        [[session dataTaskWithURL:[NSURL URLWithString:url] completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+            
+            
+            //
+            //        NSURLSessionTask *task = [session uploadTaskWithRequest:request fromData:nil completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+            if (error) {
+                NSLog(@"error = %@", error);
+                
+                
+                
+                return;
+            }
+            
+            if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
+                NSError *jsonError;
+                jsonResponse = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
+                
+                
+                
+                if (jsonError) {
+                    // Error Parsing JSON
+                    
+                    NSString *responseString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                    
+                    NSLog(@"response = %@",responseString);
+                    
+                    [SVProgressHUD showInfoWithStatus:@"some error occured"];
+                    
+                } else {
+                    // Success Parsing JSON
+                    // Log NSDictionary response:
+                    NSLog(@"result = %@",jsonResponse);
+                    if ([[jsonResponse objectForKey:@"status"]boolValue]) {
+                        
+                        
+                        
+                        NSArray    *resultArr=[[jsonResponse objectForKey:@"details"] copy];
+                        
+                        totalCount=[[jsonResponse objectForKey:@"totalcount"]intValue];
+                        
+                        
+                        
+                        [SVProgressHUD dismiss];
+                        
+                        
+                        
+                        for (NSDictionary *Dict in resultArr) {
+                            
+                            [videoArr addObject:Dict];
+                            
+                            
+                        }
+                        
+                        
+                        
+                        if (videoArr.count>0) {
+                            
+                            
+                            [_RankTable reloadData];
+                            
+                        }
+                        else{
+                            
+                            [_RankTable setUserInteractionEnabled:NO];
+                            
+                        }
+                    }
+                    else{
+                        
+                        if (videoArr.count==0) {
+                            
+                            [SVProgressHUD dismiss];
+                        }
+                        else{
+                            [SVProgressHUD showInfoWithStatus:[jsonResponse objectForKey:@"message"]];
+                        }
+                        
+                        
+                        
+                    }
+                    
+                }
+                
+                
+                
+            }
+            
+            
+        }]resume ];
+        
+        
+        
+        
+        
+    }
+    
+    else{
+        
+        
+        [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
+        
+        
+    }
+    
+    
+    
+    
+}
+
+
+
 #pragma mark - UITableView Delegates
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section;
 {
-    return 30;
+    return videoArr.count;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -65,24 +231,41 @@
 -(void) tableView:(UITableView *)tableView willDisplayCell:(JMFavouriteCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
   
-    DebugLog(@"tag %ld",(long)cell.WhiteView.tag);
-    
-    if (oneTime==NO)
-    {
-        WhiteViewX=cell.WhiteView.frame.origin.x;
-        oneTime=YES;
-    }
+//    DebugLog(@"tag %ld",(long)cell.WhiteView.tag);
+//    
+//    if (oneTime==NO)
+//    {
+//        WhiteViewX=cell.WhiteView.frame.origin.x;
+//        oneTime=YES;
+//    }
     
     [self setRoundCornertoView:cell.ProfileImage withBorderColor:[UIColor clearColor] WithRadius:0.36];
     
-    //    [cell.ProfileNameLabel setFont:[UIFont fontWithName:cell.ProfileNameLabel.font.fontName size:[self getFontSize:cell.ProfileNameLabel.font.pointSize]]];
-    //    [cell.JokesNameLabel setFont:[UIFont fontWithName:cell.JokesNameLabel.font.fontName size:[self getFontSize:cell.JokesNameLabel.font.pointSize]]];
-    //    [cell.RatingLabel setFont:[UIFont fontWithName:cell.RatingLabel.font.fontName size:[self getFontSize:cell.RatingLabel.font.pointSize]]];
     
+    NSDictionary *videoDict=[videoArr objectAtIndex:indexPath.row];
+    
+    if ([swipedRows containsObject:[NSString stringWithFormat:@"%ld",indexPath.row]]) {
+        cell.WhiteView.frame =CGRectMake(-50.0/320.0*FULLWIDTH,  cell.WhiteView.frame.origin.y,  cell.WhiteView.frame.size.width,  cell.WhiteView.frame.size.height);
+    }
+    else{
+        cell.WhiteView.frame =CGRectMake(23.0/320.0*FULLWIDTH,  cell.WhiteView.frame.origin.y,  cell.WhiteView.frame.size.width,  cell.WhiteView.frame.size.height);
+    }
+    
+    [cell.ProfileImage sd_setImageWithURL:[NSURL URLWithString:[videoDict objectForKey:@"user_image"]] placeholderImage:[UIImage imageNamed:@"noimage"]];
+    
+     [cell.RankLabel setText:[NSString stringWithFormat:@"RANK %@",[videoDict objectForKey:@"rank"]]];
+    
+    [cell.ProfileNameLabel setText:[videoDict objectForKey:@"username"]];
+    
+    [cell.RatingLabel setText:[NSString stringWithFormat:@"%@/5",[videoDict objectForKey:@"score"]]];
+    
+    
+    [self setRoundCornertoView:cell.profileFrame withBorderColor:[UIColor clearColor] WithRadius:0.2];
+    [self setRoundCornertoView:cell.ProfileImage withBorderColor:[UIColor clearColor] WithRadius:0.15];
     
     cell.RatingView.maximumValue = 5;
     cell.RatingView.minimumValue = 0;
-    cell.RatingView.value = 4.5;
+    cell.RatingView.value =[[videoDict objectForKey:@"score"] floatValue];
     cell.RatingView.userInteractionEnabled=NO;
     //    _RatingView.tintColor = [UIColor clearColor];
     cell.RatingView.allowsHalfStars = YES;
@@ -105,8 +288,10 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    JMProfileViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMProfile"];
+    NSDictionary *videoDict=[videoArr objectAtIndex:indexPath.row];
     
+    JMProfileViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMProfile"];
+    VC.ProfileUserId=[videoDict objectForKey:@"user_id"];
     
     [self.navigationController pushViewController:VC animated:kCAMediaTimingFunctionEaseIn];
 }
@@ -114,7 +299,40 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
+#pragma mark - status bar white color
+- (UIStatusBarStyle)preferredStatusBarStyle
+{
+    return UIStatusBarStyleLightContent;
+}
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    
+    
+    if (scrollView==_RankTable && totalCount>videoArr.count)
+    {
+        CGPoint offset = scrollView.contentOffset;
+        CGRect bounds = scrollView.bounds;
+        CGSize size = scrollView.contentSize;
+        UIEdgeInsets inset = scrollView.contentInset;
+        float y = offset.y + bounds.size.height - inset.bottom;
+        float h = size.height;
+        
+        float reload_distance = -10.0f;
+        
+        
+        if(y > h + reload_distance)
+        {
+            
+            
+            
+            page += 1;
+            [self loadData];
+            
+            
+            
+        }
+    }
+}
 /*
 #pragma mark - Navigation
 

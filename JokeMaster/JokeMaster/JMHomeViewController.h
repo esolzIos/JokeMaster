@@ -60,7 +60,11 @@
 @property (strong, nonatomic) IBOutlet UIView *ratingView;
 @property (strong, nonatomic) IBOutlet UIButton *crossBtn;
 - (IBAction)crossClicked:(id)sender;
-
+@property (strong, nonatomic) IBOutlet UIButton *ratingBtnOne;
+@property (strong, nonatomic) IBOutlet UIButton *ratingBtnTwo;
+@property (strong, nonatomic) IBOutlet UIButton *ratingBtnThree;
+@property (strong, nonatomic) IBOutlet UIButton *ratingBtnFour;
+@property (strong, nonatomic) IBOutlet UIButton *ratingBtnFive;
 @property (weak, nonatomic) IBOutlet UILabel *VideoNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *VideoCreaterNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *VideoRatingLabel;
