@@ -492,6 +492,8 @@ dismissViewController:(UIViewController *)viewController {
             
             urlString=[NSMutableString stringWithFormat:@"%@index.php/Signup/login?email=%@&password=%@&device_token=%@&device_type=2",GLOBALAPI,[userEmail.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[password.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[[NSUserDefaults standardUserDefaults] objectForKey:@"deviceToken"]];
             
+//                [[[UIAlertView alloc]initWithTitle:@"Error!" message:[NSString stringWithFormat:@"%@",urlString] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
+            
             
             [urlobj getSessionJsonResponse:urlString  success:^(NSDictionary *responseDict)
              {

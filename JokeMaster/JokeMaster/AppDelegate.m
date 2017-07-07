@@ -29,6 +29,9 @@
     
 [GIDSignIn sharedInstance].clientID = @"257838552176-cik6p18idkqgrgecuss42mcmn66gd1lk.apps.googleusercontent.com";
     
+    [Fabric with:@[[Crashlytics class]]];
+
+    
     
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= 80000
     if ([application respondsToSelector:@selector(registerUserNotificationSettings:)])
@@ -278,8 +281,8 @@
     DebugLog(@"device token here: %@",deviceToken1);
     [[NSUserDefaults standardUserDefaults] synchronize];
     
-    //    UIAlertView *pushResponse = [[UIAlertView alloc] initWithTitle:nil message:[NSString stringWithFormat:@"DeviceToken:%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"deviceToken"]] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-    //    [pushResponse show];
+//        UIAlertView *pushResponse = [[UIAlertView alloc] initWithTitle:nil message:[NSString stringWithFormat:@"DeviceToken:%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"deviceToken"]] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+//        [pushResponse show];
     
     
 }

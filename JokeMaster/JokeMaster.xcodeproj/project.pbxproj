@@ -23,6 +23,8 @@
 		0C48BFB61EE7CF1200CD1C2A /* LocalizationSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C48BFB51EE7CF1200CD1C2A /* LocalizationSystem.m */; };
 		0C48BFB81EE82DA400CD1C2A /* JMHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C48BFB71EE82DA400CD1C2A /* JMHeaderView.xib */; };
 		0C48BFBB1EE82EEF00CD1C2A /* JMHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C48BFBA1EE82EEF00CD1C2A /* JMHeaderView.m */; };
+		0C56203B1F0F916400698DCE /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C5620391F0F916300698DCE /* Fabric.framework */; };
+		0C56203C1F0F916400698DCE /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C56203A1F0F916400698DCE /* Crashlytics.framework */; };
 		0C5827491EE9205600480E19 /* JMHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C5827481EE9205600480E19 /* JMHomeViewController.m */; };
 		0C58274B1EE9308E00480E19 /* JMLeftMenuView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C58274A1EE9308E00480E19 /* JMLeftMenuView.xib */; };
 		0C58274E1EE9316F00480E19 /* JMLeftMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C58274D1EE9316F00480E19 /* JMLeftMenuView.m */; };
@@ -154,6 +156,8 @@
 		0C48BFB71EE82DA400CD1C2A /* JMHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JMHeaderView.xib; sourceTree = "<group>"; };
 		0C48BFB91EE82EEF00CD1C2A /* JMHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMHeaderView.h; sourceTree = "<group>"; };
 		0C48BFBA1EE82EEF00CD1C2A /* JMHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMHeaderView.m; sourceTree = "<group>"; };
+		0C5620391F0F916300698DCE /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
+		0C56203A1F0F916400698DCE /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		0C5827471EE9205600480E19 /* JMHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMHomeViewController.h; sourceTree = "<group>"; };
 		0C5827481EE9205600480E19 /* JMHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMHomeViewController.m; sourceTree = "<group>"; };
 		0C58274A1EE9308E00480E19 /* JMLeftMenuView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JMLeftMenuView.xib; sourceTree = "<group>"; };
@@ -321,8 +325,10 @@
 				B07ABADC1EE58E740011DD57 /* SafariServices.framework in Frameworks */,
 				B07ABACC1EE570C60011DD57 /* FBSDKLoginKit.framework in Frameworks */,
 				B07ABAD81EE58E4E0011DD57 /* GoogleSignInDependencies.framework in Frameworks */,
+				0C56203C1F0F916400698DCE /* Crashlytics.framework in Frameworks */,
 				B07ABAD91EE58E4E0011DD57 /* GoogleSymbolUtilities.framework in Frameworks */,
 				B07ABAD71EE58E4E0011DD57 /* GoogleSignIn.framework in Frameworks */,
+				0C56203B1F0F916400698DCE /* Fabric.framework in Frameworks */,
 				B07ABAD51EE58E4E0011DD57 /* GoogleAppUtilities.framework in Frameworks */,
 				B07ABACB1EE570C60011DD57 /* FBSDKCoreKit.framework in Frameworks */,
 				B07ABACD1EE570C60011DD57 /* FBSDKShareKit.framework in Frameworks */,
@@ -474,6 +480,8 @@
 		B0A32B321EE1292F0044D443 = {
 			isa = PBXGroup;
 			children = (
+				0C5620391F0F916300698DCE /* Fabric.framework */,
+				0C56203A1F0F916400698DCE /* Crashlytics.framework */,
 				B0779D6F1EEBD2D10065FECD /* Comic_Book.ttf */,
 				B0A32B3D1EE1292F0044D443 /* JokeMaster */,
 				B0A32B5A1EE129300044D443 /* JokeMasterTests */,
@@ -696,6 +704,7 @@
 				B0A32B371EE1292F0044D443 /* Sources */,
 				B0A32B381EE1292F0044D443 /* Frameworks */,
 				B0A32B391EE1292F0044D443 /* Resources */,
+				0C5620381F0F912F00698DCE /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -840,6 +849,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		0C5620381F0F912F00698DCE /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./Fabric.framework/run 52b7ccdf45d1082e7ea0d7007328c2fa0e6cd183 bf4f3bede72cfb0f637fe18fddf1bf4af999ff75a3bd615ffd22b848601214e3";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		B0A32B371EE1292F0044D443 /* Sources */ = {
@@ -1009,8 +1034,8 @@
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: ESolz Technologies Pvt Ltd (K22GQFS8BW)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: ESolz Technologies Pvt Ltd (K22GQFS8BW)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Manish Sethia (6Y3K8LCSQQ)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Manish Sethia (6Y3K8LCSQQ)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = K22GQFS8BW;
@@ -1033,7 +1058,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "0c21bb5a-59d7-4b1c-98cc-f9dc21e002e9";
+				PROVISIONING_PROFILE = "114b26d7-b348-4835-9e5f-e2360b6c3aa9";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1061,8 +1086,8 @@
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: ESolz Technologies Pvt Ltd (K22GQFS8BW)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: ESolz Technologies Pvt Ltd (K22GQFS8BW)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Manish Sethia (6Y3K8LCSQQ)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Manish Sethia (6Y3K8LCSQQ)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = K22GQFS8BW;
@@ -1078,7 +1103,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "0c21bb5a-59d7-4b1c-98cc-f9dc21e002e9";
+				PROVISIONING_PROFILE = "114b26d7-b348-4835-9e5f-e2360b6c3aa9";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -1090,16 +1115,18 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = JokeMaster/JokeMaster.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: ESolz Technologies Pvt Ltd (K22GQFS8BW)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: ESolz Technologies Pvt Ltd (K22GQFS8BW)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Manish Sethia (6Y3K8LCSQQ)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Manish Sethia (6Y3K8LCSQQ)";
 				DEVELOPMENT_TEAM = K22GQFS8BW;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/JokeMaster",
+					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = JokeMaster/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				"LD_MAP_FILE_PATH[arch=*]" = "$(TARGET_TEMP_DIR)/$(PRODUCT_NAME)-LinkMap-$(CURRENT_VARIANT)-$(CURRENT_ARCH).txt";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(OTHER_LDFLAGS)",
@@ -1107,8 +1134,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.esolz.JokeMaster;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "0c21bb5a-59d7-4b1c-98cc-f9dc21e002e9";
-				PROVISIONING_PROFILE_SPECIFIER = jokemaster_adhoc;
+				PROVISIONING_PROFILE = "114b26d7-b348-4835-9e5f-e2360b6c3aa9";
+				PROVISIONING_PROFILE_SPECIFIER = jokemaster_dev;
 			};
 			name = Debug;
 		};
@@ -1117,13 +1144,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = JokeMaster/JokeMaster.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: ESolz Technologies Pvt Ltd (K22GQFS8BW)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: ESolz Technologies Pvt Ltd (K22GQFS8BW)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Manish Sethia (6Y3K8LCSQQ)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Manish Sethia (6Y3K8LCSQQ)";
 				DEVELOPMENT_TEAM = K22GQFS8BW;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/JokeMaster",
+					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = JokeMaster/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -1134,8 +1162,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.esolz.JokeMaster;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "0c21bb5a-59d7-4b1c-98cc-f9dc21e002e9";
-				PROVISIONING_PROFILE_SPECIFIER = jokemaster_adhoc;
+				PROVISIONING_PROFILE = "114b26d7-b348-4835-9e5f-e2360b6c3aa9";
+				PROVISIONING_PROFILE_SPECIFIER = jokemaster_dev;
 			};
 			name = Release;
 		};

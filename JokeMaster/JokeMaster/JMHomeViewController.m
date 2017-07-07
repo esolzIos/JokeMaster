@@ -84,7 +84,7 @@
     
  
 }
-
+#pragma mark -Joke of the Day API
 -(void)getJokeOftheDay
 {
     BOOL net=[urlobj connectedToNetwork];
@@ -127,10 +127,7 @@
                      
                      if ([[responseDict objectForKey:@"status"] boolValue])
                      {
-                    
-                         jokeDict=[responseDict objectForKey:@"videoDetails"];
-                         
-                         
+                         _tvView.hidden=NO;
                              if ([[[NSUserDefaults standardUserDefaults] valueForKey:@"HomeVisited"] boolValue]==YES)
                              {
                                  _tutorialView.hidden=YES;
@@ -142,8 +139,9 @@
                              
                              [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"HomeVisited"];
                              
-                             
-                             
+                              jokeDict=[responseDict objectForKey:@"videoDetails"];
+                         
+                         
                              _VideoNameLabel.text=[jokeDict objectForKey:@"videoname"];
                              _VideoCreaterNameLabel.text=[jokeDict objectForKey:@"username"];
                              _VideoRatingLabel.text=[NSString stringWithFormat:@"%@/5",[jokeDict objectForKey:@"averagerating"]];
@@ -157,46 +155,59 @@
                              _VideoRatingView.allowsHalfStars = YES;
                              _VideoRatingView.emptyStarImage = [[UIImage imageNamed:@"emotion"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
                              _VideoRatingView.filledStarImage = [[UIImage imageNamed:@"emotion2"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-                         _VideoRatingView.accurateHalfStars = YES;
-                         _VideoRatingView.halfStarImage = [[UIImage imageNamed:@"emotion1"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+                             _VideoRatingView.accurateHalfStars = YES;
+                             _VideoRatingView.halfStarImage = [[UIImage imageNamed:@"emotion1"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
                              
                              [_videoThumb sd_setImageWithURL:[NSURL URLWithString:[jokeDict objectForKey:@"videoimagename"] ] placeholderImage:[UIImage imageNamed: @"noimage"]];
+                             
+                             
+                             liked=[[jokeDict objectForKey:@"like"]boolValue];
+                         
+                             
                          
                          
-                         liked=[[jokeDict objectForKey:@"like"]boolValue];
                          
                          
-                            [self RecentVideoApi];
                       
                          
                      }
                      else
                      {
-                         _tvView.hidden=YES;
-                         _tutorialView.hidden=YES;
-                         
-                         
-                         
                          [SVProgressHUD showInfoWithStatus:[responseDict objectForKey:@"message"]];
                          
+                         [self VideoNotFound];
+                         
+                         
+                         
+                         
+                         
                      }
+                     
+                     [self RecentVideoApi];
                      
                  }
                  else if (urlobj.statusCode==500 || urlobj.statusCode==400)
                  {
                      //                     [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Server Failed to Respond" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
-                     _tvView.hidden=YES;
-                     _tutorialView.hidden=YES;
+//                     _tvView.hidden=YES;
+//                     _tutorialView.hidden=YES;
                      
                      [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Server Failed to Respond",nil)];
+                     
+                     [self VideoNotFound];
+                     
+                     [self RecentVideoApi];
                      
                  }
                  else
                  {
                      //                     [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Server Failed to Respond" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
-                     _tvView.hidden=YES;
-                     _tutorialView.hidden=YES;
+//                     _tvView.hidden=YES;
+//                     _tutorialView.hidden=YES;
                      [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Server Failed to Respond",nil)];
+                     [self VideoNotFound];
+                     
+                     [self RecentVideoApi];
                  }
                  
              }
@@ -207,8 +218,12 @@
                                        _tutorialView.hidden=YES;
                                        NSLog(@"Failure");
                                        //                                       [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Server Failed to Respond" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
-                                       _tvView.hidden=YES;
+//                                       _tvView.hidden=YES;
                                        [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Server Failed to Respond",nil)];
+                                       
+                                       [self VideoNotFound];
+                                       
+                                       [self RecentVideoApi];
                                        
                                    }
              ];
@@ -216,9 +231,11 @@
     }
     else
     {
-        _tvView.hidden=YES;
-        _tutorialView.hidden=YES;
+//        _tvView.hidden=YES;
+//        _tutorialView.hidden=YES;
         [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
+        
+        [self VideoNotFound];
         
     }
 
@@ -363,7 +380,15 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return [RecentVideoArray count];
+    if ([RecentVideoArray count]==0)
+    {
+        return 10;
+    }
+    else
+    {
+        return [RecentVideoArray count];
+    }
+    
     
 }
 
@@ -372,16 +397,32 @@
 {
     JokeCollectionViewCell *ccell = [collectionView dequeueReusableCellWithReuseIdentifier:@"jokeCell" forIndexPath:indexPath];
     
-    [ccell.jokeThumb sd_setImageWithURL:[NSURL URLWithString:[[RecentVideoArray objectAtIndex:indexPath.row]objectForKey:@"videoimagename"]] placeholderImage:[UIImage imageNamed: @"noimage"]];
+    if ([RecentVideoArray count]==0)
+    {
+        ccell.jokeThumb.image=[UIImage imageNamed: @"noimage"];
+    }
+    else
+    {
+        [ccell.jokeThumb sd_setImageWithURL:[NSURL URLWithString:[[RecentVideoArray objectAtIndex:indexPath.row]objectForKey:@"videoimagename"]] placeholderImage:[UIImage imageNamed: @"noimage"]];
+    }
+    
+    
     
     return ccell;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    JMPlayVideoViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMPlayVideoViewController"];
-    VC.VideoId=[[RecentVideoArray objectAtIndex:indexPath.row] valueForKey:@"id"];
-    [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
+    if ([RecentVideoArray count]==0)
+    {
+        [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Video not found",nil)];
+    }
+    else
+    {
+        JMPlayVideoViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMPlayVideoViewController"];
+        VC.VideoId=[[RecentVideoArray objectAtIndex:indexPath.row] valueForKey:@"id"];
+        [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
+    }
     
 }
 
@@ -593,12 +634,19 @@
 #pragma mark - play button click
 - (IBAction)playClicked:(id)sender {
     
-    
-    [_optionView setHidden:YES];
-    [_ratingImage.layer removeAllAnimations];
-    JMPlayVideoViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMPlayVideoViewController"];
-     VC.VideoId=[jokeDict valueForKey:@"id"];
-    [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
+    if ([jokeDict valueForKey:@"id"]==nil)
+    {
+        [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Video not found",nil)];
+    }
+    else
+    {
+        [_optionView setHidden:YES];
+        [_ratingImage.layer removeAllAnimations];
+        JMPlayVideoViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMPlayVideoViewController"];
+        VC.VideoId=[jokeDict valueForKey:@"id"];
+        [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
+    }
+   
 }
 - (IBAction)shareClicked:(id)sender {
     [_ratingImage.layer removeAllAnimations];
@@ -684,7 +732,7 @@
                          
                          if (RecentVideoArray.count>0)
                          {
-                             _tvView.hidden=NO;
+                           //  _tvView.hidden=NO;
                          
                              
                     
@@ -694,8 +742,8 @@
                      }
                      else
                      {
-                         _tvView.hidden=NO;
-                         _tutorialView.hidden=YES;
+//                         _tvView.hidden=NO;
+//                         _tutorialView.hidden=YES;
                          
                          
                          
@@ -707,8 +755,8 @@
                  else if (urlobj.statusCode==500 || urlobj.statusCode==400)
                  {
                      //                     [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Server Failed to Respond" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
-                     _tvView.hidden=NO;
-                     _tutorialView.hidden=YES;
+//                     _tvView.hidden=NO;
+//                     _tutorialView.hidden=YES;
                      
                      [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Server Failed to Respond",nil)];
                      
@@ -716,8 +764,8 @@
                  else
                  {
                      //                     [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Server Failed to Respond" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
-                     _tvView.hidden=NO;
-                     _tutorialView.hidden=YES;
+//                     _tvView.hidden=NO;
+//                     _tutorialView.hidden=YES;
                      [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Server Failed to Respond",nil)];
                  }
                  
@@ -726,7 +774,7 @@
                                        
                                        // [self checkLoader];
                                        self.view.userInteractionEnabled = YES;
-                                       _tutorialView.hidden=YES;
+//                                       _tutorialView.hidden=YES;
                                        NSLog(@"Failure");
                                        //                                       [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Server Failed to Respond" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
                                        _tvView.hidden=YES;
@@ -738,10 +786,37 @@
     }
     else
     {
-        _tvView.hidden=NO;
-        _tutorialView.hidden=YES;
+//        _tvView.hidden=NO;
+//        _tutorialView.hidden=YES;
         [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
         
     }
+}
+#pragma mark -Video not found
+-(void)VideoNotFound
+{
+    _tvView.hidden=NO;
+    
+    if ([[[NSUserDefaults standardUserDefaults] valueForKey:@"HomeVisited"] boolValue]==YES)
+    {
+        _tutorialView.hidden=YES;
+    }
+    else
+    {
+        _tutorialView.hidden=NO;
+    }
+    
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"HomeVisited"];
+    
+    _VideoRatingView.maximumValue = 5;
+    _VideoRatingView.minimumValue = 0;
+    _VideoRatingView.value =4;
+    _VideoRatingView.userInteractionEnabled=NO;
+    //    _RatingView.tintColor = [UIColor clearColor];
+    _VideoRatingView.allowsHalfStars = YES;
+    _VideoRatingView.emptyStarImage = [[UIImage imageNamed:@"emotion"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    _VideoRatingView.filledStarImage = [[UIImage imageNamed:@"emotion2"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    _VideoRatingView.accurateHalfStars = YES;
+    _VideoRatingView.halfStarImage = [[UIImage imageNamed:@"emotion1"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
 }
 @end

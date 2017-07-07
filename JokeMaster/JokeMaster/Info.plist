@@ -43,6 +43,20 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>Fabric</key>
+	<dict>
+		<key>APIKey</key>
+		<string>52b7ccdf45d1082e7ea0d7007328c2fa0e6cd183</string>
+		<key>Kits</key>
+		<array>
+			<dict>
+				<key>KitInfo</key>
+				<dict/>
+				<key>KitName</key>
+				<string>Crashlytics</string>
+			</dict>
+		</array>
+	</dict>
 	<key>FacebookAppID</key>
 	<string>189232534935448</string>
 	<key>FacebookDisplayName</key>
@@ -81,10 +95,10 @@
 	<string>App wants to access camera</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>App requires current location</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>App wants to access Microphone</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>App wants to access gallery</string>
-    <key>NSMicrophoneUsageDescription</key>
-    <string>App wants to access Microphone</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>comicbd_1.ttf</string>
@@ -112,5 +126,19 @@
 		<string>UIInterfaceOrientationPortrait</string>
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 	</array>
+    <key>Fabric</key>
+    <dict>
+        <key>APIKey</key>
+        <string>52b7ccdf45d1082e7ea0d7007328c2fa0e6cd183</string>
+        <key>Kits</key>
+        <array>
+            <dict>
+                <key>KitInfo</key>
+                <dict/>
+                <key>KitName</key>
+                <string>Crashlytics</string>
+            </dict>
+        </array>
+    </dict>
 </dict>
 </plist>
