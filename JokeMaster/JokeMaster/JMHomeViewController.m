@@ -733,10 +733,14 @@
                          if (RecentVideoArray.count>0)
                          {
                            //  _tvView.hidden=NO;
-                         
+                             _recentBtn.userInteractionEnabled=YES;
                              
                     
                              [_jokeCollectionView reloadData];
+                         }
+                         else
+                         {
+                             _recentBtn.userInteractionEnabled=NO;
                          }
                          
                      }
@@ -745,8 +749,7 @@
 //                         _tvView.hidden=NO;
 //                         _tutorialView.hidden=YES;
                          
-                         
-                         
+                         _recentBtn.userInteractionEnabled=NO;
                          [SVProgressHUD showInfoWithStatus:[responseDict objectForKey:@"message"]];
                          
                      }
@@ -757,7 +760,7 @@
                      //                     [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Server Failed to Respond" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
 //                     _tvView.hidden=NO;
 //                     _tutorialView.hidden=YES;
-                     
+                     _recentBtn.userInteractionEnabled=NO;
                      [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Server Failed to Respond",nil)];
                      
                  }
@@ -766,6 +769,7 @@
                      //                     [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Server Failed to Respond" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
 //                     _tvView.hidden=NO;
 //                     _tutorialView.hidden=YES;
+                     _recentBtn.userInteractionEnabled=NO;
                      [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Server Failed to Respond",nil)];
                  }
                  
@@ -777,7 +781,8 @@
 //                                       _tutorialView.hidden=YES;
                                        NSLog(@"Failure");
                                        //                                       [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Server Failed to Respond" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
-                                       _tvView.hidden=YES;
+                                      // _tvView.hidden=YES;
+                                       _recentBtn.userInteractionEnabled=NO;
                                        [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Server Failed to Respond",nil)];
                                        
                                    }
@@ -788,6 +793,7 @@
     {
 //        _tvView.hidden=NO;
 //        _tutorialView.hidden=YES;
+        _recentBtn.userInteractionEnabled=NO;
         [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
         
     }
