@@ -422,7 +422,7 @@
             NSString *urlString;
             
             
-            urlString=[NSString stringWithFormat:@"%@index.php/video/category",GLOBALAPI];
+            urlString=[NSString stringWithFormat:@"%@index.php/video/category&mode=%@",GLOBALAPI,[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"]];
             
             
             
@@ -529,7 +529,7 @@
             
             
             
-            urlString=[NSString stringWithFormat:@"%@%@Video?categoryid=%@&language=%@&country=%@&userid=&page=%d&limit=15",GLOBALAPI,INDEX,categoryId,[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"],[[NSUserDefaults standardUserDefaults] objectForKey:@"countryId"],page];
+            urlString=[NSString stringWithFormat:@"%@%@Video?categoryid=%@&language=%@&country=%@&userid=&page=%d&limit=15&mode=%@",GLOBALAPI,INDEX,categoryId,[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"],[[NSUserDefaults standardUserDefaults] objectForKey:@"countryId"],page,[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"]];
             
             
             

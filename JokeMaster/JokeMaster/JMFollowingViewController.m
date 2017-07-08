@@ -69,7 +69,7 @@
         
         //http://ec2-13-58-196-4.us-east-2.compute.amazonaws.com/jokemaster/index.php/Follow/followerlisting?userid=3&page=1&limit=15
         
-        url=[NSString stringWithFormat:@"%@%@Follow/followerlisting?userid=%@&page=%d&limit=15",GLOBALAPI,INDEX,appDelegate.userId,page];
+        url=[NSString stringWithFormat:@"%@%@Follow/followerlisting?userid=%@&page=%d&limit=15&mode=%@",GLOBALAPI,INDEX,appDelegate.userId,page,[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"]];
         
         
         
@@ -304,7 +304,7 @@
      NSDictionary *videoDict=[videoArr objectAtIndex:indexPath.row];
     
     JMProfileViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMProfile"];
-    VC.ProfileUserId=[videoDict objectForKey:@"userid"];
+    VC.ProfileUserId=[videoDict objectForKey:@"followingid"];
     
     [self.navigationController pushViewController:VC animated:kCAMediaTimingFunctionEaseIn];
 }
@@ -402,12 +402,13 @@
         
         
         NSString *sendData = @"follower_id=";
-        sendData = [sendData stringByAppendingString:[NSString stringWithFormat:@"%@",[videoDict objectForKey:@"userid"]]];
-        
-        sendData = [sendData stringByAppendingString:@"&following_id="];
         sendData = [sendData stringByAppendingString:[NSString stringWithFormat:@"%@",appDelegate.userId]];
         
+        sendData = [sendData stringByAppendingString:@"&following_id="];
+        sendData = [sendData stringByAppendingString:[NSString stringWithFormat:@"%@",[videoDict objectForKey:@"followingid"]]];
         
+        sendData = [sendData stringByAppendingString:@"&mode="];
+        sendData = [sendData stringByAppendingString: [[NSUserDefaults standardUserDefaults] objectForKey:@"langId"]];
         
         [request setValue:@"gzip" forHTTPHeaderField:@"Accept-Encoding"];
         

@@ -490,7 +490,7 @@ dismissViewController:(UIViewController *)viewController {
             NSMutableString *urlString;
             
             
-            urlString=[NSMutableString stringWithFormat:@"%@index.php/Signup/login?email=%@&password=%@&device_token=%@&device_type=2",GLOBALAPI,[userEmail.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[password.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[[NSUserDefaults standardUserDefaults] objectForKey:@"deviceToken"]];
+            urlString=[NSMutableString stringWithFormat:@"%@index.php/Signup/login?email=%@&password=%@&device_token=%@&device_type=2&mode=%@",GLOBALAPI,[userEmail.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[password.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[[NSUserDefaults standardUserDefaults] objectForKey:@"deviceToken"],[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"]];
             
 //                [[[UIAlertView alloc]initWithTitle:@"Error!" message:[NSString stringWithFormat:@"%@",urlString] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
             
@@ -582,7 +582,7 @@ dismissViewController:(UIViewController *)viewController {
             NSString *urlString;
             
             
-            urlString=[NSString stringWithFormat:@"%@index.php/Signup/socialSignup?register_type=2&name=%@&email=%@&facebook_id=%@&facebook_token=%@&device_token=%@&device_type=2",GLOBALAPI,[name stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[email stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[fbid stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[accessToken stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[[NSUserDefaults standardUserDefaults] objectForKey:@"deviceToken"]];
+            urlString=[NSString stringWithFormat:@"%@index.php/Signup/socialSignup?register_type=2&name=%@&email=%@&facebook_id=%@&facebook_token=%@&device_token=%@&device_type=2&mode=%@",GLOBALAPI,[name stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[email stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[fbid stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[accessToken stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[[NSUserDefaults standardUserDefaults] objectForKey:@"deviceToken"],[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"]];
             
             
             
@@ -696,7 +696,7 @@ dismissViewController:(UIViewController *)viewController {
             NSString *urlString;
             
             
-            urlString=[NSString stringWithFormat:@"%@index.php/Signup/socialSignup?register_type=3&name=%@&email=%@&facebook_id=%@&facebook_token=%@&device_token=%@&device_type=2",GLOBALAPI,[name stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[email stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[fbid stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[accessToken stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[[NSUserDefaults standardUserDefaults] objectForKey:@"deviceToken"]];
+            urlString=[NSString stringWithFormat:@"%@index.php/Signup/socialSignup?register_type=3&name=%@&email=%@&facebook_id=%@&facebook_token=%@&device_token=%@&device_type=2&mode=%@",GLOBALAPI,[name stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[email stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[fbid stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[accessToken stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[[NSUserDefaults standardUserDefaults] objectForKey:@"deviceToken"],[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"]];
             
             
             

@@ -63,7 +63,7 @@
         
         //http://ec2-13-58-196-4.us-east-2.compute.amazonaws.com/jokemaster/index.php/Useraction/userankinglisting?page=1&limit=15
         
-        url=[NSString stringWithFormat:@"%@%@Useraction/userankinglisting?page=%d&limit=15",GLOBALAPI,INDEX,page];
+        url=[NSString stringWithFormat:@"%@%@Useraction/userankinglisting?page=%d&limit=15&mode=%@",GLOBALAPI,INDEX,page,[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"]];
         
         
         

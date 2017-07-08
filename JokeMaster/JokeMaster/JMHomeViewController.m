@@ -26,6 +26,7 @@
     [self setRoundCornertoView:_videoThumb withBorderColor:[UIColor clearColor] WithRadius:0.15];
     
     [self setRoundCornertoView:_optionView withBorderColor:[UIColor clearColor] WithRadius:0.15];
+            [self setRoundCornertoView:_noVideoView withBorderColor:[UIColor clearColor] WithRadius:0.15];
     
     [self addMoreView:self.view];
     
@@ -100,7 +101,7 @@
             NSString *urlString;
             
             
-            urlString=[NSString stringWithFormat:@"%@%@Video/jokeoftheday?language=%@&country=%@&userid=%@",GLOBALAPI,INDEX,[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"],[[NSUserDefaults standardUserDefaults] objectForKey:@"countryId"],appDelegate.userId];
+            urlString=[NSString stringWithFormat:@"%@%@Video/jokeoftheday?language=%@&country=%@&userid=%@&mode=%@",GLOBALAPI,INDEX,[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"],[[NSUserDefaults standardUserDefaults] objectForKey:@"countryId"],appDelegate.userId,[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"]];
             
             
             
@@ -258,7 +259,7 @@
             NSString *urlString;
             
             
-            urlString=[NSString stringWithFormat:@"%@%@Useraction/commentrating?user_id=%@&videoid=%@&rating=%d&comment=",GLOBALAPI,INDEX,appDelegate.userId,[jokeDict objectForKey:@"id"],(int)btn.tag];
+            urlString=[NSString stringWithFormat:@"%@%@Useraction/commentrating?user_id=%@&videoid=%@&rating=%d&comment=&mode=%@",GLOBALAPI,INDEX,appDelegate.userId,[jokeDict objectForKey:@"id"],(int)btn.tag,[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"]];
             
             
             
@@ -530,7 +531,8 @@
         sendData = [sendData stringByAppendingString:@"&userid="];
         sendData = [sendData stringByAppendingString:[NSString stringWithFormat:@"%@",appDelegate.userId]];
         
-        
+        sendData = [sendData stringByAppendingString:@"&mode="];
+        sendData = [sendData stringByAppendingString: [[NSUserDefaults standardUserDefaults] objectForKey:@"langId"]];
         
         [request setValue:@"gzip" forHTTPHeaderField:@"Accept-Encoding"];
         
@@ -701,7 +703,7 @@
             NSString *urlString;
             
             
-            urlString=[NSString stringWithFormat:@"%@%@Video?categoryid=&language=%@&country=%@&userid=&page=1&limit=10",GLOBALAPI,INDEX,[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"],[[NSUserDefaults standardUserDefaults] objectForKey:@"countryId"]];
+            urlString=[NSString stringWithFormat:@"%@%@Video?categoryid=&language=%@&country=%@&userid=&page=1&limit=10&mode=%@",GLOBALAPI,INDEX,[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"],[[NSUserDefaults standardUserDefaults] objectForKey:@"countryId"],[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"]];
             
             
             
@@ -814,15 +816,29 @@
     
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"HomeVisited"];
     
-    _VideoRatingView.maximumValue = 5;
-    _VideoRatingView.minimumValue = 0;
-    _VideoRatingView.value =4;
-    _VideoRatingView.userInteractionEnabled=NO;
-    //    _RatingView.tintColor = [UIColor clearColor];
-    _VideoRatingView.allowsHalfStars = YES;
-    _VideoRatingView.emptyStarImage = [[UIImage imageNamed:@"emotion"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    _VideoRatingView.filledStarImage = [[UIImage imageNamed:@"emotion2"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    _VideoRatingView.accurateHalfStars = YES;
-    _VideoRatingView.halfStarImage = [[UIImage imageNamed:@"emotion1"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    [_noVideoView setHidden:NO];
+    
+    [_ratingView setHidden:YES];
+    [_VideoRatingView setHidden:YES];
+    [_VideoRatingLabel setHidden:YES];
+    [_VideoCreaterNameLabel setHidden:YES];
+    [_VideoNameLabel setHidden:YES];
+    [_jokeDetailBtn setUserInteractionEnabled:NO];
+    [_jokeCollectionView setUserInteractionEnabled:NO];
+    [_ratingBtn setUserInteractionEnabled:NO];
+    
+    
+//    _VideoRatingView.maximumValue = 5;
+//    _VideoRatingView.minimumValue = 0;
+//    _VideoRatingView.value =4;
+//    _VideoRatingView.userInteractionEnabled=NO;
+//    //    _RatingView.tintColor = [UIColor clearColor];
+//    _VideoRatingView.allowsHalfStars = YES;
+//    _VideoRatingView.emptyStarImage = [[UIImage imageNamed:@"emotion"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+//    _VideoRatingView.filledStarImage = [[UIImage imageNamed:@"emotion2"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+//    _VideoRatingView.accurateHalfStars = YES;
+//    _VideoRatingView.halfStarImage = [[UIImage imageNamed:@"emotion1"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    
+    
 }
 @end

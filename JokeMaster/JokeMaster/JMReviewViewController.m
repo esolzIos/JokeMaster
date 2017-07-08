@@ -146,7 +146,7 @@
             NSString *urlString;
             
             
-            urlString=[NSString stringWithFormat:@"%@index.php/Useraction/commentrating?user_id=%@&videoid=%@&rating=%ld&comment=%@",GLOBALAPI,[[NSUserDefaults standardUserDefaults] valueForKey:@"UserId"],_VideoId,(long)Rate,_commentTxt.text];
+            urlString=[NSString stringWithFormat:@"%@index.php/Useraction/commentrating?user_id=%@&videoid=%@&rating=%ld&comment=%@&mode=%@",GLOBALAPI,[[NSUserDefaults standardUserDefaults] valueForKey:@"UserId"],_VideoId,(long)Rate,_commentTxt.text,[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"]];
             
             
             

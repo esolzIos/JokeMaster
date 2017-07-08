@@ -9,12 +9,12 @@
 #import "JMGlobalMethods.h"
 #import "JMSearchView.h"
 #import "JMCategoryCell.h"
-#import "JMRecentUploadedCollectionViewCell.h"
+#import "JMFavouriteCell.h"
 @interface JMSearchViewController : JMGlobalMethods<UICollectionViewDataSource,UICollectionViewDelegate>
 
 
 @property (weak, nonatomic) IBOutlet UIScrollView *MainScroll;
-@property (weak, nonatomic) IBOutlet UICollectionView *RecentVideoCollectionView;
-@property (weak, nonatomic) IBOutlet UIButton *RecentlyUploadedBtn;
-- (IBAction)RecentlyUploadedVideoTapped:(id)sender;
+
+@property (strong, nonatomic) IBOutlet UITableView *jokeTable;
+
 @end

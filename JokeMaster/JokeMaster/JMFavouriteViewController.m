@@ -79,7 +79,7 @@
         NSString *url;
         
         //http://ec2-13-58-196-4.us-east-2.compute.amazonaws.com/jokemaster/index.php/useraction/favouritelisting?userid=1&page=1&limit=1
-        url=[NSString stringWithFormat:@"%@%@useraction/favouritelisting?userid=%@&page=%d&limit=15",GLOBALAPI,INDEX,appDelegate.userId,page];
+        url=[NSString stringWithFormat:@"%@%@useraction/favouritelisting?userid=%@&page=%d&limit=15&mode=%@",GLOBALAPI,INDEX,appDelegate.userId,page,[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"]];
         
         
         
@@ -275,9 +275,9 @@
     
       [cell.ProfileImage sd_setImageWithURL:[NSURL URLWithString:[videoDict objectForKey:@"videoimagename"]] placeholderImage:[UIImage imageNamed:@"noimage"]];
     
-    [cell.JokesNameLabel setText:[videoDict objectForKey:@"videoname"]];
+    [cell.JokesNameLabel setText:[videoDict objectForKey:@"username"]];
     
-        [cell.ProfileNameLabel setText:[videoDict objectForKey:@"username"]];
+        [cell.ProfileNameLabel setText:[videoDict objectForKey:@"videoname"]];
     
          [cell.RatingLabel setText:[NSString stringWithFormat:@"%@/5",[videoDict objectForKey:@"averagerating"]]];
     
@@ -414,7 +414,8 @@
         sendData = [sendData stringByAppendingString:@"&userid="];
         sendData = [sendData stringByAppendingString:[NSString stringWithFormat:@"%@",appDelegate.userId]];
         
-        
+              sendData = [sendData stringByAppendingString:@"&mode="];
+        sendData = [sendData stringByAppendingString: [[NSUserDefaults standardUserDefaults] objectForKey:@"langId"]];
         
         [request setValue:@"gzip" forHTTPHeaderField:@"Accept-Encoding"];
         

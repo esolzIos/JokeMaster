@@ -167,7 +167,7 @@
     ipc.allowsEditing=YES;
     
     ipc.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
-    ipc.videoQuality = UIImagePickerControllerQualityTypeMedium;
+    ipc.videoQuality = UIImagePickerControllerQualityTypeLow;
     ipc.videoMaximumDuration = 60;
     ipc.mediaTypes = [[NSArray alloc] initWithObjects: (NSString *) kUTTypeMovie, nil];
     [self presentViewController:ipc animated:YES completion:^{
@@ -576,6 +576,9 @@
             sendData = [sendData stringByAppendingString:@"&videoimage="];
             sendData = [sendData stringByAppendingString:[NSString stringWithFormat:@"%@", encodedImgString]];
             
+            sendData = [sendData stringByAppendingString:@"&mode="];
+            sendData = [sendData stringByAppendingString: [[NSUserDefaults standardUserDefaults] objectForKey:@"langId"]];
+            
             [request setValue:@"gzip" forHTTPHeaderField:@"Accept-Encoding"];
             
             NSMutableData *theBodyData = [NSMutableData data];
@@ -713,7 +716,7 @@
         NSString *url;
         
         
-        url=[NSString stringWithFormat:@"%@%@Signup/fetchlanguage",GLOBALAPI,INDEX];
+        url=[NSString stringWithFormat:@"%@%@Signup/fetchlanguage?mode=%@",GLOBALAPI,INDEX,[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"]];
         
         
         
@@ -858,7 +861,7 @@
         NSString *url;
         
         
-        url=[NSString stringWithFormat:@"%@%@video/category",GLOBALAPI,INDEX];
+        url=[NSString stringWithFormat:@"%@%@video/category&mode=%@",GLOBALAPI,INDEX,[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"]];
         
         
         

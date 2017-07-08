@@ -266,7 +266,7 @@ AVPlayer *player;
             NSString *urlString;
             
             
-            urlString=[NSString stringWithFormat:@"%@index.php/Useraction/commentrating?user_id=%@&videoid=%@&rating=%d&comment=",GLOBALAPI,app.userId,VideoId,(int)btn.tag];
+            urlString=[NSString stringWithFormat:@"%@index.php/Useraction/commentrating?user_id=%@&videoid=%@&rating=%d&comment=&mode=%@",GLOBALAPI,app.userId,VideoId,(int)btn.tag,[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"]];
             
             
             
@@ -456,7 +456,8 @@ AVPlayer *player;
         sendData = [sendData stringByAppendingString:@"&userid="];
         sendData = [sendData stringByAppendingString:[NSString stringWithFormat:@"%@",app.userId]];
         
-        
+        sendData = [sendData stringByAppendingString:@"&mode="];
+        sendData = [sendData stringByAppendingString: [[NSUserDefaults standardUserDefaults] objectForKey:@"langId"]];
         
         [request setValue:@"gzip" forHTTPHeaderField:@"Accept-Encoding"];
         
@@ -677,10 +678,10 @@ AVPlayer *player;
             NSString *urlString;
             
             if (app.isLogged) {
-                  urlString=[NSString stringWithFormat:@"%@index.php/Videodetails?videoid=%@&loggedinid=%@",GLOBALAPI,VideoId,app.userId];
+                  urlString=[NSString stringWithFormat:@"%@index.php/Videodetails?videoid=%@&loggedinid=%@&mode=%@",GLOBALAPI,VideoId,app.userId,[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"]];
             }
             else{
-                  urlString=[NSString stringWithFormat:@"%@index.php/Videodetails?videoid=%@&loggedinid=",GLOBALAPI,VideoId];
+                  urlString=[NSString stringWithFormat:@"%@index.php/Videodetails?videoid=%@&loggedinid=&mode=%@",GLOBALAPI,VideoId,[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"]];
             }
           
             
@@ -969,7 +970,7 @@ AVPlayer *player;
         NSString *url;
         
         
-        url=[NSString stringWithFormat:@"%@%@useraction/reviewlisting?videoid=%@&page=%d&limit=10",GLOBALAPI,INDEX,VideoId,page];
+        url=[NSString stringWithFormat:@"%@%@useraction/reviewlisting?videoid=%@&page=%d&limit=10&mode=%@",GLOBALAPI,INDEX,VideoId,page,[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"]];
         
         
         
@@ -1140,7 +1141,7 @@ AVPlayer *player;
         NSString *url;
         
         
-        url=[NSString stringWithFormat:@"%@%@useraction/videoviewcount?videoid=%@",GLOBALAPI,INDEX,VideoId];
+        url=[NSString stringWithFormat:@"%@%@useraction/videoviewcount?videoid=%@&mode=%@",GLOBALAPI,INDEX,VideoId,[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"]];
         
         
         

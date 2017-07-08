@@ -27,15 +27,14 @@
     
     [self addMoreView:self.view];
     
-    
-        [_RecentlyUploadedBtn setTitle:AMLocalizedString(@"RECENTLY UPLOADED VIDEOS", nil) forState:UIControlStateNormal];
+
     [self.searchHeaderView.searchText setDelegate:self];
     
     
     // header label font according to screen size
     [self.searchHeaderView.searchText setFont:[UIFont fontWithName:self.searchHeaderView.searchText.font.fontName size:[self getFontSize:self.searchHeaderView.searchText.font.pointSize]]];
     
-     [_RecentlyUploadedBtn.titleLabel setFont:[UIFont fontWithName:_RecentlyUploadedBtn.titleLabel.font.fontName size:[self getFontSize:_RecentlyUploadedBtn.titleLabel.font.pointSize]]];
+
     
        self.searchHeaderView.searchText.attributedPlaceholder = [[NSAttributedString alloc] initWithString:AMLocalizedString(@"SEARCH BY NAME", nil) attributes:@{NSForegroundColorAttributeName: [UIColor blackColor]}];
     
@@ -80,7 +79,7 @@
             
             //http://ec2-13-58-196-4.us-east-2.compute.amazonaws.com/jokemaster/index.php/search?searchValue=test1&language=1&country=99&page=1&limit=15
             
-            urlString=[NSString stringWithFormat:@"%@%@search?searchValue=%@&language=%@&country=%@&page=%d&limit=30",GLOBALAPI,INDEX,searchedText,[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"],[[NSUserDefaults standardUserDefaults] objectForKey:@"countryId"],page];
+            urlString=[NSString stringWithFormat:@"%@%@search?searchValue=%@&language=%@&country=%@&page=%d&limit=30&mode=%@",GLOBALAPI,INDEX,searchedText,[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"],[[NSUserDefaults standardUserDefaults] objectForKey:@"countryId"],page,[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"]];
             
             
             
@@ -123,7 +122,7 @@
                                  
                              }
                      
-                             [_RecentVideoCollectionView reloadData];
+                             [_jokeTable reloadData];
                          }
                          else
                          {
@@ -190,68 +189,163 @@
 {
     return UIStatusBarStyleLightContent;
 }
-#pragma mark - CollectionView delegates
+//#pragma mark - CollectionView delegates
+//
+//- (CGSize)collectionView:(UICollectionView *)collectionView
+//                  layout:(UICollectionViewLayout *)collectionViewLayout
+//  sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    if (IsIphone5)
+//    {
+//        return CGSizeMake(self.view.frame.size.width/3,105);
+//    }
+//    else if (IsIphone6)
+//    {
+//        return CGSizeMake(self.view.frame.size.width/3,123);
+//    }
+//    else
+//    {
+//        return CGSizeMake(self.view.frame.size.width/3,135);
+//    }
+//    
+//}
+//
+//
+//- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+//    return videoArr.count;
+//}
+//
+//- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
+//    static NSString *identifier = @"JMRecentUploadedCollectionViewCell";
+//    
+//    
+//    JMRecentUploadedCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
+//    
+//      [cell.VideoThumpnailImage sd_setImageWithURL:[NSURL URLWithString:[[videoArr objectAtIndex:indexPath.row]objectForKey:@"videoimagename"]] placeholderImage:[UIImage imageNamed: @"noimage"]];
+//    
+//    cell.VideoThumpnailImage.layer.cornerRadius=12.0;
+//    cell.VideoThumpnailImage.clipsToBounds=YES;
+//    
+//    [cell.CategoryNameLabel setFont:[UIFont fontWithName:cell.CategoryNameLabel.font.fontName size:[self getFontSize:9.0]]];
+//    
+//    //   NSLog(@"%@",[arrCategory objectAtIndex:indexPath.row]);
+//    
+//    cell.CategoryNameLabel.text = [[[videoArr objectAtIndex:indexPath.row]objectForKey:@"videoname" ] uppercaseString];
+//    //
+//    //    [cell.categoryImage sd_setImageWithURL:[NSURL URLWithString:[[arrCategory objectAtIndex:indexPath.row]objectForKey:@"picture" ]] placeholderImage:[UIImage imageNamed: @"NoJob"]];
+//    //
+//    //    cell.categoryImage.layer.masksToBounds = YES;
+//    //    cell.categoryImage.layer.cornerRadius=5.0;
+//    //
+//    //    cell.OverlayView.layer.cornerRadius=5.0;
+//    
+//    return cell;
+//}
+//
+//- (void)collectionView:(UICollectionViewCell *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+//
+//{
+//    
+//    JMPlayVideoViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMPlayVideoViewController"];
+//    VC.VideoId=[[videoArr objectAtIndex:indexPath.row] valueForKey:@"id"];
+//    [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
+//    
+//    
+//}
+#pragma mark - UITableView Delegates
 
-- (CGSize)collectionView:(UICollectionView *)collectionView
-                  layout:(UICollectionViewLayout *)collectionViewLayout
-  sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section;
 {
-    if (IsIphone5)
+    return videoArr.count;
+}
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    NSString *identifier = @"JMFavouriteCell";
+    
+    JMFavouriteCell *cell = (JMFavouriteCell *)[tableView dequeueReusableCellWithIdentifier:identifier];
+    
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
+    
+    
+    
+    
+    return cell;
+    
+    
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    if (IsIphone4 || IsIphone5)
     {
-        return CGSizeMake(self.view.frame.size.width/3,105);
+        return 95;
     }
     else if (IsIphone6)
     {
-        return CGSizeMake(self.view.frame.size.width/3,123);
+        return 108;
+    }
+    else if (IsIphone6plus)
+    {
+        return 120;
     }
     else
     {
-        return CGSizeMake(self.view.frame.size.width/3,135);
+        return 100;
     }
+    // return 95.0/480.0*FULLHEIGHT;
     
 }
-
-
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return videoArr.count;
-}
-
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
-    static NSString *identifier = @"JMRecentUploadedCollectionViewCell";
-    
-    
-    JMRecentUploadedCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
-    
-      [cell.VideoThumpnailImage sd_setImageWithURL:[NSURL URLWithString:[[videoArr objectAtIndex:indexPath.row]objectForKey:@"videoimagename"]] placeholderImage:[UIImage imageNamed: @"noimage"]];
-    
-    cell.VideoThumpnailImage.layer.cornerRadius=12.0;
-    cell.VideoThumpnailImage.clipsToBounds=YES;
-    
-    [cell.CategoryNameLabel setFont:[UIFont fontWithName:cell.CategoryNameLabel.font.fontName size:[self getFontSize:9.0]]];
-    
-    //   NSLog(@"%@",[arrCategory objectAtIndex:indexPath.row]);
-    
-    cell.CategoryNameLabel.text = [[[videoArr objectAtIndex:indexPath.row]objectForKey:@"videoname" ] uppercaseString];
-    //
-    //    [cell.categoryImage sd_setImageWithURL:[NSURL URLWithString:[[arrCategory objectAtIndex:indexPath.row]objectForKey:@"picture" ]] placeholderImage:[UIImage imageNamed: @"NoJob"]];
-    //
-    //    cell.categoryImage.layer.masksToBounds = YES;
-    //    cell.categoryImage.layer.cornerRadius=5.0;
-    //
-    //    cell.OverlayView.layer.cornerRadius=5.0;
-    
-    return cell;
-}
-
-- (void)collectionView:(UICollectionViewCell *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
-
+-(void) tableView:(UITableView *)tableView willDisplayCell:(JMFavouriteCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
+    NSDictionary *videoDict=[videoArr objectAtIndex:indexPath.row];
+    
+    
+
+        cell.WhiteView.frame =CGRectMake(23.0/320.0*FULLWIDTH,  cell.WhiteView.frame.origin.y,  cell.WhiteView.frame.size.width,  cell.WhiteView.frame.size.height);
+
+    
+    
+    
+    [self setRoundCornertoView:cell.profileFrame withBorderColor:[UIColor clearColor] WithRadius:0.2];
+    [self setRoundCornertoView:cell.ProfileImage withBorderColor:[UIColor clearColor] WithRadius:0.15];
+    
+
+    
+    
+    [cell.ProfileImage sd_setImageWithURL:[NSURL URLWithString:[videoDict objectForKey:@"videoimagename"]] placeholderImage:[UIImage imageNamed:@"noimage"]];
+    
+    [cell.JokesNameLabel setText:[videoDict objectForKey:@"username"]];
+    
+    [cell.ProfileNameLabel setText:[videoDict objectForKey:@"videoname"]];
+    
+    [cell.RatingLabel setText:[NSString stringWithFormat:@"%@/5",[videoDict objectForKey:@"averagerating"]]];
+    
+    cell.RatingView.maximumValue = 5;
+    cell.RatingView.minimumValue = 0;
+    cell.RatingView.value =[[videoDict objectForKey:@"averagerating"] floatValue];
+    cell.RatingView.userInteractionEnabled=NO;
+    //    _RatingView.tintColor = [UIColor clearColor];
+    cell.RatingView.allowsHalfStars = YES;
+    cell.RatingView.emptyStarImage = [[UIImage imageNamed:@"emotion"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    cell.RatingView.filledStarImage = [[UIImage imageNamed:@"emotion2"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    
+    cell.RatingView.accurateHalfStars = YES;
+    cell.RatingView.halfStarImage = [[UIImage imageNamed:@"emotion1"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    
+
+}
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSDictionary *videoDict=[videoArr objectAtIndex:indexPath.row];
+    
     JMPlayVideoViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMPlayVideoViewController"];
-    VC.VideoId=[[videoArr objectAtIndex:indexPath.row] valueForKey:@"id"];
+    VC.VideoId=[videoDict valueForKey:@"id"];
     [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
     
-    
+
 }
 
 - (IBAction)ratingClicked:(id)sender
@@ -286,7 +380,7 @@
 {
     
     
-    if (scrollView==_RecentVideoCollectionView && totalCount>videoArr.count)
+    if (scrollView==_jokeTable && totalCount>videoArr.count)
     {
         CGPoint offset = scrollView.contentOffset;
         CGRect bounds = scrollView.bounds;

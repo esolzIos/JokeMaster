@@ -152,9 +152,10 @@
         }
     
 
+        sendData = [sendData stringByAppendingString:@"&mode="];
+        sendData = [sendData stringByAppendingString: [[NSUserDefaults standardUserDefaults] objectForKey:@"langId"]];
 
 
-        
         
         
         [request setValue:@"gzip" forHTTPHeaderField:@"Accept-Encoding"];
@@ -436,7 +437,8 @@
         sendData = [sendData stringByAppendingString:@"&follower_id="];
         sendData = [sendData stringByAppendingString:[NSString stringWithFormat:@"%@", appDelegate.userId]];
   
-        
+        sendData = [sendData stringByAppendingString:@"&mode="];
+        sendData = [sendData stringByAppendingString: [[NSUserDefaults standardUserDefaults] objectForKey:@"langId"]];
         
         [request setValue:@"gzip" forHTTPHeaderField:@"Accept-Encoding"];
         
@@ -994,6 +996,9 @@
                 sendData = [sendData stringByAppendingString:@"&userimage="];
                 sendData = [sendData stringByAppendingString:[NSString stringWithFormat:@"%@", encodedString]];
                 
+                sendData = [sendData stringByAppendingString:@"&mode="];
+                sendData = [sendData stringByAppendingString: [[NSUserDefaults standardUserDefaults] objectForKey:@"langId"]];
+                
                 [request setValue:@"gzip" forHTTPHeaderField:@"Accept-Encoding"];
                 
                 NSMutableData *theBodyData = [NSMutableData data];
@@ -1146,7 +1151,7 @@
             NSString *urlString;
             
             
-            urlString=[NSString stringWithFormat:@"%@%@Video?categoryid=%@&language=%@&country=%@&userid=%@&page=%d&limit=15",GLOBALAPI,INDEX,categoryId,[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"],[[NSUserDefaults standardUserDefaults] objectForKey:@"countryId"],_ProfileUserId,page];
+            urlString=[NSString stringWithFormat:@"%@%@Video?categoryid=%@&language=%@&country=%@&userid=%@&page=%d&limit=15&mode=%@",GLOBALAPI,INDEX,categoryId,[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"],[[NSUserDefaults standardUserDefaults] objectForKey:@"countryId"],_ProfileUserId,page,[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"]];
             
             
             
@@ -1259,7 +1264,7 @@
             NSString *urlString;
             
             
-            urlString=[NSString stringWithFormat:@"%@index.php/video/category",GLOBALAPI];
+            urlString=[NSString stringWithFormat:@"%@index.php/video/category&mode=%@",GLOBALAPI,[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"]];
             
             
             
