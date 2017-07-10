@@ -15,6 +15,8 @@
 #import "JMLeftMenuView.h"
 #import "JMSearchView.h"
 #import "SDWebImage/UIImageView+WebCache.h"
+#import "FLAnimatedImage/FLAnimatedImage.h"
+#import "FLAnimatedImage/FLAnimatedImageView.h"
 @interface JMGlobalMethods : UIViewController<Side_menu_delegate>
 {
     UIView *loader_shadow_View;

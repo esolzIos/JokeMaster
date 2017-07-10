@@ -20,5 +20,6 @@
 @property (weak, nonatomic) IBOutlet UIImageView *CrownImage;
 @property (strong, nonatomic) IBOutlet UIButton *deleteBtn;
 @property (strong, nonatomic) IBOutlet UIImageView *profileFrame;
+@property (strong, nonatomic) IBOutlet UIImageView *countryImage;
 
 @end

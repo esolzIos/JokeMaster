@@ -8,6 +8,8 @@
 
 #import "JMGlobalMethods.h"
 #import "CountryCell.h"
+#import "FLAnimatedImage/FLAnimatedImage.h"
+#import "FLAnimatedImage/FLAnimatedImageView.h"
 @interface JMChooseCountryViewController : JMGlobalMethods<UITableViewDataSource,UITableViewDelegate,UIPickerViewDelegate>
 {
    
@@ -26,5 +28,15 @@
 - (IBAction)selectClicked:(id)sender;
 @property (strong, nonatomic) IBOutlet UIButton *cancelBttn;
 - (IBAction)cancelClicked:(id)sender;
+
+
+@property (strong, nonatomic) IBOutlet UIView *loaderView;
+@property (strong, nonatomic) IBOutlet UIView *loadertvView;
+@property (strong, nonatomic) IBOutlet UIImageView *loaderImage;
+@property (strong, nonatomic) IBOutlet UIButton *loaderBtn;
+- (IBAction)loaderClicked:(id)sender;
+@property (strong, nonatomic) IBOutlet UIView *noVideoView;
+@property (strong, nonatomic) IBOutlet FLAnimatedImageView *gifImage;
+@property (strong, nonatomic) IBOutlet UILabel *noVideoLbl;
 
 @end

@@ -34,6 +34,16 @@
 		0C91CFBD1EEE5B7A00123303 /* JMCategoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C91CFBC1EEE5B7A00123303 /* JMCategoryCell.m */; };
 		0C91CFC31EEE92F400123303 /* JMJokesCategoryVideoListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C91CFC21EEE92F400123303 /* JMJokesCategoryVideoListViewController.m */; };
 		0CE2FB481EE190E50031C0E6 /* JMRegistrationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CE2FB471EE190E50031C0E6 /* JMRegistrationViewController.m */; };
+		B001C0F21F13B49D0000D05F /* giphy.gif in Resources */ = {isa = PBXBuildFile; fileRef = B001C0F11F13B49C0000D05F /* giphy.gif */; };
+		B07134691F137AE0006178E7 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B07134681F137AE0006178E7 /* QuartzCore.framework */; };
+		B071346B1F137AE6006178E7 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B071346A1F137AE6006178E7 /* ImageIO.framework */; };
+		B071346D1F137AF1006178E7 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B071346C1F137AF1006178E7 /* MobileCoreServices.framework */; };
+		B07134701F137B4C006178E7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B071346F1F137B4C006178E7 /* Foundation.framework */; };
+		B07134721F137B53006178E7 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B07134711F137B53006178E7 /* CoreGraphics.framework */; };
+		B07134741F137B5B006178E7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B07134731F137B5B006178E7 /* UIKit.framework */; };
+		B071347B1F137C19006178E7 /* FLAnimatedImage.m in Sources */ = {isa = PBXBuildFile; fileRef = B07134771F137C19006178E7 /* FLAnimatedImage.m */; };
+		B071347C1F137C19006178E7 /* FLAnimatedImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = B07134791F137C19006178E7 /* FLAnimatedImageView.m */; };
+		B071347D1F137C19006178E7 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B071347A1F137C19006178E7 /* Info.plist */; };
 		B07764111F0132F3007FAEE5 /* MKAnnotationView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = B07763EA1F0132F3007FAEE5 /* MKAnnotationView+WebCache.m */; };
 		B07764121F0132F3007FAEE5 /* NSData+ImageContentType.m in Sources */ = {isa = PBXBuildFile; fileRef = B07763EC1F0132F3007FAEE5 /* NSData+ImageContentType.m */; };
 		B07764131F0132F3007FAEE5 /* NSImage+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = B07763EE1F0132F3007FAEE5 /* NSImage+WebCache.m */; };
@@ -177,6 +187,18 @@
 		0C91CFC21EEE92F400123303 /* JMJokesCategoryVideoListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMJokesCategoryVideoListViewController.m; sourceTree = "<group>"; };
 		0CE2FB461EE190E50031C0E6 /* JMRegistrationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMRegistrationViewController.h; sourceTree = "<group>"; };
 		0CE2FB471EE190E50031C0E6 /* JMRegistrationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMRegistrationViewController.m; sourceTree = "<group>"; };
+		B001C0F11F13B49C0000D05F /* giphy.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = giphy.gif; sourceTree = "<group>"; };
+		B07134681F137AE0006178E7 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		B071346A1F137AE6006178E7 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
+		B071346C1F137AF1006178E7 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		B071346F1F137B4C006178E7 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		B07134711F137B53006178E7 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		B07134731F137B5B006178E7 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		B07134761F137C19006178E7 /* FLAnimatedImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLAnimatedImage.h; sourceTree = "<group>"; };
+		B07134771F137C19006178E7 /* FLAnimatedImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLAnimatedImage.m; sourceTree = "<group>"; };
+		B07134781F137C19006178E7 /* FLAnimatedImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLAnimatedImageView.h; sourceTree = "<group>"; };
+		B07134791F137C19006178E7 /* FLAnimatedImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLAnimatedImageView.m; sourceTree = "<group>"; };
+		B071347A1F137C19006178E7 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B0739C741EE6891800A22C22 /* he */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = he; path = he.lproj/Main.strings; sourceTree = "<group>"; };
 		B0739C751EE6891800A22C22 /* he */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = he; path = he.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		B0739C761EE689C000A22C22 /* hi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hi; path = hi.lproj/Main.strings; sourceTree = "<group>"; };
@@ -319,6 +341,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B07134741F137B5B006178E7 /* UIKit.framework in Frameworks */,
+				B07134721F137B53006178E7 /* CoreGraphics.framework in Frameworks */,
+				B07134701F137B4C006178E7 /* Foundation.framework in Frameworks */,
+				B071346D1F137AF1006178E7 /* MobileCoreServices.framework in Frameworks */,
+				B071346B1F137AE6006178E7 /* ImageIO.framework in Frameworks */,
+				B07134691F137AE0006178E7 /* QuartzCore.framework in Frameworks */,
 				B0BBF3DE1F04E06F00B21395 /* PhotosUI.framework in Frameworks */,
 				B0BBF3DC1F04E06800B21395 /* Photos.framework in Frameworks */,
 				B07ABADE1EE58E790011DD57 /* SystemConfiguration.framework in Frameworks */,
@@ -420,6 +448,18 @@
 			name = Cell;
 			sourceTree = "<group>";
 		};
+		B07134751F137C19006178E7 /* FLAnimatedImage */ = {
+			isa = PBXGroup;
+			children = (
+				B07134761F137C19006178E7 /* FLAnimatedImage.h */,
+				B07134771F137C19006178E7 /* FLAnimatedImage.m */,
+				B07134781F137C19006178E7 /* FLAnimatedImageView.h */,
+				B07134791F137C19006178E7 /* FLAnimatedImageView.m */,
+				B071347A1F137C19006178E7 /* Info.plist */,
+			);
+			path = FLAnimatedImage;
+			sourceTree = "<group>";
+		};
 		B07763E51F0132F3007FAEE5 /* SDWebImage */ = {
 			isa = PBXGroup;
 			children = (
@@ -469,6 +509,12 @@
 		B07ABADA1EE58E740011DD57 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B07134731F137B5B006178E7 /* UIKit.framework */,
+				B07134711F137B53006178E7 /* CoreGraphics.framework */,
+				B071346F1F137B4C006178E7 /* Foundation.framework */,
+				B071346C1F137AF1006178E7 /* MobileCoreServices.framework */,
+				B071346A1F137AE6006178E7 /* ImageIO.framework */,
+				B07134681F137AE0006178E7 /* QuartzCore.framework */,
 				B0BBF3DD1F04E06F00B21395 /* PhotosUI.framework */,
 				B0BBF3DB1F04E06800B21395 /* Photos.framework */,
 				B07ABADD1EE58E790011DD57 /* SystemConfiguration.framework */,
@@ -483,6 +529,7 @@
 				0C5620391F0F916300698DCE /* Fabric.framework */,
 				0C56203A1F0F916400698DCE /* Crashlytics.framework */,
 				B0779D6F1EEBD2D10065FECD /* Comic_Book.ttf */,
+				B001C0F11F13B49C0000D05F /* giphy.gif */,
 				B0A32B3D1EE1292F0044D443 /* JokeMaster */,
 				B0A32B5A1EE129300044D443 /* JokeMasterTests */,
 				B0A32B651EE129300044D443 /* JokeMasterUITests */,
@@ -628,6 +675,7 @@
 		B0A32B811EE1313F0044D443 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B07134751F137C19006178E7 /* FLAnimatedImage */,
 				B07763E51F0132F3007FAEE5 /* SDWebImage */,
 				B0A5C4CF1EFE7F1C002FB26D /* JTSImageViewer */,
 				B0A5C4C51EFE7EDB002FB26D /* DZNPhotoeditorViewController */,
@@ -816,12 +864,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B071347D1F137C19006178E7 /* Info.plist in Resources */,
 				B0779D701EEBD2D10065FECD /* Comic_Book.ttf in Resources */,
 				B0A32B8F1EE131680044D443 /* SVProgressHUD.bundle in Resources */,
 				0C58274B1EE9308E00480E19 /* JMLeftMenuView.xib in Resources */,
 				B0A32B761EE12DC20044D443 /* comicbd_1.ttf in Resources */,
 				B07ABAE01EE590580011DD57 /* GoogleService-Info.plist in Resources */,
 				B099B0C91EF8F741004AC64C /* JMSearchView.xib in Resources */,
+				B001C0F21F13B49D0000D05F /* giphy.gif in Resources */,
 				B0A5C4C41EFE6F83002FB26D /* ExtendedViews.xib in Resources */,
 				B0A32B511EE129300044D443 /* LaunchScreen.storyboard in Resources */,
 				B0A32B4E1EE129300044D443 /* Assets.xcassets in Resources */,
@@ -888,6 +938,7 @@
 				0C35E1EC1EF2999500D2CBCE /* HCSStarRatingView.m in Sources */,
 				0C91CFC31EEE92F400123303 /* JMJokesCategoryVideoListViewController.m in Sources */,
 				B0A2300D1EF2960600F228BD /* JMProfileViewController.m in Sources */,
+				B071347C1F137C19006178E7 /* FLAnimatedImageView.m in Sources */,
 				0C48BFBB1EE82EEF00CD1C2A /* JMHeaderView.m in Sources */,
 				B0A32B401EE1292F0044D443 /* main.m in Sources */,
 				B077641C1F0132F3007FAEE5 /* UIButton+WebCache.m in Sources */,
@@ -903,6 +954,7 @@
 				B07764111F0132F3007FAEE5 /* MKAnnotationView+WebCache.m in Sources */,
 				B0A32B7C1EE12E4E0044D443 /* JMGlobalMethods.m in Sources */,
 				B0A5C4DE1EFE7F2F002FB26D /* JTSImageViewController.m in Sources */,
+				B071347B1F137C19006178E7 /* FLAnimatedImage.m in Sources */,
 				B07764221F0132F3007FAEE5 /* UIView+WebCache.m in Sources */,
 				B07764171F0132F3007FAEE5 /* SDWebImageDecoder.m in Sources */,
 				B0A5C4DF1EFE7F2F002FB26D /* JTSSimpleImageDownloader.m in Sources */,

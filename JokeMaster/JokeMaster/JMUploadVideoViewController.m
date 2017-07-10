@@ -19,7 +19,7 @@
 @import Photos;
 @import PhotosUI;
 
-@interface JMUploadVideoViewController ()<UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIPickerViewDelegate,UITextFieldDelegate>
+@interface JMUploadVideoViewController ()<UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIPickerViewDelegate,UITextFieldDelegate,NSURLSessionDataDelegate, NSURLSessionDelegate, NSURLSessionTaskDelegate>
 {
     UIImagePickerController *ipc;
     
@@ -32,6 +32,8 @@
     NSString *langSelected,*categorySelected;
     AppDelegate *app;
 }
+@property (nonatomic, retain) NSMutableData *dataToDownload;
+@property (nonatomic) float downloadSize;
 @end
 
 @implementation JMUploadVideoViewController
@@ -999,4 +1001,32 @@
     return YES;
 }
 
+- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task
+   didSendBodyData:(int64_t)bytesSent
+    totalBytesSent:(int64_t)totalBytesSent
+totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
+{
+
+    [SVProgressHUD showProgress:(totalBytesExpectedToSend/totalBytesSent)*100];
+}
+
+
+
+- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveResponse:(NSURLResponse *)response completionHandler:(void (^)(NSURLSessionResponseDisposition disposition))completionHandler {
+    completionHandler(NSURLSessionResponseAllow);
+    
+    [SVProgressHUD showProgress:0.0f];
+
+    _downloadSize=[response expectedContentLength];
+    _dataToDownload=[[NSMutableData alloc]init];
+}
+
+- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data {
+    
+    
+    [_dataToDownload appendData:data];
+
+    
+    [SVProgressHUD showProgress:[ _dataToDownload length ]/_downloadSize];
+}
 @end

@@ -70,4 +70,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *VideoCreaterNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *VideoRatingLabel;
 @property (weak, nonatomic) IBOutlet HCSStarRatingView *VideoRatingView;
+
+
+
 @end

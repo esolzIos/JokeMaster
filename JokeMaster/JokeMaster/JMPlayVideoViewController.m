@@ -133,6 +133,14 @@ AVPlayer *player;
     // Do any additional setup after loading the view.
     
     
+    NSString* filePath = [[NSBundle mainBundle] pathForResource:@"giphy.gif" ofType:nil];
+    NSData* imageData = [NSData dataWithContentsOfFile:filePath];
+    
+    _gifImage.animatedImage = [FLAnimatedImage animatedImageWithGIFData:imageData];
+    
+    [self setRoundCornertoView:_gifImage withBorderColor:[UIColor clearColor] WithRadius:0.15];
+    [self setRoundCornertoView:_errorView withBorderColor:[UIColor clearColor] WithRadius:0.15];
+    [self setRoundCornertoView:_loaderImage withBorderColor:[UIColor clearColor] WithRadius:0.15];
 }
 
 
@@ -671,10 +679,10 @@ AVPlayer *player;
         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
             
    
-                self.view.userInteractionEnabled = NO;
-                [self checkLoader];
+             //   self.view.userInteractionEnabled = NO;
+            //    [self checkLoader];
 
-            
+                 [_loaderView setHidden:NO];
         }];
         [[NSOperationQueue new] addOperationWithBlock:^{
             
@@ -703,11 +711,14 @@ AVPlayer *player;
                  DebugLog(@"success %@ Status Code:%ld",responseDict,(long)urlobj.statusCode);
                  
                  
-                 self.view.userInteractionEnabled = YES;
-                   [self checkLoader];
+                // self.view.userInteractionEnabled = YES;
+                 //  [self checkLoader];
                  
                  if (urlobj.statusCode==200)
                  {
+                     
+                             [_loaderView setHidden:YES];
+                     
 //                     if ([[NSString stringWithFormat:@"%@",[responseDict objectForKey:@"status"]] isEqualToString:@"Success"])
 //                     {
                      
@@ -926,26 +937,40 @@ AVPlayer *player;
                  {
                      //                     [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Server Failed to Respond" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
                      
+                     [_gifImage setHidden:YES];
+                     [_errorView setHidden:NO];
+                     [_noVideoLbl setText:[NSString stringWithFormat:@"Server Failed to Respond\n\n Click to retry"]];
+                     [_loaderBtn setHidden:NO];
                      
-                     [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Server Failed to Respond",nil)];
+                  //   [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Server Failed to Respond",nil)];
                      
                  }
                  else
                  {
                      //                     [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Server Failed to Respond" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
                      
-                     [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Server Failed to Respond",nil)];
+                     [_gifImage setHidden:YES];
+                     [_errorView setHidden:NO];
+                     [_noVideoLbl setText:[NSString stringWithFormat:@"Server Failed to Respond\n\n Click to retry"]];
+                     [_loaderBtn setHidden:NO];
+                     
+                   //  [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Server Failed to Respond",nil)];
                  }
                  
              }
                                    failure:^(NSError *error) {
                                        
-                                        [self checkLoader];
-                                       self.view.userInteractionEnabled = YES;
+                                     //   [self checkLoader];
+                                   //    self.view.userInteractionEnabled = YES;
                                        NSLog(@"Failure");
                                        //                                       [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Server Failed to Respond" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
+                
+                                       [_gifImage setHidden:YES];
+                                       [_errorView setHidden:NO];
+                                       [_noVideoLbl setText:[NSString stringWithFormat:@"Server Failed to Respond\n\n Click to retry"]];
+                                       [_loaderBtn setHidden:NO];
                                        
-                                       [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Server Failed to Respond",nil)];
+                                      // [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Server Failed to Respond",nil)];
                                        
                                    }
              ];
@@ -953,8 +978,12 @@ AVPlayer *player;
     }
     else
     {
-        
-        [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
+        [_loaderView setHidden:NO];
+        [_gifImage setHidden:YES];
+        [_errorView setHidden:NO];
+        [_noVideoLbl setText:[NSString stringWithFormat:@"Check your Internet connection\n\n Click to retry"]];
+        [_loaderBtn setHidden:NO];
+       // [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
         
     }
 }
@@ -1049,7 +1078,7 @@ AVPlayer *player;
                             
                             [_reviewTable setUserInteractionEnabled:NO];
                             
-                            
+                                [_noreviewLbl setHidden:NO];
                         }
                         
                         
@@ -1061,6 +1090,9 @@ AVPlayer *player;
                         if (reviewArr.count==0) {
                             
                             [SVProgressHUD dismiss];
+                            
+                            [_noreviewLbl setHidden:NO];
+                            
                         }
                         else{
                             [SVProgressHUD showInfoWithStatus:[jsonResponse objectForKey:@"message"]];
@@ -1247,5 +1279,18 @@ AVPlayer *player;
     
 
 }
+- (IBAction)loaderClicked:(id)sender {
+    
+    
+    [_gifImage setHidden:NO];
+    [_errorView setHidden:YES];
+    [_noVideoLbl setText:@""];
+    [_loaderBtn setHidden:YES];
+    
 
+    
+  [self VideoDetailsApi];
+    
+    
+}
 @end

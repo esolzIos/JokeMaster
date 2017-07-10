@@ -41,19 +41,30 @@
     
     [self loadData];
     
+
+    NSString* filePath = [[NSBundle mainBundle] pathForResource:@"giphy.gif" ofType:nil];
+    NSData* imageData = [NSData dataWithContentsOfFile:filePath];
     
+    _gifImage.animatedImage = [FLAnimatedImage animatedImageWithGIFData:imageData];
+    
+    [self setRoundCornertoView:_gifImage withBorderColor:[UIColor clearColor] WithRadius:0.15];
+      [self setRoundCornertoView:_noVideoView withBorderColor:[UIColor clearColor] WithRadius:0.15];
+        [self setRoundCornertoView:_loaderImage withBorderColor:[UIColor clearColor] WithRadius:0.15];
 
     // Do any additional setup after loading the view.
 }
 -(void)loadData
 {
 
+    
+     [_loaderView setHidden:NO];
+    
     if([self networkAvailable])
     {
         
-
+       
         
-        [SVProgressHUD show];
+        //[SVProgressHUD show];
         
         
         
@@ -72,18 +83,25 @@
         
         
         NSURLSessionConfiguration *sessionConfig = [NSURLSessionConfiguration defaultSessionConfiguration];
-       session = [NSURLSession sessionWithConfiguration:sessionConfig delegate:nil delegateQueue:nil];
+       session = [NSURLSession sessionWithConfiguration:sessionConfig delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
         
         [[session dataTaskWithURL:[NSURL URLWithString:url] completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
             
 
+            
+            
 //
 //        NSURLSessionTask *task = [session uploadTaskWithRequest:request fromData:nil completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
             if (error) {
                 NSLog(@"error = %@", error);
           
+                [_gifImage setHidden:YES];
+                [_noVideoView setHidden:NO];
+                [_noVideoLbl setText:@"Some error occured.\n\n Click to retry"];
+                [_loaderBtn setHidden:NO];
+               
+                       // [_chooseBtn setUserInteractionEnabled:YES];
                 
-                [_chooseBtn setUserInteractionEnabled:YES];
                 return;
             }
             
@@ -96,7 +114,7 @@
                 
                 
                 
-                [_chooseBtn setUserInteractionEnabled:YES];
+               // [_chooseBtn setUserInteractionEnabled:YES];
                 
                 if (jsonError) {
                     // Error Parsing JSON
@@ -105,7 +123,12 @@
                     
                     NSLog(@"response = %@",responseString);
                     
-                    [SVProgressHUD showInfoWithStatus:@"some error occured"];
+                   // [SVProgressHUD showInfoWithStatus:@"some error occured"];
+                    
+                    [_gifImage setHidden:YES];
+                    [_noVideoView setHidden:NO];
+                    [_noVideoLbl setText:@"Some error occured.\n\n Click to retry"];
+                    [_loaderBtn setHidden:NO];
                     
                 } else {
                     // Success Parsing JSON
@@ -121,9 +144,10 @@
                         
                             
                             
-                            [SVProgressHUD dismiss];
+                         //   [SVProgressHUD dismiss];
          
-                        
+                        [_loaderView setHidden:YES];
+                    
                             
                             for (NSDictionary *langDict in langjsonArr) {
                                 
@@ -137,9 +161,12 @@
                             }
                             else{
                         
-                                [_chooseBtn setUserInteractionEnabled:NO];
+//                                [_chooseBtn setUserInteractionEnabled:NO];
                                 
-                                
+                                [_gifImage setHidden:YES];
+                                [_noVideoView setHidden:NO];
+                                [_noVideoLbl setText:@"No language Found.\n\n Click to retry"];
+                                [_loaderBtn setHidden:NO];
                             }
                             
                             
@@ -148,15 +175,18 @@
                     
                         else{
                             
-                            if (langArr.count==0) {
-                                
-                                [SVProgressHUD dismiss];
-                          }
-                            else{
-                                [SVProgressHUD showInfoWithStatus:[jsonResponse objectForKey:@"message"]];
-                            }
+//                            if (langArr.count==0) {
+//                                
+//                                [SVProgressHUD dismiss];
+//                          }
+//                            else{
+//                                [SVProgressHUD showInfoWithStatus:[jsonResponse objectForKey:@"message"]];
+//                            }
                             
-                            
+                            [_gifImage setHidden:YES];
+                            [_noVideoView setHidden:NO];
+                            [_noVideoLbl setText:[NSString stringWithFormat:@"%@\n\n Click to retry",[jsonResponse objectForKey:@"message"]]];
+                            [_loaderBtn setHidden:NO];
                             
                         }
                     
@@ -180,7 +210,12 @@
     else{
         
         
-        [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
+        [_gifImage setHidden:YES];
+        [_noVideoView setHidden:NO];
+        [_noVideoLbl setText:[NSString stringWithFormat:@"Check your Internet connection\n\n Click to retry"]];
+        [_loaderBtn setHidden:NO];
+        
+      //  [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
       
       
     }
@@ -302,6 +337,23 @@
     rowSelected=(int)row;
     
     
+    
+}
+- (IBAction)loaderClicked:(id)sender {
+    
+    
+    [_gifImage setHidden:NO];
+    [_noVideoView setHidden:YES];
+    [_noVideoLbl setText:@""];
+    [_loaderBtn setHidden:YES];
+    
+    langArr=[[NSMutableArray alloc] init];
+    
+    codeArr=[[NSMutableArray alloc] init];
+    langCodeArr=[[NSMutableArray alloc]init];
+    
+   [self loadData];
+
     
 }
 @end

@@ -7,7 +7,8 @@
 //
 
 #import "JMGlobalMethods.h"
-
+#import "FLAnimatedImage/FLAnimatedImage.h"
+#import "FLAnimatedImage/FLAnimatedImageView.h"
 @interface JMLanguageViewController : JMGlobalMethods
 @property (strong, nonatomic) IBOutlet UIView *languageView;
 @property (strong, nonatomic) IBOutlet UILabel *languageLbl;
@@ -22,5 +23,14 @@
 - (IBAction)selectClicked:(id)sender;
 @property (strong, nonatomic) IBOutlet UIButton *cancelBttn;
 - (IBAction)cancelClicked:(id)sender;
+@property (strong, nonatomic) IBOutlet UIView *loaderView;
+@property (strong, nonatomic) IBOutlet UIView *loadertvView;
+@property (strong, nonatomic) IBOutlet UIImageView *loaderImage;
+@property (strong, nonatomic) IBOutlet UIButton *loaderBtn;
+- (IBAction)loaderClicked:(id)sender;
+@property (strong, nonatomic) IBOutlet UIView *noVideoView;
+@property (strong, nonatomic) IBOutlet FLAnimatedImageView *gifImage;
+@property (strong, nonatomic) IBOutlet UILabel *noVideoLbl;
+
 
 @end

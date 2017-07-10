@@ -77,6 +77,7 @@
 
 - (IBAction)resizeClicked:(id)sender;
 - (IBAction)commentClicked:(id)sender;
+@property (strong, nonatomic) IBOutlet UILabel *noreviewLbl;
 
 @property (strong, nonatomic) IBOutlet UIView *rateView;
 @property (strong, nonatomic) IBOutlet UIButton *crossBtn;
@@ -91,5 +92,14 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *VideoNameLabel;
 @property (weak, nonatomic) IBOutlet UIScrollView *mainscroll;
+
+@property (strong, nonatomic) IBOutlet UIView *loaderView;
+@property (strong, nonatomic) IBOutlet UIView *loadertvView;
+@property (strong, nonatomic) IBOutlet UIImageView *loaderImage;
+@property (strong, nonatomic) IBOutlet UIButton *loaderBtn;
+- (IBAction)loaderClicked:(id)sender;
+@property (strong, nonatomic) IBOutlet UIView *errorView;
+@property (strong, nonatomic) IBOutlet FLAnimatedImageView *gifImage;
+@property (strong, nonatomic) IBOutlet UILabel *noVideoLbl;
 
 @end

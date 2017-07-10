@@ -323,6 +323,13 @@
     
     [cell.RatingLabel setText:[NSString stringWithFormat:@"%@/5",[videoDict objectForKey:@"averagerating"]]];
     
+    [cell.RatingLabel setHidden:YES];
+    
+    [cell.countryImage setHidden:NO];
+    
+    [cell.countryImage sd_setImageWithURL:[NSURL URLWithString:[videoDict objectForKey:@"country_image"]]];
+    
+    
     cell.RatingView.maximumValue = 5;
     cell.RatingView.minimumValue = 0;
     cell.RatingView.value =[[videoDict objectForKey:@"averagerating"] floatValue];
