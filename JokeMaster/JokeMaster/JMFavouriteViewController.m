@@ -417,6 +417,8 @@
               sendData = [sendData stringByAppendingString:@"&mode="];
         sendData = [sendData stringByAppendingString: [[NSUserDefaults standardUserDefaults] objectForKey:@"langId"]];
         
+                sendData = [sendData stringByAppendingString:@"&pushmode="];
+                sendData = [sendData stringByAppendingString: PUSHTYPE];
         [request setValue:@"gzip" forHTTPHeaderField:@"Accept-Encoding"];
         
         NSMutableData *theBodyData = [NSMutableData data];

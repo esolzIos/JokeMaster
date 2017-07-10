@@ -579,6 +579,9 @@
             sendData = [sendData stringByAppendingString:@"&mode="];
             sendData = [sendData stringByAppendingString: [[NSUserDefaults standardUserDefaults] objectForKey:@"langId"]];
             
+            sendData = [sendData stringByAppendingString:@"&pushmode="];
+            sendData = [sendData stringByAppendingString: PUSHTYPE];
+            
             [request setValue:@"gzip" forHTTPHeaderField:@"Accept-Encoding"];
             
             NSMutableData *theBodyData = [NSMutableData data];
@@ -861,7 +864,7 @@
         NSString *url;
         
         
-        url=[NSString stringWithFormat:@"%@%@video/category&mode=%@",GLOBALAPI,INDEX,[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"]];
+        url=[NSString stringWithFormat:@"%@%@video/category?mode=%@",GLOBALAPI,INDEX,[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"]];
         
         
         
