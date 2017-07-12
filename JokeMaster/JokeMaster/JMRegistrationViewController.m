@@ -132,183 +132,201 @@
         
         if([self textFieldBlankorNot:Nametxt.text]==YES)
         {
-            UIAlertController * alert=   [UIAlertController
-                                          alertControllerWithTitle:AMLocalizedString(@"Alert",nil)
-
-                                          message:AMLocalizedString(@"Enter Name", nil)
-
-
-                                          preferredStyle:UIAlertControllerStyleAlert];
+//            UIAlertController * alert=   [UIAlertController
+//                                          alertControllerWithTitle:AMLocalizedString(@"Alert",nil)
+//
+//                                          message:AMLocalizedString(@"Enter Name", nil)
+//
+//
+//                                          preferredStyle:UIAlertControllerStyleAlert];
+//            
+//            UIAlertAction* ok = [UIAlertAction
+//                                 actionWithTitle:AMLocalizedString(@"OK",nil)
+//                                 style:UIAlertActionStyleDefault
+//                                 handler:^(UIAlertAction * action)
+//                                 {
+//                                     [alert dismissViewControllerAnimated:YES completion:nil];
+//                                     
+//                                     
+//                                     
+//                                     
+//                                 }];
+//            
+//            [alert addAction:ok];
+//            [self presentViewController:alert animated:YES completion:nil];
             
-            UIAlertAction* ok = [UIAlertAction
-                                 actionWithTitle:AMLocalizedString(@"OK",nil)
-                                 style:UIAlertActionStyleDefault
-                                 handler:^(UIAlertAction * action)
-                                 {
-                                     [alert dismissViewControllerAnimated:YES completion:nil];
-                                     
-                                     
-                                     
-                                     
-                                 }];
+            [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Enter Name", nil)];
             
-            [alert addAction:ok];
-            [self presentViewController:alert animated:YES completion:nil];
             
         }
         else if ([self textFieldBlankorNot:Emailtxt.text]==YES)
         {
-            UIAlertController * alert=   [UIAlertController
-                                          alertControllerWithTitle:AMLocalizedString(@"Alert",nil)
-                                          message:AMLocalizedString(@"Enter Email Address",nil)
-                                          preferredStyle:UIAlertControllerStyleAlert];
+//            UIAlertController * alert=   [UIAlertController
+//                                          alertControllerWithTitle:AMLocalizedString(@"Alert",nil)
+//                                          message:AMLocalizedString(@"Enter Email Address",nil)
+//                                          preferredStyle:UIAlertControllerStyleAlert];
+//            
+//            UIAlertAction* ok = [UIAlertAction
+//                                 actionWithTitle:AMLocalizedString(@"OK",nil)
+//                                 style:UIAlertActionStyleDefault
+//                                 handler:^(UIAlertAction * action)
+//                                 {
+//                                     [alert dismissViewControllerAnimated:YES completion:nil];
+//                                     
+//                                     
+//                                     
+//                                     
+//                                 }];
+//            
+//            [alert addAction:ok];
+//            [self presentViewController:alert animated:YES completion:nil];
             
-            UIAlertAction* ok = [UIAlertAction
-                                 actionWithTitle:AMLocalizedString(@"OK",nil)
-                                 style:UIAlertActionStyleDefault
-                                 handler:^(UIAlertAction * action)
-                                 {
-                                     [alert dismissViewControllerAnimated:YES completion:nil];
-                                     
-                                     
-                                     
-                                     
-                                 }];
-            
-            [alert addAction:ok];
-            [self presentViewController:alert animated:YES completion:nil];
+               [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Enter Email Address",nil)];
         }
         else if ([self validateEmailWithString:Emailtxt.text]==NO)
         {
-            UIAlertController * alert=   [UIAlertController
-                                          alertControllerWithTitle:AMLocalizedString(@"Alert",nil)
-                                          message:AMLocalizedString(@"Enter Valid Email Address",nil)
-                                          preferredStyle:UIAlertControllerStyleAlert];
+//            UIAlertController * alert=   [UIAlertController
+//                                          alertControllerWithTitle:AMLocalizedString(@"Alert",nil)
+//                                          message:AMLocalizedString(@"Enter Valid Email Address",nil)
+//                                          preferredStyle:UIAlertControllerStyleAlert];
+//            
+//            UIAlertAction* ok = [UIAlertAction
+//                                 actionWithTitle:AMLocalizedString(@"OK",nil)
+//                                 style:UIAlertActionStyleDefault
+//                                 handler:^(UIAlertAction * action)
+//                                 {
+//                                     [alert dismissViewControllerAnimated:YES completion:nil];
+//                                     
+//                                     
+//                                     
+//                                     
+//                                 }];
+//            
+//            [alert addAction:ok];
+//            [self presentViewController:alert animated:YES completion:nil];
             
-            UIAlertAction* ok = [UIAlertAction
-                                 actionWithTitle:AMLocalizedString(@"OK",nil)
-                                 style:UIAlertActionStyleDefault
-                                 handler:^(UIAlertAction * action)
-                                 {
-                                     [alert dismissViewControllerAnimated:YES completion:nil];
-                                     
-                                     
-                                     
-                                     
-                                 }];
-            
-            [alert addAction:ok];
-            [self presentViewController:alert animated:YES completion:nil];
+              [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Enter Valid Email Address",nil)];
         }
         else if ([LanguageLabel.text isEqualToString:AMLocalizedString(@"Language",nil)])
         {
-            UIAlertController * alert=   [UIAlertController
-                                          alertControllerWithTitle:AMLocalizedString(@"Alert",nil)
-                                          message:AMLocalizedString(@"Select Language",nil)
-                                          preferredStyle:UIAlertControllerStyleAlert];
+//            UIAlertController * alert=   [UIAlertController
+//                                          alertControllerWithTitle:AMLocalizedString(@"Alert",nil)
+//                                          message:AMLocalizedString(@"Select Language",nil)
+//                                          preferredStyle:UIAlertControllerStyleAlert];
+//            
+//            UIAlertAction* ok = [UIAlertAction
+//                                 actionWithTitle:AMLocalizedString(@"OK",nil)
+//                                 style:UIAlertActionStyleDefault
+//                                 handler:^(UIAlertAction * action)
+//                                 {
+//                                     [alert dismissViewControllerAnimated:YES completion:nil];
+//                                     
+//                                     
+//                                     
+//                                     
+//                                 }];
+//            
+//            [alert addAction:ok];
+//            [self presentViewController:alert animated:YES completion:nil];
             
-            UIAlertAction* ok = [UIAlertAction
-                                 actionWithTitle:AMLocalizedString(@"OK",nil)
-                                 style:UIAlertActionStyleDefault
-                                 handler:^(UIAlertAction * action)
-                                 {
-                                     [alert dismissViewControllerAnimated:YES completion:nil];
-                                     
-                                     
-                                     
-                                     
-                                 }];
             
-            [alert addAction:ok];
-            [self presentViewController:alert animated:YES completion:nil];
+                         [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Select Language",nil)];
         }
         else if ([self textFieldBlankorNot:Passwordtxt.text]==YES)
         {
-            UIAlertController * alert=   [UIAlertController
-                                          alertControllerWithTitle:AMLocalizedString(@"Alert",nil)
-                                          message:AMLocalizedString(@"Enter Password", nil)
-                                          preferredStyle:UIAlertControllerStyleAlert];
+//            UIAlertController * alert=   [UIAlertController
+//                                          alertControllerWithTitle:AMLocalizedString(@"Alert",nil)
+//                                          message:AMLocalizedString(@"Enter Password", nil)
+//                                          preferredStyle:UIAlertControllerStyleAlert];
+//            
+//            UIAlertAction* ok = [UIAlertAction
+//                                 actionWithTitle:AMLocalizedString(@"OK",nil)
+//                                 style:UIAlertActionStyleDefault
+//                                 handler:^(UIAlertAction * action)
+//                                 {
+//                                     [alert dismissViewControllerAnimated:YES completion:nil];
+//                                     
+//                                     
+//                                     
+//                                     
+//                                 }];
+//            
+//            [alert addAction:ok];
+//            [self presentViewController:alert animated:YES completion:nil];
             
-            UIAlertAction* ok = [UIAlertAction
-                                 actionWithTitle:AMLocalizedString(@"OK",nil)
-                                 style:UIAlertActionStyleDefault
-                                 handler:^(UIAlertAction * action)
-                                 {
-                                     [alert dismissViewControllerAnimated:YES completion:nil];
-                                     
-                                     
-                                     
-                                     
-                                 }];
-            
-            [alert addAction:ok];
-            [self presentViewController:alert animated:YES completion:nil];
+                          [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Enter Password", nil)];
         }
         else if (Passwordtxt.text.length<6)
         {
-            UIAlertController * alert=   [UIAlertController
-                                          alertControllerWithTitle:AMLocalizedString(@"Alert",nil)
-                                          message:AMLocalizedString(@"Password Should be at least 6 characters",nil)
-                                          preferredStyle:UIAlertControllerStyleAlert];
+//            UIAlertController * alert=   [UIAlertController
+//                                          alertControllerWithTitle:AMLocalizedString(@"Alert",nil)
+//                                          message:AMLocalizedString(@"Password Should be at least 6 characters",nil)
+//                                          preferredStyle:UIAlertControllerStyleAlert];
+//            
+//            UIAlertAction* ok = [UIAlertAction
+//                                 actionWithTitle:AMLocalizedString(@"OK",nil)
+//                                 style:UIAlertActionStyleDefault
+//                                 handler:^(UIAlertAction * action)
+//                                 {
+//                                     [alert dismissViewControllerAnimated:YES completion:nil];
+//                                     
+//                                     
+//                                     
+//                                     
+//                                 }];
+//            
+//            [alert addAction:ok];
+//            [self presentViewController:alert animated:YES completion:nil];
             
-            UIAlertAction* ok = [UIAlertAction
-                                 actionWithTitle:AMLocalizedString(@"OK",nil)
-                                 style:UIAlertActionStyleDefault
-                                 handler:^(UIAlertAction * action)
-                                 {
-                                     [alert dismissViewControllerAnimated:YES completion:nil];
-                                     
-                                     
-                                     
-                                     
-                                 }];
-            
-            [alert addAction:ok];
-            [self presentViewController:alert animated:YES completion:nil];
+                      [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Password Should be at least 6 characters",nil)];
         }
         else if ([self textFieldBlankorNot:ConfirmPassword.text]==YES)
         {
-            UIAlertController * alert=   [UIAlertController
-                                          alertControllerWithTitle:AMLocalizedString(@"Alert",nil)
-                                          message:AMLocalizedString(@"Enter Confirm Password",nil)
-                                          preferredStyle:UIAlertControllerStyleAlert];
+//            UIAlertController * alert=   [UIAlertController
+//                                          alertControllerWithTitle:AMLocalizedString(@"Alert",nil)
+//                                          message:AMLocalizedString(@"Enter Confirm Password",nil)
+//                                          preferredStyle:UIAlertControllerStyleAlert];
+//            
+//            UIAlertAction* ok = [UIAlertAction
+//                                 actionWithTitle:AMLocalizedString(@"OK",nil)
+//                                 style:UIAlertActionStyleDefault
+//                                 handler:^(UIAlertAction * action)
+//                                 {
+//                                     [alert dismissViewControllerAnimated:YES completion:nil];
+//                                     
+//                                     
+//                                     
+//                                     
+//                                 }];
+//            
+//            [alert addAction:ok];
+//            [self presentViewController:alert animated:YES completion:nil];
             
-            UIAlertAction* ok = [UIAlertAction
-                                 actionWithTitle:AMLocalizedString(@"OK",nil)
-                                 style:UIAlertActionStyleDefault
-                                 handler:^(UIAlertAction * action)
-                                 {
-                                     [alert dismissViewControllerAnimated:YES completion:nil];
-                                     
-                                     
-                                     
-                                     
-                                 }];
-            
-            [alert addAction:ok];
-            [self presentViewController:alert animated:YES completion:nil];
+               [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Enter Confirm Password",nil)];
         }
         else if (![Passwordtxt.text isEqualToString:ConfirmPassword.text])
         {
-            UIAlertController * alert=   [UIAlertController
-                                          alertControllerWithTitle:AMLocalizedString(@"Alert",nil)
-                                          message:AMLocalizedString(@"Password and confirm password should be same.",nil)
-                                          preferredStyle:UIAlertControllerStyleAlert];
+//            UIAlertController * alert=   [UIAlertController
+//                                          alertControllerWithTitle:AMLocalizedString(@"Alert",nil)
+//                                          message:AMLocalizedString(@"Password and confirm password should be same.",nil)
+//                                          preferredStyle:UIAlertControllerStyleAlert];
+//            
+//            UIAlertAction* ok = [UIAlertAction
+//                                 actionWithTitle:AMLocalizedString(@"OK",nil)
+//                                 style:UIAlertActionStyleDefault
+//                                 handler:^(UIAlertAction * action)
+//                                 {
+//                                     [alert dismissViewControllerAnimated:YES completion:nil];
+//                                     
+//                                     
+//                                     
+//                                     
+//                                 }];
+//            
+//            [alert addAction:ok];
+//            [self presentViewController:alert animated:YES completion:nil];
             
-            UIAlertAction* ok = [UIAlertAction
-                                 actionWithTitle:AMLocalizedString(@"OK",nil)
-                                 style:UIAlertActionStyleDefault
-                                 handler:^(UIAlertAction * action)
-                                 {
-                                     [alert dismissViewControllerAnimated:YES completion:nil];
-                                     
-                                     
-                                     
-                                     
-                                 }];
-            
-            [alert addAction:ok];
-            [self presentViewController:alert animated:YES completion:nil];
+               [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Password and confirm password should be same.",nil)];
         }
         else
         {

@@ -13,7 +13,7 @@
 #import <Crashlytics/Crashlytics.h>
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
-
+@property () BOOL restrictRotation;
 @property (strong, nonatomic) UIWindow *window;
 @property(strong,nonatomic)  NSString *userId,*userName,*userImage,*userTypeId,*authToken,*password ;
 @property(strong,nonatomic) NSString *userDeviceToken,*userDesignation;

@@ -51,6 +51,8 @@
       [self setRoundCornertoView:_noVideoView withBorderColor:[UIColor clearColor] WithRadius:0.15];
         [self setRoundCornertoView:_loaderImage withBorderColor:[UIColor clearColor] WithRadius:0.15];
 
+        [_noVideoLbl setFont:[UIFont fontWithName:_noVideoLbl.font.fontName size:[self getFontSize:_noVideoLbl.font.pointSize]]];
+    
     // Do any additional setup after loading the view.
 }
 -(void)loadData
@@ -134,7 +136,7 @@
                     // Success Parsing JSON
                     // Log NSDictionary response:
                     NSLog(@"result = %@",jsonResponse);
-                    if ([jsonResponse objectForKey:@"status"]) {
+                    if ([[jsonResponse objectForKey:@"status"]boolValue]) {
                         
            
                             

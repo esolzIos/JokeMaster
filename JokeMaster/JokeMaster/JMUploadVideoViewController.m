@@ -169,7 +169,7 @@
     ipc.allowsEditing=YES;
     
     ipc.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
-    ipc.videoQuality = UIImagePickerControllerQualityTypeLow;
+    ipc.videoQuality = UIImagePickerControllerQualityTypeMedium;
     ipc.videoMaximumDuration = 60;
     ipc.mediaTypes = [[NSArray alloc] initWithObjects: (NSString *) kUTTypeMovie, nil];
     [self presentViewController:ipc animated:YES completion:^{
@@ -593,7 +593,7 @@
             
             //  self.session = [NSURLSession sharedSession];  // use sharedSession or create your own
             
-            session =[NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
+            session =[NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:self delegateQueue:[NSOperationQueue mainQueue]];
             
             NSURLSessionTask *task = [session uploadTaskWithRequest:request fromData:theBodyData completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
                 
@@ -622,36 +622,18 @@
                         // Success Parsing JSON
                         // Log NSDictionary response:
                         NSLog(@"result = %@",jsonResponse);
-                        
-                        
-                        if ([[jsonResponse objectForKey:@"status_code"]intValue]==406) {
-                            
-                            //                            app.userId=@"";
-                            //
-                            //                            app.authToken=@"";
-                            //
-                            //
-                            //
-                            //                            NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
-                            //                            [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
-                            //
-                            //
-                            //
-                            //                            ADLoginViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"ADLogin"];
-                            //                            VC.forcedToLogin=true;
-                            //                            [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
-                            
-                        }
-                        else
+            
                             if ([[jsonResponse objectForKey:@"code"]intValue]==200) {
                                 
                                 
                                 
                                 [SVProgressHUD showInfoWithStatus:@"Video uploaded Successfully"];
                                 
-                                [self performSelector:@selector(loadProfile) withObject:nil afterDelay:3.0];
+                                //[self performSelector:@selector(loadProfile) withObject:nil afterDelay:3.0];
                                 
-                                
+                                [[NSNotificationCenter defaultCenter]
+                                 postNotificationName:@"videoLoaded"
+                                 object:self];
                                 
                                 
                                 
@@ -662,6 +644,8 @@
                                 [SVProgressHUD showInfoWithStatus:[jsonResponse objectForKey:@"message"]];
                                 
                                 
+                                
+                          ;
                             }
                         
                     }
@@ -675,7 +659,7 @@
             
             [task resume];
             
-            
+            [self loadProfile];
             
             
             
@@ -1006,27 +990,15 @@
     totalBytesSent:(int64_t)totalBytesSent
 totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
 {
-
-    [SVProgressHUD showProgress:(totalBytesExpectedToSend/totalBytesSent)*100];
+    
+        DebugLog(@"%f",(float)totalBytesSent);
+        DebugLog(@"%f",(float)totalBytesExpectedToSend);
+    
+    DebugLog(@"%f",(float)((float)totalBytesSent/(float)totalBytesExpectedToSend));
+    
+    [SVProgressHUD showProgress:(float)((float)totalBytesSent/(float)totalBytesExpectedToSend)];
 }
 
 
 
-- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveResponse:(NSURLResponse *)response completionHandler:(void (^)(NSURLSessionResponseDisposition disposition))completionHandler {
-    completionHandler(NSURLSessionResponseAllow);
-    
-    [SVProgressHUD showProgress:0.0f];
-
-    _downloadSize=[response expectedContentLength];
-    _dataToDownload=[[NSMutableData alloc]init];
-}
-
-- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data {
-    
-    
-    [_dataToDownload appendData:data];
-
-    
-    [SVProgressHUD showProgress:[ _dataToDownload length ]/_downloadSize];
-}
 @end

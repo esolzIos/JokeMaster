@@ -16,7 +16,7 @@
 {
     float MenuViewY;
     NSMutableArray *CategoryArray;
-    UrlconnectionObject *urlobj;
+
 }
 @property (weak, nonatomic) IBOutlet UIScrollView *MainScroll;
 

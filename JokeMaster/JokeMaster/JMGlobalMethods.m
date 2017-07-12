@@ -45,7 +45,10 @@
     }
     return context;
 }
-
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations
+{
+    return UIInterfaceOrientationMaskPortrait;
+}
 -(void)addMoreView:(UIView *)mainView
 {
 
@@ -76,6 +79,9 @@
     }
 
 }
+
+
+
 -(void)viewDidAppear:(BOOL)animated
 {
     [SVProgressHUD dismiss];

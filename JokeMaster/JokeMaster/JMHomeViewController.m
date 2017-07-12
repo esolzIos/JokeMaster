@@ -10,8 +10,9 @@
 #import "JMRecentlyUploadedViewController.h"
 @interface JMHomeViewController ()
 {
-    BOOL liked;
-    
+    BOOL liked,jokeNotFound;
+    NSDictionary *jsonResponse;
+
     NSDictionary *jokeDict;
     NSURLSession *session;
     AppDelegate *appDelegate;
@@ -20,8 +21,16 @@
 
 @implementation JMHomeViewController
 
+
+- (NSUInteger)supportedInterfaceOrientations
+{
+    return UIInterfaceOrientationMaskPortrait + UIInterfaceOrientationMaskPortraitUpsideDown;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadJokes) name:@"videoLoaded" object:nil];
     
     [self setRoundCornertoView:_videoThumb withBorderColor:[UIColor clearColor] WithRadius:0.15];
     
@@ -73,7 +82,15 @@
     [_ratingBtnFour addTarget:self action:@selector(rateVideo:) forControlEvents:UIControlEventTouchUpInside];
     [_ratingBtnFive addTarget:self action:@selector(rateVideo:) forControlEvents:UIControlEventTouchUpInside];
 
+    NSString* filePath = [[NSBundle mainBundle] pathForResource:@"giphy.gif" ofType:nil];
+    NSData* imageData = [NSData dataWithContentsOfFile:filePath];
     
+    _gifImage.animatedImage = [FLAnimatedImage animatedImageWithGIFData:imageData];
+    
+    [self setRoundCornertoView:_gifImage withBorderColor:[UIColor clearColor] WithRadius:0.15];
+    [self setRoundCornertoView:_errorView withBorderColor:[UIColor clearColor] WithRadius:0.15];
+    [self setRoundCornertoView:_loaderImage withBorderColor:[UIColor clearColor] WithRadius:0.15];
+    [_noVideoLbl setFont:[UIFont fontWithName:_noVideoLbl.font.fontName size:[self getFontSize:_noVideoLbl.font.pointSize]]];
     
 }
 -(void)viewWillAppear:(BOOL)animated
@@ -85,19 +102,28 @@
     
  
 }
+-(void)reloadJokes
+{
+    RecentVideoArray=[[NSMutableArray alloc] init];
+    jokeDict=[[NSDictionary alloc]init];
+    
+    [self getJokeOftheDay];
+}
+
 #pragma mark -Joke of the Day API
 -(void)getJokeOftheDay
 {
-    BOOL net=[urlobj connectedToNetwork];
-    if (net==YES)
+    
+     [_loaderView setHidden:NO];
+    
+    if([self networkAvailable])
     {
-        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-            
-            self.view.userInteractionEnabled = NO;
-            [self checkLoader];
-        }];
-        [[NSOperationQueue new] addOperationWithBlock:^{
-            
+        
+        
+        
+        //   [SVProgressHUD show];
+        
+        
             NSString *urlString;
             
             
@@ -110,25 +136,75 @@
             DebugLog(@"Send string Url%@",urlString);
             
             
+        NSURLSessionConfiguration *sessionConfig = [NSURLSessionConfiguration defaultSessionConfiguration];
+        session = [NSURLSession sessionWithConfiguration:sessionConfig delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
+        
+        [[session dataTaskWithURL:[NSURL URLWithString:urlString] completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
             
             
-            [urlobj getSessionJsonResponse:urlString  success:^(NSDictionary *responseDict)
-             {
-                 
-                 DebugLog(@"success %@ Status Code:%ld",responseDict,(long)urlobj.statusCode);
-                 
-                 
-                 
-                 self.view.userInteractionEnabled = YES;
-                 //  [self checkLoader];
-                 
-                 if (urlobj.statusCode==200)
-                 {
-                     [SVProgressHUD dismiss];
+            //
+            //        NSURLSessionTask *task = [session uploadTaskWithRequest:request fromData:nil completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+            if (error) {
+                NSLog(@"error = %@", error);
+                
+                [self  JokeNotFound];
+                
+                [self RecentVideoApi];
+                
+//                
+//                [_gifImage setHidden:YES];
+//                [_noVideoView setHidden:NO];
+//                [_noVideoLbl setText:@"Some error occured.\n\n Click to retry"];
+//                [_loaderBtn setHidden:NO];
+                
+                return;
+            }
+            
+            if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
+                NSError *jsonError;
+                jsonResponse = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
+                
+                
+                
+                if (jsonError) {
+                    // Error Parsing JSON
+                    
+                    NSString *responseString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                    
+                    NSLog(@"response = %@",responseString);
+                    
+                      [self  JokeNotFound];
+                    
+                          [self RecentVideoApi];
+                    
+                    
+                    
+//                    [_gifImage setHidden:YES];
+//                    [_noVideoView setHidden:NO];
+//                    [_noVideoLbl setText:@"Some error occured.\n\n Click to retry"];
+//                    [_loaderBtn setHidden:NO];
+                    
+                    //  [SVProgressHUD showInfoWithStatus:@"some error occured"];
+                    
+                } else {
+                    // Success Parsing JSON
+                    // Log NSDictionary response:
+                    NSLog(@"result = %@",jsonResponse);
+                    if ([[jsonResponse objectForKey:@"status"]boolValue]) {
+
+                  //   [SVProgressHUD dismiss];
                      
-                     if ([[responseDict objectForKey:@"status"] boolValue])
-                     {
-                         _tvView.hidden=NO;
+              
+                        // _tvView.hidden=NO;
+                        
+       
+                        [_VideoRatingView setHidden:NO];
+                        [_VideoRatingLabel setHidden:NO];
+                        [_VideoCreaterNameLabel setHidden:NO];
+                        [_VideoNameLabel setHidden:NO];
+                        [_jokeDetailBtn setUserInteractionEnabled:YES];
+                        [_ratingBtn setUserInteractionEnabled:YES];
+                        
                              if ([[[NSUserDefaults standardUserDefaults] valueForKey:@"HomeVisited"] boolValue]==YES)
                              {
                                  _tutorialView.hidden=YES;
@@ -140,7 +216,7 @@
                              
                              [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"HomeVisited"];
                              
-                              jokeDict=[responseDict objectForKey:@"videoDetails"];
+                              jokeDict=[jsonResponse objectForKey:@"videoDetails"];
                          
                          
                              _VideoNameLabel.text=[jokeDict objectForKey:@"videoname"];
@@ -167,95 +243,64 @@
                              
                          
                          
-                         
+                              [self RecentVideoApi];
                          
                       
                          
                      }
-                     else
-                     {
-                         [SVProgressHUD showInfoWithStatus:[responseDict objectForKey:@"message"]];
-                         
-                         [self VideoNotFound];
-                         
-                         
-                         
-                         
-                         
-                     }
+                    else{
+                        
+                [self  JokeNotFound];
+             [self RecentVideoApi];
+                            
+//                            [_gifImage setHidden:YES];
+//                            [_noVideoView setHidden:NO];
+//                            [_noVideoLbl setText:[NSString stringWithFormat:@"%@\n\n Click to retry",[jsonResponse objectForKey:@"message"]]];
+//                            [_loaderBtn setHidden:NO];
                      
-                     [self RecentVideoApi];
-                     
-                 }
-                 else if (urlobj.statusCode==500 || urlobj.statusCode==400)
-                 {
-                     //                     [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Server Failed to Respond" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
-//                     _tvView.hidden=YES;
-//                     _tutorialView.hidden=YES;
-                     
-                     [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Server Failed to Respond",nil)];
-                     
-                     [self VideoNotFound];
-                     
-                     [self RecentVideoApi];
-                     
-                 }
-                 else
-                 {
-                     //                     [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Server Failed to Respond" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
-//                     _tvView.hidden=YES;
-//                     _tutorialView.hidden=YES;
-                     [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Server Failed to Respond",nil)];
-                     [self VideoNotFound];
-                     
-                     [self RecentVideoApi];
-                 }
-                 
-             }
-                                   failure:^(NSError *error) {
-                                       
-                                       // [self checkLoader];
-                                       self.view.userInteractionEnabled = YES;
-                                       _tutorialView.hidden=YES;
-                                       NSLog(@"Failure");
-                                       //                                       [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Server Failed to Respond" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
-//                                       _tvView.hidden=YES;
-                                       [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Server Failed to Respond",nil)];
-                                       
-                                       [self VideoNotFound];
-                                       
-                                       [self RecentVideoApi];
-                                       
-                                   }
-             ];
-        }];
-    }
-    else
-    {
-//        _tvView.hidden=YES;
-//        _tutorialView.hidden=YES;
-        [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
+                        
+                        
+                    }
+                    
+                }
+                
+                
+                
+            }
+            
+            
+        }]resume ];
         
-        [self VideoNotFound];
+        
+        
+        
         
     }
-
+    
+    else{
+        [_gifImage setHidden:YES];
+        [_noVideoView setHidden:NO];
+        [_noVideoLbl setText:[NSString stringWithFormat:@"Check your Internet connection\n\n Click to retry"]];
+        [_loaderBtn setHidden:NO];
+        
+         [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
+        
+          //    [self RecentVideoApi];
+    }
+    
 
 }
 
 -(void)rateVideo:(UIButton *)btn
 {
     
-    BOOL net=[urlobj connectedToNetwork];
-    if (net==YES)
+    if([self networkAvailable])
     {
-        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-            
-            self.view.userInteractionEnabled = NO;
-            [self checkLoader];
-        }];
-        [[NSOperationQueue new] addOperationWithBlock:^{
-            
+        
+        
+        
+        [SVProgressHUD show];
+        
             NSString *urlString;
             
             
@@ -270,66 +315,101 @@
             
             
             
-            [urlobj getSessionJsonResponse:urlString  success:^(NSDictionary *responseDict)
-             {
-                 
-                 DebugLog(@"success %@ Status Code:%ld",responseDict,(long)urlobj.statusCode);
-                 
-                 [_ratingView setHidden:YES];
-                 self.view.userInteractionEnabled = YES;
-                 //  [self checkLoader];
-                 
-                 if (urlobj.statusCode==200)
-                 {
-                     if ([[responseDict objectForKey:@"status"] boolValue]==1)
-                     {
+        NSURLSessionConfiguration *sessionConfig = [NSURLSessionConfiguration defaultSessionConfiguration];
+        session = [NSURLSession sessionWithConfiguration:sessionConfig delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
+        
+        [[session dataTaskWithURL:[NSURL URLWithString:urlString] completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+            
+            
+            
+            
+            if (error) {
+                NSLog(@"error = %@", error);
+                
+                //                [_gifImage setHidden:YES];
+                //                [_noVideoView setHidden:NO];
+                //                [_noVideoLbl setText:@"Some error occured.\n\n Click to retry"];
+                //                [_loaderBtn setHidden:NO];
+                
+                // [_chooseBtn setUserInteractionEnabled:YES];
+                
+                return;
+            }
+            
+            if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
+                NSError *jsonError;
+             jsonResponse = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
+                
+                
+                
+                
+                
+                
+                // [_chooseBtn setUserInteractionEnabled:YES];
+                
+                if (jsonError) {
+                    // Error Parsing JSON
+                    
+                    NSString *responseString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                    
+                    NSLog(@"response = %@",responseString);
+                    
+                    [SVProgressHUD showInfoWithStatus:@"some error occured"];
+                    
+                    //                    [_gifImage setHidden:YES];
+                    //                    [_noVideoView setHidden:NO];
+                    //                    [_noVideoLbl setText:@"Some error occured.\n\n Click to retry"];
+                    //                    [_loaderBtn setHidden:NO];
+                    
+                } else {
+                    // Success Parsing JSON
+                    // Log NSDictionary response:
+                    NSLog(@"result = %@",jsonResponse);
+                    [_ratingView setHidden:YES];
+                    self.view.userInteractionEnabled = YES;
+                    
+                    if ([[jsonResponse objectForKey:@"status"]boolValue]) {
+       
                          
                          [SVProgressHUD dismiss];
                          
-                         
+                        [self reloadJokes];
                      }
                      else
                      {
                          
-                         [SVProgressHUD showInfoWithStatus:[responseDict objectForKey:@"message"]];
+                         [SVProgressHUD showInfoWithStatus:[jsonResponse objectForKey:@"message"]];
                          
                      }
                      
-                 }
-                 else if (urlobj.statusCode==500 || urlobj.statusCode==400)
-                 {
-                     //                     [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Server Failed to Respond" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
-                     
-                     
-                     [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Server Failed to Respond",nil)];
-                     
-                 }
-                 else
-                 {
-                     //                     [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Server Failed to Respond" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
-                     [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Server Failed to Respond",nil)];
-                 }
-                 
-             }
-                                   failure:^(NSError *error) {
-                                       
-                                       // [self checkLoader];
-                                       self.view.userInteractionEnabled = YES;
-                                       
-                                       NSLog(@"Failure");
-                                       //                                       [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Server Failed to Respond" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
-                                       [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Server Failed to Respond",nil)];
-                                       
-                                   }
-             ];
-        }];
+                }
+                
+                
+            }
+            
+            
+        }]resume ];
+        
+        
+        
+        
+        
     }
-    else
-    {
+    
+    else{
+        
+        //
+        //        [_gifImage setHidden:YES];
+        //        [_noVideoView setHidden:NO];
+        //        [_noVideoLbl setText:[NSString stringWithFormat:@"Check your Internet connection\n\n Click to retry"]];
+        //        [_loaderBtn setHidden:NO];
         
         [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
         
+        
     }
+    
+    
     
     
     
@@ -492,13 +572,18 @@
 - (IBAction)ratingClicked:(id)sender {
     [_ratingImage.layer removeAllAnimations];
     
-    [_ratingView setHidden:NO];
+    if (appDelegate.isLogged) {
+       [_ratingView setHidden:NO];
+    }
+    else{
+        [SVProgressHUD showInfoWithStatus:@"Login required to rate videos"];
+    }
     
     
 }
 - (IBAction)likeClicked:(id)sender {
     
-    
+      if (appDelegate.isLogged) {
     
     if([self networkAvailable])
     {
@@ -630,7 +715,10 @@
     }
     
 
-    
+      }
+      else{
+          [SVProgressHUD showInfoWithStatus:@"Login required to like videos"];
+      }
     
  
     //[_optionView setHidden:YES];
@@ -694,16 +782,14 @@
 {
     
     
-    BOOL net=[urlobj connectedToNetwork];
-    if (net==YES)
+    if([self networkAvailable])
     {
-        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-            
-            self.view.userInteractionEnabled = NO;
-            [self checkLoader];
-        }];
-        [[NSOperationQueue new] addOperationWithBlock:^{
-            
+        
+        
+        
+        //   [SVProgressHUD show];
+        
+        
             NSString *urlString;
             
             
@@ -717,118 +803,166 @@
             
             
             
+        NSURLSessionConfiguration *sessionConfig = [NSURLSessionConfiguration defaultSessionConfiguration];
+        session = [NSURLSession sessionWithConfiguration:sessionConfig delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
+        
+        [[session dataTaskWithURL:[NSURL URLWithString:urlString] completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
             
-            [urlobj getSessionJsonResponse:urlString  success:^(NSDictionary *responseDict)
-             {
-                 
-                 DebugLog(@"success %@ Status Code:%ld",responseDict,(long)urlobj.statusCode);
-                 
-                 
-                 self.view.userInteractionEnabled = YES;
-                 //  [self checkLoader];
-                 
-                 if (urlobj.statusCode==200)
-                 {
-                     [SVProgressHUD dismiss];
-                     
-                     if ([[responseDict objectForKey:@"status"] boolValue])
-                     {
-                         RecentVideoArray=[[responseDict objectForKey:@"videoDetails"] mutableCopy];
+            
+            //
+            //        NSURLSessionTask *task = [session uploadTaskWithRequest:request fromData:nil completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+            if (error) {
+                NSLog(@"error = %@", error);
+                
+                if (jokeNotFound) {
+                    [_gifImage setHidden:YES];
+                    [_errorView setHidden:NO];
+                    [_noVideoLbl setText:@"Some error occured.\n\n Click to retry"];
+                    [_loaderBtn setHidden:NO];
+                }
+                else{
+                
+                    [_jokeCollectionView setUserInteractionEnabled:false];
+                    
+                }
+          
+                
+                return;
+            }
+            
+            if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
+                NSError *jsonError;
+                jsonResponse = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
+                
+                
+                
+                if (jsonError) {
+                    // Error Parsing JSON
+                    
+                    NSString *responseString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                    
+                    NSLog(@"response = %@",responseString);
+                    
+                    if (jokeNotFound) {
+                        [_gifImage setHidden:YES];
+                        [_errorView setHidden:NO];
+                        [_noVideoLbl setText:@"Some error occured.\n\n Click to retry"];
+                        [_loaderBtn setHidden:NO];
+                    }
+                    else{
+                        
+                        [_jokeCollectionView setUserInteractionEnabled:false];
+                        
+                    }
+                    
+                    
+                    //  [SVProgressHUD showInfoWithStatus:@"some error occured"];
+                    
+                } else {
+                    // Success Parsing JSON
+                    // Log NSDictionary response:
+                    NSLog(@"result = %@",jsonResponse);
+                    if ([[jsonResponse objectForKey:@"status"]boolValue]) {
+                        
+                                     [_loaderView setHidden:YES];
+                        
+                         RecentVideoArray=[[jsonResponse objectForKey:@"videoDetails"] mutableCopy];
                          
                          
                          if (RecentVideoArray.count>0)
                          {
                            //  _tvView.hidden=NO;
-                             _recentBtn.userInteractionEnabled=YES;
+                         //    _recentBtn.userInteractionEnabled=YES;
                              
                     
                              [_jokeCollectionView reloadData];
                          }
                          else
                          {
-                             _recentBtn.userInteractionEnabled=NO;
+                           //  _recentBtn.userInteractionEnabled=NO;
                          }
                          
                      }
-                     else
-                     {
-//                         _tvView.hidden=NO;
-//                         _tutorialView.hidden=YES;
-                         
-                         _recentBtn.userInteractionEnabled=NO;
-                         [SVProgressHUD showInfoWithStatus:[responseDict objectForKey:@"message"]];
-                         
-                     }
-                     
-                 }
-                 else if (urlobj.statusCode==500 || urlobj.statusCode==400)
-                 {
-                     //                     [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Server Failed to Respond" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
-//                     _tvView.hidden=NO;
-//                     _tutorialView.hidden=YES;
-                     _recentBtn.userInteractionEnabled=NO;
-                     [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Server Failed to Respond",nil)];
-                     
-                 }
-                 else
-                 {
-                     //                     [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Server Failed to Respond" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
-//                     _tvView.hidden=NO;
-//                     _tutorialView.hidden=YES;
-                     _recentBtn.userInteractionEnabled=NO;
-                     [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Server Failed to Respond",nil)];
-                 }
+                    else{
+                        
+                    
+                        if (jokeNotFound) {
+                            [_gifImage setHidden:YES];
+                            [_errorView setHidden:NO];
+                            [_noVideoLbl setText:@"Some error occured.\n\n Click to retry"];
+                            [_loaderBtn setHidden:NO];
+                        }
+                        else{
+                            
+                            [_jokeCollectionView setUserInteractionEnabled:false];
+                            
+                        }
+                        
                  
-             }
-                                   failure:^(NSError *error) {
-                                       
-                                       // [self checkLoader];
-                                       self.view.userInteractionEnabled = YES;
-//                                       _tutorialView.hidden=YES;
-                                       NSLog(@"Failure");
-                                       //                                       [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Server Failed to Respond" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
-                                      // _tvView.hidden=YES;
-                                       _recentBtn.userInteractionEnabled=NO;
-                                       [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Server Failed to Respond",nil)];
-                                       
-                                   }
-             ];
-        }];
-    }
-    else
-    {
-//        _tvView.hidden=NO;
-//        _tutorialView.hidden=YES;
-        _recentBtn.userInteractionEnabled=NO;
-        [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
+                        
+                        
+                    }
+                    
+                }
+                
+                
+                
+            }
+            
+            
+        }]resume ];
+        
+        
+        
+        
         
     }
+    
+    else{
+        if (jokeNotFound) {
+            [_gifImage setHidden:YES];
+            [_errorView setHidden:NO];
+            [_noVideoLbl setText:@"Some error occured.\n\n Click to retry"];
+            [_loaderBtn setHidden:NO];
+        }
+        else{
+            
+            [_jokeCollectionView setUserInteractionEnabled:false];
+            
+        }
+        
+        // [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
+        
+        
+    }
+    
 }
 #pragma mark -Video not found
--(void)VideoNotFound
+-(void)JokeNotFound
 {
-    _tvView.hidden=NO;
+    jokeNotFound=true;
     
-    if ([[[NSUserDefaults standardUserDefaults] valueForKey:@"HomeVisited"] boolValue]==YES)
-    {
-        _tutorialView.hidden=YES;
-    }
-    else
-    {
-        _tutorialView.hidden=NO;
-    }
+   // _tvView.hidden=NO;
     
-    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"HomeVisited"];
+//    if ([[[NSUserDefaults standardUserDefaults] valueForKey:@"HomeVisited"] boolValue]==YES)
+//    {
+//        _tutorialView.hidden=YES;
+//    }
+//    else
+//    {
+//        _tutorialView.hidden=NO;
+//    }
+//    
+//    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"HomeVisited"];
     
     [_noVideoView setHidden:NO];
     
-    [_ratingView setHidden:YES];
+  
     [_VideoRatingView setHidden:YES];
     [_VideoRatingLabel setHidden:YES];
     [_VideoCreaterNameLabel setHidden:YES];
     [_VideoNameLabel setHidden:YES];
     [_jokeDetailBtn setUserInteractionEnabled:NO];
-    [_jokeCollectionView setUserInteractionEnabled:NO];
     [_ratingBtn setUserInteractionEnabled:NO];
     
     
@@ -842,6 +976,22 @@
 //    _VideoRatingView.filledStarImage = [[UIImage imageNamed:@"emotion2"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
 //    _VideoRatingView.accurateHalfStars = YES;
 //    _VideoRatingView.halfStarImage = [[UIImage imageNamed:@"emotion1"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    
+    
+}
+- (IBAction)loaderClicked:(id)sender {
+    
+    
+    [_gifImage setHidden:NO];
+    [_errorView setHidden:YES];
+    [_noVideoLbl setText:@""];
+    [_loaderBtn setHidden:YES];
+    
+    RecentVideoArray=[[NSMutableArray alloc] init];
+    jokeDict=[[NSDictionary alloc]init];
+    
+    [self getJokeOftheDay];
+    
     
     
 }

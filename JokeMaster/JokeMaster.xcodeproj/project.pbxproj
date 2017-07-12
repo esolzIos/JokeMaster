@@ -34,7 +34,7 @@
 		0C91CFBD1EEE5B7A00123303 /* JMCategoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C91CFBC1EEE5B7A00123303 /* JMCategoryCell.m */; };
 		0C91CFC31EEE92F400123303 /* JMJokesCategoryVideoListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C91CFC21EEE92F400123303 /* JMJokesCategoryVideoListViewController.m */; };
 		0CE2FB481EE190E50031C0E6 /* JMRegistrationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CE2FB471EE190E50031C0E6 /* JMRegistrationViewController.m */; };
-		B001C0F21F13B49D0000D05F /* giphy.gif in Resources */ = {isa = PBXBuildFile; fileRef = B001C0F11F13B49C0000D05F /* giphy.gif */; };
+		B066138A1F16538C00D8E392 /* giphy.gif in Resources */ = {isa = PBXBuildFile; fileRef = B06613891F16538C00D8E392 /* giphy.gif */; };
 		B07134691F137AE0006178E7 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B07134681F137AE0006178E7 /* QuartzCore.framework */; };
 		B071346B1F137AE6006178E7 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B071346A1F137AE6006178E7 /* ImageIO.framework */; };
 		B071346D1F137AF1006178E7 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B071346C1F137AF1006178E7 /* MobileCoreServices.framework */; };
@@ -187,7 +187,7 @@
 		0C91CFC21EEE92F400123303 /* JMJokesCategoryVideoListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMJokesCategoryVideoListViewController.m; sourceTree = "<group>"; };
 		0CE2FB461EE190E50031C0E6 /* JMRegistrationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMRegistrationViewController.h; sourceTree = "<group>"; };
 		0CE2FB471EE190E50031C0E6 /* JMRegistrationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMRegistrationViewController.m; sourceTree = "<group>"; };
-		B001C0F11F13B49C0000D05F /* giphy.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = giphy.gif; sourceTree = "<group>"; };
+		B06613891F16538C00D8E392 /* giphy.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = giphy.gif; sourceTree = "<group>"; };
 		B07134681F137AE0006178E7 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		B071346A1F137AE6006178E7 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		B071346C1F137AF1006178E7 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
@@ -529,7 +529,7 @@
 				0C5620391F0F916300698DCE /* Fabric.framework */,
 				0C56203A1F0F916400698DCE /* Crashlytics.framework */,
 				B0779D6F1EEBD2D10065FECD /* Comic_Book.ttf */,
-				B001C0F11F13B49C0000D05F /* giphy.gif */,
+				B06613891F16538C00D8E392 /* giphy.gif */,
 				B0A32B3D1EE1292F0044D443 /* JokeMaster */,
 				B0A32B5A1EE129300044D443 /* JokeMasterTests */,
 				B0A32B651EE129300044D443 /* JokeMasterUITests */,
@@ -871,7 +871,7 @@
 				B0A32B761EE12DC20044D443 /* comicbd_1.ttf in Resources */,
 				B07ABAE01EE590580011DD57 /* GoogleService-Info.plist in Resources */,
 				B099B0C91EF8F741004AC64C /* JMSearchView.xib in Resources */,
-				B001C0F21F13B49D0000D05F /* giphy.gif in Resources */,
+				B066138A1F16538C00D8E392 /* giphy.gif in Resources */,
 				B0A5C4C41EFE6F83002FB26D /* ExtendedViews.xib in Resources */,
 				B0A32B511EE129300044D443 /* LaunchScreen.storyboard in Resources */,
 				B0A32B4E1EE129300044D443 /* Assets.xcassets in Resources */,
@@ -1086,8 +1086,8 @@
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: ESolz Technologies Pvt Ltd (K22GQFS8BW)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: ESolz Technologies Pvt Ltd (K22GQFS8BW)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Manish Sethia (6Y3K8LCSQQ)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Manish Sethia (6Y3K8LCSQQ)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = K22GQFS8BW;
@@ -1110,7 +1110,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "0c21bb5a-59d7-4b1c-98cc-f9dc21e002e9";
+				PROVISIONING_PROFILE = "114b26d7-b348-4835-9e5f-e2360b6c3aa9";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1138,8 +1138,8 @@
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: ESolz Technologies Pvt Ltd (K22GQFS8BW)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: ESolz Technologies Pvt Ltd (K22GQFS8BW)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Manish Sethia (6Y3K8LCSQQ)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Manish Sethia (6Y3K8LCSQQ)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = K22GQFS8BW;
@@ -1155,7 +1155,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "0c21bb5a-59d7-4b1c-98cc-f9dc21e002e9";
+				PROVISIONING_PROFILE = "114b26d7-b348-4835-9e5f-e2360b6c3aa9";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -1167,8 +1167,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = JokeMaster/JokeMaster.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: ESolz Technologies Pvt Ltd (K22GQFS8BW)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: ESolz Technologies Pvt Ltd (K22GQFS8BW)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Manish Sethia (6Y3K8LCSQQ)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Manish Sethia (6Y3K8LCSQQ)";
 				DEVELOPMENT_TEAM = K22GQFS8BW;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1186,8 +1186,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.esolz.JokeMaster;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "0c21bb5a-59d7-4b1c-98cc-f9dc21e002e9";
-				PROVISIONING_PROFILE_SPECIFIER = jokemaster_adhoc;
+				PROVISIONING_PROFILE = "114b26d7-b348-4835-9e5f-e2360b6c3aa9";
+				PROVISIONING_PROFILE_SPECIFIER = jokemaster_dev;
 			};
 			name = Debug;
 		};
@@ -1196,8 +1196,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = JokeMaster/JokeMaster.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: ESolz Technologies Pvt Ltd (K22GQFS8BW)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: ESolz Technologies Pvt Ltd (K22GQFS8BW)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Manish Sethia (6Y3K8LCSQQ)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Manish Sethia (6Y3K8LCSQQ)";
 				DEVELOPMENT_TEAM = K22GQFS8BW;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1214,8 +1214,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.esolz.JokeMaster;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "0c21bb5a-59d7-4b1c-98cc-f9dc21e002e9";
-				PROVISIONING_PROFILE_SPECIFIER = jokemaster_adhoc;
+				PROVISIONING_PROFILE = "114b26d7-b348-4835-9e5f-e2360b6c3aa9";
+				PROVISIONING_PROFILE_SPECIFIER = jokemaster_dev;
 			};
 			name = Release;
 		};

@@ -15,7 +15,7 @@
 #import "UrlconnectionObject.h"
 @interface JMPlayVideoViewController : JMGlobalMethods<UITableViewDelegate,UITableViewDataSource>
 {
-    UrlconnectionObject *urlobj;
+   // UrlconnectionObject *urlobj;
     NSMutableDictionary *VideoDictionary;
     NSString *VideoPosterId;
 }
@@ -102,4 +102,5 @@
 @property (strong, nonatomic) IBOutlet FLAnimatedImageView *gifImage;
 @property (strong, nonatomic) IBOutlet UILabel *noVideoLbl;
 
+@property (strong, nonatomic) IBOutlet UIView *playBackView;
 @end

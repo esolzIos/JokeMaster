@@ -11,10 +11,12 @@
 //  AppDelegate.m
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <GoogleSignIn/GoogleSignIn.h>
-
+#import "JMPlayVideoViewController.h"
 
 @interface AppDelegate ()
-
+{
+    NSString *CurrentViewController;
+}
 @end
 
 @implementation AppDelegate
@@ -291,5 +293,43 @@
     //    [[NSUserDefaults standardUserDefaults] setObject:@"cb8143a8becd78c317b8e0c722c9177a4b9579ab25f5e2f5f4fe806dc2937a3e" forKey:@"deviceToken"];
     [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"deviceToken"];
     
+}
+- (UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window
+{
+    
+    
+    UIViewController *topMostViewControllerObj = [self topViewController];
+    CurrentViewController = NSStringFromClass([topMostViewControllerObj class]);
+    
+    
+    NSLog(@"display controller%@",CurrentViewController);
+    
+    
+    if ([CurrentViewController isEqualToString:@"JMPlayVideoViewController"])
+    {
+        return UIInterfaceOrientationMaskAll;
+    }
+    else return UIInterfaceOrientationMaskPortrait;
+}
+- (UIViewController*)topViewController
+{
+    return [self topViewControllerWithRootViewController:[UIApplication sharedApplication].keyWindow.rootViewController];
+}
+- (UIViewController*)topViewControllerWithRootViewController:(UIViewController*)rootViewController
+{
+    if ([rootViewController isKindOfClass:[UITabBarController class]]) {
+        UITabBarController* tabBarController = (UITabBarController*)rootViewController;
+        return [self topViewControllerWithRootViewController:tabBarController.selectedViewController];
+    } else if ([rootViewController isKindOfClass:[UINavigationController class]]) {
+        UINavigationController* navigationController = (UINavigationController*)rootViewController;
+        return [self topViewControllerWithRootViewController:navigationController.visibleViewController];
+    } else if (rootViewController.presentedViewController) {
+//        UIViewController* presentedViewController = rootViewController.presentedViewController;
+//        return [self topViewControllerWithRootViewController:presentedViewController];
+        UINavigationController* navigationController = (UINavigationController*)rootViewController;
+        return [self topViewControllerWithRootViewController:navigationController.visibleViewController];
+    } else {
+        return rootViewController;
+    }
 }
 @end

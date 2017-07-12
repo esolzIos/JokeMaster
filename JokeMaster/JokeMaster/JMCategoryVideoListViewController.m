@@ -54,7 +54,7 @@
     MenuBaseView.frame = CGRectMake(0, self.view.frame.size.height, MenuBaseView.frame.size.width, MenuBaseView.frame.size.height);
     
     CategoryArray=[[NSMutableArray alloc] init];
-    urlobj=[[UrlconnectionObject alloc] init];
+  
     
     [ChooseCategoryLabel setFont:[UIFont fontWithName:ChooseCategoryLabel.font.fontName size:[self getFontSize:ChooseCategoryLabel.font.pointSize]]];
 }
@@ -70,19 +70,11 @@
 {
     
     
-    BOOL net=[urlobj connectedToNetwork];
-    if (net==YES)
+    if([self networkAvailable])
     {
-        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-            
-            if (page==1)
-            {
-                self.view.userInteractionEnabled = NO;
-                [self checkLoader];
-            }
-            
-        }];
-        [[NSOperationQueue new] addOperationWithBlock:^{
+        
+        
+[SVProgressHUD show];
             
             NSString *urlString;
             
@@ -98,26 +90,62 @@
             
             
             
+            NSURLSessionConfiguration *sessionConfig = [NSURLSessionConfiguration defaultSessionConfiguration];
+            session = [NSURLSession sessionWithConfiguration:sessionConfig delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
             
-            [urlobj getSessionJsonResponse:urlString  success:^(NSDictionary *responseDict)
-             {
-                 
-                 DebugLog(@"success %@ Status Code:%ld",responseDict,(long)urlobj.statusCode);
-                 
-                 
-                 self.view.userInteractionEnabled = YES;
-                 [SVProgressHUD dismiss];
-                 
-                 if (urlobj.statusCode==200)
-                 {
-                     if ([[responseDict objectForKey:@"status"] boolValue])
-                     {
+            [[session dataTaskWithURL:[NSURL URLWithString:urlString] completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+                
+                if (error) {
+                    NSLog(@"error = %@", error);
+                    
+//                    [_gifImage setHidden:YES];
+//                    [_noVideoView setHidden:NO];
+//                    [_noVideoLbl setText:@"Some error occured.\n\n Click to retry"];
+//                    [_loaderBtn setHidden:NO];
+                    
+                    // [_chooseBtn setUserInteractionEnabled:YES];
+                    
+                    return;
+                }
+                
+                if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
+                    NSError *jsonError;
+                   jsonResponse = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
+                    
+                    
+                    
+                    
+                    
+                    
+                    // [_chooseBtn setUserInteractionEnabled:YES];
+                    
+                    if (jsonError) {
+                        // Error Parsing JSON
+                        
+                        NSString *responseString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                        
+                        NSLog(@"response = %@",responseString);
+                        
+                        // [SVProgressHUD showInfoWithStatus:@"some error occured"];
+                        
+//                        [_gifImage setHidden:YES];
+//                        [_noVideoView setHidden:NO];
+//                        [_noVideoLbl setText:@"Some error occured.\n\n Click to retry"];
+//                        [_loaderBtn setHidden:NO];
+                        
+                    } else {
+                        // Success Parsing JSON
+                        // Log NSDictionary response:
+                        NSLog(@"result = %@",jsonResponse);
+                        if ([jsonResponse objectForKey:@"status"]) {
+
+                  
                          //  RecentVideoArray=[[responseDict objectForKey:@"details"] mutableCopy];
                          
-                         totalCount=[[responseDict objectForKey:@"totalcount"]intValue];
+                         totalCount=[[jsonResponse objectForKey:@"totalcount"]intValue];
                          
                          NSMutableArray *TempArray=[[NSMutableArray alloc] init];
-                         TempArray=[[responseDict objectForKey:@"videoDetails"] mutableCopy];
+                         TempArray=[[jsonResponse objectForKey:@"videoDetails"] mutableCopy];
                          
                          
                          
@@ -137,54 +165,48 @@
                          }
                          
                      }
-                     else
-                     {
-                  
-                         
-                         if (page==1)
-                         {
-                             [SVProgressHUD showInfoWithStatus:[responseDict objectForKey:@"message"]];
-                         }
-                         
-                         
-                     }
+                        else{
+                            
+                                                        if (videoArr.count==0) {
+                            
+                                                            [SVProgressHUD dismiss];
+                                                      }
+                                                        else{
+                                                            [SVProgressHUD showInfoWithStatus:[jsonResponse objectForKey:@"message"]];
+                                                        }
+                            
+//                            [_gifImage setHidden:YES];
+//                            [_noVideoView setHidden:NO];
+//                            [_noVideoLbl setText:[NSString stringWithFormat:@"%@\n\n Click to retry",[jsonResponse objectForKey:@"message"]]];
+//                            [_loaderBtn setHidden:NO];
+                            
+                        }
+                        
+
                      
                  }
-                 else if (urlobj.statusCode==500 || urlobj.statusCode==400)
-                 {
-                     //                     [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Server Failed to Respond" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
-                     
-                     
-                     [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Server Failed to Respond",nil)];
-                     
-                 }
-                 else
-                 {
-                     //                     [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Server Failed to Respond" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
-                     
-                     [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Server Failed to Respond",nil)];
-                 }
+                }
+                
+                
+      
+              
+              
+              }]resume ];
                  
              }
-                                   failure:^(NSError *error) {
-                                       
-                                       // [self checkLoader];
-                                       self.view.userInteractionEnabled = YES;
-                                       NSLog(@"Failure");
-                                       //                                       [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Server Failed to Respond" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
-                                       
-                                       [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Server Failed to Respond",nil)];
-                                       
-                                   }
-             ];
-        }];
-    }
-    else
-    {
-        
-        [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
-        
-    }
+         else{
+             
+             
+//             [_gifImage setHidden:YES];
+//             [_noVideoView setHidden:NO];
+//             [_noVideoLbl setText:[NSString stringWithFormat:@"Check your Internet connection\n\n Click to retry"]];
+//             [_loaderBtn setHidden:NO];
+             
+               [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
+             
+             
+         }
+         
 }
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -475,16 +497,13 @@
 {
     
     
-    BOOL net=[urlobj connectedToNetwork];
-    if (net==YES)
+    if([self networkAvailable])
     {
-        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-            
-            self.view.userInteractionEnabled = NO;
-            [self checkLoader];
-        }];
-        [[NSOperationQueue new] addOperationWithBlock:^{
-            
+        
+            [ChooseCategoryBtn setUserInteractionEnabled:NO];
+        
+        //[SVProgressHUD show];
+        
             NSString *urlString;
             
             
@@ -497,22 +516,58 @@
             DebugLog(@"Send string Url%@",urlString);
             
             
+        
+        NSURLSessionConfiguration *sessionConfig = [NSURLSessionConfiguration defaultSessionConfiguration];
+        session = [NSURLSession sessionWithConfiguration:sessionConfig delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
+        
+        [[session dataTaskWithURL:[NSURL URLWithString:urlString] completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
             
+      
+            if (error) {
+                NSLog(@"error = %@", error);
+                
+//                [_gifImage setHidden:YES];
+//                [_noVideoView setHidden:NO];
+//                [_noVideoLbl setText:@"Some error occured.\n\n Click to retry"];
+//                [_loaderBtn setHidden:NO];
+                
+                     [ChooseCategoryBtn setUserInteractionEnabled:YES];
+                
+                return;
+            }
             
-            [urlobj getSessionJsonResponse:urlString  success:^(NSDictionary *responseDict)
-             {
-                 
-                 DebugLog(@"success %@ Status Code:%ld",responseDict,(long)urlobj.statusCode);
-                 
-                 
-                 self.view.userInteractionEnabled = YES;
-                 [self checkLoader];
-                 
-                 if (urlobj.statusCode==200)
-                 {
-                     if ([[responseDict objectForKey:@"status"] boolValue]==YES)
-                     {
-                         CategoryArray=[[responseDict objectForKey:@"details"] mutableCopy];
+            if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
+                NSError *jsonError;
+              jsonResponse = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
+                
+                
+                
+                
+                
+                
+               [ChooseCategoryBtn setUserInteractionEnabled:YES];
+                
+                if (jsonError) {
+                    // Error Parsing JSON
+                    
+                    NSString *responseString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                    
+                    NSLog(@"response = %@",responseString);
+                    
+                    // [SVProgressHUD showInfoWithStatus:@"some error occured"];
+                    
+//                    [_gifImage setHidden:YES];
+//                    [_noVideoView setHidden:NO];
+//                    [_noVideoLbl setText:@"Some error occured.\n\n Click to retry"];
+//                    [_loaderBtn setHidden:NO];
+                    
+                } else {
+                    // Success Parsing JSON
+                    // Log NSDictionary response:
+                    NSLog(@"result = %@",jsonResponse);
+                    if ([[jsonResponse objectForKey:@"status"]boolValue]) {
+
+                         CategoryArray=[[jsonResponse objectForKey:@"details"] mutableCopy];
                          
                          
                          if (CategoryArray.count>0)
@@ -533,45 +588,49 @@
 
                          
                      }
-                     else
-                     {
-                         [SVProgressHUD showInfoWithStatus:[responseDict objectForKey:@"message"]];
-                         //                         [[[UIAlertView alloc]initWithTitle:@"Error!" message:[responseDict objectForKey:@"message"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
-                     }
-                     
-                 }
-                 else if (urlobj.statusCode==500 || urlobj.statusCode==400)
-                 {
-                     //                     [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Server Failed to Respond" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
-                     
-                     [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Server Failed to Respond",nil)];
-                     
-                 }
-                 else
-                 {
-                     //                     [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Server Failed to Respond" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
-                     
-                     [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Server Failed to Respond",nil)];
-                 }
-                 
-             }
-                                   failure:^(NSError *error) {
-                                       
-                                       [self checkLoader];
-                                       self.view.userInteractionEnabled = YES;
-                                       NSLog(@"Failure");
-                                       //                                       [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Server Failed to Respond" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
-                                       
-                                       [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Server Failed to Respond",nil)];
-                                       
-                                   }
-             ];
-        }];
+                    else{
+                        
+                                                    if (CategoryArray.count==0) {
+                        
+                                                        [SVProgressHUD dismiss];
+                                                  }
+                                                    else{
+                                                        [SVProgressHUD showInfoWithStatus:[jsonResponse objectForKey:@"message"]];
+                                                    }
+                        
+//                        [_gifImage setHidden:YES];
+//                        [_noVideoView setHidden:NO];
+//                        [_noVideoLbl setText:[NSString stringWithFormat:@"%@\n\n Click to retry",[jsonResponse objectForKey:@"message"]]];
+//                        [_loaderBtn setHidden:NO];
+                        
+                    }
+                    
+                }
+                
+                
+            }
+            
+            
+        }]resume ];
+        
+        
+        
+        
+        
     }
-    else
-    {
-        [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
-        //        [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Network Not Available." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
+    
+    else{
+        
+        
+//        [_gifImage setHidden:YES];
+//        [_noVideoView setHidden:NO];
+//        [_noVideoLbl setText:[NSString stringWithFormat:@"Check your Internet connection\n\n Click to retry"]];
+//        [_loaderBtn setHidden:NO];
+        
+          [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
+        
+        
     }
+
 }
 @end
