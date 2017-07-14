@@ -454,6 +454,27 @@
         }
     }
 }
+- (IBAction)loaderClicked:(id)sender {
+    
+    
+    [_gifImage setHidden:NO];
+    [_noVideoView setHidden:YES];
+    [_noVideoLbl setText:@""];
+    [_loaderBtn setHidden:YES];
+    
+  
+    page=1;
+    totalCount=0;
+    [videoArr removeAllObjects];
+    
+    
+    [self searchClicked];
+
+    
+    
+    
+    
+}
 /*
 #pragma mark - Navigation
 

@@ -84,59 +84,21 @@ AVPlayer *player;
     controller = [[AVPlayerViewController alloc]init];
 
     
+       [_noreviewLbl setHidden:YES];
+    
    DebugLog(@"video details %@",VideoDictionary);
 
-//      if (inFullscreen) {
-//        [_optionView setHidden:NO];
-//        inFullscreen=NO;
-//        CABasicAnimation* anim = [CABasicAnimation animationWithKeyPath:@"transform.scale"];
-//        anim.duration = 0.4;
-//        anim.toValue = [NSNumber numberWithFloat:0.8];
-//        anim.removedOnCompletion = NO;
-//        anim.fillMode = kCAFillModeForwards;
-//        
-//        [anim setRepeatCount:NSUIntegerMax];
-//        [anim setAutoreverses:YES];
-//        
-//        [[_ratingImage layer] addAnimation:anim forKey:nil];
-//          
-//                      _seekSlider.value = CMTimeGetSeconds( player.currentItem.currentTime);
-//              
-//              AVPlayerItem *currentItem = player.currentItem;
-//              NSUInteger dTotalSeconds = CMTimeGetSeconds(currentItem.currentTime);
-//              
-//              NSUInteger dMinutes = floor(dTotalSeconds % 3600 / 60);
-//              NSUInteger dSeconds = floor(dTotalSeconds % 3600 % 60);
-//              
-//              NSString *videoDurationText = [NSString stringWithFormat:@"%02lu:%02lu", (unsigned long)dMinutes, (unsigned long)dSeconds];
-//              
-//              DebugLog(@"time: %@",videoDurationText);
-//              
-//              
-//              [_timeLbl setText:[NSString stringWithFormat:@"%@",videoDurationText]];
-//     
-//
-//          CMTime showingTime = CMTimeMake(_seekSlider.value *1000, 1000);
-//          
-//          [player seekToTime:showingTime toleranceBefore:kCMTimeZero toleranceAfter:kCMTimeZero];
-//          
-//          paused=true;
-//          [_playPauseImg setImage:[UIImage imageNamed:@"play-1"]];
-//          [player pause];
-//          
-//
-//    }
-//    else{
-//        
-//       
-//        
-//        
-//     
-//        
+    [_tvView setHidden:YES];
+    [_ratingView setHidden:YES];
+    [_ratingLbl setHidden:YES];
+    [_ownerView setHidden:YES];
+    [_reviewHeaderView setHidden:YES];
+    [_reviewTable setHidden:YES];
+    
     
         [self VideoDetailsApi];
         
-       // }
+    
     
 }
 
@@ -383,11 +345,15 @@ AVPlayer *player;
                 } else {
                     // Success Parsing JSON
                     // Log NSDictionary response:
+                    
+                    
+                    [_rateView setHidden:YES];
+                    
                     NSLog(@"result = %@",jsonResponse);
                     if ([[jsonResponse objectForKey:@"status"]boolValue]) {
                         
                          [SVProgressHUD dismiss];
-                 
+                    [self VideoDetailsApi];
                          
                      }
                      else
@@ -721,9 +687,17 @@ AVPlayer *player;
 #pragma mark - status bar white color
 - (IBAction)commentClicked:(id)sender {
     
-    JMReviewViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMReview"];
-    VC.VideoId=[VideoDictionary objectForKey:@"video_id"];
-    [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
+    if (app.isLogged) {
+        
+        JMReviewViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMReview"];
+        VC.VideoId=[VideoDictionary objectForKey:@"video_id"];
+        [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
+    }
+    else{
+        [SVProgressHUD showInfoWithStatus:@"Login required to Comment on videos"];
+    }
+    
+   
 }
 
 
@@ -785,7 +759,7 @@ else
 #pragma mark -Video Details API
 -(void)VideoDetailsApi
 {
-    
+    [_loaderView setHidden:NO];
    
     
     if([self networkAvailable])
@@ -793,7 +767,7 @@ else
         
         
         
-    [SVProgressHUD show];
+   // [SVProgressHUD show];
             
             NSString *urlString;
             
@@ -827,10 +801,10 @@ else
             if (error) {
                 NSLog(@"error = %@", error);
                 
-//                [_gifImage setHidden:YES];
-//                [_errorView setHidden:NO];
-//                [_noVideoLbl setText:@"Some error occured.\n\n Click to retry"];
-//                [_loaderBtn setHidden:NO];
+                [_gifImage setHidden:YES];
+                [_errorView setHidden:NO];
+                [_noVideoLbl setText:@"Some error occured.\n\n Click to retry"];
+                [_loaderBtn setHidden:NO];
                 
                 // [_chooseBtn setUserInteractionEnabled:YES];
                 
@@ -855,12 +829,12 @@ else
                     
                     NSLog(@"response = %@",responseString);
                     
-                     [SVProgressHUD showInfoWithStatus:@"some error occured"];
+                    // [SVProgressHUD showInfoWithStatus:@"some error occured"];
                     
-//                    [_gifImage setHidden:YES];
-//                    [_errorView setHidden:NO];
-//                    [_noVideoLbl setText:@"Some error occured.\n\n Click to retry"];
-//                    [_loaderBtn setHidden:NO];
+                    [_gifImage setHidden:YES];
+                    [_errorView setHidden:NO];
+                    [_noVideoLbl setText:@"Some error occured.\n\n Click to retry"];
+                    [_loaderBtn setHidden:NO];
                     
                 } else {
                     // Success Parsing JSON
@@ -869,123 +843,149 @@ else
                     if ([[jsonResponse objectForKey:@"status"]boolValue]) {
                         
 
-                        [SVProgressHUD dismiss];
+                 
                      
                          VideoDictionary=[[jsonResponse objectForKey:@"details"] mutableCopy];
                          
-                         liked=[[VideoDictionary objectForKey:@"like"]boolValue];
-                         
-                         if (liked) {
-                             [_likeImage setImage:[UIImage imageNamed:@"like"]];
-                             
-                         }
-                         else{
-                             [_likeImage setImage:[UIImage imageNamed:@"unlike"]];
-                         }
-
-                         
-                         _VideoNameLabel.text=[VideoDictionary objectForKey:@"videoname"];
-                         
-                         _ownerName.text=[VideoDictionary objectForKey:@"username"];
-                         VideoPosterId=[VideoDictionary objectForKey:@"user_id"];
-                         
-                         
-                         _ratingLbl.text=[NSString stringWithFormat:@"%@/5",[VideoDictionary objectForKey:@"video_average_rating"]];
-                         
-                         _viewCountLbl.text=[NSString stringWithFormat:@"%@ VIEWS",[VideoDictionary objectForKey:@"views"]];
-                         
-                         _rankLbl.text=[NSString stringWithFormat:@"RANK %@",[VideoDictionary objectForKey:@"rank"]];
-                         
-                         _ratingView.maximumValue = 5;
-                         _ratingView.minimumValue = 0;
-                         _ratingView.allowsHalfStars = YES;
-                         _ratingView.value =[[VideoDictionary objectForKey:@"video_average_rating"] floatValue];
-                         _ratingView.userInteractionEnabled=NO;
-                         //    _RatingView.tintColor = [UIColor clearColor];
-                       
-                         _ratingView.accurateHalfStars = YES;
-                         _ratingView.halfStarImage = [[UIImage imageNamed:@"emotion1"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-                         _ratingView.emptyStarImage = [[UIImage imageNamed:@"emotion"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-                         _ratingView.filledStarImage = [[UIImage imageNamed:@"emotion2"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-                         _ratingView.hidden=NO;
-                         
-                         [_videoThumb sd_setImageWithURL:[NSURL URLWithString:[VideoDictionary objectForKey:@"videoimagename"]] placeholderImage:[UIImage imageNamed: @"noimage"]];
-                         
-                          [_ownerImage sd_setImageWithURL:[NSURL URLWithString:[VideoDictionary objectForKey:@"userimage"]] placeholderImage:[UIImage imageNamed: @"noimage"]];
-                         
-                         NSURL *videoURL;
-                        
-                             videoURL = [NSURL URLWithString:[VideoDictionary objectForKey:@"video_file"]];
-                         
-                         AVPlayerItem *item = [AVPlayerItem playerItemWithURL:videoURL];
-                         
-                         player = [AVPlayer playerWithPlayerItem:item];
+                    
                         
                         
-                        [player addObserver:self forKeyPath:@"rate" options:0 context:nil];
-            
-                        [player addObserver:self forKeyPath:@"status" options:0 context:nil];
                         
-                        [item addObserver:self forKeyPath:@"playbackBufferEmpty" options:NSKeyValueObservingOptionNew context:nil];
-                        [item addObserver:self forKeyPath:@"playbackLikelyToKeepUp" options:NSKeyValueObservingOptionNew context:nil];
+                        dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void)
                         
-                 [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(playerDidFinishPlaying:) name:AVPlayerItemDidPlayToEndTimeNotification object:item];
-                 
-                 [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(playerDidFinishPlaying:) name:AVPlayerItemPlaybackStalledNotification object:item];
+                        {
+                            NSURL *videoURL;
+                            
+                            videoURL = [NSURL URLWithString:[VideoDictionary objectForKey:@"video_file"]];
+                            
+                            AVPlayerItem *item = [AVPlayerItem playerItemWithURL:videoURL];
+                            
+                            player = [AVPlayer playerWithPlayerItem:item];
+                            
+                            
+                            [player addObserver:self forKeyPath:@"rate" options:0 context:nil];
+                            
+                            [player addObserver:self forKeyPath:@"status" options:0 context:nil];
+                            
+                            [item addObserver:self forKeyPath:@"playbackBufferEmpty" options:NSKeyValueObservingOptionNew context:nil];
+                            [item addObserver:self forKeyPath:@"playbackLikelyToKeepUp" options:NSKeyValueObservingOptionNew context:nil];
+                            
                             [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(playerDidFinishPlaying:) name:AVPlayerItemDidPlayToEndTimeNotification object:item];
+                            
+                            [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(playerDidFinishPlaying:) name:AVPlayerItemPlaybackStalledNotification object:item];
+                            [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(playerDidFinishPlaying:) name:AVPlayerItemDidPlayToEndTimeNotification object:item];
+                            
+                            
+                            dispatch_async(dispatch_get_main_queue(), ^(void){
+                                
+                                CALayer *superlayer = _playerView.layer;
+                                
+                                AVPlayerLayer *playerLayer = [AVPlayerLayer playerLayerWithPlayer:player];
+                                [playerLayer setFrame:self.playerView.bounds];
+                                playerLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
+                                [superlayer addSublayer:playerLayer];
+                                
+                                // create a player view controller
+                                
+                                
+                                _seekSlider.maximumValue = CMTimeGetSeconds(player.currentItem.asset.duration);
+                                _seekSlider.value = 0.0;
+                                
+                                //  [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(updateTime:) userInfo:nil repeats:YES];
+                                
+                                CMTime interval = CMTimeMakeWithSeconds(1.0, NSEC_PER_SEC);
+                                
+                           //     dispatch_queue_t mainQueue = dispatch_get_main_queue();
+                                
+                                [player addPeriodicTimeObserverForInterval:interval queue:nil usingBlock:^(CMTime time) {
+                                    _seekSlider.value = CMTimeGetSeconds( player.currentItem.currentTime);
+                                    
+                                    AVPlayerItem *currentItem = player.currentItem;
+                                    NSUInteger dTotalSeconds = CMTimeGetSeconds(currentItem.duration)-CMTimeGetSeconds(currentItem.currentTime);
+                                    
+                                    NSUInteger dMinutes = floor(dTotalSeconds % 3600 / 60);
+                                    NSUInteger dSeconds = floor(dTotalSeconds % 3600 % 60);
+                                    
+                                    NSString *videoDurationText = [NSString stringWithFormat:@"-%02lu:%02lu", (unsigned long)dMinutes, (unsigned long)dSeconds];
+                                    
+                                    DebugLog(@" tracking time: %@",videoDurationText);
+                                    
+                                    [_timeLbl setText:[NSString stringWithFormat:@"%@",videoDurationText]];
+                                }];
+                                
+                                [player seekToTime:kCMTimeZero];
+                                paused=true;
+                                [_playPauseImg setImage:[UIImage imageNamed:@"play-1"]];
+                                // [player play];
+                                
+                                mainscroll.userInteractionEnabled=YES;
+                                [_commentView setUserInteractionEnabled:YES];
+                                
+                                
+                                liked=[[VideoDictionary objectForKey:@"like"]boolValue];
+                                
+                                if (liked) {
+                                    [_likeImage setImage:[UIImage imageNamed:@"like"]];
+                                    
+                                }
+                                else{
+                                    [_likeImage setImage:[UIImage imageNamed:@"unlike"]];
+                                }
+                                
+                                
+                                _VideoNameLabel.text=[VideoDictionary objectForKey:@"videoname"];
+                                
+                                _ownerName.text=[VideoDictionary objectForKey:@"username"];
+                                VideoPosterId=[VideoDictionary objectForKey:@"user_id"];
+                                
+                                
+                                _ratingLbl.text=[NSString stringWithFormat:@"%@/5",[VideoDictionary objectForKey:@"video_average_rating"]];
+                                
+                                _viewCountLbl.text=[NSString stringWithFormat:@"%@ VIEWS",[VideoDictionary objectForKey:@"views"]];
+                                
+                                _rankLbl.text=[NSString stringWithFormat:@"RANK %@",[VideoDictionary objectForKey:@"rank"]];
+                                
+                                _ratingView.maximumValue = 5;
+                                _ratingView.minimumValue = 0;
+                                _ratingView.allowsHalfStars = YES;
+                                _ratingView.value =[[VideoDictionary objectForKey:@"video_average_rating"] floatValue];
+                                _ratingView.userInteractionEnabled=NO;
+                                //    _RatingView.tintColor = [UIColor clearColor];
+                                
+                                _ratingView.accurateHalfStars = YES;
+                                _ratingView.halfStarImage = [[UIImage imageNamed:@"emotion1"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+                                _ratingView.emptyStarImage = [[UIImage imageNamed:@"emotion"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+                                _ratingView.filledStarImage = [[UIImage imageNamed:@"emotion2"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+                                _ratingView.hidden=NO;
+                                
+                                [_videoThumb sd_setImageWithURL:[NSURL URLWithString:[VideoDictionary objectForKey:@"videoimagename"]] placeholderImage:[UIImage imageNamed: @"noimage"]];
+                                
+                                [_ownerImage sd_setImageWithURL:[NSURL URLWithString:[VideoDictionary objectForKey:@"userimage"]] placeholderImage:[UIImage imageNamed: @"noimage"]];
+                                
+                                
+                                totalCount=0;
+                                page=1;
+                                reviewArr=[[NSMutableArray alloc]init];
+                                
+                                [self getReviews];
+                                
+                                
+                                [_tvView setHidden:NO];
+                                [_ratingView setHidden:NO];
+                                [_ratingLbl setHidden:NO];
+                                [_ownerView setHidden:NO];
+                                [_reviewHeaderView setHidden:NO];
+                                [_reviewTable setHidden:NO];
+                                [_loaderView setHidden:YES];
+                                //Run UI Updates
+                            });
+                        });
                         
-                        CALayer *superlayer = _playerView.layer;
                         
-                        AVPlayerLayer *playerLayer = [AVPlayerLayer playerLayerWithPlayer:player];
-                        [playerLayer setFrame:self.playerView.bounds];
-                        playerLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
-                        [superlayer addSublayer:playerLayer];
-                         
-                         // create a player view controller
-                         
-                         
-                         _seekSlider.maximumValue = CMTimeGetSeconds(player.currentItem.asset.duration);
-                         _seekSlider.value = 0.0;
-                         
-                         //  [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(updateTime:) userInfo:nil repeats:YES];
-                         
-                         CMTime interval = CMTimeMakeWithSeconds(1.0, NSEC_PER_SEC);
                         
-                            dispatch_queue_t mainQueue = dispatch_get_main_queue();
+                       
                         
-                         [player addPeriodicTimeObserverForInterval:interval queue:mainQueue usingBlock:^(CMTime time) {
-                             _seekSlider.value = CMTimeGetSeconds( player.currentItem.currentTime);
-                             
-                             AVPlayerItem *currentItem = player.currentItem;
-                             NSUInteger dTotalSeconds = CMTimeGetSeconds(currentItem.duration)-CMTimeGetSeconds(currentItem.currentTime);
-                             
-                             NSUInteger dMinutes = floor(dTotalSeconds % 3600 / 60);
-                             NSUInteger dSeconds = floor(dTotalSeconds % 3600 % 60);
-                             
-                             NSString *videoDurationText = [NSString stringWithFormat:@"-%02lu:%02lu", (unsigned long)dMinutes, (unsigned long)dSeconds];
-                             
-                             DebugLog(@" tracking time: %@",videoDurationText);
-                             
-                             [_timeLbl setText:[NSString stringWithFormat:@"%@",videoDurationText]];
-                         }];
-                         
-                         [player seekToTime:kCMTimeZero];
-                         paused=true;
-                         [_playPauseImg setImage:[UIImage imageNamed:@"play-1"]];
-                         // [player play];
-
-                         mainscroll.userInteractionEnabled=YES;
-                        [_commentView setUserInteractionEnabled:YES];
-                     
-                     totalCount=0;
-                     page=1;
-                     reviewArr=[[NSMutableArray alloc]init];
-                     
-                     [self getReviews];
-                     
-          
-                     
-                     
+                        
                  }
                     
                     else{
@@ -1025,12 +1025,12 @@ else
     else{
         
         
-//        [_gifImage setHidden:YES];
-//        [_errorView setHidden:NO];
-//        [_noVideoLbl setText:[NSString stringWithFormat:@"Check your Internet connection\n\n Click to retry"]];
-//        [_loaderBtn setHidden:NO];
+        [_gifImage setHidden:YES];
+        [_errorView setHidden:NO];
+        [_noVideoLbl setText:[NSString stringWithFormat:@"Check your Internet connection\n\n Click to retry"]];
+        [_loaderBtn setHidden:NO];
         
-          [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
+         // [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
         
         
     }
@@ -1043,7 +1043,7 @@ else
         
         
         
-        [SVProgressHUD show];
+       // [SVProgressHUD show];
         
         
         
@@ -1217,7 +1217,7 @@ else
         
         
         
-        [SVProgressHUD show];
+      //  [SVProgressHUD show];
         
         
         
@@ -1266,7 +1266,7 @@ else
                     
                     NSLog(@"response = %@",responseString);
                     
-                    [SVProgressHUD showInfoWithStatus:@"some error occured"];
+                  //  [SVProgressHUD showInfoWithStatus:@"some error occured"];
                     
                 } else {
                     // Success Parsing JSON
@@ -1276,7 +1276,7 @@ else
                         
                         
                         viewed=true;
-                     [SVProgressHUD dismiss];
+                    // [SVProgressHUD dismiss];
                         
                         
                         
@@ -1287,10 +1287,10 @@ else
                         
                     
                             
-                            [SVProgressHUD dismiss];
+                           // [SVProgressHUD dismiss];
                      
                        
-                            [SVProgressHUD showInfoWithStatus:[jsonResponse objectForKey:@"message"]];
+                           // [SVProgressHUD showInfoWithStatus:[jsonResponse objectForKey:@"message"]];
                      
                         
                         
@@ -1317,7 +1317,7 @@ else
     else{
         
         
-        [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
+      //  [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
         
         
     }

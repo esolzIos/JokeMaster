@@ -279,11 +279,11 @@
     
     else{
         [_gifImage setHidden:YES];
-        [_noVideoView setHidden:NO];
+        [_errorView setHidden:NO];
         [_noVideoLbl setText:[NSString stringWithFormat:@"Check your Internet connection\n\n Click to retry"]];
         [_loaderBtn setHidden:NO];
         
-         [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
+        // [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
         
           //    [self RecentVideoApi];
     }
@@ -365,8 +365,10 @@
                     // Success Parsing JSON
                     // Log NSDictionary response:
                     NSLog(@"result = %@",jsonResponse);
+                    
                     [_ratingView setHidden:YES];
-                    self.view.userInteractionEnabled = YES;
+                    
+             //       self.view.userInteractionEnabled = YES;
                     
                     if ([[jsonResponse objectForKey:@"status"]boolValue]) {
        
@@ -889,7 +891,7 @@
                         if (jokeNotFound) {
                             [_gifImage setHidden:YES];
                             [_errorView setHidden:NO];
-                            [_noVideoLbl setText:@"Some error occured.\n\n Click to retry"];
+                            [_noVideoLbl setText:@"No videos Found.\n\n Click to retry"];
                             [_loaderBtn setHidden:NO];
                         }
                         else{

@@ -57,24 +57,29 @@
   
     
     [ChooseCategoryLabel setFont:[UIFont fontWithName:ChooseCategoryLabel.font.fontName size:[self getFontSize:ChooseCategoryLabel.font.pointSize]]];
-}
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
     
+    NSString* filePath = [[NSBundle mainBundle] pathForResource:@"giphy.gif" ofType:nil];
+    NSData* imageData = [NSData dataWithContentsOfFile:filePath];
     
+    _gifImage.animatedImage = [FLAnimatedImage animatedImageWithGIFData:imageData];
+    
+    [self setRoundCornertoView:_gifImage withBorderColor:[UIColor clearColor] WithRadius:0.15];
+    [self setRoundCornertoView:_noVideoView withBorderColor:[UIColor clearColor] WithRadius:0.15];
+    [self setRoundCornertoView:_loaderImage withBorderColor:[UIColor clearColor] WithRadius:0.15];
+    [_noVideoLbl setFont:[UIFont fontWithName:_noVideoLbl.font.fontName size:[self getFontSize:_noVideoLbl.font.pointSize]]];
 }
+
 
 #pragma mark -Video list API
 -(void)loadVideos
 {
-    
+    [_loaderView setHidden:NO];
     
     if([self networkAvailable])
     {
         
         
-[SVProgressHUD show];
+//[SVProgressHUD show];
             
             NSString *urlString;
             
@@ -89,7 +94,7 @@
             DebugLog(@"Send string Url%@",urlString);
             
             
-            
+        
             NSURLSessionConfiguration *sessionConfig = [NSURLSessionConfiguration defaultSessionConfiguration];
             session = [NSURLSession sessionWithConfiguration:sessionConfig delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
             
@@ -98,10 +103,10 @@
                 if (error) {
                     NSLog(@"error = %@", error);
                     
-//                    [_gifImage setHidden:YES];
-//                    [_noVideoView setHidden:NO];
-//                    [_noVideoLbl setText:@"Some error occured.\n\n Click to retry"];
-//                    [_loaderBtn setHidden:NO];
+                    [_gifImage setHidden:YES];
+                    [_noVideoView setHidden:NO];
+                    [_noVideoLbl setText:@"Some error occured.\n\n Click to retry"];
+                    [_loaderBtn setHidden:NO];
                     
                     // [_chooseBtn setUserInteractionEnabled:YES];
                     
@@ -128,17 +133,18 @@
                         
                         // [SVProgressHUD showInfoWithStatus:@"some error occured"];
                         
-//                        [_gifImage setHidden:YES];
-//                        [_noVideoView setHidden:NO];
-//                        [_noVideoLbl setText:@"Some error occured.\n\n Click to retry"];
-//                        [_loaderBtn setHidden:NO];
+                        [_gifImage setHidden:YES];
+                        [_noVideoView setHidden:NO];
+                        [_noVideoLbl setText:@"Some error occured.\n\n Click to retry"];
+                        [_loaderBtn setHidden:NO];
                         
                     } else {
                         // Success Parsing JSON
                         // Log NSDictionary response:
                         NSLog(@"result = %@",jsonResponse);
-                        if ([jsonResponse objectForKey:@"status"]) {
+                        if ([[jsonResponse objectForKey:@"status"]boolValue]) {
 
+                            [_loaderView setHidden:YES];
                   
                          //  RecentVideoArray=[[responseDict objectForKey:@"details"] mutableCopy];
                          
@@ -167,18 +173,20 @@
                      }
                         else{
                             
-                                                        if (videoArr.count==0) {
-                            
-                                                            [SVProgressHUD dismiss];
-                                                      }
-                                                        else{
-                                                            [SVProgressHUD showInfoWithStatus:[jsonResponse objectForKey:@"message"]];
-                                                        }
-                            
-//                            [_gifImage setHidden:YES];
-//                            [_noVideoView setHidden:NO];
-//                            [_noVideoLbl setText:[NSString stringWithFormat:@"%@\n\n Click to retry",[jsonResponse objectForKey:@"message"]]];
-//                            [_loaderBtn setHidden:NO];
+                            if (videoArr.count>0) {
+                                
+                                [_loaderView setHidden:YES];
+                                
+                            }
+                            else{
+                                
+                                
+                                [_gifImage setHidden:YES];
+                                [_noVideoView setHidden:NO];
+                                [_noVideoLbl setText:[NSString stringWithFormat:@"%@\n\n Click to retry",[jsonResponse objectForKey:@"message"]]];
+                                [_loaderBtn setHidden:NO];
+                            }
+
                             
                         }
                         
@@ -197,12 +205,12 @@
          else{
              
              
-//             [_gifImage setHidden:YES];
-//             [_noVideoView setHidden:NO];
-//             [_noVideoLbl setText:[NSString stringWithFormat:@"Check your Internet connection\n\n Click to retry"]];
-//             [_loaderBtn setHidden:NO];
+             [_gifImage setHidden:YES];
+             [_noVideoView setHidden:NO];
+             [_noVideoLbl setText:[NSString stringWithFormat:@"Check your Internet connection\n\n Click to retry"]];
+             [_loaderBtn setHidden:NO];
              
-               [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
+              // [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
              
              
          }
@@ -632,5 +640,24 @@
         
     }
 
+}
+- (IBAction)loaderClicked:(id)sender {
+    
+    
+    [_gifImage setHidden:NO];
+    [_noVideoView setHidden:YES];
+    [_noVideoLbl setText:@""];
+    [_loaderBtn setHidden:YES];
+    
+    videoArr=[[NSMutableArray alloc]init];
+    
+    page=1;
+    totalCount=0;
+    
+    [self loadVideos];
+    
+    
+    
+    
 }
 @end

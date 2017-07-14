@@ -16,6 +16,8 @@
 #import <AVFoundation/AVPlayerItem.h>
 #import <CoreMedia/CoreMedia.h>
 #import "JMHomeViewController.h"
+#import "AFNetworking.h"
+
 @import Photos;
 @import PhotosUI;
 
@@ -52,15 +54,7 @@
     
     [self addMoreView:self.view];
     
-    categoryArr=[[NSMutableArray alloc] init];
-    
-    //    langArr=[[NSMutableArray alloc] initWithObjects:@"English",@"Hebrew",@"Hindi",@"Chinese",@"Spanish", nil];
-    //
-    //    codeArr=[[NSMutableArray alloc] initWithObjects:@"en",@"he",@"hi",@"zh",@"es", nil];
-    
-    langArr=[[NSMutableArray alloc] init];
-    
-    codeArr=[[NSMutableArray alloc] init];
+
     
     [_languagePicker setDelegate:self];
     
@@ -74,6 +68,8 @@
     [_okLbl setFont:[UIFont fontWithName:_okLbl.font.fontName size:[self getFontSize:_okLbl.font.pointSize]]];
     [_cancelLabl setFont:[UIFont fontWithName:_cancelLabl.font.fontName size:[self getFontSize:_cancelLabl.font.pointSize]]];
     
+        [_loadingLbl setFont:[UIFont fontWithName:_loadingLbl.font.fontName size:[self getFontSize:_loadingLbl.font.pointSize]]];
+    
     [_tapInfo setFont:[UIFont fontWithName:_tapInfo.font.fontName size:[self getFontSize:_tapInfo.font.pointSize]]];
     
     [_cameraLbl setFont:[UIFont fontWithName:_cameraLbl.font.fontName size:[self getFontSize:_cameraLbl.font.pointSize]]];
@@ -83,16 +79,33 @@
     
     // Do any additional setup after loading the view.
     
-    [_mainScroll setContentSize:CGSizeMake(FULLWIDTH,  465.0/480.0*FULLHEIGHT)];
+    [_mainScroll setContentSize:CGSizeMake(FULLWIDTH,  470.0/480.0*FULLHEIGHT)];
     
+    NSString* filePath = [[NSBundle mainBundle] pathForResource:@"giphy.gif" ofType:nil];
+    NSData* imageD = [NSData dataWithContentsOfFile:filePath];
     
+    _gifImage.animatedImage = [FLAnimatedImage animatedImageWithGIFData:imageD];
+    
+    [self setRoundCornertoView:_gifImage withBorderColor:[UIColor clearColor] WithRadius:0.15];
+    [self setRoundCornertoView:_noVideoView withBorderColor:[UIColor clearColor] WithRadius:0.15];
+    [self setRoundCornertoView:_loaderImage withBorderColor:[UIColor clearColor] WithRadius:0.15];
+    
+    [_noVideoLbl setFont:[UIFont fontWithName:_noVideoLbl.font.fontName size:[self getFontSize:_noVideoLbl.font.pointSize]]];
     
 }
 
 -(void)viewWillAppear:(BOOL)animated
 
 {
+    categoryArr=[[NSMutableArray alloc] init];
     
+    //    langArr=[[NSMutableArray alloc] initWithObjects:@"English",@"Hebrew",@"Hindi",@"Chinese",@"Spanish", nil];
+    //
+    //    codeArr=[[NSMutableArray alloc] initWithObjects:@"en",@"he",@"hi",@"zh",@"es", nil];
+    
+    langArr=[[NSMutableArray alloc] init];
+    
+    codeArr=[[NSMutableArray alloc] init];
     [_langBtn setUserInteractionEnabled:NO];
     [_categoryBtn setUserInteractionEnabled:NO];
     
@@ -115,10 +128,7 @@
  }
  */
 
-- (IBAction)Test:(id)sender
-{
-    DebugLog(@"testtttt");
-}
+
 - (IBAction)uploadClicked:(id)sender {
     
     [_warningView setHidden:NO];
@@ -191,7 +201,7 @@
         
         [picker dismissViewControllerAnimated:YES completion:^{
             
-            [SVProgressHUD showWithStatus:@"Processing"];
+         //   [SVProgressHUD showWithStatus:@"Processing"];
             
             NSString *mediaType = [info objectForKey:UIImagePickerControllerMediaType];
             if ([mediaType isEqualToString:(NSString *)kUTTypeImage])
@@ -220,6 +230,8 @@
                                 // Get the name of the video
                             //    [self getMediaName:nil url:assetURL];
                                 
+                          
+                                
                                 
                                 PHFetchResult *refResult = [PHAsset fetchAssetsWithALAssetURLs:@[assetURL] options:nil];
                                 PHVideoRequestOptions *videoRequestOptions = [[PHVideoRequestOptions alloc] init];
@@ -235,8 +247,9 @@
                                         dispatch_async(dispatch_get_main_queue(), ^{
                                             
                                             [_loadingView setHidden:NO];
+                                            [_infoLbl setText:@"GENERATING IMAGE"];
                                             
-                                            
+                       
                                             AVURLAsset *asset=[[AVURLAsset alloc] initWithURL:compressedUrl options:nil];
                                             AVAssetImageGenerator *generator = [[AVAssetImageGenerator alloc] initWithAsset:asset];
                                             generator.appliesPreferredTrackTransform=TRUE;
@@ -274,11 +287,11 @@
                                                     [_loadingView setHidden:YES];
                                                     
                                                     
-                                                    [_uploadBtn setUserInteractionEnabled:YES];
+
                                                     
                                                     
                                                     
-                                                    [SVProgressHUD dismiss];
+                                                  //  [SVProgressHUD dismiss];
                                                 }
                                                 else{
                                                     
@@ -290,8 +303,8 @@
                                                 
                                             };
                                             
-                                            CGSize maxSize = CGSizeMake(320, 180);
-                                            generator.maximumSize = maxSize;
+                                          //  CGSize maxSize = CGSizeMake(640, 360);
+                                            generator.maximumSize = CGSizeZero;
                                             [generator generateCGImagesAsynchronouslyForTimes:[NSArray arrayWithObject:[NSValue valueWithCMTime:thumbTime]] completionHandler:handler];
                                             
                                             
@@ -419,13 +432,35 @@
         pickerLabel = [[UILabel alloc] initWithFrame:frame];
         pickerLabel.textAlignment = NSTextAlignmentCenter;
         pickerLabel.backgroundColor = [UIColor clearColor];
-        pickerLabel.font = [UIFont fontWithName:@"ComicSansMS-Bold" size:24];
+        pickerLabel.font = [UIFont fontWithName:@"ComicSansMS-Bold" size:[self getFontSize:18]];
         
         if (langPickerOpen) {
             [pickerLabel setText:[langArr objectAtIndex:row]];
         }
         else if (catPickerOpen) {
-            [pickerLabel setText:[[categoryArr objectAtIndex:row] objectForKey:@"name"]];
+            
+            NSString *htmlString = [[[categoryArr objectAtIndex:row] objectForKey:@"name"] capitalizedString];
+            NSData *stringData = [htmlString dataUsingEncoding:NSUTF8StringEncoding];
+            
+            NSDictionary *options = @{NSDocumentTypeDocumentAttribute:NSHTMLTextDocumentType};
+            NSMutableAttributedString *decodedString;
+            decodedString = [[NSMutableAttributedString alloc] initWithData:stringData
+                                                                    options:options
+                                                         documentAttributes:NULL
+                                                                      error:NULL];
+            
+            NSMutableParagraphStyle *paragraphStyle = NSMutableParagraphStyle.new;
+            paragraphStyle.alignment  = NSTextAlignmentCenter;
+            
+    [decodedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, [decodedString length])];
+            
+            [decodedString addAttribute:NSFontAttributeName
+                                  value:[UIFont fontWithName:@"ComicSansMS-Bold" size:[self getFontSize:18]]
+                                  range:NSMakeRange(0, decodedString.length)];
+            
+            pickerLabel.attributedText = decodedString;
+            
+           // [pickerLabel setText:[[categoryArr objectAtIndex:row] objectForKey:@"name"]];
         }
     }
     pickerLabel.textColor = [UIColor whiteColor];
@@ -487,18 +522,7 @@
     [_warningView setHidden:YES];
 }
 - (IBAction)warnOkClicked:(id)sender {
-    [_warningView setHidden:YES];
-    
-    [self fireUrl];
-    
-}
-- (IBAction)crossClicked:(id)sender {
-    [_warningView setHidden:YES];
-}
-
--(void)fireUrl
-{
-    
+   
     if ([self textFieldBlankorNot:_videoName.text]) {
         [SVProgressHUD showInfoWithStatus:@"Video name cannot be blank"];
     }
@@ -517,173 +541,342 @@
     else
     {
         
-        if ([self networkAvailable])
-            
-        {
-            
-            
-            [_uploadBtn setUserInteractionEnabled:NO];
-            
-            [SVProgressHUD show];
-            
-            
-            
-            
-            
-            
-            
-            //            NSData *imageData =  UIImagePNGRepresentation(selectedImage);
-            
-            NSString  *encodedImgString = [self base64forData:imageData];
-            
-            NSString  *encodedVidString = [self base64forData:videoData];
-            
-            NSURL *url;
-            
-            
-            
-            url =[NSURL URLWithString:[NSString stringWithFormat:@"%@%@Video/AddVideo",GLOBALAPI,INDEX]];
-            
-            
-            
-            // configure the request
-            
-            NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
-            [request setHTTPMethod:@"POST"];
-            
-            
-            
-            
-            
-            
-            NSString *sendData = @"user_id=";
-            sendData = [sendData stringByAppendingString:[NSString stringWithFormat:@"%@", app.userId]];
-            
-            
-            sendData = [sendData stringByAppendingString:@"&language="];
-            sendData = [sendData stringByAppendingString:[NSString stringWithFormat:@"%@", langSelected]];
-            
-            sendData = [sendData stringByAppendingString:@"&country="];
-            sendData = [sendData stringByAppendingString:[NSString stringWithFormat:@"%@", [[NSUserDefaults standardUserDefaults] objectForKey:@"countryId"]]];
-            
-            sendData = [sendData stringByAppendingString:@"&category="];
-            sendData = [sendData stringByAppendingString:[NSString stringWithFormat:@"%@", categorySelected]];
-            
-            sendData = [sendData stringByAppendingString:@"&videoname="];
-            sendData = [sendData stringByAppendingString:[NSString stringWithFormat:@"%@", _videoName.text]];
-            
-            sendData = [sendData stringByAppendingString:@"&video="];
-            sendData = [sendData stringByAppendingString:[NSString stringWithFormat:@"%@", encodedVidString]];
-            
-            sendData = [sendData stringByAppendingString:@"&videoimage="];
-            sendData = [sendData stringByAppendingString:[NSString stringWithFormat:@"%@", encodedImgString]];
-            
-            sendData = [sendData stringByAppendingString:@"&mode="];
-            sendData = [sendData stringByAppendingString: [[NSUserDefaults standardUserDefaults] objectForKey:@"langId"]];
-            
-            sendData = [sendData stringByAppendingString:@"&pushmode="];
-            sendData = [sendData stringByAppendingString: PUSHTYPE];
-            
-            [request setValue:@"gzip" forHTTPHeaderField:@"Accept-Encoding"];
-            
-            NSMutableData *theBodyData = [NSMutableData data];
-            
-            theBodyData = [[sendData dataUsingEncoding:NSUTF8StringEncoding] mutableCopy];
-            
-            
-            //  self.session = [NSURLSession sharedSession];  // use sharedSession or create your own
-            
-            session =[NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:self delegateQueue:[NSOperationQueue mainQueue]];
-            
-            NSURLSessionTask *task = [session uploadTaskWithRequest:request fromData:theBodyData completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-                
-                [_uploadBtn setUserInteractionEnabled:YES];
-                
-                
-                if (error) {
-                    NSLog(@"error = %@", error);
-                    return;
-                }
-                
-                if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
-                    NSError *jsonError;
-                    NSDictionary *jsonResponse = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
-                    
-                    
-                    
-                    if (jsonError) {
-                        // Error Parsing JSON
-                        NSString *responseString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-                        
-                        [SVProgressHUD showInfoWithStatus:@"some error occured 2"];
-                        
-                        NSLog(@"response = %@ %@",responseString,jsonError.description);
-                    } else {
-                        // Success Parsing JSON
-                        // Log NSDictionary response:
-                        NSLog(@"result = %@",jsonResponse);
-            
-                            if ([[jsonResponse objectForKey:@"code"]intValue]==200) {
-                                
-                                
-                                
-                                [SVProgressHUD showInfoWithStatus:@"Video uploaded Successfully"];
-                                
-                                //[self performSelector:@selector(loadProfile) withObject:nil afterDelay:3.0];
-                                
-                                [[NSNotificationCenter defaultCenter]
-                                 postNotificationName:@"videoLoaded"
-                                 object:self];
-                                
-                                
-                                
-                            }
-                        
-                            else{
-                                
-                                [SVProgressHUD showInfoWithStatus:[jsonResponse objectForKey:@"message"]];
-                                
-                                
-                                
-                          ;
-                            }
-                        
-                    }
-                    
-                    
-                }
-                
-                
-            }];
-            
-            
-            [task resume];
-            
-            [self loadProfile];
-            
-            
-            
-            
-        }
+    [_warningView setHidden:YES];
+    
+    [self fireAFUrl];
+    }
+}
+- (IBAction)crossClicked:(id)sender {
+    [_warningView setHidden:YES];
+}
+
+- (NSString *)generateBoundaryString {
+    return [NSString stringWithFormat:@"Boundary-%@", [[NSUUID UUID] UUIDString]];
+}
+
+-(void)fireAFUrl
+{
+    
+      [_loadingView setHidden:NO];
+      [_infoLbl setText:@"UPLOADING"];
+
+    if ([self networkAvailable]) {
         
-        else
+                  [_uploadBtn setUserInteractionEnabled:NO];
+        
+//                    NSString  *encodedImgString = [self base64forData:imageData];
+//        
+//                    NSString  *encodedVidString = [self base64forData:videoData];
+        
+        NSMutableDictionary *dictParam = [NSMutableDictionary new];
+        
+        
+        AFHTTPRequestSerializer *requestSerializer = [AFHTTPRequestSerializer serializer];
+        AFHTTPResponseSerializer *responseSerializer = [AFHTTPResponseSerializer serializer];
+        
+//        requestSerializer = [AFJSONRequestSerializer serializer];
+  ///  responseSerializer = [AFJSONResponseSerializer serializer];
+        
+        [dictParam setValue:app.userId forKey:@"user_id"];
+         [dictParam setValue:langSelected forKey:@"language"];
+         [dictParam setValue:[[NSUserDefaults standardUserDefaults] objectForKey:@"countryId"] forKey:@"country"];
+         [dictParam setValue:categorySelected forKey:@"category"];
+         [dictParam setValue: _videoName.text forKey:@"videoname"];
+         [dictParam setValue:[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"] forKey:@"mode"];
+        [dictParam setValue: PUSHTYPE forKey:@"pushmode"];
+        
+        NSError *__autoreleasing *error;
+        
+
+        NSMutableURLRequest *request = [requestSerializer multipartFormRequestWithMethod:@"POST" URLString:[NSString stringWithFormat:@"%@%@Video/AddVideo",GLOBALAPI,INDEX] parameters:dictParam constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
             
-        {
+         
+            if (videoData != nil) {
+              
+                    [formData appendPartWithFileData:videoData
+                                                name:@"video"
+                                            fileName:@"video.mov"
+                                            mimeType:@"video/mp4"];
+           
+            }
             
-            [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
-            
-            
-            
+            if (imageData != nil) {
+                [formData appendPartWithFileData:imageData
+                                            name:@"videoimage"
+                                        fileName:@"videoimage.png"
+                                        mimeType:@"image/png"];
+            }
+        } error:(NSError *__autoreleasing *)error];
+        
+        AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+        
+        manager.responseSerializer = responseSerializer;
+
+        NSURLSessionUploadTask *uploadTask;
+        
+        uploadTask = [manager uploadTaskWithStreamedRequest:request progress:^(NSProgress * _Nonnull uploadProgress) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                NSLog(@"Video Uploading Progress = %f", uploadProgress.fractionCompleted);
+                
+   [_loadingLbl setText:[NSString stringWithFormat:@"%.f%@",uploadProgress.fractionCompleted*100,@"%"]];
+
+
+            });
         }
+                      
+     completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
+                                              
+         [_uploadBtn setUserInteractionEnabled:YES];
+                                              
+          if (error) {
+         NSLog(@"ERROR WHILE UPLOAD USER VIDEO THROUGH AFNETWORDKING = %@",error.localizedDescription);
+                                              
+              }
+           else {
+           NSLog(@"JSON: %@", [responseObject description]);
+                                                  
+      
+
+              
+               NSString *string = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+               
+               //NSDictionary * response = responseObject;
+               
+             DebugLog(@"json returns: %@",string);
+               
+               NSData *newJSONData = [string dataUsingEncoding:NSUTF8StringEncoding];
+               NSDictionary* response = [NSJSONSerialization
+                                     JSONObjectWithData:newJSONData
+                                     options:NSJSONReadingMutableContainers
+                                     error:&error];
+    
+             DebugLog(@"json response: %@",response);
+       
+                                                  
+          if ([[response objectForKey:@"status"]boolValue]) {
+                                                      
+                                                      
+                                                      
+              [SVProgressHUD showInfoWithStatus:@"Video uploaded Successfully"];
+                                                      
+                 [self loadProfile];
+
+                                                  
+                 NSLog(@"Success");
+                                 }
+            
+                             }
+                       }];
+        [uploadTask resume];
+    }
+        
+        
+    
+    else{
+        
+        // [self showAlertwithTitle:@"No internet" withMessage:@"Please check your Internet connection" withAlertType:UIAlertControllerStyleAlert withOk:YES withCancel:NO];
+        
+        [SVProgressHUD showInfoWithStatus:@"Please check your Internet connection"];
         
     }
     
+
     
-    
+
 }
+
+//-(void)fireUrl
+//{
+//    
+//    [_loadingView setHidden:NO];
+//    
+//        
+//        
+//        if ([self networkAvailable])
+//            
+//        {
+//            
+//            
+//            [_uploadBtn setUserInteractionEnabled:NO];
+//            
+//          //  [SVProgressHUD show];
+//            
+//            
+//            
+//            
+//            
+//            
+//            
+//            //            NSData *imageData =  UIImagePNGRepresentation(selectedImage);
+//            
+//            NSString  *encodedImgString = [self base64forData:imageData];
+//            
+//            NSString  *encodedVidString = [self base64forData:videoData];
+//            
+//            NSURL *url;
+//            
+//            
+//            
+//            url =[NSURL URLWithString:[NSString stringWithFormat:@"%@%@Video/AddVideo",GLOBALAPI,INDEX]];
+//            
+//            
+//            
+//            // configure the request
+//            
+//            NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
+//            [request setHTTPMethod:@"POST"];
+//            
+//            
+//            
+//            
+//            
+//            
+//            NSString *sendData = @"user_id=";
+//            sendData = [sendData stringByAppendingString:[NSString stringWithFormat:@"%@", app.userId]];
+//            
+//            
+//            sendData = [sendData stringByAppendingString:@"&language="];
+//            sendData = [sendData stringByAppendingString:[NSString stringWithFormat:@"%@", langSelected]];
+//            
+//            sendData = [sendData stringByAppendingString:@"&country="];
+//            sendData = [sendData stringByAppendingString:[NSString stringWithFormat:@"%@", [[NSUserDefaults standardUserDefaults] objectForKey:@"countryId"]]];
+//            
+//            sendData = [sendData stringByAppendingString:@"&category="];
+//            sendData = [sendData stringByAppendingString:[NSString stringWithFormat:@"%@", categorySelected]];
+//            
+//            sendData = [sendData stringByAppendingString:@"&videoname="];
+//            sendData = [sendData stringByAppendingString:[NSString stringWithFormat:@"%@", _videoName.text]];
+//            
+//      
+//            
+//            sendData = [sendData stringByAppendingString:@"&mode="];
+//            sendData = [sendData stringByAppendingString: [[NSUserDefaults standardUserDefaults] objectForKey:@"langId"]];
+//            
+//            sendData = [sendData stringByAppendingString:@"&pushmode="];
+//            sendData = [sendData stringByAppendingString: PUSHTYPE];
+//            
+//            DebugLog(@"data:%@",sendData);
+//            
+//            
+//            sendData = [sendData stringByAppendingString:@"&video="];
+//            sendData = [sendData stringByAppendingString:[NSString stringWithFormat:@"%@", encodedVidString]];
+//            
+//            sendData = [sendData stringByAppendingString:@"&videoimage="];
+//            sendData = [sendData stringByAppendingString:[NSString stringWithFormat:@"%@", encodedImgString]];
+//            
+//            [request setValue:@"gzip" forHTTPHeaderField:@"Accept-Encoding"];
+//            
+//           // NSString *boundary = [self generateBoundaryString];
+//            
+//          //  [request addValue:@"application/json" forHTTPHeaderField:@"Accept"];
+//      
+//           // [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+//            
+//            NSMutableData *theBodyData = [NSMutableData data];
+//            
+//            theBodyData = [[sendData dataUsingEncoding:NSUTF8StringEncoding] mutableCopy];
+//            
+//           // [request setHTTPBody:theBodyData];
+//            
+//            //  self.session = [NSURLSession sharedSession];  // use sharedSession or create your own
+//            
+//            session =[NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:self delegateQueue:[NSOperationQueue mainQueue]];
+//            
+//            NSURLSessionTask *task = [session uploadTaskWithRequest:request fromData:theBodyData  completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+//                
+//                [_uploadBtn setUserInteractionEnabled:YES];
+//                
+//                
+//                if (error) {
+//                    NSLog(@"error = %@", error);
+//                    
+//                          [SVProgressHUD showInfoWithStatus:@"some error occured"];
+//                    return;
+//                }
+//                
+//                if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
+//                    NSError *jsonError;
+//                    NSDictionary *jsonResponse = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&jsonError];
+//                    
+//                    
+//                    
+//                    if (jsonError) {
+//                        // Error Parsing JSON
+//                        NSString *responseString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+//                        
+//                        [SVProgressHUD showInfoWithStatus:@"some error occured"];
+//                        
+//                        NSLog(@"response = %@ %@",responseString,jsonError.description);
+//                    } else {
+//                        // Success Parsing JSON
+//                        // Log NSDictionary response:
+//                        NSLog(@"result = %@",jsonResponse);
+//            
+//                            if ([[jsonResponse objectForKey:@"status"]boolValue]) {
+//                                
+//                                
+//                                
+//                                [SVProgressHUD showInfoWithStatus:@"Video uploaded Successfully"];
+//                                
+//                                 [self loadProfile];
+//                                
+//                             //   [self performSelector:@selector(loadProfile) withObject:nil afterDelay:3.0];
+//                                
+//                              //  [[NSNotificationCenter defaultCenter]
+//                               //  postNotificationName:@"videoLoaded"
+//                              //   object:self];
+//                                
+//                                
+//                                
+//                            }
+//                        
+//                            else{
+//                                
+//                                [SVProgressHUD showInfoWithStatus:[jsonResponse objectForKey:@"message"]];
+//                                
+//                                
+//                                
+//                          ;
+//                            }
+//                        
+//                    }
+//                    
+//                    
+//                }
+//                
+//                
+//            }];
+//            
+//            
+//            [task resume];
+//            
+//          //  [self loadProfile];
+//            
+//            
+//            
+//            
+//        }
+//        
+//        else
+//            
+//        {
+//            
+//            [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
+//            
+//            
+//            
+//        }
+//        
+// 
+//    
+//    
+//    
+//}
 
 -(void)loadProfile
 {
+    
+     [_loadingView setHidden:YES];
     JMHomeViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMHomeViewController"];
     
     
@@ -693,12 +886,14 @@
 -(void)loadData
 {
     
+        [_loaderView setHidden:NO];
+    
     if([self networkAvailable])
     {
         
         
         
-        [SVProgressHUD show];
+      //  [SVProgressHUD show];
         
         
         
@@ -715,7 +910,7 @@
         
         
         NSURLSessionConfiguration *sessionConfig = [NSURLSessionConfiguration defaultSessionConfiguration];
-        session = [NSURLSession sessionWithConfiguration:sessionConfig delegate:nil delegateQueue:nil];
+        session = [NSURLSession sessionWithConfiguration:sessionConfig delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
         
         [[session dataTaskWithURL:[NSURL URLWithString:url] completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
             
@@ -726,7 +921,12 @@
                 NSLog(@"error = %@", error);
                 
                 
-                [_langBtn setUserInteractionEnabled:YES];
+                [_gifImage setHidden:YES];
+                [_noVideoView setHidden:NO];
+                [_noVideoLbl setText:@"Some error occured.\n\n Click to retry"];
+                [_loaderBtn setHidden:NO];
+                
+               // [_langBtn setUserInteractionEnabled:YES];
                 return;
             }
             
@@ -748,13 +948,18 @@
                     
                     NSLog(@"response = %@",responseString);
                     
-                    [SVProgressHUD showInfoWithStatus:@"some error occured 3"];
+                    [_gifImage setHidden:YES];
+                    [_noVideoView setHidden:NO];
+                    [_noVideoLbl setText:@"Some error occured.\n\n Click to retry"];
+                    [_loaderBtn setHidden:NO];
+                    
+//                    [SVProgressHUD showInfoWithStatus:@"some error occured 3"];
                     
                 } else {
                     // Success Parsing JSON
                     // Log NSDictionary response:
                     NSLog(@"result = %@",jsonResponse);
-                    if ([jsonResponse objectForKey:@"status"]) {
+                    if ([[jsonResponse objectForKey:@"status"]boolValue]) {
                         
                         
                         
@@ -762,9 +967,9 @@
                         
                         totalCount=(int)langjsonArr.count;
                         
+                           [_loaderView setHidden:YES];
                         
-                        
-                        [SVProgressHUD dismiss];
+                        //[SVProgressHUD dismiss];
                         
                         [_langBtn setUserInteractionEnabled:YES];
                     
@@ -786,22 +991,27 @@
                             
                         }
                         
+                           [self loadCategory];
+                        
                         
                     }
                     
                     
                     else{
                         
-                        if (langArr.count==0) {
-                            
-                            [SVProgressHUD dismiss];
-                        }
-                        else{
-                            [SVProgressHUD showInfoWithStatus:[jsonResponse objectForKey:@"message"]];
-                        }
+//                        if (langArr.count==0) {
+//                            
+//                            [SVProgressHUD dismiss];
+//                        }
+//                        else{
+//                            [SVProgressHUD showInfoWithStatus:[jsonResponse objectForKey:@"message"]];
+//                        }
+//                        
                         
-                        
-                        
+                        [_gifImage setHidden:YES];
+                        [_noVideoView setHidden:NO];
+                        [_noVideoLbl setText:[NSString stringWithFormat:@"%@\n\n Click to retry",[jsonResponse objectForKey:@"message"]]];
+                        [_loaderBtn setHidden:NO];
                     }
                     
                     
@@ -813,7 +1023,7 @@
             }
             
             
-            [self loadCategory];
+         
             
             
             
@@ -827,8 +1037,11 @@
     
     else{
         
-        
-        [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
+        [_gifImage setHidden:YES];
+        [_noVideoView setHidden:NO];
+        [_noVideoLbl setText:[NSString stringWithFormat:@"Check your Internet connection\n\n Click to retry"]];
+        [_loaderBtn setHidden:NO];
+        //[SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
         
         
     }
@@ -838,12 +1051,15 @@
 
 -(void)loadCategory
 {
+    
+         [_loaderView setHidden:NO];
+    
     if([self networkAvailable])
     {
         
         
         
-        [SVProgressHUD show];
+       // [SVProgressHUD show];
         
         
         
@@ -860,7 +1076,7 @@
         
         
         NSURLSessionConfiguration *sessionConfig = [NSURLSessionConfiguration defaultSessionConfiguration];
-        session = [NSURLSession sessionWithConfiguration:sessionConfig delegate:nil delegateQueue:nil];
+        session = [NSURLSession sessionWithConfiguration:sessionConfig delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
         
         [[session dataTaskWithURL:[NSURL URLWithString:url] completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
             
@@ -870,8 +1086,12 @@
             if (error) {
                 NSLog(@"error = %@", error);
                 
+                [_gifImage setHidden:YES];
+                [_noVideoView setHidden:NO];
+                [_noVideoLbl setText:@"Some error occured.\n\n Click to retry"];
+                [_loaderBtn setHidden:NO];
                 
-                [_langBtn setUserInteractionEnabled:YES];
+               // [_langBtn setUserInteractionEnabled:YES];
                 return;
             }
             
@@ -884,7 +1104,7 @@
                 
                 
                 
-                [_langBtn setUserInteractionEnabled:YES];
+              //  [_langBtn setUserInteractionEnabled:YES];
                 
                 if (jsonError) {
                     // Error Parsing JSON
@@ -893,13 +1113,18 @@
                     
                     NSLog(@"response = %@",responseString);
                     
-                    [SVProgressHUD showInfoWithStatus:@"some error occured 1"];
+                    [_gifImage setHidden:YES];
+                    [_noVideoView setHidden:NO];
+                    [_noVideoLbl setText:@"Some error occured.\n\n Click to retry"];
+                    [_loaderBtn setHidden:NO];
+                    
+                   // [SVProgressHUD showInfoWithStatus:@"some error occured 1"];
                     
                 } else {
                     // Success Parsing JSON
                     // Log NSDictionary response:
                     NSLog(@"result = %@",jsonResponse);
-                    if ([[jsonResponse objectForKey:@"code"] intValue]==200) {
+                    if ([[jsonResponse objectForKey:@"status"]boolValue]) {
                         
                         
                         
@@ -909,9 +1134,9 @@
                         
                             [_categoryBtn setUserInteractionEnabled:YES];
                         
-                        [SVProgressHUD dismiss];
+                       // [SVProgressHUD dismiss];
                         
-                        
+                                       [_loaderView setHidden:YES];
                         
                         
                         
@@ -933,15 +1158,18 @@
                     
                     else{
                         
-                        if (categoryArr.count==0) {
-                            
-                            [SVProgressHUD dismiss];
-                        }
-                        else{
-                            [SVProgressHUD showInfoWithStatus:[jsonResponse objectForKey:@"message"]];
-                        }
+//                        if (categoryArr.count==0) {
+//                            
+//                            [SVProgressHUD dismiss];
+//                        }
+//                        else{
+//                            [SVProgressHUD showInfoWithStatus:[jsonResponse objectForKey:@"message"]];
+//                        }
                         
-                        
+                        [_gifImage setHidden:YES];
+                        [_noVideoView setHidden:NO];
+                        [_noVideoLbl setText:[NSString stringWithFormat:@"%@\n\n Click to retry",[jsonResponse objectForKey:@"message"]]];
+                        [_loaderBtn setHidden:NO];
                         
                     }
                     
@@ -969,7 +1197,12 @@
     else{
         
         
-        [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
+        [_gifImage setHidden:YES];
+        [_noVideoView setHidden:NO];
+        [_noVideoLbl setText:[NSString stringWithFormat:@"Check your Internet connection\n\n Click to retry"]];
+        [_loaderBtn setHidden:NO];
+        
+       // [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
         
         
     }
@@ -985,19 +1218,21 @@
     return YES;
 }
 
-- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task
-   didSendBodyData:(int64_t)bytesSent
-    totalBytesSent:(int64_t)totalBytesSent
-totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
-{
-    
-        DebugLog(@"%f",(float)totalBytesSent);
-        DebugLog(@"%f",(float)totalBytesExpectedToSend);
-    
-    DebugLog(@"%f",(float)((float)totalBytesSent/(float)totalBytesExpectedToSend));
-    
-    [SVProgressHUD showProgress:(float)((float)totalBytesSent/(float)totalBytesExpectedToSend)];
-}
+//- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task
+//   didSendBodyData:(int64_t)bytesSent
+//    totalBytesSent:(int64_t)totalBytesSent
+//totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
+//{
+//    
+//        DebugLog(@"%f",(float)totalBytesSent);
+//        DebugLog(@"%f",(float)totalBytesExpectedToSend);
+//    
+//    DebugLog(@"%f",(float)((float)totalBytesSent/(float)totalBytesExpectedToSend));
+//    
+//    //[SVProgressHUD showProgress:(float)((float)totalBytesSent/(float)totalBytesExpectedToSend)];
+//    
+//    [_loadingLbl setText:[NSString stringWithFormat:@"%.f%@",((float)((float)totalBytesSent/(float)totalBytesExpectedToSend))*100,@"%"]];
+//}
 
 
 
