@@ -7,8 +7,11 @@
 //
 
 #import "JMGlobalMethods.h"
-
+#import "UrlconnectionObject.h"
 @interface JMForgotPasswordViewController : JMGlobalMethods
+{
+    UrlconnectionObject *urlobj;
+}
 @property (weak, nonatomic) IBOutlet UIScrollView *EmailScroll;
 @property (weak, nonatomic) IBOutlet UITextField *txtEmail;
 @property (weak, nonatomic) IBOutlet UIButton *btnEmailSubmit;
@@ -20,6 +23,8 @@
 @property (weak, nonatomic) IBOutlet UITextField *txtConfirmPassword;
 - (IBAction)PasswordSubmitClick:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *btnPasswordSubmit;
+@property (weak, nonatomic) IBOutlet UIButton *btnBackToLogin;
+- (IBAction)BackToLogin:(id)sender;
 
 
 @end

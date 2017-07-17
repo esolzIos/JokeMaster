@@ -4355,6 +4355,17 @@
                                             <action selector="EmailSubmitClick:" destination="Wf9-7k-dpM" eventType="touchUpInside" id="HBW-8l-HWD"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="eUO-bh-iI6">
+                                        <rect key="frame" x="0.0" y="417" width="320" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="ComicSansMS-Bold" family="Comic Sans MS" pointSize="11"/>
+                                        <state key="normal" title="Back to Log In ">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="BackToLogin:" destination="Wf9-7k-dpM" eventType="touchUpInside" id="w3S-vd-ngT"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                             </scrollView>
                             <scrollView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="WWR-kN-sAE">
@@ -4411,6 +4422,7 @@
                     <connections>
                         <outlet property="EmailScroll" destination="cSX-5d-2MW" id="gns-u3-Jfw"/>
                         <outlet property="PasswordScroll" destination="WWR-kN-sAE" id="myM-rk-Frr"/>
+                        <outlet property="btnBackToLogin" destination="eUO-bh-iI6" id="f0b-cG-niR"/>
                         <outlet property="btnEmailSubmit" destination="E2F-6C-gWE" id="ffa-rh-mha"/>
                         <outlet property="btnPasswordSubmit" destination="k7P-hu-mKl" id="VEg-4B-ht9"/>
                         <outlet property="txtCode" destination="HwS-uh-2Pr" id="jLN-HK-4nb"/>

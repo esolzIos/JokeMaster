@@ -102,6 +102,7 @@
     
     [_signupBtn setAttributedTitle:attributedText forState:UIControlStateNormal];
     
+    _btnForgotPassword.titleLabel.font=[UIFont fontWithName:@"ComicSansMS-Bold" size:[self getFontSize:11.0f]];
     
     urlobj=[[UrlconnectionObject alloc] init];
     
