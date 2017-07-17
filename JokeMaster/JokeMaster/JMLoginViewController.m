@@ -49,6 +49,8 @@
     
     [_loginBtn setTitle:AMLocalizedString(@"LOG IN", nil) forState:UIControlStateNormal];
     
+    [_btnForgotPassword setTitle:AMLocalizedString(@"Forgot Password?", nil) forState:UIControlStateNormal];
+    
     [_fbBtn setTitle:AMLocalizedString(@"Facebook", nil) forState:UIControlStateNormal];
     
     [_googleBtn setTitle:AMLocalizedString(@"Google", nil) forState:UIControlStateNormal];
@@ -791,4 +793,9 @@ dismissViewController:(UIViewController *)viewController {
     }
 }
 
+- (IBAction)ForgotPasswordClick:(id)sender
+{
+    JMLoginViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMForgotPasswordViewController"];
+    [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
+}
 @end

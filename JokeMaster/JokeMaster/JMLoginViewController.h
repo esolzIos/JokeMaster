@@ -28,5 +28,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *infoTxt;
 @property (strong, nonatomic) IBOutlet UIButton *signupBtn;
 - (IBAction)signUpClicked:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *btnForgotPassword;
+- (IBAction)ForgotPasswordClick:(id)sender;
 
 @end

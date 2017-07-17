@@ -31,6 +31,7 @@
 		0C6455421EFE74CE00850324 /* UrlconnectionObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C6455411EFE74CE00850324 /* UrlconnectionObject.m */; };
 		0C6F9E311EE14A7B005D31A0 /* JMChooseCountryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C6F9E301EE14A7B005D31A0 /* JMChooseCountryViewController.m */; };
 		0C6F9E361EE14E84005D31A0 /* CountryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C6F9E351EE14E84005D31A0 /* CountryCell.m */; };
+		0C7B61981F18F69A0063D1B1 /* JMForgotPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C7B61971F18F69A0063D1B1 /* JMForgotPasswordViewController.m */; };
 		0C91CFBD1EEE5B7A00123303 /* JMCategoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C91CFBC1EEE5B7A00123303 /* JMCategoryCell.m */; };
 		0C91CFC31EEE92F400123303 /* JMJokesCategoryVideoListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C91CFC21EEE92F400123303 /* JMJokesCategoryVideoListViewController.m */; };
 		0CE2FB481EE190E50031C0E6 /* JMRegistrationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CE2FB471EE190E50031C0E6 /* JMRegistrationViewController.m */; };
@@ -187,6 +188,8 @@
 		0C6F9E301EE14A7B005D31A0 /* JMChooseCountryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMChooseCountryViewController.m; sourceTree = "<group>"; };
 		0C6F9E341EE14E84005D31A0 /* CountryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CountryCell.h; sourceTree = "<group>"; };
 		0C6F9E351EE14E84005D31A0 /* CountryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CountryCell.m; sourceTree = "<group>"; };
+		0C7B61961F18F69A0063D1B1 /* JMForgotPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMForgotPasswordViewController.h; sourceTree = "<group>"; };
+		0C7B61971F18F69A0063D1B1 /* JMForgotPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMForgotPasswordViewController.m; sourceTree = "<group>"; };
 		0C91CFBB1EEE5B7A00123303 /* JMCategoryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMCategoryCell.h; sourceTree = "<group>"; };
 		0C91CFBC1EEE5B7A00123303 /* JMCategoryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMCategoryCell.m; sourceTree = "<group>"; };
 		0C91CFC11EEE92F400123303 /* JMJokesCategoryVideoListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMJokesCategoryVideoListViewController.h; sourceTree = "<group>"; };
@@ -707,6 +710,8 @@
 				B08B36091EFBD98400ECC327 /* JMReviewViewController.m */,
 				B09139821EFE4B5000B17C8B /* JMCategoryVideoListViewController.h */,
 				B09139831EFE4B5000B17C8B /* JMCategoryVideoListViewController.m */,
+				0C7B61961F18F69A0063D1B1 /* JMForgotPasswordViewController.h */,
+				0C7B61971F18F69A0063D1B1 /* JMForgotPasswordViewController.m */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -1035,6 +1040,7 @@
 				B07764191F0132F3007FAEE5 /* SDWebImageDownloaderOperation.m in Sources */,
 				B099B0C81EF8F741004AC64C /* JMSearchView.m in Sources */,
 				0C3E27721EEBBFF70075B104 /* JMRecentlyUploadedViewController.m in Sources */,
+				0C7B61981F18F69A0063D1B1 /* JMForgotPasswordViewController.m in Sources */,
 				B099B0CC1EF8FBA2004AC64C /* JMSearchViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
