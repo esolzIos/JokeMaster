@@ -42,5 +42,12 @@
 "ISRAEL"="ISRAEL";
 "INDIA"="INDIA";
 
-
-
+"Joke Category" = "Categoría de Broma";
+"Forgot Password?" = "¿Se te olvidó tu contraseña?";
+"Guest" = "Huésped";
+"Login required to rate videos" = "Inicio de sesión necesario para votar videos";
+"REVIEWS" = "COMENTARIOS";
+"COMMENTS" = "COMENTARIOS";
+"NO REVIEW FOUND" = "NO HAY REVISION REVISADA";
+"Login required to create your channel" = "Es necesario iniciar sesión para crear tu canal";
+"No videos found" = "No se encontraron vídeos";

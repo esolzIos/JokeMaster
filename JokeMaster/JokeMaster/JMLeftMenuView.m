@@ -31,7 +31,8 @@
     [customView.ScoreLabel setFont:[UIFont fontWithName:customView.ScoreLabel.font.fontName size:[customView getFontSize:customView.ScoreLabel.font.pointSize]]];
         
     
-    customView.ScoreLabel.text=AMLocalizedString(@"SCORE : 0.0/5", nil);
+    customView.ScoreLabel.text=[NSString stringWithFormat:@"%@ : %@",AMLocalizedString(@"SCORE",nil),@"0.0/5"];
+    //AMLocalizedString(@"SCORE : 0.0/5", nil);
   //  customView.NameLabel.text=AMLocalizedString(@"JOHN DOE", nil);
     
     if ([[NSUserDefaults standardUserDefaults]boolForKey:@"loggedIn"])
@@ -49,7 +50,7 @@
         
     {
         
-        customView.NameLabel.text=@"Guest";
+        customView.NameLabel.text=AMLocalizedString(@"Guest",nil);
         
     }
     

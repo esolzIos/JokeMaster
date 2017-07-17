@@ -75,3 +75,14 @@
 "RANKINGS" ="דירוגים";
 "UPLOAD A VIDEO" ="העלה סרטון";
 "CLICK TO RETRY" = "נסה שוב";
+"Joke Category" = "בדיחה קטגוריה";
+"Forgot Password?" = "שכחת את הסיסמא?";
+"Guest" = "אוֹרֵחַ";
+
+// amlocalized required
+"Login required to rate videos" = "נדרשת כניסה כדי לדרג סרטונים";
+"REVIEWS" = "ביקורות";
+"COMMENTS" = "הערות";
+"NO REVIEW FOUND" = "לא ראה סקירה";
+"Login required to create your channel" = "נדרשת התחברות כדי ליצור את הערוץ שלך";
+"No videos found" = "לא נמצאו סרטונים";

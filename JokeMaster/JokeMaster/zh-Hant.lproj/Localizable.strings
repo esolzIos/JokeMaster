@@ -42,5 +42,12 @@
 "ISRAEL"="ISRAEL";
 "INDIA"="INDIA";
 
-
-
+"Joke Category" = "笑話類別";
+"Forgot Password?" = "忘記密碼？";
+"Guest" = "客人";
+"Login required to rate videos" = "需要登錄才能對視頻進行評分";
+"REVIEWS" = "點評";
+"COMMENTS" = "註釋";
+"NO REVIEW FOUND" = "沒有評論發現";
+"Login required to create your channel" = "創建頻道需要登錄";
+"No videos found" = "找不到影片";
