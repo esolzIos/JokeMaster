@@ -159,7 +159,7 @@
         
         if (indexPath.row==0)
         {
-            cell.menuName.text = [AMLocalizedString(@"My Channel",nil) uppercaseString];
+            cell.menuName.text = [AMLocalizedString(@"MY CHANNEL",nil) uppercaseString];
             cell.menuImg.image = [UIImage imageNamed:@"my-chanel"];
         }
         else if (indexPath.row==1)

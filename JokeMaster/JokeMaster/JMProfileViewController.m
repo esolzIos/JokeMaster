@@ -227,12 +227,13 @@
                     // Log NSDictionary response:
                     NSLog(@"result = %@",jsonResponse);
                     
-                   
+                    [_loaderView setHidden:YES];
+                    
                     
                     
                     //[SVProgressHUD dismiss];
             
-                        if ([[jsonResponse objectForKey:@"status_code"]intValue]==200) {
+                        if ([[jsonResponse objectForKey:@"status_code"]boolValue]) {
                             
                             
                               // [_loaderView setHidden:YES];
@@ -716,6 +717,7 @@
          
 
          [videoArr removeAllObjects];
+         [_categoryCollectionView reloadData];
          page=1;
          totalCount=0;
          [self loadVideos];
@@ -1165,7 +1167,7 @@
 -(void)loadVideos
 {
     
-    [_loaderView setHidden:NO];
+   // [_loaderView setHidden:NO];
     
     
     if([self networkAvailable])
@@ -1190,12 +1192,14 @@
             if (error) {
                 NSLog(@"error = %@", error);
                 
-                [_gifImage setHidden:YES];
-                [_noVideoView setHidden:NO];
-                [_noVideoLbl setText:@"Some error occured.\n\n Click to retry"];
-                [_loaderBtn setHidden:NO];
+//                [_gifImage setHidden:YES];
+//                [_noVideoView setHidden:NO];
+//                [_noVideoLbl setText:@"Some error occured.\n\n Click to retry"];
+//                [_loaderBtn setHidden:NO];
                 
                 // [_chooseBtn setUserInteractionEnabled:YES];
+                
+             [SVProgressHUD showInfoWithStatus:@"some error occured"];
                 
                 return;
             }
@@ -1218,21 +1222,21 @@
                     
                     NSLog(@"response = %@",responseString);
                     
-                    // [SVProgressHUD showInfoWithStatus:@"some error occured"];
+                    [SVProgressHUD showInfoWithStatus:@"some error occured"];
                     
-                    [_gifImage setHidden:YES];
-                    [_noVideoView setHidden:NO];
-                    [_noVideoLbl setText:@"Some error occured.\n\n Click to retry"];
-                    [_loaderBtn setHidden:NO];
+//                    [_gifImage setHidden:YES];
+//                    [_noVideoView setHidden:NO];
+//                    [_noVideoLbl setText:@"Some error occured.\n\n Click to retry"];
+//                    [_loaderBtn setHidden:NO];
                     
                 } else {
                     // Success Parsing JSON
                     // Log NSDictionary response:
                     NSLog(@"result = %@",jsonResponse);
                     if ([[jsonResponse objectForKey:@"status"]boolValue]) {
-                        // [SVProgressHUD dismiss];
+                         [SVProgressHUD dismiss];
                         
-                        [_loaderView setHidden:YES];
+                       // [_loaderView setHidden:YES];
                         
                          totalCount=[[jsonResponse objectForKey:@"totalcount"] intValue];
                          

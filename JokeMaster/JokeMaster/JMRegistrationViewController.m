@@ -207,31 +207,31 @@
             
               [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Enter Valid Email Address",nil)];
         }
-        else if ([LanguageLabel.text isEqualToString:AMLocalizedString(@"Language",nil)])
-        {
-//            UIAlertController * alert=   [UIAlertController
-//                                          alertControllerWithTitle:AMLocalizedString(@"Alert",nil)
-//                                          message:AMLocalizedString(@"Select Language",nil)
-//                                          preferredStyle:UIAlertControllerStyleAlert];
+//        else if ([LanguageLabel.text isEqualToString:AMLocalizedString(@"Language",nil)])
+//        {
+////            UIAlertController * alert=   [UIAlertController
+////                                          alertControllerWithTitle:AMLocalizedString(@"Alert",nil)
+////                                          message:AMLocalizedString(@"Select Language",nil)
+////                                          preferredStyle:UIAlertControllerStyleAlert];
+////            
+////            UIAlertAction* ok = [UIAlertAction
+////                                 actionWithTitle:AMLocalizedString(@"OK",nil)
+////                                 style:UIAlertActionStyleDefault
+////                                 handler:^(UIAlertAction * action)
+////                                 {
+////                                     [alert dismissViewControllerAnimated:YES completion:nil];
+////                                     
+////                                     
+////                                     
+////                                     
+////                                 }];
+////            
+////            [alert addAction:ok];
+////            [self presentViewController:alert animated:YES completion:nil];
 //            
-//            UIAlertAction* ok = [UIAlertAction
-//                                 actionWithTitle:AMLocalizedString(@"OK",nil)
-//                                 style:UIAlertActionStyleDefault
-//                                 handler:^(UIAlertAction * action)
-//                                 {
-//                                     [alert dismissViewControllerAnimated:YES completion:nil];
-//                                     
-//                                     
-//                                     
-//                                     
-//                                 }];
 //            
-//            [alert addAction:ok];
-//            [self presentViewController:alert animated:YES completion:nil];
-            
-            
-                         [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Select Language",nil)];
-        }
+//                         [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Select Language",nil)];
+//        }
         else if ([self textFieldBlankorNot:Passwordtxt.text]==YES)
         {
 //            UIAlertController * alert=   [UIAlertController
@@ -869,7 +869,7 @@
 #pragma mark -signup api call
 -(void)SignUpAPI1
 {
-    NSString *urlString = [NSMutableString stringWithFormat:@"%@index.php/Signup?register_type=1&name=%@&email=%@&password=%@&language=%@&device_token=%@&device_type=2&mode=%@",GLOBALAPI,[Nametxt.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[Emailtxt.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[Passwordtxt.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[LanguageLabel.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[[NSUserDefaults standardUserDefaults] objectForKey:@"deviceToken"],[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"]];
+    NSString *urlString = [NSMutableString stringWithFormat:@"%@index.php/Signup?register_type=1&name=%@&email=%@&password=%@&language=&device_token=%@&device_type=2&mode=%@",GLOBALAPI,[Nametxt.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[Emailtxt.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[Passwordtxt.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[[NSUserDefaults standardUserDefaults] objectForKey:@"deviceToken"],[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"]];
     
         urlString=[urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
     

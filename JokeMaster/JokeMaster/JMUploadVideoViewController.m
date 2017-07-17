@@ -620,6 +620,7 @@
                 
    [_loadingLbl setText:[NSString stringWithFormat:@"%.f%@",uploadProgress.fractionCompleted*100,@"%"]];
 
+                [SVProgressHUD showProgress:uploadProgress.fractionCompleted];
 
             });
         }
@@ -659,15 +660,17 @@
                                                       
               [SVProgressHUD showInfoWithStatus:@"Video uploaded Successfully"];
                                                       
-                 [self loadProfile];
-
-                                                  
+              
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"videoLoaded"  object:self];
+                 
                  NSLog(@"Success");
                                  }
             
                              }
                        }];
         [uploadTask resume];
+        
+           [self loadProfile];
     }
         
         

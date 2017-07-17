@@ -736,13 +736,13 @@ dismissViewController:(UIViewController *)viewController {
                  {
                      if ([[responseDict objectForKey:@"status"] boolValue]==YES)
                      {
-                         [[NSUserDefaults standardUserDefaults] setObject:[[responseDict objectForKey:@"userinfo"] valueForKey:@"userid"] forKey:@"UserId"];
+                         [[NSUserDefaults standardUserDefaults] setObject:[[responseDict objectForKey:@"userinfo"] valueForKey:@"id"] forKey:@"UserId"];
                          [[NSUserDefaults standardUserDefaults] setObject:[[responseDict objectForKey:@"userinfo"] valueForKey:@"name"] forKey:@"Name"];
                          [[NSUserDefaults standardUserDefaults] setObject:[[responseDict objectForKey:@"userinfo"] valueForKey:@"image"] forKey:@"Image"];
                          
-                         app.userId=[[responseDict objectForKey:@"Details"] valueForKey:@"user_id"];
-                         app.userName=[[responseDict objectForKey:@"Details"] valueForKey:@"name"];
-                         app.userImage=[[responseDict objectForKey:@"Details"] valueForKey:@"image"];
+                         app.userId=[[responseDict objectForKey:@"userinfo"] valueForKey:@"id"];
+                         app.userName=[[responseDict objectForKey:@"userinfo"] valueForKey:@"name"];
+                         app.userImage=[[responseDict objectForKey:@"userinfo"] valueForKey:@"image"];
                          app.isLogged=true;
                          
                          [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"loggedIn"];
@@ -758,13 +758,7 @@ dismissViewController:(UIViewController *)viewController {
                      }
                      
                  }
-                 else if (urlobj.statusCode==500 || urlobj.statusCode==400)
-                 {
-                     //                     [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Server Failed to Respond" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
-                     
-                     [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Server Failed to Respond",nil)];
-                     
-                 }
+    
                  else
                  {
                      //                     [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Server Failed to Respond" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];

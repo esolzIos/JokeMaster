@@ -643,6 +643,116 @@ AVPlayer *player;
 - (IBAction)shareClicked:(id)sender {
 }
 - (IBAction)reportClicked:(id)sender {
+    
+    if([self networkAvailable])
+    {
+        
+        [_reportBtn setUserInteractionEnabled:NO];
+        
+        
+        
+        
+        [SVProgressHUD show];
+        
+        //http://ec2-13-58-196-4.us-east-2.compute.amazonaws.com/jokemaster/index.php/useraction/reportabuse?videoid=21&userid=1
+        
+        NSURL *url=[NSURL URLWithString:[NSString stringWithFormat:@"%@%@useraction/reportabuse",GLOBALAPI,INDEX]];
+        
+        // configure the request
+        
+        NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
+        [request setHTTPMethod:@"POST"];
+        
+        
+        
+        NSString *sendData = @"videoid=";
+        sendData = [sendData stringByAppendingString:[NSString stringWithFormat:@"%@",[VideoDictionary objectForKey:@"id"]]];
+        
+        sendData = [sendData stringByAppendingString:@"&userid="];
+        sendData = [sendData stringByAppendingString:[NSString stringWithFormat:@"%@",app.userId]];
+        
+       [request setValue:@"gzip" forHTTPHeaderField:@"Accept-Encoding"];
+        
+        NSMutableData *theBodyData = [NSMutableData data];
+        
+        theBodyData = [[sendData dataUsingEncoding:NSUTF8StringEncoding] mutableCopy];
+        
+        
+        //  self.session = [NSURLSession sharedSession];  // use sharedSession or create your own
+        
+        session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
+        
+        NSURLSessionTask *task = [session uploadTaskWithRequest:request fromData:theBodyData completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+            if (error) {
+                NSLog(@"error = %@", error);
+                
+                [SVProgressHUD showErrorWithStatus:@"Some error occured"];
+                
+                return;
+            }
+            
+            if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
+                NSError *jsonError;
+                NSDictionary *Response = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
+                
+                [_reportBtn setUserInteractionEnabled:YES];
+                
+                if (jsonError) {
+                    // Error Parsing JSON
+                    
+                    NSString *responseString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                    
+                    NSLog(@"response = %@",responseString);
+                    
+                    [SVProgressHUD showInfoWithStatus:@"Some error occured"];
+                    
+                    
+                    
+                } else {
+                    // Success Parsing JSON
+                    // Log NSDictionary response:
+                    
+                  
+                    
+                    NSLog(@"result = %@",Response);
+                    
+                    
+                    if ([[Response objectForKey:@"status"]boolValue]) {
+                        
+                          [SVProgressHUD dismiss];
+                        
+                                     }
+                    
+                    else{
+                        
+                        [SVProgressHUD showInfoWithStatus:[Response objectForKey:@"message"]];
+                        
+                        
+                    }
+                    
+                    
+                    
+                    
+                }
+                
+                
+                
+                
+                
+            }
+        }];
+        
+        
+        [task resume];
+        
+        
+    }
+    else{
+        [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
+    }
+    
+    
+
 }
 #pragma mark -Go to Profile Page
 - (IBAction)gotoProfile:(id)sender {
