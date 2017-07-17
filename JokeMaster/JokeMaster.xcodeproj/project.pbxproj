@@ -80,6 +80,8 @@
 		B07ABADC1EE58E740011DD57 /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B07ABADB1EE58E740011DD57 /* SafariServices.framework */; };
 		B07ABADE1EE58E790011DD57 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B07ABADD1EE58E790011DD57 /* SystemConfiguration.framework */; };
 		B07ABAE01EE590580011DD57 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B07ABADF1EE590580011DD57 /* GoogleService-Info.plist */; };
+		B07D122D1F1CCA310066033C /* HPGrowingTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = B07D122A1F1CCA310066033C /* HPGrowingTextView.m */; };
+		B07D122E1F1CCA310066033C /* HPTextViewInternal.m in Sources */ = {isa = PBXBuildFile; fileRef = B07D122C1F1CCA310066033C /* HPTextViewInternal.m */; };
 		B08609D01EF118CF00E8D84A /* ReviewsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B08609CF1EF118CF00E8D84A /* ReviewsTableViewCell.m */; };
 		B08B360A1EFBD98400ECC327 /* JMReviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B08B36091EFBD98400ECC327 /* JMReviewViewController.m */; };
 		B08D168B1F1892A900767164 /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B08D167F1F1892A900767164 /* AFHTTPSessionManager.m */; };
@@ -270,6 +272,10 @@
 		B07ABADB1EE58E740011DD57 /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
 		B07ABADD1EE58E790011DD57 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		B07ABADF1EE590580011DD57 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		B07D12291F1CCA310066033C /* HPGrowingTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HPGrowingTextView.h; sourceTree = "<group>"; };
+		B07D122A1F1CCA310066033C /* HPGrowingTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HPGrowingTextView.m; sourceTree = "<group>"; };
+		B07D122B1F1CCA310066033C /* HPTextViewInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HPTextViewInternal.h; sourceTree = "<group>"; };
+		B07D122C1F1CCA310066033C /* HPTextViewInternal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HPTextViewInternal.m; sourceTree = "<group>"; };
 		B08609CE1EF118CF00E8D84A /* ReviewsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReviewsTableViewCell.h; sourceTree = "<group>"; };
 		B08609CF1EF118CF00E8D84A /* ReviewsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReviewsTableViewCell.m; sourceTree = "<group>"; };
 		B08B36081EFBD98400ECC327 /* JMReviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMReviewViewController.h; sourceTree = "<group>"; };
@@ -545,6 +551,17 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		B07D12281F1CCA310066033C /* HPGrowingTextView */ = {
+			isa = PBXGroup;
+			children = (
+				B07D12291F1CCA310066033C /* HPGrowingTextView.h */,
+				B07D122A1F1CCA310066033C /* HPGrowingTextView.m */,
+				B07D122B1F1CCA310066033C /* HPTextViewInternal.h */,
+				B07D122C1F1CCA310066033C /* HPTextViewInternal.m */,
+			);
+			path = HPGrowingTextView;
+			sourceTree = "<group>";
+		};
 		B08D167D1F1892A900767164 /* AFNetworking */ = {
 			isa = PBXGroup;
 			children = (
@@ -719,6 +736,7 @@
 		B0A32B811EE1313F0044D443 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B07D12281F1CCA310066033C /* HPGrowingTextView */,
 				B08D167D1F1892A900767164 /* AFNetworking */,
 				B07134751F137C19006178E7 /* FLAnimatedImage */,
 				B07763E51F0132F3007FAEE5 /* SDWebImage */,
@@ -984,6 +1002,7 @@
 				B07ABAC71EE540F90011DD57 /* JMLoginViewController.m in Sources */,
 				0C35E1EC1EF2999500D2CBCE /* HCSStarRatingView.m in Sources */,
 				0C91CFC31EEE92F400123303 /* JMJokesCategoryVideoListViewController.m in Sources */,
+				B07D122E1F1CCA310066033C /* HPTextViewInternal.m in Sources */,
 				B0A2300D1EF2960600F228BD /* JMProfileViewController.m in Sources */,
 				B071347C1F137C19006178E7 /* FLAnimatedImageView.m in Sources */,
 				0C48BFBB1EE82EEF00CD1C2A /* JMHeaderView.m in Sources */,
@@ -1003,6 +1022,7 @@
 				B07764111F0132F3007FAEE5 /* MKAnnotationView+WebCache.m in Sources */,
 				B0A32B7C1EE12E4E0044D443 /* JMGlobalMethods.m in Sources */,
 				B0A5C4DE1EFE7F2F002FB26D /* JTSImageViewController.m in Sources */,
+				B07D122D1F1CCA310066033C /* HPGrowingTextView.m in Sources */,
 				B071347B1F137C19006178E7 /* FLAnimatedImage.m in Sources */,
 				B07764221F0132F3007FAEE5 /* UIView+WebCache.m in Sources */,
 				B07764171F0132F3007FAEE5 /* SDWebImageDecoder.m in Sources */,

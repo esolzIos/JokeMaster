@@ -197,7 +197,7 @@
               
                         // _tvView.hidden=NO;
                         
-       
+                        [_noVideoView setHidden:YES];
                         [_VideoRatingView setHidden:NO];
                         [_VideoRatingLabel setHidden:NO];
                         [_VideoCreaterNameLabel setHidden:NO];
@@ -988,7 +988,7 @@
     [_errorView setHidden:YES];
     [_noVideoLbl setText:@""];
     [_loaderBtn setHidden:YES];
-    
+
     RecentVideoArray=[[NSMutableArray alloc] init];
     jokeDict=[[NSDictionary alloc]init];
     

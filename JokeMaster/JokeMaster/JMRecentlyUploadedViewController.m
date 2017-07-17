@@ -87,7 +87,7 @@
 - (IBAction)loaderClicked:(id)sender {
     
     
-    categoryId=@"";
+   // categoryId=@"";
     CategoryArray=[[NSMutableArray alloc] init];
     RecentVideoArray=[[NSMutableArray alloc] init];
     page=1;
@@ -469,7 +469,25 @@
                  {
                      if ([[responseDict objectForKey:@"status"] boolValue]==YES)
                      {
-                         CategoryArray=[[responseDict objectForKey:@"details"] mutableCopy];
+                         CategoryArray=[[NSMutableArray alloc]init];
+                         
+                         NSMutableDictionary *zerodict=[[NSMutableDictionary alloc]init];
+                         
+                         [zerodict setObject:@"All" forKey:@"name"];
+                         [zerodict setObject:@"" forKey:@"id"];
+                         [zerodict setObject:@"" forKey:@"image"];
+                         
+                         [CategoryArray addObject:zerodict];
+                         
+                         
+                         for (NSDictionary *dict in [[responseDict objectForKey:@"details"] mutableCopy]) {
+                             
+                             [CategoryArray addObject:dict];
+                             
+                             
+                         } 
+                         
+                         
                          
                          
                          if (CategoryArray.count>0)
@@ -610,7 +628,7 @@
                          NSMutableArray *TempArray=[[NSMutableArray alloc] init];
                          TempArray=[[jsonResponse objectForKey:@"videoDetails"] mutableCopy];
                          
-                         
+                            [_novidLbl setHidden:YES];
                          
                          if (TempArray.count>0)
                          {
@@ -632,16 +650,18 @@
                          
                      }
                     else{
+                                [_loaderHUDView setHidden:YES];
                         
                         if (RecentVideoArray.count>0) {
                             
-                            [_loaderHUDView setHidden:YES];
-                            
+                       
+                                 [_novidLbl setHidden:YES];
                         }
                         else{
                             
-                            [_loaderHUDView setHidden:YES];
-                            [SVProgressHUD showInfoWithStatus:@"No videos found"];
+                    
+                            [_novidLbl setHidden:NO];
+                            
                             
                         }
                         

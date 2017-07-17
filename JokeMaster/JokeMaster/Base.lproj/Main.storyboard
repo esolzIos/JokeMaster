@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" colorMatched="YES" initialViewController="aJH-Kf-IIM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" colorMatched="YES" initialViewController="aJH-Kf-IIM">
     <device id="retina3_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -928,6 +928,13 @@
                                                     <outlet property="delegate" destination="Mdn-rx-qlK" id="Pvn-PZ-UtQ"/>
                                                 </connections>
                                             </collectionView>
+                                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Videos Found" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="s2i-qV-LL4">
+                                                <rect key="frame" x="0.0" y="204" width="320" height="21"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" name="ComicBook" family="Comic Book" pointSize="17"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                             <view hidden="YES" alpha="0.5" contentMode="scaleToFill" misplaced="YES" id="NT7-MU-rPd">
                                                 <rect key="frame" x="135" y="375" width="50" height="50"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
@@ -1110,6 +1117,7 @@
                         <outlet property="loadertvView" destination="TxC-fu-940" id="vce-ri-JLG"/>
                         <outlet property="noVideoLbl" destination="vem-Uf-DNB" id="yAX-hY-KcE"/>
                         <outlet property="noVideoView" destination="Vaj-Go-fG5" id="IzI-mu-Sqk"/>
+                        <outlet property="novidLbl" destination="s2i-qV-LL4" id="LK8-EQ-Eo3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ncd-3g-tBa" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2255,7 +2263,7 @@
                                                                     <rect key="frame" x="17" y="2" width="34" height="30"/>
                                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                                 </imageView>
-                                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" selectable="NO" id="zwK-ER-A0q">
+                                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" selectable="NO" id="zwK-ER-A0q">
                                                                     <rect key="frame" x="17" y="44" width="290" height="44"/>
                                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -2280,7 +2288,7 @@
                                                             <outlet property="ratingLbl" destination="npN-Kd-wGb" id="MPt-L6-boo"/>
                                                             <outlet property="ratingView" destination="Sj7-6k-bM9" id="w0o-30-CJI"/>
                                                             <outlet property="reviewDate" destination="Ipv-C3-qVp" id="GVA-6I-Agd"/>
-                                                            <outlet property="reviewTxt" destination="zwK-ER-A0q" id="nYO-hP-f6o"/>
+                                                            <outlet property="reviewTxt" destination="zwK-ER-A0q" id="q87-bH-JQV"/>
                                                             <outlet property="userImage" destination="RQe-oI-H90" id="FQl-RM-8t3"/>
                                                             <outlet property="userName" destination="2wF-UW-3d0" id="1UX-3J-hcR"/>
                                                         </connections>
@@ -3635,6 +3643,13 @@
                                                     <outlet property="delegate" destination="Y18-Tc-dnr" id="pQc-Aq-tqX"/>
                                                 </connections>
                                             </collectionView>
+                                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="No Videos Found" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="P2y-hu-bqn">
+                                                <rect key="frame" x="0.0" y="345" width="320" height="21"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" name="ComicBook" family="Comic Book" pointSize="17"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                         </subviews>
                                         <connections>
                                             <outlet property="delegate" destination="Y18-Tc-dnr" id="g7f-IU-yAz"/>
@@ -3813,6 +3828,7 @@
                         <outlet property="loaderView" destination="IlJ-RQ-vjx" id="ItK-OS-s97"/>
                         <outlet property="loadertvView" destination="4DF-q4-aOm" id="5bb-2Q-P0m"/>
                         <outlet property="membershipDate" destination="JDr-vR-lBE" id="ytd-6b-Ddf"/>
+                        <outlet property="noVidLbl" destination="P2y-hu-bqn" id="nHF-Oo-2hq"/>
                         <outlet property="noVideoLbl" destination="bBw-29-Pix" id="EhE-7m-6uy"/>
                         <outlet property="noVideoView" destination="NF2-N4-ZLa" id="EMN-9l-JC7"/>
                         <outlet property="profileBttn" destination="hrw-cZ-3by" id="JpZ-Hx-d6a"/>

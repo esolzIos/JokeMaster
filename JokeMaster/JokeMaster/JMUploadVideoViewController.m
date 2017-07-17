@@ -249,26 +249,41 @@
                                             [_loadingView setHidden:NO];
                                             [_infoLbl setText:@"GENERATING IMAGE"];
                                             
-                       
-                                            AVURLAsset *asset=[[AVURLAsset alloc] initWithURL:compressedUrl options:nil];
+                                            AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:compressedUrl options:nil];
                                             AVAssetImageGenerator *generator = [[AVAssetImageGenerator alloc] initWithAsset:asset];
-                                            generator.appliesPreferredTrackTransform=TRUE;
-                                            
+                                            generator.appliesPreferredTrackTransform = YES;
                                             CMTime thumbTime = CMTimeMakeWithSeconds(0,30);
+                                            NSError *error = nil;
+                                            CMTime actualTime;
+                                            
+                                            CGImageRef image = [generator copyCGImageAtTime:thumbTime actualTime:&actualTime error:&error];
+                                            UIImage *thumb = [[UIImage alloc] initWithCGImage:image];
+                                       
+                                                imageData = UIImagePNGRepresentation(thumb);
+                                            
+                                              CGSize maxSize = CGSizeMake(640, 360);
+                                              generator.maximumSize = maxSize;
                                             
                                             
+//                                            AVURLAsset *asset=[[AVURLAsset alloc] initWithURL:compressedUrl options:nil];
+//                                            AVAssetImageGenerator *generator = [[AVAssetImageGenerator alloc] initWithAsset:asset];
+//                                            generator.appliesPreferredTrackTransform=TRUE;
+//                                            
+//                                            CMTime thumbTime = CMTimeMakeWithSeconds(0,30);
+//                                            
+//                                            
+//                                            
+//                                            AVAssetImageGeneratorCompletionHandler handler = ^(CMTime requestedTime, CGImageRef im, CMTime actualTime, AVAssetImageGeneratorResult result, NSError *error){
+//                                                if (result != AVAssetImageGeneratorSucceeded) {
+//                                                    DebugLog(@"couldn't generate thumbnail, error:%@", error);
+//                                                    
+//                                                    
+//                                                    
+//                                                    // [SVProgressHUD showInfoWithStatus:@"Something went wrong"];
+//                                                    
+//                                                }
                                             
-                                            AVAssetImageGeneratorCompletionHandler handler = ^(CMTime requestedTime, CGImageRef im, CMTime actualTime, AVAssetImageGeneratorResult result, NSError *error){
-                                                if (result != AVAssetImageGeneratorSucceeded) {
-                                                    DebugLog(@"couldn't generate thumbnail, error:%@", error);
-                                                    
-                                                    
-                                                    
-                                                    // [SVProgressHUD showInfoWithStatus:@"Something went wrong"];
-                                                    
-                                                }
-                                                
-                                                imageData = UIImagePNGRepresentation([UIImage imageWithCGImage:im]);
+                                             //   imageData = UIImagePNGRepresentation([UIImage imageWithCGImage:im]);
                                                 
                                                 if ( imageData!=nil )
                                                 {
@@ -276,7 +291,7 @@
                                                     
                                                     videoPicked=true;
                                                     
-                                                    [_videoThumb setImage:[UIImage imageWithCGImage:im]];
+                                                    [_videoThumb setImage:thumb];
                                                     
                                                     
                                                     _videoThumb.contentMode = UIViewContentModeScaleAspectFill;
@@ -301,11 +316,11 @@
                                                 
                                                 
                                                 
-                                            };
+                                         //   };
                                             
                                           //  CGSize maxSize = CGSizeMake(640, 360);
-                                            generator.maximumSize = CGSizeZero;
-                                            [generator generateCGImagesAsynchronouslyForTimes:[NSArray arrayWithObject:[NSValue valueWithCMTime:thumbTime]] completionHandler:handler];
+                                          //  generator.maximumSize = CGSizeZero;
+                                          //  [generator generateCGImagesAsynchronouslyForTimes:[NSArray arrayWithObject:[NSValue valueWithCMTime:thumbTime]] completionHandler:handler];
                                             
                                             
                                         });

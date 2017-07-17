@@ -13,6 +13,7 @@
 #import "JMGlobalMethods.h"
 #import "HCSStarRatingView.h"
 #import "UrlconnectionObject.h"
+
 @interface JMPlayVideoViewController : JMGlobalMethods<UITableViewDelegate,UITableViewDataSource>
 {
    // UrlconnectionObject *urlobj;

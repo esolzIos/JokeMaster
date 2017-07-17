@@ -46,6 +46,7 @@
 @property (strong, nonatomic) IBOutlet UIButton *profileBttn;
 @property(nonatomic) BOOL fromLeftMenu;
 @property (strong, nonatomic) NSString *ProfileUserId;
+@property (strong, nonatomic) IBOutlet UILabel *noVidLbl;
 
 @property (strong, nonatomic) IBOutlet UIView *loaderView;
 @property (strong, nonatomic) IBOutlet UIView *loadertvView;

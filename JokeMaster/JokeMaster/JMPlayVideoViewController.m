@@ -23,6 +23,8 @@ AVPlayer *player;
     NSMutableArray *reviewArr;
     UIFont *nameFont,*dateFont,*reviewFont,*ratingFont;
         AVPlayerViewController *controller;
+UITextView *demoTxt;
+    NSMutableArray *heightArr;
 }
 @end
 
@@ -111,6 +113,8 @@ AVPlayer *player;
     
         [_reviewTable setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     
+   
+    
 [_seekSlider setThumbImage:[UIImage imageNamed:@"circleslider"] forState:UIControlStateNormal];
     [_seekSlider setThumbImage:[UIImage imageNamed:@"circleslider"] forState:UIControlStateSelected];
     [_seekSlider setThumbImage:[UIImage imageNamed:@"circleslider"] forState:UIControlStateHighlighted];
@@ -157,6 +161,16 @@ AVPlayer *player;
     [self setRoundCornertoView:_errorView withBorderColor:[UIColor clearColor] WithRadius:0.15];
     [self setRoundCornertoView:_loaderImage withBorderColor:[UIColor clearColor] WithRadius:0.15];
            [_noVideoLbl setFont:[UIFont fontWithName:_noVideoLbl.font.fontName size:[self getFontSize:_noVideoLbl.font.pointSize]]];
+    
+demoTxt = [[UITextView alloc] init];
+    
+
+  
+    demoTxt.font = [UIFont systemFontOfSize:[self getFontSize:10.0]];
+
+  
+
+    
 }
 
 
@@ -196,7 +210,8 @@ AVPlayer *player;
 //        return 60;
 //    }
     
-    return 100.0/480.0*FULLHEIGHT;
+     return 66.0/480.0*FULLHEIGHT + ( [[heightArr objectAtIndex:indexPath.row ] floatValue]);
+
     
 }
 
@@ -205,6 +220,22 @@ AVPlayer *player;
     
     NSDictionary *reviewDict=[reviewArr objectAtIndex:indexPath.row];
     
+        [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+       //  [cell.contentView setAutoresizesSubviews:NO];
+    
+    
+    [cell.userImage setFrame:CGRectMake(cell.userImage.frame.origin.x, cell.userImage.frame.origin.y, 34.0/320.0*FULLWIDTH, 30.0/480.0*FULLHEIGHT)];
+    
+        [cell.userName setFrame:CGRectMake(cell.userName.frame.origin.x, cell.userName.frame.origin.y, 134.0/320.0*FULLWIDTH, 22.0/480.0*FULLHEIGHT)];
+    
+        [cell.ratingView setFrame:CGRectMake(cell.ratingView.frame.origin.x, cell.ratingView.frame.origin.y, 79.0/320.0*FULLWIDTH, 21.0/480.0*FULLHEIGHT)];
+    
+        [cell.ratingLbl setFrame:CGRectMake(cell.ratingLbl.frame.origin.x, cell.ratingLbl.frame.origin.y, 41.0/320.0*FULLWIDTH, 22.0/480.0*FULLHEIGHT)];
+    
+    
+        [cell.reviewDate setFrame:CGRectMake(cell.reviewDate.frame.origin.x, cell.reviewDate.frame.origin.y, 134.0/320.0*FULLWIDTH, 22.0/480.0*FULLHEIGHT)];
+    
+        [cell.reviewTxt setFrame:CGRectMake(cell.reviewTxt.frame.origin.x, cell.reviewTxt.frame.origin.y, 290.0/320.0*FULLWIDTH, [[heightArr objectAtIndex:indexPath.row]floatValue])];
     
     [self setRoundCornertoView:cell.userImage withBorderColor:[UIColor clearColor] WithRadius:0.5];
     
@@ -1076,7 +1107,7 @@ else
                                 totalCount=0;
                                 page=1;
                                 reviewArr=[[NSMutableArray alloc]init];
-                                
+                                heightArr=[[NSMutableArray alloc]init];
                                 [self getReviews];
                                 
                                 
@@ -1222,11 +1253,25 @@ else
                             [reviewArr addObject:Dict];
                             
                             
+                            demoTxt.text=[Dict objectForKey:@"usercomment"];
+           
+                            CGSize size = [demoTxt sizeThatFits:CGSizeMake(290.0/320.0*FULLWIDTH, FLT_MAX)];
+            
+                            [heightArr addObject:[NSString stringWithFormat:@"%f",size.height]];
+                            
+                       
+                            
+                            
                         }
                         
                         
                         
                         if (reviewArr.count>0) {
+                            
+                            
+                            
+                            
+                            
                             
                             [_reviewTable reloadData];
                             
@@ -1526,4 +1571,6 @@ else
         }
     }
 }
+
+
 @end

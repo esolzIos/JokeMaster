@@ -1172,6 +1172,9 @@
     
     if([self networkAvailable])
     {
+        [SVProgressHUD show];
+        
+        
             NSString *urlString;
             
             
@@ -1251,6 +1254,8 @@
                          
                          if (videoArr.count>0)
                          {
+                                    [_noVidLbl setHidden:YES];
+                             
                              DebugLog(@"%f",(float)videoArr.count/3.0);
                              
                              DebugLog(@"%f",ceil((float)videoArr.count/3.0));
@@ -1269,19 +1274,25 @@
                          
                      }
                     else{
-                        
+                            [SVProgressHUD dismiss];
                         if (videoArr.count>0) {
                             
-                            [_loaderView setHidden:YES];
+                          //  [_loaderView setHidden:YES];
                             
+                 
+                                   [_noVidLbl setHidden:YES];
                         }
                         else{
                             
+                        
+                            [_noVidLbl setHidden:NO];
                             
-                            [_gifImage setHidden:YES];
-                            [_noVideoView setHidden:NO];
-                            [_noVideoLbl setText:[NSString stringWithFormat:@"%@\n\n Click to retry",[jsonResponse objectForKey:@"message"]]];
-                            [_loaderBtn setHidden:NO];
+                          //  [SVProgressHUD showInfoWithStatus:@"No videos Found"];
+                            
+//                            [_gifImage setHidden:YES];
+//                            [_noVideoView setHidden:NO];
+//                            [_noVideoLbl setText:[NSString stringWithFormat:@"%@\n\n Click to retry",[jsonResponse objectForKey:@"message"]]];
+//                            [_loaderBtn setHidden:NO];
                         }
                         
                         
@@ -1354,9 +1365,27 @@
                  
                  if (urlobj.statusCode==200)
                  {
-                     if ([[responseDict objectForKey:@"status"] boolValue]==YES)
+                     if ([[responseDict objectForKey:@"status"] boolValue])
                      {
-                         CategoryArray=[[responseDict objectForKey:@"details"] mutableCopy];
+                         
+                         
+                         CategoryArray=[[NSMutableArray alloc]init];
+                         
+                         NSMutableDictionary *zerodict=[[NSMutableDictionary alloc]init];
+                         
+                         [zerodict setObject:@"All" forKey:@"name"];
+                         [zerodict setObject:@"" forKey:@"id"];
+                         [zerodict setObject:@"" forKey:@"image"];
+                         
+                         [CategoryArray addObject:zerodict];
+                         
+                         
+                         for (NSDictionary *dict in [[responseDict objectForKey:@"details"] mutableCopy]) {
+                             
+                             [CategoryArray addObject:dict];
+                             
+                             
+                         }
                          
                          
                          if (CategoryArray.count>0)
