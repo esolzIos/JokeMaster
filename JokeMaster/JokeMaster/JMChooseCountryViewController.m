@@ -98,7 +98,7 @@
         NSString *url;
         
         
-        url=[NSString stringWithFormat:@"%@%@Signup/fetchlanguage?country=&mode=%@",GLOBALAPI,INDEX,[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"]];
+        url=[NSString stringWithFormat:@"%@%@Signup/fetchlanguage?country=&mode=1",GLOBALAPI,INDEX];
         
         
         

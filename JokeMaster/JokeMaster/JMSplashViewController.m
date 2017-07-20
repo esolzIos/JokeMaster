@@ -57,7 +57,12 @@
     }
     else{
     
-        JMLanguageViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMLanguage"];
+        //
+        
+        //JMLanguageViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMLanguage"];
+        
+//[self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
+        JMChooseCountryViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMChooseCountryViewController"];
         
         [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
     }
