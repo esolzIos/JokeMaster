@@ -401,7 +401,7 @@
     }
     else if (catPickerOpen) {
         
-        [_categoryLbl setText:[[categoryArr objectAtIndex:rowSelected] objectForKey:@"name"]];
+        [_categoryLbl setText:[[[[categoryArr objectAtIndex:rowSelected]objectForKey:@"name"]stringByReplacingOccurrencesOfString:@"&amp;" withString:@"&"] uppercaseString]];
         
         categorySelected=[[categoryArr objectAtIndex:rowSelected] objectForKey:@"id"];
         
@@ -447,33 +447,16 @@
         pickerLabel = [[UILabel alloc] initWithFrame:frame];
         pickerLabel.textAlignment = NSTextAlignmentCenter;
         pickerLabel.backgroundColor = [UIColor clearColor];
-        pickerLabel.font = [UIFont fontWithName:@"ComicSansMS-Bold" size:[self getFontSize:18]];
+        pickerLabel.font = [UIFont fontWithName:@"ComicSansMS-Bold" size:[self getFontSize:14]];
         
         if (langPickerOpen) {
             [pickerLabel setText:[langArr objectAtIndex:row]];
         }
         else if (catPickerOpen) {
             
-            NSString *htmlString = [[[categoryArr objectAtIndex:row] objectForKey:@"name"] capitalizedString];
-            NSData *stringData = [htmlString dataUsingEncoding:NSUTF8StringEncoding];
-            
-            NSDictionary *options = @{NSDocumentTypeDocumentAttribute:NSHTMLTextDocumentType};
-            NSMutableAttributedString *decodedString;
-            decodedString = [[NSMutableAttributedString alloc] initWithData:stringData
-                                                                    options:options
-                                                         documentAttributes:NULL
-                                                                      error:NULL];
-            
-            NSMutableParagraphStyle *paragraphStyle = NSMutableParagraphStyle.new;
-            paragraphStyle.alignment  = NSTextAlignmentCenter;
-            
-    [decodedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, [decodedString length])];
-            
-            [decodedString addAttribute:NSFontAttributeName
-                                  value:[UIFont fontWithName:@"ComicSansMS-Bold" size:[self getFontSize:18]]
-                                  range:NSMakeRange(0, decodedString.length)];
-            
-            pickerLabel.attributedText = decodedString;
+            NSString *htmlString = [[[[categoryArr objectAtIndex:row]objectForKey:@"name"]stringByReplacingOccurrencesOfString:@"&amp;" withString:@"&"] uppercaseString];
+
+            pickerLabel.text = htmlString;
             
            // [pickerLabel setText:[[categoryArr objectAtIndex:row] objectForKey:@"name"]];
         }
@@ -496,7 +479,7 @@
     
     else if(catPickerOpen)
     {
-        return [[categoryArr objectAtIndex:row]objectForKey:@"name"];
+        return [[[[categoryArr objectAtIndex:row]objectForKey:@"name"]stringByReplacingOccurrencesOfString:@"&amp;" withString:@"&"] uppercaseString];
     }
     return @"";
     
@@ -918,7 +901,7 @@
         NSString *url;
         
         
-        url=[NSString stringWithFormat:@"%@%@Signup/fetchlanguage?mode=%@",GLOBALAPI,INDEX,[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"]];
+        url=[NSString stringWithFormat:@"%@%@Signup/fetchlanguage?country=%@&mode=%@",GLOBALAPI,INDEX,[[NSUserDefaults standardUserDefaults] objectForKey:@"countryId"],[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"]];
         
         
         

@@ -418,9 +418,9 @@
         
         [SVProgressHUD show];
         
-        //http://ec2-13-58-196-4.us-east-2.compute.amazonaws.com/jokemaster/index.php/follow/followunfollowvideo?follower_id=32&following_id=40
+        //http://ec2-13-58-196-4.us-east-2.compute.amazonaws.com/jokemaster/index.php/follow/followunfollowuser?follower_id=32&following_id=40
         
-        NSURL *url=[NSURL URLWithString:[NSString stringWithFormat:@"%@%@follow/followunfollowvideo",GLOBALAPI,INDEX]];
+        NSURL *url=[NSURL URLWithString:[NSString stringWithFormat:@"%@%@follow/followunfollowuser",GLOBALAPI,INDEX]];
         
         // configure the request
         

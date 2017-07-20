@@ -529,6 +529,17 @@
   
     
 }
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+    
+    [picker dismissViewControllerAnimated:YES completion:^{
+        
+        
+    }];
+    
+    
+}
 #pragma mark - open camera
 -(void)openCamera
 {

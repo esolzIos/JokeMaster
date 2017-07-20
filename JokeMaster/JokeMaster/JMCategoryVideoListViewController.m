@@ -399,7 +399,7 @@
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    cell.CategoryLabel.text=[[CategoryArray objectAtIndex:indexPath.row] objectForKey:@"name"];
+    cell.CategoryLabel.text=[[[[CategoryArray objectAtIndex:indexPath.row]objectForKey:@"name"]stringByReplacingOccurrencesOfString:@"&amp;" withString:@"&"] uppercaseString];
     
     if (IsIphone5)
     {
@@ -472,7 +472,8 @@
      {
          JMCategoryVideoListViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMVideoList"];
          VC.CategoryId=[NSString stringWithFormat:@"%@",[[CategoryArray objectAtIndex:indexPath.row]objectForKey:@"id"]];
-         VC.CategoryName=[NSString stringWithFormat:@"%@",[[CategoryArray objectAtIndex:indexPath.row]objectForKey:@"name"]];
+         VC.CategoryName=[NSString stringWithFormat:@"%@",[[[[CategoryArray objectAtIndex:indexPath.row]objectForKey:@"name"]stringByReplacingOccurrencesOfString:@"&amp;" withString:@"&"] uppercaseString]];
+         
          [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
          
          [cell.CheckButton setHighlighted:NO];

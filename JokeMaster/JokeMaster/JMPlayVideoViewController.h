@@ -75,10 +75,13 @@
 @property (strong, nonatomic) IBOutlet UIButton *profileBttn;
 - (IBAction)gotoProfile:(id)sender;
 @property (strong, nonatomic) IBOutlet UILabel *viewCountLbl;
+- (IBAction)deleteClicked:(id)sender;
 
 - (IBAction)resizeClicked:(id)sender;
 - (IBAction)commentClicked:(id)sender;
+@property (strong, nonatomic) IBOutlet UIButton *deleteBtn;
 @property (strong, nonatomic) IBOutlet UILabel *noreviewLbl;
+@property (strong, nonatomic) IBOutlet UIView *deleteView;
 
 @property (strong, nonatomic) IBOutlet UIView *rateView;
 @property (strong, nonatomic) IBOutlet UIButton *crossBtn;

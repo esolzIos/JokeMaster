@@ -42,7 +42,7 @@ UITextView *demoTxt;
         
     
         controller.player = player;
-        [controller setVideoGravity:AVLayerVideoGravityResizeAspectFill];
+        [controller setVideoGravity:AVLayerVideoGravityResizeAspect];
         
 //        AVPlayerItem *currentItem = player.currentItem;
 //        NSUInteger dTotalSeconds = CMTimeGetSeconds(currentItem.currentTime);
@@ -669,9 +669,77 @@ demoTxt = [[UITextView alloc] init];
 - (IBAction)sharedClicked:(id)sender {
      [_ratingImage.layer removeAllAnimations];
     [_optionView setHidden:YES];
+    NSURL *vidurl=[NSURL URLWithString:[VideoDictionary objectForKey:@"video_file"]];
+    NSArray *items = @[vidurl];
+    
+    // build an activity view controller
+    UIActivityViewController *actcontroller = [[UIActivityViewController alloc]initWithActivityItems:items applicationActivities:nil];
+    
+    // and present it
+    [self.navigationController presentViewController:actcontroller animated:YES completion:^{
+        // executes after the user selects something
+    }];
+    
+    
+    actcontroller.completionWithItemsHandler = ^(NSString *activityType,
+                                              BOOL completed,
+                                              NSArray *returnedItems,
+                                              NSError *error){
+        // react to the completion
+        if (completed) {
+            
+            // user shared an item
+            NSLog(@"We used activity type%@", activityType);
+            
+        } else {
+            
+            // user cancelled
+            NSLog(@"We didn't want to share anything after all.");
+        }
+        
+        if (error) {
+            NSLog(@"An Error occured: %@, %@", error.localizedDescription, error.localizedFailureReason);
+        }
+    };
+
 }
 
 - (IBAction)shareClicked:(id)sender {
+    
+    NSURL *vidurl=[NSURL URLWithString:[VideoDictionary objectForKey:@"video_file"]];
+    NSArray *items = @[vidurl];
+    
+    // build an activity view controller
+    UIActivityViewController *actcontroller = [[UIActivityViewController alloc]initWithActivityItems:items applicationActivities:nil];
+    
+    // and present it
+    [self.navigationController presentViewController:actcontroller animated:YES completion:^{
+        // executes after the user selects something
+    }];
+    
+    
+    actcontroller.completionWithItemsHandler = ^(NSString *activityType,
+                                              BOOL completed,
+                                              NSArray *returnedItems,
+                                              NSError *error){
+        // react to the completion
+        if (completed) {
+            
+            // user shared an item
+            NSLog(@"We used activity type%@", activityType);
+            
+        } else {
+            
+            // user cancelled
+            NSLog(@"We didn't want to share anything after all.");
+        }
+        
+        if (error) {
+            NSLog(@"An Error occured: %@, %@", error.localizedDescription, error.localizedFailureReason);
+        }
+    };
+
+    
 }
 - (IBAction)reportClicked:(id)sender {
     
@@ -794,12 +862,132 @@ demoTxt = [[UITextView alloc] init];
     [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
 }
 
+- (IBAction)deleteClicked:(id)sender {
+    
+        if([self networkAvailable])
+        {
+            
+            [_deleteBtn setUserInteractionEnabled:NO];
+            
+            
+            
+            
+            [SVProgressHUD show];
+            
+            //http://ec2-13-58-196-4.us-east-2.compute.amazonaws.com/jokemaster/index.php/video/deletevideo?videoid=3&mode=1
+            
+            NSURL *url=[NSURL URLWithString:[NSString stringWithFormat:@"%@%@video/deletevideo",GLOBALAPI,INDEX]];
+            
+            // configure the request
+            
+            NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
+            [request setHTTPMethod:@"POST"];
+            
+            
+            
+            //        NSString *boundary = @"---------------------------14737809831466499882746641449";
+            //        NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@", boundary];
+            //        [request addValue:contentType forHTTPHeaderField:@"Content-Type"];
+            
+            NSString *sendData = @"videoid=";
+            sendData = [sendData stringByAppendingString:[NSString stringWithFormat:@"%@",[VideoDictionary objectForKey:@"video_id"]]];
+            
+  sendData = [sendData stringByAppendingString:@"&mode="];
+            sendData = [sendData stringByAppendingString: [[NSUserDefaults standardUserDefaults] objectForKey:@"langId"]];
+     
+            [request setValue:@"gzip" forHTTPHeaderField:@"Accept-Encoding"];
+            
+            NSMutableData *theBodyData = [NSMutableData data];
+            
+            theBodyData = [[sendData dataUsingEncoding:NSUTF8StringEncoding] mutableCopy];
+            
+            
+            //  self.session = [NSURLSession sharedSession];  // use sharedSession or create your own
+            
+            session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
+            
+            NSURLSessionTask *task = [session uploadTaskWithRequest:request fromData:theBodyData completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+                if (error) {
+                    NSLog(@"error = %@", error);
+                    
+                    [SVProgressHUD showErrorWithStatus:@"Some error occured"];
+                    
+                    return;
+                }
+                
+                if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
+                    NSError *jsonError;
+                    NSDictionary *Response = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
+                    
+                    [_likeBtn setUserInteractionEnabled:YES];
+                    
+                    if (jsonError) {
+                        // Error Parsing JSON
+                        
+                        NSString *responseString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                        
+                        NSLog(@"response = %@",responseString);
+                        
+                        [SVProgressHUD showInfoWithStatus:@"Some error occured"];
+                        
+                        
+                        
+                    } else {
+                        // Success Parsing JSON
+                        // Log NSDictionary response:
+                        
+                        [SVProgressHUD dismiss];
+                        
+                        NSLog(@"result = %@",Response);
+                        
+                        
+                        if ([[Response objectForKey:@"status"]boolValue]) {
+                            
+                            
+                      [self.navigationController popViewControllerAnimated:YES];
+                            
+                            
+                                               }
+                        
+                        else{
+                            
+                            [SVProgressHUD showInfoWithStatus:[Response objectForKey:@"message"]];
+                            
+                            
+                        }
+                        
+                        
+                        
+                        
+                    }
+                    
+                    
+                    
+                    
+                    
+                }
+            }];
+            
+            
+            [task resume];
+            
+            
+        }
+        else{
+            [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
+        }
+        
+    
+
+    
+}
+
 - (IBAction)resizeClicked:(id)sender {
     
     
 //    AVPlayerViewController *controller = [[AVPlayerViewController alloc]init];
     controller.player = player;
-    [controller setVideoGravity:AVLayerVideoGravityResizeAspectFill];
+    [controller setVideoGravity:AVLayerVideoGravityResizeAspect];
     
     //        AVPlayerItem *currentItem = player.currentItem;
     //        NSUInteger dTotalSeconds = CMTimeGetSeconds(currentItem.currentTime);
@@ -1023,7 +1211,7 @@ else
                                 
                                 AVPlayerLayer *playerLayer = [AVPlayerLayer playerLayerWithPlayer:player];
                                 [playerLayer setFrame:self.playerView.bounds];
-                                playerLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
+                                playerLayer.videoGravity = AVLayerVideoGravityResizeAspect;
                                 [superlayer addSublayer:playerLayer];
                                 
                                 // create a player view controller
@@ -1073,6 +1261,13 @@ else
                                     [_likeImage setImage:[UIImage imageNamed:@"unlike"]];
                                 }
                                 
+                                  if (app.isLogged) {
+                                if ([[VideoDictionary objectForKey:@"user_id"]isEqualToString:app.userId]) {
+                                    
+                                    [_deleteView setHidden:NO];
+                                    
+                                }
+                                  }
                                 
                                 _VideoNameLabel.text=[VideoDictionary objectForKey:@"videoname"];
                                 

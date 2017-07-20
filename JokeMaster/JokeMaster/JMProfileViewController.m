@@ -441,9 +441,9 @@
         
         [SVProgressHUD show];
         
-        //http://ec2-13-58-196-4.us-east-2.compute.amazonaws.com/jokemaster/index.php/follow/followunfollowvideo?follower_id=32&following_id=40
+        //http://ec2-13-58-196-4.us-east-2.compute.amazonaws.com/jokemaster/index.php/follow/followunfollowuser?follower_id=32&following_id=40
         
-        NSURL *url=[NSURL URLWithString:[NSString stringWithFormat:@"%@%@follow/followunfollowvideo",GLOBALAPI,INDEX]];
+        NSURL *url=[NSURL URLWithString:[NSString stringWithFormat:@"%@%@follow/followunfollowuser",GLOBALAPI,INDEX]];
         
         // configure the request
         
@@ -646,7 +646,7 @@
 -(void) tableView:(UITableView *)tableView willDisplayCell:(JMCategoryCell *) cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    cell.CategoryLabel.text=[[CategoryArray objectAtIndex:indexPath.row] valueForKey:@"name"];
+    cell.CategoryLabel.text=[[[[CategoryArray objectAtIndex:indexPath.row]objectForKey:@"name"]stringByReplacingOccurrencesOfString:@"&amp;" withString:@"&"] uppercaseString];
     
     
     if (!catFonteSet) {
@@ -1177,9 +1177,16 @@
         
             NSString *urlString;
             
-            
-            urlString=[NSString stringWithFormat:@"%@%@Video?categoryid=%@&language=%@&country=%@&userid=%@&page=%d&limit=15&mode=%@",GLOBALAPI,INDEX,categoryId,[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"],[[NSUserDefaults standardUserDefaults] objectForKey:@"countryId"],_ProfileUserId,page,[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"]];
-            
+      //  if ([_ProfileUserId isEqualToString:appDelegate.userId]) {
+                   urlString=[NSString stringWithFormat:@"%@%@Video?categoryid=%@&language=&country=&userid=%@&page=%d&limit=15&mode=%@",GLOBALAPI,INDEX,categoryId,_ProfileUserId,page,[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"]];
+//        }
+//        else{
+//            
+//            urlString=[NSString stringWithFormat:@"%@%@Video?categoryid=%@&language=%@&country=%@&userid=%@&page=%d&limit=15&mode=%@",GLOBALAPI,INDEX,categoryId,[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"],[[NSUserDefaults standardUserDefaults] objectForKey:@"countryId"],_ProfileUserId,page,[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"]];
+//            
+//      
+//        }
+        
             
             
             urlString=[urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];

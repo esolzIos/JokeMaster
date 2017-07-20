@@ -747,6 +747,40 @@
 - (IBAction)shareClicked:(id)sender {
     [_ratingImage.layer removeAllAnimations];
     [_optionView setHidden:YES];
+    
+    NSURL *vidurl=[NSURL URLWithString:[jokeDict objectForKey:@"videofilename"]];
+    NSArray *items = @[vidurl];
+    
+    // build an activity view controller
+    UIActivityViewController *controller = [[UIActivityViewController alloc]initWithActivityItems:items applicationActivities:nil];
+    
+    // and present it
+    [self.navigationController presentViewController:controller animated:YES completion:^{
+        // executes after the user selects something
+    }];
+    
+    
+    controller.completionWithItemsHandler = ^(NSString *activityType,
+                                              BOOL completed,
+                                              NSArray *returnedItems,
+                                              NSError *error){
+        // react to the completion
+        if (completed) {
+            
+            // user shared an item
+            NSLog(@"We used activity type%@", activityType);
+            
+        } else {
+            
+            // user cancelled
+            NSLog(@"We didn't want to share anything after all.");
+        }
+        
+        if (error) {
+            NSLog(@"An Error occured: %@, %@", error.localizedDescription, error.localizedFailureReason);
+        }
+    };
+    
 }
 
 -(void)langClicked

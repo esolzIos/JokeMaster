@@ -92,7 +92,7 @@
             
             //http://ec2-13-58-196-4.us-east-2.compute.amazonaws.com/jokemaster/index.php/search?searchValue=test1&language=1&country=99&page=1&limit=15
             
-            urlString=[NSString stringWithFormat:@"%@%@search?searchValue=%@&language=%@&country=%@&page=%d&limit=30&mode=%@",GLOBALAPI,INDEX,searchedText,[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"],[[NSUserDefaults standardUserDefaults] objectForKey:@"countryId"],page,[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"]];
+            urlString=[NSString stringWithFormat:@"%@%@search?searchValue=%@&language=&country=&page=%d&limit=30&mode=%@",GLOBALAPI,INDEX,searchedText,page,[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"]];
             
             
             

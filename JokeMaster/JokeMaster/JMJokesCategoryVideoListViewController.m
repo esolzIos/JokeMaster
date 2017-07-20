@@ -122,7 +122,7 @@
     
     [cell.CategoryNameLabel setFont:[UIFont fontWithName:cell.CategoryNameLabel.font.fontName size:[self getFontSize:9.0]]];
     
-    cell.CategoryNameLabel.text = [[[CategoryArray objectAtIndex:indexPath.row]objectForKey:@"name"] uppercaseString];
+    cell.CategoryNameLabel.text = [[[[CategoryArray objectAtIndex:indexPath.row]objectForKey:@"name"]stringByReplacingOccurrencesOfString:@"&amp;" withString:@"&"] uppercaseString];
     //
     [cell.VideoThumpnailImage sd_setImageWithURL:[NSURL URLWithString:[[CategoryArray objectAtIndex:indexPath.row]objectForKey:@"image"]] placeholderImage:[UIImage imageNamed: @"noimage"]];
     
@@ -143,7 +143,7 @@
     
     JMCategoryVideoListViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMVideoList"];
     VC.CategoryId=[NSString stringWithFormat:@"%@",[[CategoryArray objectAtIndex:indexPath.row]objectForKey:@"id"]];
-    VC.CategoryName=[NSString stringWithFormat:@"%@",[[CategoryArray objectAtIndex:indexPath.row]objectForKey:@"name"]];
+    VC.CategoryName=[NSString stringWithFormat:@"%@",[[[[CategoryArray objectAtIndex:indexPath.row]objectForKey:@"name"]stringByReplacingOccurrencesOfString:@"&amp;" withString:@"&"] uppercaseString]];
     [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
     
     

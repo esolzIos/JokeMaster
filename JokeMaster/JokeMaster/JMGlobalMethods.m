@@ -233,107 +233,90 @@
     
 }
 
-//-(void)readAfterPush
-//{
-//
-//
-//
-//    if([self networkAvailable])
-//    {
-//
-//
-//
-//        [SVProgressHUD showWithStatus:@"Please Wait"];
-//
-//
-//        //  AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-//        //
-//
-//        NSURL *url=[NSURL URLWithString:[NSString stringWithFormat:@"%@badgecountminus_control",GLOBALAPI]];
-//
-//
-//
-//
-//        // configure the request
-//
-//        NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
-//        [request setHTTPMethod:@"POST"];
-//
-//
-//
-//        //        NSString *boundary = @"---------------------------14737809831466499882746641449";
-//        //        NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@", boundary];
-//        //        [request addValue:contentType forHTTPHeaderField:@"Content-Type"];
-//
-//        NSString *sendData = @"authtoken=";
-//        sendData = [sendData stringByAppendingString:[NSString stringWithFormat:@"%@", app.authToken]];
-//
-//
-//        [request setValue:@"gzip" forHTTPHeaderField:@"Accept-Encoding"];
-//
-//        NSMutableData *theBodyData = [NSMutableData data];
-//
-//        theBodyData = [[sendData dataUsingEncoding:NSUTF8StringEncoding] mutableCopy];
-//
-//
-//        //  self.session = [NSURLSession sharedSession];  // use sharedSession or create your own
-//
-//        session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
-//
-//        NSURLSessionTask *task = [session uploadTaskWithRequest:request fromData:theBodyData completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-//            if (error) {
-//                NSLog(@"error = %@", error);
-//
-//                return;
-//            }
-//
-//            if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
-//                NSError *jsonError;
-//                NSDictionary *response = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
-//
-//
-//
-//
-//
-//
-//                if (jsonError) {
-//                    // Error Parsing JSON
-//
-//                    NSString *responseString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-//
-//                    NSLog(@"response = %@",responseString);
-//
-//                    [SVProgressHUD showInfoWithStatus:@"some error occured"];
-//
-//                } else {
-//                    // Success Parsing JSON
-//                    // Log NSDictionary response:
-//                    NSLog(@"result = %@",response);
-//
-//                    if ([[response objectForKey:@"status_code"]intValue]==406) {
-//
-//                        app.userId=@"";
-//
-//                        app.authToken=@"";
-//
-//                        NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
-//                        [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
-//
-//
-//
-//                        ADLoginViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"ADLogin"];
-//                        VC.forcedToLogin=true;
-//                        [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
-//
-//                    }
-//                    else
-//
-//                        if ([[response objectForKey:@"status_code"]intValue]==200) {
-//
-//                            [SVProgressHUD dismiss];
-//
-//                            app.badgeCount=[[response objectForKey:@"batchcount"]intValue];
-//
+-(void)readAfterPush
+{
+
+
+
+    if([self networkAvailable])
+    {
+
+
+
+        [SVProgressHUD showWithStatus:@"Please Wait"];
+
+
+        //  AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+        //
+//http://ec2-13-58-196-4.us-east-2.compute.amazonaws.com/jokemaster/index.php/useraction/updateBatchCount?userid=
+        NSURL *url=[NSURL URLWithString:[NSString stringWithFormat:@"%@%@useraction/updateBatchCount",GLOBALAPI,INDEX]];
+
+
+
+
+        // configure the request
+
+        NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
+        [request setHTTPMethod:@"POST"];
+
+
+
+        //        NSString *boundary = @"---------------------------14737809831466499882746641449";
+        //        NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@", boundary];
+        //        [request addValue:contentType forHTTPHeaderField:@"Content-Type"];
+
+        NSString *sendData = @"userid=";
+        sendData = [sendData stringByAppendingString:[NSString stringWithFormat:@"%@", app.userId]];
+
+
+        [request setValue:@"gzip" forHTTPHeaderField:@"Accept-Encoding"];
+
+        NSMutableData *theBodyData = [NSMutableData data];
+
+        theBodyData = [[sendData dataUsingEncoding:NSUTF8StringEncoding] mutableCopy];
+
+
+        //  self.session = [NSURLSession sharedSession];  // use sharedSession or create your own
+
+        session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
+
+        NSURLSessionTask *task = [session uploadTaskWithRequest:request fromData:theBodyData completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+            if (error) {
+                NSLog(@"error = %@", error);
+
+                return;
+            }
+
+            if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
+                NSError *jsonError;
+                NSDictionary *response = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
+
+
+
+
+
+
+                if (jsonError) {
+                    // Error Parsing JSON
+
+                    NSString *responseString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+
+                    NSLog(@"response = %@",responseString);
+
+                    [SVProgressHUD showInfoWithStatus:@"some error occured"];
+
+                } else {
+                    // Success Parsing JSON
+                    // Log NSDictionary response:
+                    NSLog(@"result = %@",response);
+
+            
+                        if ([[response objectForKey:@"status"]boolValue]) {
+
+                            [SVProgressHUD dismiss];
+
+                          //  app.badgeCount=[[response objectForKey:@"batchcount"]intValue];
+
 //                            if (app.badgeCount>0) {
 //
 //                                [badgeLbl setHidden:NO];
@@ -344,134 +327,114 @@
 //                            else{
 //                                [badgeLbl setHidden:YES];
 //                            }
-//
-//
-//
-//                        }
-//
-//                        else{
-//
-//
-//                        }
-//
-//
-//
-//
-//                }
-//
-//
-//            }
-//
-//
-//        }];
-//
-//
-//        [task resume];
-//
-//
-//    }
-//
-//    else{
-//
-//
-//        [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
-//
-//
-//
-//    }
-//
-//
-//}
+
+
+
+                        }
+
+                        else{
+
+
+                        }
+
+
+
+
+                }
+
+
+            }
+
+
+        }];
+
+
+        [task resume];
+
+
+    }
+
+    else{
+
+
+        [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
+
+
+
+    }
+
+
+}
 
 -(void)appendAfterPush
 {
     
     app=(AppDelegate *)[[UIApplication sharedApplication]delegate];
     
+
     
-    
-    NSString *class=[NSString stringWithFormat:@"%@",[self.navigationController.visibleViewController class]];
-    
-    if ([class isEqualToString:@"ADChatViewController"]) {
-        
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"chatReceived" object:nil];
-        
-        
-    }
-    else
-    {
-        
-        
-        
-        
-        
         [[NSNotificationCenter defaultCenter] postNotificationName:@"pushReceived" object:nil];
         
-        
-        
-        
-        
-        
-    }
+ 
     
 }
 
-//-(void)addPushView:(UIView *)mainView
-//{
-//    [pushView removeFromSuperview];
-//
-//    pushView= [[[NSBundle mainBundle] loadNibNamed:@"extendedView" owner:self options:nil] objectAtIndex:3];
-//
-//
-//    [ pushView setFrame:CGRectMake(0, -70.0/480.0*FULLHEIGHT, FULLWIDTH,70.0/480.0*FULLHEIGHT)];
-//
-//
-//
-//    pushTitle=(UILabel *)[pushView viewWithTag:1];
-//    [pushTitle setFont:[UIFont fontWithName:pushTitle.font.fontName size:[self getFontSize:pushTitle.font.pointSize]]];
-//
-//    pushDesc=(UILabel *)[pushView viewWithTag:2];
-//    [pushDesc setFont:[UIFont fontWithName:pushDesc.font.fontName size:[self getFontSize:pushDesc.font.pointSize]]];
-//
-//    pushBtn=(UIButton *)[pushView viewWithTag:3];
-//    [pushBtn addTarget:self action:@selector(pushClicked) forControlEvents:UIControlEventTouchUpInside];
-//
-//    pushInnerView=(UIView *)[pushView viewWithTag:4];
-//    [self setRoundCornertoView:pushInnerView withBorderColor:[UIColor blackColor] WithRadius:0.05];
-//
-//    [pushTitle setText:[app.pushDict objectForKey:@"sendername"]];
-//    [pushDesc setText:[app.pushDict objectForKey:@"alert"]];
-//
-//    UISwipeGestureRecognizer * recognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeLeft)];
-//    [recognizer setDirection:(UISwipeGestureRecognizerDirectionLeft)];
-//    [pushView addGestureRecognizer:recognizer];
-//
-//    UISwipeGestureRecognizer * recognizer2 = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeRight)];
-//    [recognizer2 setDirection:(UISwipeGestureRecognizerDirectionRight)];
-//    [pushView addGestureRecognizer:recognizer2];
-//
-//
-//    [mainView addSubview:pushView];
-//
-//
-//
-//
-//
-//
-//    [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:0.0 initialSpringVelocity:0.0 options:UIViewAnimationOptionCurveEaseIn animations:^{
-//        [ pushView setFrame:CGRectMake(0, 0, FULLWIDTH,70.0/480.0*FULLHEIGHT)];
-//    } completion:^(BOOL finished) {
-//
-//
-//    }];
-//
-//
-//    [self performSelector:@selector(hidePush) withObject:nil afterDelay:4];
-//
-//
-//
-//
-//}
+-(void)addPushView:(UIView *)mainView
+{
+    [pushView removeFromSuperview];
+
+    pushView= [[[NSBundle mainBundle] loadNibNamed:@"extendedView" owner:self options:nil] objectAtIndex:3];
+
+
+    [ pushView setFrame:CGRectMake(0, -70.0/480.0*FULLHEIGHT, FULLWIDTH,70.0/480.0*FULLHEIGHT)];
+
+
+
+    pushTitle=(UILabel *)[pushView viewWithTag:1];
+    [pushTitle setFont:[UIFont fontWithName:pushTitle.font.fontName size:[self getFontSize:pushTitle.font.pointSize]]];
+
+    pushDesc=(UILabel *)[pushView viewWithTag:2];
+    [pushDesc setFont:[UIFont fontWithName:pushDesc.font.fontName size:[self getFontSize:pushDesc.font.pointSize]]];
+
+    pushBtn=(UIButton *)[pushView viewWithTag:3];
+    [pushBtn addTarget:self action:@selector(pushClicked) forControlEvents:UIControlEventTouchUpInside];
+
+    pushInnerView=(UIView *)[pushView viewWithTag:4];
+    [self setRoundCornertoView:pushInnerView withBorderColor:[UIColor blackColor] WithRadius:0.05];
+
+    [pushTitle setText:[app.pushDict objectForKey:@"sendername"]];
+    [pushDesc setText:[app.pushDict objectForKey:@"alert"]];
+
+    UISwipeGestureRecognizer * recognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeLeft)];
+    [recognizer setDirection:(UISwipeGestureRecognizerDirectionLeft)];
+    [pushView addGestureRecognizer:recognizer];
+
+    UISwipeGestureRecognizer * recognizer2 = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeRight)];
+    [recognizer2 setDirection:(UISwipeGestureRecognizerDirectionRight)];
+    [pushView addGestureRecognizer:recognizer2];
+
+
+    [mainView addSubview:pushView];
+
+
+
+
+
+
+    [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:0.0 initialSpringVelocity:0.0 options:UIViewAnimationOptionCurveEaseIn animations:^{
+        [ pushView setFrame:CGRectMake(0, 0, FULLWIDTH,70.0/480.0*FULLHEIGHT)];
+    } completion:^(BOOL finished) {
+
+
+    }];
+
+
+    [self performSelector:@selector(hidePush) withObject:nil afterDelay:4];
+
+
+
+
+}
 
 -(void)swipeLeft
 {
@@ -839,351 +802,351 @@
     
 }
 
--(void)addHeader:(UIView *)mainView
-{
-    
-    [headerView removeFromSuperview];
-    
-    
-    
-    headerView= [[[NSBundle mainBundle] loadNibNamed:@"JMHeaderView" owner:self options:nil] objectAtIndex:0];
-    
-    
-    [ headerView setFrame:CGRectMake(0, 0, FULLWIDTH, mainView.frame.size.height)];
-    
-    
-    
-    headerLbl=(UILabel *)[headerView viewWithTag:10];
-    [headerLbl setFont:[UIFont fontWithName:headerLbl.font.fontName size:[self getFontSize:headerLbl.font.pointSize]]];
-    
-    _backView=(UIView *)[headerView viewWithTag:4];
-    _backImg=(UIImageView *)[headerView viewWithTag:14];
-    _backBtn =(UIButton *)[headerView viewWithTag:24];
-    
-    profileView=(UIView *)[headerView viewWithTag:1];
-    _profileImg=(UIImageView *)[headerView viewWithTag:11];
-    profileBtn = (UIButton *)[headerView viewWithTag:21];
-    
-    chatView=(UIView *)[headerView viewWithTag:2];
-    _chatImg=(UIImageView *)[headerView viewWithTag:12];
-    chatBtn = (UIButton *)[headerView viewWithTag:22];
-    
-    notifyView=(UIView *)[headerView viewWithTag:3];
-    _notifyImg=(UIImageView *)[headerView viewWithTag:13];
-    notifyBtn = (UIButton *)[headerView viewWithTag:23];
-    badgeLbl =(UILabel *)[headerView viewWithTag:999];
-    
-    _doneView=(UIView *)[headerView viewWithTag:6];
-    _doneLbl=(UILabel *)[headerView viewWithTag:16];
-    _doneBtn = (UIButton *)[headerView viewWithTag:26];
-    
-    _saveView=(UIView *)[headerView viewWithTag:7];
-    _saveLbl=(UILabel *)[headerView viewWithTag:17];
-    _saveBtn = (UIButton *)[headerView viewWithTag:27];
-    
-    _cancelview=(UIView *)[headerView viewWithTag:5];
-    _cancelLbl=(UILabel *)[headerView viewWithTag:15];
-    _cancelBtn = (UIButton *)[headerView viewWithTag:25];
-    
-    _writeView=(UIView *)[headerView viewWithTag:9];
-    _writeImg=(UIImageView *)[headerView viewWithTag:19];
-    _writeBtn = (UIButton *)[headerView viewWithTag:29];
-    
-    _moreView=(UIView *)[headerView viewWithTag:8];
-    _moreImg=(UIImageView *)[headerView viewWithTag:18];
-    _moreBtn = (UIButton *)[headerView viewWithTag:28];
-    
-    
-    _editview=(UIView *)[headerView viewWithTag:101];
-    _editLbl=(UILabel *)[headerView viewWithTag:102];
-    _editBtn = (UIButton *)[headerView viewWithTag:103];
-    
-    _userView=(UIView *)[headerView viewWithTag:201];
-    _userImg=(UIImageView *)[headerView viewWithTag:202];
-    _userBttn = (UIButton *)[headerView viewWithTag:203];
-    
-    _trashView=(UIView *)[headerView viewWithTag:301];
-    _trashImg=(UIImageView *)[headerView viewWithTag:302];
-    _trashBtn = (UIButton *)[headerView viewWithTag:303];
-    
-    [self setRoundCornertoView:badgeLbl withBorderColor:[UIColor clearColor] WithRadius:0.5];
-    
-    //    if (app.badgeCount==0) {
-    [badgeLbl setHidden:YES];
-    //    }
-    //    else
-    //    {
-    //        [badgeLbl setHidden:NO];
-    //
-    //    }
-    
-    [_doneLbl setFont:[UIFont fontWithName:_doneLbl.font.fontName size:[self getFontSize:_doneLbl.font.pointSize]]];
-    
-    [_cancelLbl setFont:[UIFont fontWithName:_cancelLbl.font.fontName size:[self getFontSize:_cancelLbl.font.pointSize]]];
-    
-    [_saveLbl setFont:[UIFont fontWithName:_saveLbl.font.fontName size:[self getFontSize:_saveLbl.font.pointSize]]];
-    
-    [_editLbl setFont:[UIFont fontWithName:_editLbl.font.fontName size:[self getFontSize:_editLbl.font.pointSize]]];
-    
-    
-    //  [_profileImg setFrame:CGRectMake(_profileImg.frame.origin.x, _profileImg.frame.origin.y, _profileImg.frame.size.width/320.0*FULLWIDTH, _profileImg.frame.size.height/480.0*FULLHEIGHT)];
-    
-    // [_chatImg setFrame:CGRectMake(_chatImg.frame.origin.x, _chatImg.frame.origin.y, _chatImg.frame.size.width/320.0*FULLWIDTH, _chatImg.frame.size.height/480.0*FULLHEIGHT)];
-    
-    //  [_notifyImg setFrame:CGRectMake(_notifyImg.frame.origin.x, _notifyImg.frame.origin.y, _notifyImg.frame.size.width/320.0*FULLWIDTH, _notifyImg.frame.size.height/480.0*FULLHEIGHT)];
-    
-    
-    NSString *class=[NSString stringWithFormat:@"%@",[self.navigationController.visibleViewController class]];
-    
-    if ([class isEqualToString:@"ADHomeViewController"]) {
-        
-        [headerLbl setText:@"HOME"];
-        
-        
-        [_backView setHidden:YES];
-        
-        [profileView setHidden:NO];
-        [notifyView setHidden:NO];
-        [chatView setHidden:NO];
-    }
-    
-    else if ([class isEqualToString:@"ADUserProfileViewController"]) {
-        
-        [headerLbl setText:@"PROFILE"];
-        
-        
-        [_backView setHidden:NO];
-        // [_moreView setHidden:NO];
-        
-        [profileView setHidden:YES];
-        [notifyView setHidden:YES];
-        
-        [chatView setHidden:YES];
-    }
-    
-    else if ([class isEqualToString:@"ADUserListViewController"]) {
-        
-        [headerLbl setText:@"USERS"];
-        
-        
-        [_backView setHidden:NO];
-        
-        [profileView setHidden:YES];
-        [notifyView setHidden:YES];
-        [chatView setHidden:YES];
-    }
-    else if ([class isEqualToString:@"ADChatViewController"]) {
-        
-        [headerLbl setText:@"CHAT"];
-        
-        
-        [_backView setHidden:NO];
-        
-        [profileView setHidden:YES];
-        [notifyView setHidden:YES];
-        [chatView setHidden:YES];
-    }
-    else if ([class isEqualToString:@"ADFollowViewController"]) {
-        
-        [_backView setHidden:NO];
-        
-        [profileView setHidden:YES];
-        [notifyView setHidden:YES];
-        [chatView setHidden:YES];
-    }
-    
-    else if ([class isEqualToString:@"ADFeaturedViewController"] ) {
-        
-        [headerLbl setText:@"FEATURED"];
-        
-        
-        [_backView setHidden:YES];
-        
-        [profileView setHidden:YES];
-        [notifyView setHidden:NO];
-        [chatView setHidden:YES];
-        
-        CGRect chatRect = chatView.frame;
-        
-        
-        [notifyView setFrame:chatRect];
-        
-    } else if ([class isEqualToString:@"ADNotificationViewController"]) {
-        
-        [headerLbl setText:@"NOTIFICATION"];
-        
-        
-        [_backView setHidden:NO];
-        
-        [profileView setHidden:YES];
-        [notifyView setHidden:YES];
-        [chatView setHidden:YES];
-        
-        
-        
-    }
-    else  if ([class isEqualToString:@"ADCreateEventViewController"] ) {
-        [headerLbl setText:@"ADIT"];
-        
-        
-        [_backView setHidden:YES];
-        
-        [profileView setHidden:YES];
-        [notifyView setHidden:YES];
-        [chatView setHidden:YES];
-        
-        [_doneView setHidden:NO];
-        [_cancelview setHidden:NO];
-        
-        
-    }
-    else  if ([class isEqualToString:@"ADDetailsViewController"] ) {
-        [headerLbl setText:@"EVENT DETAILS"];
-        
-        
-        [_backView setHidden:NO];
-        
-        [profileView setHidden:YES];
-        [notifyView setHidden:YES];
-        [chatView setHidden:YES];
-        
-    }
-    
-    else if ([class isEqualToString:@"ADSearchViewController"]) {
-        
-        [headerLbl setText:@"SEARCH"];
-        
-        
-        [_backView setHidden:NO];
-        
-        [profileView setHidden:YES];
-        [notifyView setHidden:NO];
-        [chatView setHidden:YES];
-        
-        CGRect chatRect = chatView.frame;
-        
-        
-        [notifyView setFrame:chatRect];
-        
-    }
-    else if ([class isEqualToString:@"ADSettingsViewController"]) {
-        
-        [headerLbl setText:@"SETTINGS"];
-        
-        
-        [_backView setHidden:NO];
-        
-        [profileView setHidden:YES];
-        [notifyView setHidden:YES];
-        [chatView setHidden:YES];
-        [_saveView setHidden:NO];
-        
-        
-        
-    }
-    else if ([class isEqualToString:@"ADMessageListViewController"]) {
-        
-        [headerLbl setText:@"MESSAGES"];
-        
-        
-        [_backView setHidden:NO];
-        
-        //       CGRect backRect = _backView.frame;
-        //
-        //
-        //       [chatView setFrame:backRect];
-        //
-        
-        [profileView setHidden:YES];
-        [notifyView setHidden:NO];
-        [chatView setHidden:YES];
-        [_writeView setHidden:NO];
-        
-        
-        
-    }
-    else if ([class isEqualToString:@"ADEventsViewController"]) {
-        
-        [headerLbl setText:@"EVENTS"];
-        
-        
-        [_backView setHidden:YES];
-        
-        [profileView setHidden:YES];
-        [notifyView setHidden:NO];
-        [chatView setHidden:YES];
-        
-        [_cancelview setHidden:YES];
-        [_doneView setHidden:YES];
-        
-        CGRect chatRect = chatView.frame;
-        
-        
-        [notifyView setFrame:chatRect];
-        
-    }
-    else if ([class isEqualToString:@"ADEventDetailViewController"]) {
-        
-        [headerLbl setText:@"EVENT DETAILS"];
-        
-        
-        [_backView setHidden:NO];
-        
-        [profileView setHidden:YES];
-        [notifyView setHidden:YES];
-        [chatView setHidden:YES];
-        
-        [_cancelview setHidden:YES];
-        [_doneView setHidden:YES];
-        
-        //       CGRect chatRect = chatView.frame;
-        //
-        //
-        //       [notifyView setFrame:chatRect];
-        
-    }
-    else{
-        
-        [profileView setHidden:YES];
-        [notifyView setHidden:YES];
-        [chatView setHidden:YES];
-        
-        [_backView setHidden:NO];
-        
-        if ([class isEqualToString:@"ADSignupViewController"]) {
-            
-            [headerLbl setText:@"Fill the details"];
-        }
-        else  if ([class isEqualToString:@"ADRegisterViewController"]) {
-            
-            [headerLbl setText:@"Sign Up"];
-        }
-    }
-    
-    
-    if ([class isEqualToString:@"ADFeaturedViewController"]|| [class isEqualToString:@"ADHomeViewController"] || [class isEqualToString:@"ADSearchViewController"] ||  [class isEqualToString:@"ADMessageListViewController"]  ||  [class isEqualToString:@"ADEventsViewController"]) {
-        
-        [self checkPushCount];
-        
-        
-        
-    }
-    
-    
-    [mainView addSubview:headerView];
-    
-    [profileBtn addTarget:self action:@selector(profileClicked) forControlEvents:UIControlEventTouchUpInside];
-    [notifyBtn addTarget:self action:@selector(notifyClicked) forControlEvents:UIControlEventTouchUpInside];
-    [chatBtn addTarget:self action:@selector(chatClicked) forControlEvents:UIControlEventTouchUpInside];
-    
-    [_backBtn addTarget:self action:@selector(backClicked) forControlEvents:UIControlEventTouchUpInside];
-    
-    
-    
-    
-    
-    [_writeBtn addTarget:self action:@selector(writeClicked) forControlEvents:UIControlEventTouchUpInside];
-}
+//-(void)addHeader:(UIView *)mainView
+//{
+//    
+//    [headerView removeFromSuperview];
+//    
+//    
+//    
+//    headerView= [[[NSBundle mainBundle] loadNibNamed:@"JMHeaderView" owner:self options:nil] objectAtIndex:0];
+//    
+//    
+//    [ headerView setFrame:CGRectMake(0, 0, FULLWIDTH, mainView.frame.size.height)];
+//    
+//    
+//    
+//    headerLbl=(UILabel *)[headerView viewWithTag:10];
+//    [headerLbl setFont:[UIFont fontWithName:headerLbl.font.fontName size:[self getFontSize:headerLbl.font.pointSize]]];
+//    
+//    _backView=(UIView *)[headerView viewWithTag:4];
+//    _backImg=(UIImageView *)[headerView viewWithTag:14];
+//    _backBtn =(UIButton *)[headerView viewWithTag:24];
+//    
+//    profileView=(UIView *)[headerView viewWithTag:1];
+//    _profileImg=(UIImageView *)[headerView viewWithTag:11];
+//    profileBtn = (UIButton *)[headerView viewWithTag:21];
+//    
+//    chatView=(UIView *)[headerView viewWithTag:2];
+//    _chatImg=(UIImageView *)[headerView viewWithTag:12];
+//    chatBtn = (UIButton *)[headerView viewWithTag:22];
+//    
+//    notifyView=(UIView *)[headerView viewWithTag:3];
+//    _notifyImg=(UIImageView *)[headerView viewWithTag:13];
+//    notifyBtn = (UIButton *)[headerView viewWithTag:23];
+//    badgeLbl =(UILabel *)[headerView viewWithTag:999];
+//    
+//    _doneView=(UIView *)[headerView viewWithTag:6];
+//    _doneLbl=(UILabel *)[headerView viewWithTag:16];
+//    _doneBtn = (UIButton *)[headerView viewWithTag:26];
+//    
+//    _saveView=(UIView *)[headerView viewWithTag:7];
+//    _saveLbl=(UILabel *)[headerView viewWithTag:17];
+//    _saveBtn = (UIButton *)[headerView viewWithTag:27];
+//    
+//    _cancelview=(UIView *)[headerView viewWithTag:5];
+//    _cancelLbl=(UILabel *)[headerView viewWithTag:15];
+//    _cancelBtn = (UIButton *)[headerView viewWithTag:25];
+//    
+//    _writeView=(UIView *)[headerView viewWithTag:9];
+//    _writeImg=(UIImageView *)[headerView viewWithTag:19];
+//    _writeBtn = (UIButton *)[headerView viewWithTag:29];
+//    
+//    _moreView=(UIView *)[headerView viewWithTag:8];
+//    _moreImg=(UIImageView *)[headerView viewWithTag:18];
+//    _moreBtn = (UIButton *)[headerView viewWithTag:28];
+//    
+//    
+//    _editview=(UIView *)[headerView viewWithTag:101];
+//    _editLbl=(UILabel *)[headerView viewWithTag:102];
+//    _editBtn = (UIButton *)[headerView viewWithTag:103];
+//    
+//    _userView=(UIView *)[headerView viewWithTag:201];
+//    _userImg=(UIImageView *)[headerView viewWithTag:202];
+//    _userBttn = (UIButton *)[headerView viewWithTag:203];
+//    
+//    _trashView=(UIView *)[headerView viewWithTag:301];
+//    _trashImg=(UIImageView *)[headerView viewWithTag:302];
+//    _trashBtn = (UIButton *)[headerView viewWithTag:303];
+//    
+//    [self setRoundCornertoView:badgeLbl withBorderColor:[UIColor clearColor] WithRadius:0.5];
+//    
+//    //    if (app.badgeCount==0) {
+//    [badgeLbl setHidden:YES];
+//    //    }
+//    //    else
+//    //    {
+//    //        [badgeLbl setHidden:NO];
+//    //
+//    //    }
+//    
+//    [_doneLbl setFont:[UIFont fontWithName:_doneLbl.font.fontName size:[self getFontSize:_doneLbl.font.pointSize]]];
+//    
+//    [_cancelLbl setFont:[UIFont fontWithName:_cancelLbl.font.fontName size:[self getFontSize:_cancelLbl.font.pointSize]]];
+//    
+//    [_saveLbl setFont:[UIFont fontWithName:_saveLbl.font.fontName size:[self getFontSize:_saveLbl.font.pointSize]]];
+//    
+//    [_editLbl setFont:[UIFont fontWithName:_editLbl.font.fontName size:[self getFontSize:_editLbl.font.pointSize]]];
+//    
+//    
+//    //  [_profileImg setFrame:CGRectMake(_profileImg.frame.origin.x, _profileImg.frame.origin.y, _profileImg.frame.size.width/320.0*FULLWIDTH, _profileImg.frame.size.height/480.0*FULLHEIGHT)];
+//    
+//    // [_chatImg setFrame:CGRectMake(_chatImg.frame.origin.x, _chatImg.frame.origin.y, _chatImg.frame.size.width/320.0*FULLWIDTH, _chatImg.frame.size.height/480.0*FULLHEIGHT)];
+//    
+//    //  [_notifyImg setFrame:CGRectMake(_notifyImg.frame.origin.x, _notifyImg.frame.origin.y, _notifyImg.frame.size.width/320.0*FULLWIDTH, _notifyImg.frame.size.height/480.0*FULLHEIGHT)];
+//    
+//    
+//    NSString *class=[NSString stringWithFormat:@"%@",[self.navigationController.visibleViewController class]];
+//    
+//    if ([class isEqualToString:@"ADHomeViewController"]) {
+//        
+//        [headerLbl setText:@"HOME"];
+//        
+//        
+//        [_backView setHidden:YES];
+//        
+//        [profileView setHidden:NO];
+//        [notifyView setHidden:NO];
+//        [chatView setHidden:NO];
+//    }
+//    
+//    else if ([class isEqualToString:@"ADUserProfileViewController"]) {
+//        
+//        [headerLbl setText:@"PROFILE"];
+//        
+//        
+//        [_backView setHidden:NO];
+//        // [_moreView setHidden:NO];
+//        
+//        [profileView setHidden:YES];
+//        [notifyView setHidden:YES];
+//        
+//        [chatView setHidden:YES];
+//    }
+//    
+//    else if ([class isEqualToString:@"ADUserListViewController"]) {
+//        
+//        [headerLbl setText:@"USERS"];
+//        
+//        
+//        [_backView setHidden:NO];
+//        
+//        [profileView setHidden:YES];
+//        [notifyView setHidden:YES];
+//        [chatView setHidden:YES];
+//    }
+//    else if ([class isEqualToString:@"ADChatViewController"]) {
+//        
+//        [headerLbl setText:@"CHAT"];
+//        
+//        
+//        [_backView setHidden:NO];
+//        
+//        [profileView setHidden:YES];
+//        [notifyView setHidden:YES];
+//        [chatView setHidden:YES];
+//    }
+//    else if ([class isEqualToString:@"ADFollowViewController"]) {
+//        
+//        [_backView setHidden:NO];
+//        
+//        [profileView setHidden:YES];
+//        [notifyView setHidden:YES];
+//        [chatView setHidden:YES];
+//    }
+//    
+//    else if ([class isEqualToString:@"ADFeaturedViewController"] ) {
+//        
+//        [headerLbl setText:@"FEATURED"];
+//        
+//        
+//        [_backView setHidden:YES];
+//        
+//        [profileView setHidden:YES];
+//        [notifyView setHidden:NO];
+//        [chatView setHidden:YES];
+//        
+//        CGRect chatRect = chatView.frame;
+//        
+//        
+//        [notifyView setFrame:chatRect];
+//        
+//    } else if ([class isEqualToString:@"ADNotificationViewController"]) {
+//        
+//        [headerLbl setText:@"NOTIFICATION"];
+//        
+//        
+//        [_backView setHidden:NO];
+//        
+//        [profileView setHidden:YES];
+//        [notifyView setHidden:YES];
+//        [chatView setHidden:YES];
+//        
+//        
+//        
+//    }
+//    else  if ([class isEqualToString:@"ADCreateEventViewController"] ) {
+//        [headerLbl setText:@"ADIT"];
+//        
+//        
+//        [_backView setHidden:YES];
+//        
+//        [profileView setHidden:YES];
+//        [notifyView setHidden:YES];
+//        [chatView setHidden:YES];
+//        
+//        [_doneView setHidden:NO];
+//        [_cancelview setHidden:NO];
+//        
+//        
+//    }
+//    else  if ([class isEqualToString:@"ADDetailsViewController"] ) {
+//        [headerLbl setText:@"EVENT DETAILS"];
+//        
+//        
+//        [_backView setHidden:NO];
+//        
+//        [profileView setHidden:YES];
+//        [notifyView setHidden:YES];
+//        [chatView setHidden:YES];
+//        
+//    }
+//    
+//    else if ([class isEqualToString:@"ADSearchViewController"]) {
+//        
+//        [headerLbl setText:@"SEARCH"];
+//        
+//        
+//        [_backView setHidden:NO];
+//        
+//        [profileView setHidden:YES];
+//        [notifyView setHidden:NO];
+//        [chatView setHidden:YES];
+//        
+//        CGRect chatRect = chatView.frame;
+//        
+//        
+//        [notifyView setFrame:chatRect];
+//        
+//    }
+//    else if ([class isEqualToString:@"ADSettingsViewController"]) {
+//        
+//        [headerLbl setText:@"SETTINGS"];
+//        
+//        
+//        [_backView setHidden:NO];
+//        
+//        [profileView setHidden:YES];
+//        [notifyView setHidden:YES];
+//        [chatView setHidden:YES];
+//        [_saveView setHidden:NO];
+//        
+//        
+//        
+//    }
+//    else if ([class isEqualToString:@"ADMessageListViewController"]) {
+//        
+//        [headerLbl setText:@"MESSAGES"];
+//        
+//        
+//        [_backView setHidden:NO];
+//        
+//        //       CGRect backRect = _backView.frame;
+//        //
+//        //
+//        //       [chatView setFrame:backRect];
+//        //
+//        
+//        [profileView setHidden:YES];
+//        [notifyView setHidden:NO];
+//        [chatView setHidden:YES];
+//        [_writeView setHidden:NO];
+//        
+//        
+//        
+//    }
+//    else if ([class isEqualToString:@"ADEventsViewController"]) {
+//        
+//        [headerLbl setText:@"EVENTS"];
+//        
+//        
+//        [_backView setHidden:YES];
+//        
+//        [profileView setHidden:YES];
+//        [notifyView setHidden:NO];
+//        [chatView setHidden:YES];
+//        
+//        [_cancelview setHidden:YES];
+//        [_doneView setHidden:YES];
+//        
+//        CGRect chatRect = chatView.frame;
+//        
+//        
+//        [notifyView setFrame:chatRect];
+//        
+//    }
+//    else if ([class isEqualToString:@"ADEventDetailViewController"]) {
+//        
+//        [headerLbl setText:@"EVENT DETAILS"];
+//        
+//        
+//        [_backView setHidden:NO];
+//        
+//        [profileView setHidden:YES];
+//        [notifyView setHidden:YES];
+//        [chatView setHidden:YES];
+//        
+//        [_cancelview setHidden:YES];
+//        [_doneView setHidden:YES];
+//        
+//        //       CGRect chatRect = chatView.frame;
+//        //
+//        //
+//        //       [notifyView setFrame:chatRect];
+//        
+//    }
+//    else{
+//        
+//        [profileView setHidden:YES];
+//        [notifyView setHidden:YES];
+//        [chatView setHidden:YES];
+//        
+//        [_backView setHidden:NO];
+//        
+//        if ([class isEqualToString:@"ADSignupViewController"]) {
+//            
+//            [headerLbl setText:@"Fill the details"];
+//        }
+//        else  if ([class isEqualToString:@"ADRegisterViewController"]) {
+//            
+//            [headerLbl setText:@"Sign Up"];
+//        }
+//    }
+//    
+//    
+//    if ([class isEqualToString:@"ADFeaturedViewController"]|| [class isEqualToString:@"ADHomeViewController"] || [class isEqualToString:@"ADSearchViewController"] ||  [class isEqualToString:@"ADMessageListViewController"]  ||  [class isEqualToString:@"ADEventsViewController"]) {
+//        
+//        [self checkPushCount];
+//        
+//        
+//        
+//    }
+//    
+//    
+//    [mainView addSubview:headerView];
+//    
+//    [profileBtn addTarget:self action:@selector(profileClicked) forControlEvents:UIControlEventTouchUpInside];
+//    [notifyBtn addTarget:self action:@selector(notifyClicked) forControlEvents:UIControlEventTouchUpInside];
+//    [chatBtn addTarget:self action:@selector(chatClicked) forControlEvents:UIControlEventTouchUpInside];
+//    
+//    [_backBtn addTarget:self action:@selector(backClicked) forControlEvents:UIControlEventTouchUpInside];
+//    
+//    
+//    
+//    
+//    
+//    [_writeBtn addTarget:self action:@selector(writeClicked) forControlEvents:UIControlEventTouchUpInside];
+//}
 
 
 //-(void)checkPushCount

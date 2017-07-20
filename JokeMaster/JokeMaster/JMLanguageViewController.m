@@ -73,7 +73,7 @@
         NSString *url;
         
  
-            url=[NSString stringWithFormat:@"%@%@Signup/fetchlanguage",GLOBALAPI,INDEX];
+            url=[NSString stringWithFormat:@"%@%@Signup/fetchlanguage?country=&mode=1",GLOBALAPI,INDEX];
      
         
         
@@ -312,7 +312,7 @@
         pickerLabel = [[UILabel alloc] initWithFrame:frame];
         pickerLabel.textAlignment = NSTextAlignmentCenter;
         pickerLabel.backgroundColor = [UIColor clearColor];
-        pickerLabel.font = [UIFont fontWithName:@"ComicSansMS-Bold" size:24];
+        pickerLabel.font = [UIFont fontWithName:@"ComicSansMS-Bold" size:[self getFontSize:14]];
         [pickerLabel setText:[langArr objectAtIndex:row]];
     }
     pickerLabel.textColor = [UIColor whiteColor];

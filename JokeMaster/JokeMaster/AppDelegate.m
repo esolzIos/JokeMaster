@@ -12,7 +12,7 @@
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <GoogleSignIn/GoogleSignIn.h>
 #import "JMPlayVideoViewController.h"
-
+#import "JMProfileViewController.h"
 @interface AppDelegate ()
 {
     NSString *CurrentViewController;
@@ -33,34 +33,37 @@
     
     [Fabric with:@[[Crashlytics class]]];
 
+       _badgeCount=0;
+    [self registerForRemoteNotifications];
     
     
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 80000
-    if ([application respondsToSelector:@selector(registerUserNotificationSettings:)])
-    {
-        // use registerUserNotificationSettings
-        [application registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
-        
-        [application registerForRemoteNotifications];
-        
-        //        alert = [[UIAlertView alloc] initWithTitle:@"Alert!" message:@"Launch Finish" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        //                [alert show];
-    }
-    else
-    {
-        // use registerForRemoteNotifications
-        [[UIApplication sharedApplication] registerForRemoteNotifications];
-        
-       
-        
-    }
     
-    
-#else
-    {
-        [[UIApplication sharedApplication] registerForRemoteNotificationTypes: (UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge |UIRemoteNotificationTypeSound)];
-    }
-#endif
+//#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 80000
+//    if ([application respondsToSelector:@selector(registerUserNotificationSettings:)])
+//    {
+//        // use registerUserNotificationSettings
+//        [application registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
+//        
+//        [application registerForRemoteNotifications];
+//        
+//        //        alert = [[UIAlertView alloc] initWithTitle:@"Alert!" message:@"Launch Finish" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+//        //                [alert show];
+//    }
+//    else
+//    {
+//        // use registerForRemoteNotifications
+//        [[UIApplication sharedApplication] registerForRemoteNotifications];
+//        
+//       
+//        
+//    }
+//    
+//    
+//#else
+//    {
+//        [[UIApplication sharedApplication] registerForRemoteNotificationTypes: (UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge |UIRemoteNotificationTypeSound)];
+//    }
+//#endif
 
     
 
@@ -91,6 +94,22 @@
     
     return YES;
 }
+
+- (void)registerForRemoteNotifications {
+    if(SYSTEM_VERSION_GRATERTHAN_OR_EQUALTO(@"10.0")){
+        UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+        center.delegate = self;
+        [center requestAuthorizationWithOptions:(UNAuthorizationOptionSound | UNAuthorizationOptionAlert | UNAuthorizationOptionBadge) completionHandler:^(BOOL granted, NSError * _Nullable error){
+            if(!error){
+                [[UIApplication sharedApplication] registerForRemoteNotifications];
+            }
+        }];
+    }
+    else {
+        // Code for old versions
+    }
+}
+
 
 
 - (BOOL)application:(UIApplication *)application
@@ -128,29 +147,38 @@
 //}
 
 
-
-
-
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
+    
+    
+    [UIApplication sharedApplication].applicationIconBadgeNumber = _badgeCount;
+    
 }
 
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    [UIApplication sharedApplication].applicationIconBadgeNumber = _badgeCount;
 }
 
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"PushCount" object:nil];
 }
 
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"PushCount" object:nil];
 }
+
+
+
 
 
 - (void)applicationWillTerminate:(UIApplication *)application {
@@ -206,94 +234,94 @@
 }
 #pragma mark - Push Notification
 
-
-- (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings
-
-{
-    
-    //register to receive notifications
-    
-    [application registerForRemoteNotifications];
-    
-}
-
-- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
-{
-    DebugLog(@"didReceiveRemoteNotification %@",userInfo);
-    
-   
-    
-    UIApplicationState state = [application applicationState];
-    if (state == UIApplicationStateActive)
-    {
-        
-    }
-    else if (state == UIApplicationStateInactive || state == UIApplicationStateBackground)
-    {
-        
-    }
-    
-    
-}
-- (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forRemoteNotification:(NSDictionary *)userInfo completionHandler:(void(^)())completionHandler
-
-{
-    NSLog(@"didReceiveRemoteNotification %@",userInfo);
-    
-    //handle the actions
-    
-    
-    
-    NSLog(@"handle action");
-    
-    if ([identifier isEqualToString:@"declineAction"])
-    {
-        
-    }
-    
-    else if ([identifier isEqualToString:@"answerAction"])
-    {
-        
-    }
-    
-}
-- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
-{
-    
-    NSString *deviceToken1 = [[[[deviceToken description]
-                                
-                                stringByReplacingOccurrencesOfString:@"<"withString:@""]
-                               
-                               stringByReplacingOccurrencesOfString:@">" withString:@""]
-                              
-                              stringByReplacingOccurrencesOfString: @" " withString: @""];
-    
-    
-    if ([deviceToken1 length] == 0 || [deviceToken1 isKindOfClass:[NSNull class]] || [deviceToken1 isEqual:@"<null>"] || deviceToken1==nil || [deviceToken1 isEqual:@"(null)"])
-    {
-        // deviceToken1 = @"cb8143a8becd78c317b8e0c722c9177a4b9579ab25f5e2f5f4fe806dc2937a3e";
-        deviceToken1 = @"";
-        [[NSUserDefaults standardUserDefaults] setObject:deviceToken1 forKey:@"deviceToken"];
-    }
-    else
-    {
-        [[NSUserDefaults standardUserDefaults] setObject:deviceToken1 forKey:@"deviceToken"];
-    }
-    
-    DebugLog(@"device token here: %@",deviceToken1);
-    [[NSUserDefaults standardUserDefaults] synchronize];
-    
-//        UIAlertView *pushResponse = [[UIAlertView alloc] initWithTitle:nil message:[NSString stringWithFormat:@"DeviceToken:%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"deviceToken"]] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-//        [pushResponse show];
-    
-    
-}
--(void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error{
-    DebugLog(@"error in did fail to regidter remote notification %@",error.description);
-    //    [[NSUserDefaults standardUserDefaults] setObject:@"cb8143a8becd78c317b8e0c722c9177a4b9579ab25f5e2f5f4fe806dc2937a3e" forKey:@"deviceToken"];
-    [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"deviceToken"];
-    
-}
+//
+//- (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings
+//
+//{
+//    
+//    //register to receive notifications
+//    
+//    [application registerForRemoteNotifications];
+//    
+//}
+//
+//- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
+//{
+//    DebugLog(@"didReceiveRemoteNotification %@",userInfo);
+//    
+//   
+//    
+//    UIApplicationState state = [application applicationState];
+//    if (state == UIApplicationStateActive)
+//    {
+//        
+//    }
+//    else if (state == UIApplicationStateInactive || state == UIApplicationStateBackground)
+//    {
+//        
+//    }
+//    
+//    
+//}
+//- (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forRemoteNotification:(NSDictionary *)userInfo completionHandler:(void(^)())completionHandler
+//
+//{
+//    NSLog(@"didReceiveRemoteNotification %@",userInfo);
+//    
+//    //handle the actions
+//    
+//    
+//    
+//    NSLog(@"handle action");
+//    
+//    if ([identifier isEqualToString:@"declineAction"])
+//    {
+//        
+//    }
+//    
+//    else if ([identifier isEqualToString:@"answerAction"])
+//    {
+//        
+//    }
+//    
+//}
+//- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
+//{
+//    
+//    NSString *deviceToken1 = [[[[deviceToken description]
+//                                
+//                                stringByReplacingOccurrencesOfString:@"<"withString:@""]
+//                               
+//                               stringByReplacingOccurrencesOfString:@">" withString:@""]
+//                              
+//                              stringByReplacingOccurrencesOfString: @" " withString: @""];
+//    
+//    
+//    if ([deviceToken1 length] == 0 || [deviceToken1 isKindOfClass:[NSNull class]] || [deviceToken1 isEqual:@"<null>"] || deviceToken1==nil || [deviceToken1 isEqual:@"(null)"])
+//    {
+//        // deviceToken1 = @"cb8143a8becd78c317b8e0c722c9177a4b9579ab25f5e2f5f4fe806dc2937a3e";
+//        deviceToken1 = @"";
+//        [[NSUserDefaults standardUserDefaults] setObject:deviceToken1 forKey:@"deviceToken"];
+//    }
+//    else
+//    {
+//        [[NSUserDefaults standardUserDefaults] setObject:deviceToken1 forKey:@"deviceToken"];
+//    }
+//    
+//    DebugLog(@"device token here: %@",deviceToken1);
+//    [[NSUserDefaults standardUserDefaults] synchronize];
+//    
+////        UIAlertView *pushResponse = [[UIAlertView alloc] initWithTitle:nil message:[NSString stringWithFormat:@"DeviceToken:%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"deviceToken"]] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+////        [pushResponse show];
+//    
+//    
+//}
+//-(void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error{
+//    DebugLog(@"error in did fail to regidter remote notification %@",error.description);
+//    //    [[NSUserDefaults standardUserDefaults] setObject:@"cb8143a8becd78c317b8e0c722c9177a4b9579ab25f5e2f5f4fe806dc2937a3e" forKey:@"deviceToken"];
+//    [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"deviceToken"];
+//    
+//}
 - (UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window
 {
     
@@ -324,12 +352,123 @@
         UINavigationController* navigationController = (UINavigationController*)rootViewController;
         return [self topViewControllerWithRootViewController:navigationController.visibleViewController];
     } else if (rootViewController.presentedViewController) {
-//        UIViewController* presentedViewController = rootViewController.presentedViewController;
-//        return [self topViewControllerWithRootViewController:presentedViewController];
-        UINavigationController* navigationController = (UINavigationController*)rootViewController;
-        return [self topViewControllerWithRootViewController:navigationController.visibleViewController];
+       UIViewController* presentedViewController = rootViewController.presentedViewController;
+       return [self topViewControllerWithRootViewController:presentedViewController];
+ //       UINavigationController* navigationController = (UINavigationController*)rootViewController;
+//        return [self topViewControllerWithRootViewController:navigationController.visibleViewController];
     } else {
         return rootViewController;
     }
 }
+//Called when a notification is delivered to a foreground app.
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken NS_AVAILABLE_IOS(3_0){
+    
+    
+    NSLog(@"device token : %@",deviceToken);
+    
+    NSString *token = [[deviceToken description] stringByTrimmingCharactersInSet: [NSCharacterSet characterSetWithCharactersInString:@"<>"]];
+    token = [token stringByReplacingOccurrencesOfString:@" " withString:@""];
+    
+    _userDeviceToken=[NSString stringWithFormat:@"%@",token];
+    
+    if(_userDeviceToken.length==0 || [_userDeviceToken isKindOfClass:[NSNull class]])
+    {
+        _userDeviceToken=@"1234456789987654321";
+    }
+        [[NSUserDefaults standardUserDefaults] setObject:_userDeviceToken forKey:@"deviceToken"];
+    
+}
+
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error NS_AVAILABLE_IOS(3_0)
+{
+    
+    _userDeviceToken=@"1234456789987654321";
+    
+            [[NSUserDefaults standardUserDefaults] setObject:_userDeviceToken forKey:@"deviceToken"];
+}
+
+//Called when a notification is delivered to a foreground app.
+-(void)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions options))completionHandler{
+    NSLog(@"User Info : %@",notification.request.content.userInfo);
+    
+    //  [SVProgressHUD showInfoWithStatus:[NSString stringWithFormat:@"%@",notification.request.content.userInfo]];
+    
+    //  _badgeCount++;
+    AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
+    
+    _pushDict=[notification.request.content.userInfo objectForKey:@"aps"];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"ReceivedPush" object:nil];
+    
+    // completionHandler(UNAuthorizationOptionSound | UNAuthorizationOptionAlert | UNAuthorizationOptionBadge);
+    
+    
+}
+
+//Called to let your app know which action was selected by the user for a given notification.
+-(void)userNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void(^)())completionHandler{
+    
+    NSLog(@"User Info : %@",response.notification.request.content.userInfo);
+    
+    
+    //    UIApplication *application = [UIApplication sharedApplication];
+    //
+    //
+    //    if (application.applicationState == UIApplicationStateActive)
+    //    {
+    
+    
+    
+    //    }
+    //    else if (application.applicationState == UIApplicationStateBackground || application.applicationState == UIApplicationStateInactive)
+    //    {
+    
+    //   _badgeCount++;
+    UINavigationController *navigationController = (UINavigationController *)self.window.rootViewController;
+    
+    
+    
+    _pushDict=[response.notification.request.content.userInfo objectForKey:@"aps"];
+    
+    
+    
+    
+    
+    
+    if ( [[_pushDict objectForKey:@"type"]intValue]==1) {
+        
+
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main"
+                                                             bundle: nil];
+//
+        JMPlayVideoViewController *VC=[storyboard instantiateViewControllerWithIdentifier:@"JMPlayVideoViewController"];
+        VC.VideoId=[_pushDict valueForKey:@"videoid"];
+
+        [navigationController pushViewController:VC animated:YES];
+        
+    }
+    else
+        if ( [[_pushDict objectForKey:@"type"]intValue]==2) {
+            
+            
+            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main"
+                                                                 bundle: nil];
+            //
+            JMProfileViewController *VC=[storyboard instantiateViewControllerWithIdentifier:@"JMProfile"];
+            VC.ProfileUserId=[_pushDict valueForKey:@"followingid"];
+            
+
+            
+            [navigationController pushViewController:VC animated:YES];
+            
+        }
+
+    
+   // [[NSNotificationCenter defaultCenter] postNotificationName:@"ReadPush" object:nil];
+        
+  //  }
+ 
+    completionHandler();
+}
+
 @end

@@ -30,5 +30,8 @@
 - (IBAction)signUpClicked:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *btnForgotPassword;
 - (IBAction)ForgotPasswordClick:(id)sender;
+- (IBAction)gobackClicked:(id)sender;
 
+@property (strong, nonatomic) IBOutlet UIView *gobackView;
+@property (strong, nonatomic) IBOutlet UIButton *goBackBtn;
 @end

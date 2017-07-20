@@ -793,4 +793,10 @@ dismissViewController:(UIViewController *)viewController {
     JMLoginViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMForgotPasswordViewController"];
     [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
 }
+
+- (IBAction)gobackClicked:(id)sender {
+    
+    [self.navigationController popViewControllerAnimated:YES];
+    
+}
 @end

@@ -40,7 +40,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 #define UDUSERNAME @"userName"
 #define DEVICETOKEN @"deviceToken"
 #define ISLOGGED @"isLogged"
-#define PUSHTYPE @"2" //1 for dev 2 for dis
+#define PUSHTYPE @"1" //1 for dev 2 for dis
 //size
 #define LandingHeaderHeight 100.0f
 #define OtherHeaderHeight 45.0f
