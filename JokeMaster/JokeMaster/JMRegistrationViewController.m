@@ -87,14 +87,32 @@
     Passwordtxt.attributedPlaceholder = [[NSAttributedString alloc] initWithString:AMLocalizedString(@"Password",nil)attributes:@{NSForegroundColorAttributeName: [UIColor whiteColor]}];
     ConfirmPassword.attributedPlaceholder = [[NSAttributedString alloc] initWithString:AMLocalizedString(@"Confirm Password",nil) attributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
     
-    
-    ProfileImageLabel.frame=CGRectMake(ProfileImageLabel.frame.origin.x, ProfileImage.frame.origin.y+ProfileImage.frame.size.height/2-ProfileImageLabel.frame.size.height/2, ProfileImageLabel.frame.size.width, ProfileImageLabel.frame.size.height);
+//    
+//    ProfileImageLabel.frame=CGRectMake(ProfileImageLabel.frame.origin.x, ProfileImage.frame.origin.y+ProfileImage.frame.size.height/2-ProfileImageLabel.frame.size.height/2, ProfileImageLabel.frame.size.width, ProfileImageLabel.frame.size.height);
     
     LangaugeArray=[[NSMutableArray alloc] initWithObjects:AMLocalizedString(@"English",nil),AMLocalizedString(@"Hebrew",nil),AMLocalizedString(@"Hindi",nil), nil];
     
     ProfileImageLabel.text= AMLocalizedString(@"Upload Profile Picture",nil);
     LanguageLabel.text=AMLocalizedString(@"Language",nil);
     [SignUpBtn setTitle:AMLocalizedString(@"SIGN UP",nil) forState:UIControlStateNormal];
+    
+    
+    [self setRoundCornertoView:_profileImgView withBorderColor:[UIColor clearColor] WithRadius:0.15];
+    
+    [ProfileImageLabel setFont:[UIFont fontWithName:ProfileImageLabel.font.fontName size:[self getFontSize:ProfileImageLabel.font.pointSize]]];
+    
+  
+    
+        [Nametxt setFont:[UIFont fontWithName:Nametxt.font.fontName size:[self getFontSize:Nametxt.font.pointSize]]];
+    
+        [Emailtxt setFont:[UIFont fontWithName:Emailtxt.font.fontName size:[self getFontSize:Emailtxt.font.pointSize]]];
+    
+        [Passwordtxt setFont:[UIFont fontWithName:Passwordtxt.font.fontName size:[self getFontSize:Passwordtxt.font.pointSize]]];
+    
+        [ConfirmPassword setFont:[UIFont fontWithName:ConfirmPassword.font.fontName size:[self getFontSize:ConfirmPassword.font.pointSize]]];
+    
+        [SignUpBtn.titleLabel setFont:[UIFont fontWithName:SignUpBtn.titleLabel.font.fontName size:[self getFontSize:SignUpBtn.titleLabel.font.pointSize]]];
+    
     
     urlobj=[[UrlconnectionObject alloc] init];
 }
@@ -509,7 +527,7 @@
     
     ProfileImage.contentMode = UIViewContentModeScaleAspectFill;
     
-    ProfileImage.layer.cornerRadius=ProfileImage.frame.size.height/2;
+  //  ProfileImage.layer.cornerRadius=ProfileImage.frame.size.height/2;
     
     ProfileImage.clipsToBounds=YES;
     
@@ -939,6 +957,8 @@
                 [[NSUserDefaults standardUserDefaults] setObject:[[result objectForKey:@"Details"] valueForKey:@"user_id"] forKey:@"UserId"];
                 [[NSUserDefaults standardUserDefaults] setObject:[[result objectForKey:@"Details"] valueForKey:@"name"] forKey:@"Name"];
                 [[NSUserDefaults standardUserDefaults] setObject:[[result objectForKey:@"Details"] valueForKey:@"image"] forKey:@"Image"];
+                
+                DebugLog(@"%@",[[result objectForKey:@"Details"] valueForKey:@"user_id"]);
                 
                 app.userId=[[result objectForKey:@"Details"] valueForKey:@"user_id"];
                 app.userName=[[result objectForKey:@"Details"] valueForKey:@"name"];

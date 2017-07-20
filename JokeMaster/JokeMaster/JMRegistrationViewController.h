@@ -22,6 +22,7 @@
     
     
 }
+@property (strong, nonatomic) IBOutlet UIView *profileImgView;
 @property (weak, nonatomic) IBOutlet UIScrollView *mainscroll;
 @property (weak, nonatomic) IBOutlet UIImageView *ProfileImage;
 @property (weak, nonatomic) IBOutlet UILabel *ProfileImageLabel;

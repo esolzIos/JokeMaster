@@ -110,7 +110,7 @@
     
        [HeaderView.langBtn addTarget:self action:@selector(gotoCountrySelect) forControlEvents:UIControlEventTouchUpInside];
     
-    [HeaderView.langImage sd_setImageWithURL:[NSURL URLWithString:[[NSUserDefaults standardUserDefaults] objectForKey:@"flag"]]];
+    [HeaderView.langImage sd_setImageWithURL:[NSURL URLWithString:[[NSUserDefaults standardUserDefaults] objectForKey:@"flag"]]placeholderImage:[UIImage imageNamed:@"noimage"]];
     
     
     HeaderView.langView.hidden=NO;
@@ -3129,6 +3129,8 @@
                 [UIView commitAnimations];
                 [MainView removeGestureRecognizer:tapRecognizer];
                
+                DebugLog(@"%@",app.userId);
+                
                     JMProfileViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMProfile"];
                     VC.ProfileUserId=app.userId;
                                [self.navigationController pushViewController:VC animated:YES];
@@ -3214,43 +3216,85 @@
     }
         else if (sender==5)
         {
-                        if ([[NSUserDefaults standardUserDefaults]boolForKey:@"loggedIn"]) {
-                          
-                            
-                            
-                            NSString *deviceToken;
-                            NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
-                            
-                            NSString *countryImage=[prefs valueForKey:@"flag"];
-                             NSString *countrySelected=[prefs valueForKey:@"countryId"];
-                             NSString *langSelected=[prefs valueForKey:@"langId"];
-                            BOOL homevisited=[prefs boolForKey:@"HomeVisited"];
-                            
-                            deviceToken=[prefs valueForKey:@"deviceToken"];
-                        NSString     *flagImage=[prefs valueForKey:@"deviceToken"];
-                            NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
-                            [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
-                            [[NSUserDefaults standardUserDefaults] synchronize];
-                            
-                            [[NSUserDefaults standardUserDefaults] setObject:deviceToken  forKey:@"deviceToken"];
-                              [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"loggedIn"];
-                            
-                            [[NSUserDefaults standardUserDefaults ]setObject:countryImage forKey:@"flag"];
-                            [[NSUserDefaults standardUserDefaults ]setObject:countrySelected forKey:@"countryId"];
-                            [[NSUserDefaults standardUserDefaults ]setObject:langSelected forKey:@"langId"];
-                            [[NSUserDefaults standardUserDefaults] setBool:homevisited forKey:@"HomeVisited"];
-                            
-                            
-                            app.userId=@"";
-                            app.userName=@"";
-                            app.userImage=@"";
-                            app.isLogged=false;
-                            
-                            
-                JMGlobalMethods *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMHomeViewController"];
-                            
-                         [self.navigationController pushViewController:VC animated:YES];
-                            
+            
+                                  if ([[NSUserDefaults standardUserDefaults]boolForKey:@"loggedIn"]) {
+            
+            UIAlertController *alertController = [UIAlertController
+                                                  alertControllerWithTitle:@"Are you sure?"
+                                                  message:@"Choose OK to logout."
+                                                  preferredStyle:UIAlertControllerStyleAlert];
+            
+            
+            
+            
+            UIAlertAction *cancelAction = [UIAlertAction
+                                           actionWithTitle:NSLocalizedString(@"Cancel", @"Cancel action")
+                                           style:UIAlertActionStyleCancel
+                                           handler:^(UIAlertAction *action)
+                                           {
+                                               DebugLog(@"Cancel action");
+                                           }];
+            
+            
+            [alertController addAction:cancelAction];
+            
+            
+            
+            
+            UIAlertAction *okAction = [UIAlertAction
+                                       actionWithTitle:NSLocalizedString(@"OK", @"OK action")
+                                       style:UIAlertActionStyleDefault
+                                       handler:^(UIAlertAction *action)
+                                       {
+                                           
+                                           //  AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+                                   
+                                               NSString *deviceToken;
+                                               NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+                                               
+                                               NSString *countryImage=[prefs valueForKey:@"flag"];
+                                               NSString *countrySelected=[prefs valueForKey:@"countryId"];
+                                               NSString *langSelected=[prefs valueForKey:@"langId"];
+                                               BOOL homevisited=[prefs boolForKey:@"HomeVisited"];
+                                               
+                                               deviceToken=[prefs valueForKey:@"deviceToken"];
+                                      
+                                               NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
+                                               [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
+                                               [[NSUserDefaults standardUserDefaults] synchronize];
+                                               
+                                               [[NSUserDefaults standardUserDefaults] setObject:deviceToken  forKey:@"deviceToken"];
+                                               [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"loggedIn"];
+                                               
+                                               [[NSUserDefaults standardUserDefaults ]setObject:countryImage forKey:@"flag"];
+                                               [[NSUserDefaults standardUserDefaults ]setObject:countrySelected forKey:@"countryId"];
+                                               [[NSUserDefaults standardUserDefaults ]setObject:langSelected forKey:@"langId"];
+                                               [[NSUserDefaults standardUserDefaults] setBool:homevisited forKey:@"HomeVisited"];
+                                               
+                                               
+                                               app.userId=@"";
+                                               app.userName=@"";
+                                               app.userImage=@"";
+                                               app.isLogged=false;
+                                               
+                                               
+                                               JMGlobalMethods *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMHomeViewController"];
+                                               
+                                               [self.navigationController pushViewController:VC animated:YES];
+                                       
+                                           
+                                       }];
+            
+            
+            [alertController addAction:okAction];
+            
+            
+            
+            
+          
+                [self presentViewController:alertController animated:YES completion:nil];
+    
+                    
                         }
          
                         else{

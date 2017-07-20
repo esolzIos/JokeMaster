@@ -322,7 +322,7 @@
     }
 
 
-      [cell.CountryImage sd_setImageWithURL:[NSURL URLWithString:[[CountryArray objectAtIndex:indexPath.row]objectForKey:@"image"]]];
+      [cell.CountryImage sd_setImageWithURL:[NSURL URLWithString:[[CountryArray objectAtIndex:indexPath.row]objectForKey:@"image"]] placeholderImage:[UIImage imageNamed:@"noimage"]];
     
     [cell.CountryLabel setText:AMLocalizedString([[[CountryArray objectAtIndex:indexPath.row]objectForKey:@"countryName"] uppercaseString], nil) ];
     

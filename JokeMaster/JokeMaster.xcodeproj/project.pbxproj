@@ -1158,8 +1158,8 @@
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Manish Sethia (6Y3K8LCSQQ)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Manish Sethia (6Y3K8LCSQQ)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: ESolz Technologies Pvt Ltd (K22GQFS8BW)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: ESolz Technologies Pvt Ltd (K22GQFS8BW)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = K22GQFS8BW;
@@ -1182,7 +1182,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "114b26d7-b348-4835-9e5f-e2360b6c3aa9";
+				PROVISIONING_PROFILE = "797bf892-3fa2-4c2f-bff9-744133c57283";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1210,8 +1210,8 @@
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Manish Sethia (6Y3K8LCSQQ)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Manish Sethia (6Y3K8LCSQQ)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: ESolz Technologies Pvt Ltd (K22GQFS8BW)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: ESolz Technologies Pvt Ltd (K22GQFS8BW)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = K22GQFS8BW;
@@ -1227,7 +1227,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "114b26d7-b348-4835-9e5f-e2360b6c3aa9";
+				PROVISIONING_PROFILE = "797bf892-3fa2-4c2f-bff9-744133c57283";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -1239,8 +1239,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = JokeMaster/JokeMaster.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Manish Sethia (6Y3K8LCSQQ)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Manish Sethia (6Y3K8LCSQQ)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: ESolz Technologies Pvt Ltd (K22GQFS8BW)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: ESolz Technologies Pvt Ltd (K22GQFS8BW)";
 				DEVELOPMENT_TEAM = K22GQFS8BW;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1258,8 +1258,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.esolz.JokeMaster;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "114b26d7-b348-4835-9e5f-e2360b6c3aa9";
-				PROVISIONING_PROFILE_SPECIFIER = jokemaster_dev;
+				PROVISIONING_PROFILE = "797bf892-3fa2-4c2f-bff9-744133c57283";
+				PROVISIONING_PROFILE_SPECIFIER = jokemaster_adhoc;
 			};
 			name = Debug;
 		};
@@ -1268,8 +1268,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = JokeMaster/JokeMaster.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Manish Sethia (6Y3K8LCSQQ)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Manish Sethia (6Y3K8LCSQQ)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: ESolz Technologies Pvt Ltd (K22GQFS8BW)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: ESolz Technologies Pvt Ltd (K22GQFS8BW)";
 				DEVELOPMENT_TEAM = K22GQFS8BW;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1286,8 +1286,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.esolz.JokeMaster;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "114b26d7-b348-4835-9e5f-e2360b6c3aa9";
-				PROVISIONING_PROFILE_SPECIFIER = jokemaster_dev;
+				PROVISIONING_PROFILE = "797bf892-3fa2-4c2f-bff9-744133c57283";
+				PROVISIONING_PROFILE_SPECIFIER = jokemaster_adhoc;
 			};
 			name = Release;
 		};

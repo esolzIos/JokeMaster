@@ -371,7 +371,7 @@
     
         cell.CategoryNameLabel.text = [[[videoArr objectAtIndex:indexPath.row]objectForKey:@"videoname" ] uppercaseString];
     
-        [cell.VideoThumpnailImage sd_setImageWithURL:[NSURL URLWithString:[[videoArr objectAtIndex:indexPath.row]objectForKey:@"videoimagename" ]] placeholderImage:[UIImage imageNamed: @"Noimage"]];
+        [cell.VideoThumpnailImage sd_setImageWithURL:[NSURL URLWithString:[[videoArr objectAtIndex:indexPath.row]objectForKey:@"videoimagename" ]] placeholderImage:[UIImage imageNamed: @"noimage"]];
     //
     //    cell.categoryImage.layer.masksToBounds = YES;
     //    cell.categoryImage.layer.cornerRadius=5.0;

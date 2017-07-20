@@ -74,5 +74,8 @@
 @property (strong, nonatomic) IBOutlet UIView *noVideoView;
 @property (strong, nonatomic) IBOutlet FLAnimatedImageView *gifImage;
 @property (strong, nonatomic) IBOutlet UILabel *noVideoLbl;
+@property (strong, nonatomic) IBOutlet UIView *cancelView;
+@property (strong, nonatomic) IBOutlet UIButton *cancelVidBtn;
+- (IBAction)cancelVidClicked:(id)sender;
 
 @end

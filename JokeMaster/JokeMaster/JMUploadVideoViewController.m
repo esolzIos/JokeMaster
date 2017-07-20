@@ -89,7 +89,7 @@
     [self setRoundCornertoView:_gifImage withBorderColor:[UIColor clearColor] WithRadius:0.15];
     [self setRoundCornertoView:_noVideoView withBorderColor:[UIColor clearColor] WithRadius:0.15];
     [self setRoundCornertoView:_loaderImage withBorderColor:[UIColor clearColor] WithRadius:0.15];
-    
+    [self setRoundCornertoView:_cancelView withBorderColor:[UIColor clearColor] WithRadius:0.15];
     [_noVideoLbl setFont:[UIFont fontWithName:_noVideoLbl.font.fontName size:[self getFontSize:_noVideoLbl.font.pointSize]]];
     
 }
@@ -130,9 +130,26 @@
 
 
 - (IBAction)uploadClicked:(id)sender {
+    if ([self textFieldBlankorNot:_videoName.text]) {
+        [SVProgressHUD showInfoWithStatus:@"Video name cannot be blank"];
+    }
+    else if ([self textFieldBlankorNot:langSelected]) {
+        [SVProgressHUD showInfoWithStatus:@"Select joke language"];
+    }
+    else if ([self textFieldBlankorNot:categorySelected]) {
+        [SVProgressHUD showInfoWithStatus:@"Select joke Category"];
+    }
     
+    else if (!videoPicked) {
+        [SVProgressHUD showInfoWithStatus:@"Please select a video to continue"];
+    }
+    
+    
+    else
+    {
+
     [_warningView setHidden:NO];
-    
+    }
 }
 - (IBAction)cameraClicked:(id)sender {
     ipc = [[UIImagePickerController alloc] init];
@@ -300,6 +317,7 @@
                                                     
                                                     [_optionView setHidden:YES];
                                                     [_loadingView setHidden:YES];
+                                                    [_cancelView setHidden:NO];
                                                     
                                                     
 
@@ -521,28 +539,11 @@
 }
 - (IBAction)warnOkClicked:(id)sender {
    
-    if ([self textFieldBlankorNot:_videoName.text]) {
-        [SVProgressHUD showInfoWithStatus:@"Video name cannot be blank"];
-    }
-    else if ([self textFieldBlankorNot:langSelected]) {
-        [SVProgressHUD showInfoWithStatus:@"Select joke language"];
-    }
-    else if ([self textFieldBlankorNot:categorySelected]) {
-        [SVProgressHUD showInfoWithStatus:@"Select joke Category"];
-    }
     
-    else if (!videoPicked) {
-        [SVProgressHUD showInfoWithStatus:@"Please select a video to continue"];
-    }
-    
-    
-    else
-    {
-        
     [_warningView setHidden:YES];
     
     [self fireAFUrl];
-    }
+    
 }
 - (IBAction)crossClicked:(id)sender {
     [_warningView setHidden:YES];
@@ -1237,4 +1238,14 @@
 
 
 
+- (IBAction)cancelVidClicked:(id)sender {
+    
+    [_optionView setHidden:NO];
+    videoPicked=false;
+    videoData=nil;
+    imageData=nil;
+    [_cancelView setHidden:YES];
+    
+    
+}
 @end

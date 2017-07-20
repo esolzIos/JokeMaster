@@ -31,7 +31,10 @@
 -(void)LoadHome
 {
  
+
+       // [[Crashlytics sharedInstance] crash];
  
+
     
     if ([[[NSUserDefaults standardUserDefaults]valueForKey:@"langId"] length]>0) {
         
