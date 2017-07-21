@@ -10,7 +10,7 @@
 #import "CountryCell.h"
 #import "FLAnimatedImage/FLAnimatedImage.h"
 #import "FLAnimatedImage/FLAnimatedImageView.h"
-@interface JMChooseCountryViewController : JMGlobalMethods<UITableViewDataSource,UITableViewDelegate,UIPickerViewDelegate>
+@interface JMChooseCountryViewController : JMGlobalMethods<UITableViewDataSource,UITableViewDelegate,UIPickerViewDelegate,UIPickerViewDataSource>
 {
    
     NSMutableArray *CountryArray;

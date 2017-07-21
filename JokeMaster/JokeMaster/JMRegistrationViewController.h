@@ -8,10 +8,13 @@
 
 #import "JMGlobalMethods.h"
 #import "UrlconnectionObject.h"
-@interface JMRegistrationViewController : JMGlobalMethods<UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIActionSheetDelegate,UIPickerViewDataSource,UIPickerViewDelegate,NSURLConnectionDelegate>
+#import "CountryCell.h"
+#import "FLAnimatedImage/FLAnimatedImage.h"
+#import "FLAnimatedImage/FLAnimatedImageView.h"
+@interface JMRegistrationViewController : JMGlobalMethods<UITableViewDataSource,UITableViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIActionSheetDelegate,UIPickerViewDataSource,UIPickerViewDelegate,NSURLConnectionDelegate>
 {
     UIActionSheet *actionsheet;
-    NSMutableArray *LangaugeArray;
+
     NSString *LanguageId,*Lang;
     UIPickerView *Langpicker;
     UIButton *btnSave,*btnCancel;
@@ -41,5 +44,27 @@
 @property (weak, nonatomic) IBOutlet UIButton *SignUpBtn;
 @property (strong, nonatomic) IBOutlet UIButton *gobackBtn;
 - (IBAction)backClicked:(id)sender;
+@property (strong, nonatomic) IBOutlet UIView *countryView;
+@property (strong, nonatomic) IBOutlet UILabel *countryLbl;
+@property (strong, nonatomic) IBOutlet UIButton *countryBtn;
+- (IBAction)countryClicked:(id)sender;
+@property (strong, nonatomic) IBOutlet UIView *pickerView;
+@property (strong, nonatomic) IBOutlet UIPickerView *languagePicker;
+@property (strong, nonatomic) IBOutlet UIButton *selectBtn;
+- (IBAction)selectClicked:(id)sender;
+@property (strong, nonatomic) IBOutlet UIButton *cancelBttn;
+- (IBAction)cancelClicked:(id)sender;
+@property (strong, nonatomic) IBOutlet UIView *countryPopView;
+@property (strong, nonatomic) IBOutlet UITableView *countryTable;
+@property (strong, nonatomic) IBOutlet UIButton *goBtn;
+- (IBAction)countryChoosed:(id)sender;
+@property (strong, nonatomic) IBOutlet UIView *loaderView;
+@property (strong, nonatomic) IBOutlet UIView *loadertvView;
+@property (strong, nonatomic) IBOutlet UIImageView *loaderImage;
+@property (strong, nonatomic) IBOutlet UIButton *loaderBtn;
+- (IBAction)loaderClicked:(id)sender;
+@property (strong, nonatomic) IBOutlet UIView *noVideoView;
+@property (strong, nonatomic) IBOutlet FLAnimatedImageView *gifImage;
+@property (strong, nonatomic) IBOutlet UILabel *noVideoLbl;
 
 @end

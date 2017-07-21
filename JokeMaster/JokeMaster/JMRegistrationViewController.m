@@ -14,6 +14,16 @@
 {
     AppDelegate *app;
     
+    NSMutableArray *langArr,*flagArr;
+    
+    NSMutableDictionary *langDict;
+    
+        NSMutableArray *CountryArray;
+    int rowSelected;
+    NSString *  countrySelected,*countryImage,*langSelected;
+    NSURLSession *session;
+    
+    NSMutableArray *jsonArr;
 }
 @end
 
@@ -90,7 +100,6 @@
 //    
 //    ProfileImageLabel.frame=CGRectMake(ProfileImageLabel.frame.origin.x, ProfileImage.frame.origin.y+ProfileImage.frame.size.height/2-ProfileImageLabel.frame.size.height/2, ProfileImageLabel.frame.size.width, ProfileImageLabel.frame.size.height);
     
-    LangaugeArray=[[NSMutableArray alloc] initWithObjects:AMLocalizedString(@"English",nil),AMLocalizedString(@"Hebrew",nil),AMLocalizedString(@"Hindi",nil), nil];
     
     ProfileImageLabel.text= AMLocalizedString(@"Upload Profile Picture",nil);
     LanguageLabel.text=AMLocalizedString(@"Language",nil);
@@ -102,6 +111,10 @@
     [ProfileImageLabel setFont:[UIFont fontWithName:ProfileImageLabel.font.fontName size:[self getFontSize:ProfileImageLabel.font.pointSize]]];
     
   
+    
+      [LanguageLabel setFont:[UIFont fontWithName:LanguageLabel.font.fontName size:[self getFontSize:LanguageLabel.font.pointSize]]];
+    
+      [_countryLbl setFont:[UIFont fontWithName:_countryLbl.font.fontName size:[self getFontSize:_countryLbl.font.pointSize]]];
     
         [Nametxt setFont:[UIFont fontWithName:Nametxt.font.fontName size:[self getFontSize:Nametxt.font.pointSize]]];
     
@@ -115,6 +128,54 @@
     
     
     urlobj=[[UrlconnectionObject alloc] init];
+    
+    
+    langDict=[[NSMutableDictionary alloc]init];
+    
+    CountryArray=[[NSMutableArray alloc]init];
+
+    
+    
+    langArr=[[NSMutableArray alloc] init];
+ 
+    
+    //    engArr=[[NSMutableArray alloc] initWithObjects:@"UNITED STATES",@"UNITED KINGDOM",@"INDIA", nil];
+    //
+    //     hindiArr=[[NSMutableArray alloc] initWithObjects:@"INDIA",@"PAKISTAN", nil];
+    //
+    //      hebrewArr=[[NSMutableArray alloc] initWithObjects:@"ISRAEL", nil];
+    //
+    //    [langDict setObject:engArr forKey:@"en"];
+    //
+    //    [langDict setObject:hebrewArr forKey:@"he"] ;
+    //
+    //     [langDict setObject:hindiArr forKey:@"hi"] ;
+    //
+    [LanguageLabel setText:AMLocalizedString(@"App interface language", nil)];
+    
+    [_goBtn setTitle:AMLocalizedString(@"GO",nil) forState:UIControlStateNormal] ;
+    
+    [_languagePicker setDelegate:self];
+    
+    
+//    langSelected=[[NSUserDefaults standardUserDefaults ]objectForKey:@"langId"];
+//    countrySelected= [[NSUserDefaults standardUserDefaults ]objectForKey:@"countryId"];
+//    
+//    countryImage=[[NSUserDefaults standardUserDefaults ]objectForKey:@"flag"];
+    
+    
+    NSString* filePath = [[NSBundle mainBundle] pathForResource:@"giphy.gif" ofType:nil];
+    NSData* imageData = [NSData dataWithContentsOfFile:filePath];
+    
+    _gifImage.animatedImage = [FLAnimatedImage animatedImageWithGIFData:imageData];
+    
+    [self setRoundCornertoView:_gifImage withBorderColor:[UIColor clearColor] WithRadius:0.15];
+    [self setRoundCornertoView:_noVideoView withBorderColor:[UIColor clearColor] WithRadius:0.15];
+    [self setRoundCornertoView:_loaderImage withBorderColor:[UIColor clearColor] WithRadius:0.15];
+    [_noVideoLbl setFont:[UIFont fontWithName:_noVideoLbl.font.fontName size:[self getFontSize:_noVideoLbl.font.pointSize]]];
+    
+    
+    [mainscroll setContentSize:CGSizeMake(FULLWIDTH, 630.0/480.0*FULLHEIGHT)];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -131,6 +192,341 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [self loadData];
+}
+-(void)loadData
+{
+    
+    [_loaderView setHidden:NO];
+    
+    if([self networkAvailable])
+    {
+        
+        
+        
+        // [SVProgressHUD show];
+        
+        
+        
+        NSString *url;
+        
+        
+        url=[NSString stringWithFormat:@"%@%@Signup/fetchlanguage_new?mode=1",GLOBALAPI,INDEX];
+        
+        
+        
+        NSLog(@"Url String..%@",url);
+        
+        
+        
+        NSURLSessionConfiguration *sessionConfig = [NSURLSessionConfiguration defaultSessionConfiguration];
+        session = [NSURLSession sessionWithConfiguration:sessionConfig delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
+        
+        [[session dataTaskWithURL:[NSURL URLWithString:url] completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+            
+            
+            //
+            //        NSURLSessionTask *task = [session uploadTaskWithRequest:request fromData:nil completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+            if (error) {
+                NSLog(@"error = %@", error);
+                
+                
+                [_gifImage setHidden:YES];
+                [_noVideoView setHidden:NO];
+                [_noVideoLbl setText:@"Some error occured.\n\n Click to retry"];
+                [_loaderBtn setHidden:NO];
+                
+                
+                // [_GoButton setUserInteractionEnabled:YES];
+                return;
+            }
+            
+            if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
+                NSError *jsonError;
+                NSDictionary *jsonResponse = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
+                
+
+                
+                if (jsonError) {
+                    // Error Parsing JSON
+                    
+                    NSString *responseString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                    
+                    NSLog(@"response = %@",responseString);
+                    
+                    [_gifImage setHidden:YES];
+                    [_noVideoView setHidden:NO];
+                    [_noVideoLbl setText:@"Some error occured.\n\n Click to retry"];
+                    [_loaderBtn setHidden:NO];
+                    
+                    //    [SVProgressHUD showInfoWithStatus:@"some error occured"];
+                    
+                } else {
+                    // Success Parsing JSON
+                    // Log NSDictionary response:
+                    NSLog(@"result = %@",jsonResponse);
+                    if ([[jsonResponse objectForKey:@"status"]boolValue]) {
+                        
+                        [_loaderView setHidden:YES];
+                        
+                        jsonArr=[[jsonResponse objectForKey:@"details"] copy];
+                        
+                     
+                        
+                        
+                        
+                        // [SVProgressHUD dismiss];
+                        
+                        
+                        
+                        for (NSDictionary *Dict in jsonArr) {
+                            
+                            [langArr addObject:Dict];
+              
+                   
+                            
+                        }
+                        
+   
+                        
+                        [self getCountries];
+                        
+                    }
+                    
+                    
+                    else{
+                        
+                        //                        if (langArr.count==0) {
+                        //
+                        //                            [SVProgressHUD dismiss];
+                        //                        }
+                        //                        else{
+                        //                            [SVProgressHUD showInfoWithStatus:[jsonResponse objectForKey:@"message"]];
+                        //                        }
+                        //
+                        [_gifImage setHidden:YES];
+                        [_noVideoView setHidden:NO];
+                        [_noVideoLbl setText:[NSString stringWithFormat:@"%@\n\n Click to retry",[jsonResponse objectForKey:@"message"]]];
+                        [_loaderBtn setHidden:NO];
+                        
+                    }
+                    
+                    
+                    
+                    
+                }
+                
+                
+            }
+            
+            
+        }]resume ];
+        
+        
+        
+        
+        
+    }
+    
+    else{
+        
+        
+        [_gifImage setHidden:YES];
+        [_noVideoView setHidden:NO];
+        [_noVideoLbl setText:[NSString stringWithFormat:@"Check your Internet connection\n\n Click to retry"]];
+        [_loaderBtn setHidden:NO];
+        
+        //   [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
+        
+        
+    }
+    
+    
+    
+    
+    
+    
+    
+}
+
+-(void)getCountries
+{
+    
+    [_loaderView setHidden:NO];
+    
+    if([self networkAvailable])
+    {
+        
+        
+        
+        // [SVProgressHUD show];
+        
+        
+        
+        NSString *url;
+        
+        
+        url=[NSString stringWithFormat:@"%@%@Signup/getcountry?mode=1",GLOBALAPI,INDEX];
+        
+        
+        
+        NSLog(@"Url String..%@",url);
+        
+        
+        
+        NSURLSessionConfiguration *sessionConfig = [NSURLSessionConfiguration defaultSessionConfiguration];
+        session = [NSURLSession sessionWithConfiguration:sessionConfig delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
+        
+        [[session dataTaskWithURL:[NSURL URLWithString:url] completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+            
+            
+            //
+            //        NSURLSessionTask *task = [session uploadTaskWithRequest:request fromData:nil completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+            if (error) {
+                NSLog(@"error = %@", error);
+                
+                
+                [_gifImage setHidden:YES];
+                [_noVideoView setHidden:NO];
+                [_noVideoLbl setText:@"Some error occured.\n\n Click to retry"];
+                [_loaderBtn setHidden:NO];
+                
+                
+                // [_GoButton setUserInteractionEnabled:YES];
+                return;
+            }
+            
+            if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
+                NSError *jsonError;
+                NSDictionary *jsonResponse = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
+                
+                
+                
+                
+                
+                
+                [_goBtn setUserInteractionEnabled:YES];
+                
+                if (jsonError) {
+                    // Error Parsing JSON
+                    
+                    NSString *responseString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                    
+                    NSLog(@"response = %@",responseString);
+                    
+                    [_gifImage setHidden:YES];
+                    [_noVideoView setHidden:NO];
+                    [_noVideoLbl setText:@"Some error occured.\n\n Click to retry"];
+                    [_loaderBtn setHidden:NO];
+                    
+                    //    [SVProgressHUD showInfoWithStatus:@"some error occured"];
+                    
+                } else {
+                    // Success Parsing JSON
+                    // Log NSDictionary response:
+                    NSLog(@"result = %@",jsonResponse);
+                    if ([[jsonResponse objectForKey:@"status"]boolValue]) {
+                        
+                        [_loaderView setHidden:YES];
+                        
+                        jsonArr=[[jsonResponse objectForKey:@"countryData"] copy];
+                        
+                        
+                          [_goBtn setUserInteractionEnabled:YES];
+                        
+                        
+                        // [SVProgressHUD dismiss];
+                        
+                        
+                        
+                        for (NSDictionary *Dict in jsonArr) {
+                            
+                            [CountryArray addObject:Dict];
+                            
+                            
+                            
+                        }
+                        
+                        
+                        
+                        if (CountryArray.count>0) {
+                    
+            
+                            
+                            [_countryTable reloadData];
+                            
+               
+                        }
+                        else{
+                            
+                            [_goBtn setUserInteractionEnabled:NO];
+                            
+                            
+                        }
+                        
+            
+                        
+                    }
+                    
+                    
+                    else{
+                        
+                        //                        if (langArr.count==0) {
+                        //
+                        //                            [SVProgressHUD dismiss];
+                        //                        }
+                        //                        else{
+                        //                            [SVProgressHUD showInfoWithStatus:[jsonResponse objectForKey:@"message"]];
+                        //                        }
+                        //
+                        [_gifImage setHidden:YES];
+                        [_noVideoView setHidden:NO];
+                        [_noVideoLbl setText:[NSString stringWithFormat:@"%@\n\n Click to retry",[jsonResponse objectForKey:@"message"]]];
+                        [_loaderBtn setHidden:NO];
+                        
+                    }
+                    
+                    
+                    
+                    
+                }
+                
+                
+            }
+            
+            
+        }]resume ];
+        
+        
+        
+        
+        
+    }
+    
+    else{
+        
+        
+        [_gifImage setHidden:YES];
+        [_noVideoView setHidden:NO];
+        [_noVideoLbl setText:[NSString stringWithFormat:@"Check your Internet connection\n\n Click to retry"]];
+        [_loaderBtn setHidden:NO];
+        
+        //   [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
+        
+        
+    }
+    
+    
+    
+    
+    
+    
+    
+}
+
 #pragma mark - Sign up tap
 - (IBAction)SignUpTapped:(id)sender
 {
@@ -582,151 +978,13 @@
     [ConfirmPassword resignFirstResponder];
     
     
-    if (LanguageBtn.selected==NO)
-    {
-        if (LangaugeArray.count>0)
-        {
-            [OverlayView removeFromSuperview];
-            
-            OverlayView=[[UIView alloc]initWithFrame:CGRectMake(self.view.frame.origin.x, 0, self.view.frame.size.width,self.navigationController.visibleViewController.view.frame.size.height)];
-            OverlayView.backgroundColor = [UIColor colorWithRed:(0.0f/255.0f) green:(0.0f/255.0f) blue:(0.0f/255.0f) alpha:0.6f];
-            [self.navigationController.visibleViewController.view addSubview:OverlayView];
-            
-            if (IsIphone4)
-            {
-                
-                
-                Langview=[[UIView alloc]initWithFrame:CGRectMake(self.view.frame.origin.x+10,OverlayView.frame.size.height-230, self.view.frame.size.width-20,220)];
-                
-                Langpicker=[[UIPickerView alloc] initWithFrame:CGRectMake(0,30, Langview.frame.size.width,190)];
-                
-                
-            }
-            else
-            {
-                
-                
-                Langview=[[UIView alloc]initWithFrame:CGRectMake(self.view.frame.origin.x+10, OverlayView.frame.size.height-330, self.view.frame.size.width-20,320)];
-                
-                Langpicker=[[UIPickerView alloc] initWithFrame:CGRectMake(0,30, Langview.frame.size.width,290)];
-            }
-            
-            
-            
-            Langpicker.layer.cornerRadius = 5.0f;
-            Langpicker.clipsToBounds = YES;
-            
-            Langview.layer.cornerRadius = 5.0f;
-            Langview.layer.borderWidth = 2.0f;
-            Langview.layer.borderColor = [UIColorFromRGB(0xFF8200) CGColor];
-            
-            Langview.backgroundColor=[UIColor whiteColor];
-            [OverlayView addSubview:Langview];
-            
-            
-            tipImage = [[UIImageView alloc] initWithFrame:CGRectMake(Langview.frame.origin.x+(Langview.frame.size.width-[UIImage imageNamed:@"downarrow"].size.width)/2, Langview.frame.origin.y+Langview.frame.size.height, [UIImage imageNamed:@"downarrow"].size.width, [UIImage imageNamed:@"downarrow"].size.height)];
-            tipImage.image = [UIImage imageNamed:@"downarrow"];
-            [OverlayView addSubview:tipImage];
-            
-            
-            LangBorderView=[[UIView alloc]initWithFrame:CGRectMake(self.view.frame.origin.x,0, Langview.frame.size.width,30)];
-            LangBorderView.layer.cornerRadius = 5.0f;
-            LangBorderView.backgroundColor=UIColorFromRGB(0xFF8200);
-            LangBorderView.clipsToBounds = YES;
-            [Langview addSubview:LangBorderView];
-            
-            
-            Langpicker.delegate=self;
-            Langpicker.dataSource=self;
-            [Langpicker setBackgroundColor:[UIColor whiteColor]];
-            
-            if (![LanguageLabel.text isEqualToString:AMLocalizedString(@"Language",nil)])
-            {
-                for (int i=0; i<[LangaugeArray count]; i++)
-                {
-                    
-                    
-                    
-                    if ([LanguageLabel.text isEqualToString:[LangaugeArray objectAtIndex:i]])
-                    {
-                        [Langpicker selectRow:i inComponent:0 animated:YES];
-                        Lang=[LangaugeArray objectAtIndex:i];
-                        
-                        break;
-                    }
-//                    if ([CategoryId isEqualToString:[[CategoryArray objectAtIndex:i] valueForKey:@"parent_category"]])
-//                    {
-//                        [Catpicker selectRow:i inComponent:0 animated:YES];
-//
-//                        if ([[[NSUserDefaults standardUserDefaults] valueForKey:@"language"] length]==0)
-//                        {
-//                            Cat=[[CategoryArray objectAtIndex:i] valueForKey:@"title_eng"];
-//                        }
-//                        else if ([[[NSUserDefaults standardUserDefaults] valueForKey:@"language"] isEqualToString:@"ar"])
-//                        {
-//                            Cat=[[CategoryArray objectAtIndex:i] valueForKey:@"title_arb"];
-//                        }
-//                        else
-//                        {
-//                            Cat=[[CategoryArray objectAtIndex:i] valueForKey:@"title_eng"];
-//                        }
-//                        
-//                        break;
-//                    }
-                }
-            }
-            
-            
-            [Langview addSubview:Langpicker];
-            
-            
-            
-            btnSave = [UIButton buttonWithType:UIButtonTypeCustom];
-            btnSave.frame = CGRectMake(Langpicker.frame.origin.x+Langpicker.frame.size.width-50,0, 50, 30);
-            [btnSave setTitle:AMLocalizedString(@"Save",nil) forState:UIControlStateNormal];
-            
-            
-            [btnSave setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal ];
-            btnSave.titleLabel.font = [UIFont fontWithName:@"ComicSansMS-Bold" size:15.0];
-            [btnSave addTarget:self action:@selector(CategoryChange) forControlEvents:UIControlEventTouchUpInside];
-            [LangBorderView addSubview:btnSave];
-            [LangBorderView bringSubviewToFront:btnSave];
-            
-            btnCancel = [UIButton buttonWithType:UIButtonTypeCustom];
-            btnCancel.frame = CGRectMake(Langpicker.frame.origin.x,0, 70, 30);
-            
-           [btnCancel setTitle:AMLocalizedString(@"Cancel",nil) forState:UIControlStateNormal];
-            [btnCancel setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal ];
-            btnCancel.titleLabel.font = [UIFont fontWithName:@"ComicSansMS-Bold" size:15.0];
-            [btnCancel addTarget:self action:@selector(CategoryCancel) forControlEvents:UIControlEventTouchUpInside];
-            [LangBorderView addSubview:btnCancel];
-            [LangBorderView bringSubviewToFront:btnCancel];
-            
-            
-            
-            
-            LanguageBtn.selected=YES;
-        }
-        
-        
-    }
-    else
-    {
-        [UIView animateWithDuration:0.4f
-         
-                         animations:^{
-                             
-                             LanguageBtn.selected=NO;
-                             [Langview removeFromSuperview];
-                             [mainscroll setContentOffset:CGPointMake(0.0f,0) animated:YES];
-                             
-                         }
-                         completion:^(BOOL finished)
-         {
-         }
-         ];
-        
-    }
+    [_pickerView setHidden:NO];
+    
+    [_languagePicker reloadAllComponents];
+    
+    
+    [_languagePicker selectRow:rowSelected inComponent:0 animated:NO];
+
 }
 #pragma mark -  title picker cancel
 -(void)CategoryCancel
@@ -739,157 +997,62 @@
     [Langview removeFromSuperview];
     
 }
-#pragma mark -  title picker title save
--(void)CategoryChange
-{
-    
-    LanguageBtn.selected=NO;
-    
-    if (Lang.length==0)
-    {
-        LanguageLabel.text=[LangaugeArray objectAtIndex:0];
-        
-//        if ([[[NSUserDefaults standardUserDefaults] valueForKey:@"language"] length]==0)
-//        {
-//            lblCategory.text=[[CategoryArray objectAtIndex:0] valueForKey:@"title_eng"];
-//        }
-//        else if ([[[NSUserDefaults standardUserDefaults] valueForKey:@"language"] isEqualToString:@"ar"])
-//        {
-//            lblCategory.text=[[CategoryArray objectAtIndex:0] valueForKey:@"title_arb"];
-//        }
-//        else
-//        {
-//            lblCategory.text=[[CategoryArray objectAtIndex:0] valueForKey:@"title_eng"];
-//        }
-//        
-//        
-//        CategoryId=[[CategoryArray objectAtIndex:0] valueForKey:@"parent_category"];
-    }
-    else
-    {
-        LanguageLabel.text=Lang;
-    }
-    Lang=@"";
-    
-    [OverlayView removeFromSuperview];
-    [tipImage removeFromSuperview];
-    [Langview removeFromSuperview];
-    [mainscroll setContentOffset:CGPointMake(0.0f,0) animated:YES];
-    
-}
+
 #pragma mark -  picker delegate
-- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
+
+-(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
 {
+    
     return 1;
-}
-- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
-{
-    if(pickerView==Langpicker)
-    {
-        return LangaugeArray.count;
-    }
-    
-    else
-    {
-        return 0;
-    }
-}
-- (NSString*)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
-{
-    if(pickerView==Langpicker)
-    {
-         return [LangaugeArray objectAtIndex:row];
-        
-//        if ([[[NSUserDefaults standardUserDefaults] valueForKey:@"language"] length]==0)
-//        {
-//            return [[CategoryArray objectAtIndex:row] valueForKey:@"title_eng"];
-//        }
-//        else if ([[[NSUserDefaults standardUserDefaults] valueForKey:@"language"] isEqualToString:@"ar"])
-//        {
-//            return [[CategoryArray objectAtIndex:row] valueForKey:@"title_arb"];
-//        }
-//        else
-//        {
-//            return [[CategoryArray objectAtIndex:row] valueForKey:@"title_eng"];
-//        }
-        
-    }
-    
-    else
-    {
-        return @"";
-    }
     
 }
-- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
-{
-    if(pickerView==Langpicker)
-    {
-        
-        Lang = [LangaugeArray objectAtIndex:row];
-//        if ([[[NSUserDefaults standardUserDefaults] valueForKey:@"language"] length]==0)
-//        {
-//            Cat= [[CategoryArray objectAtIndex:row] valueForKey:@"title_eng"];
-//        }
-//        else if ([[[NSUserDefaults standardUserDefaults] valueForKey:@"language"] isEqualToString:@"ar"])
-//        {
-//            Cat= [[CategoryArray objectAtIndex:row] valueForKey:@"title_arb"];
-//        }
-//        else
-//        {
-//            Cat= [[CategoryArray objectAtIndex:row] valueForKey:@"title_eng"];
-//        }
-//        
-//        
-//        CategoryId=[[CategoryArray objectAtIndex:row] valueForKey:@"parent_category"];
-        
-    }
-    
-    else
-    {
-        
-    }
-}
-- (NSAttributedString *)pickerView:(UIPickerView *)pickerView
-             attributedTitleForRow:(NSInteger)row
-                      forComponent:(NSInteger)component
+
+-(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
 {
     
-    return [[NSAttributedString alloc] initWithString:[LangaugeArray objectAtIndex:row]
-                                           attributes:@
-            {
-            NSForegroundColorAttributeName:UIColorFromRGB(0xFF8200)
-            }];
+    return langArr.count;
     
-//    if ([[[NSUserDefaults standardUserDefaults] valueForKey:@"language"] length]==0)
-//    {
-//        return [[NSAttributedString alloc] initWithString:[[CategoryArray objectAtIndex:row] valueForKey:@"title_eng"]
-//                                               attributes:@
-//                {
-//                NSForegroundColorAttributeName:UIColorFromRGB(0x4799EF)
-//                }];
-//        
-//    }
-//    else if ([[[NSUserDefaults standardUserDefaults] valueForKey:@"language"] isEqualToString:@"ar"])
-//    {
-//        return [[NSAttributedString alloc] initWithString:[[CategoryArray objectAtIndex:row] valueForKey:@"title_arb"]
-//                                               attributes:@
-//                {
-//                NSForegroundColorAttributeName:UIColorFromRGB(0x4799EF)
-//                }];
-//        
-//    }
-//    else
-//    {
-//        return [[NSAttributedString alloc] initWithString:[[CategoryArray objectAtIndex:row] valueForKey:@"title_eng"]
-//                                               attributes:@
-//                {
-//                NSForegroundColorAttributeName:UIColorFromRGB(0x4799EF)
-//                }];
-//        
-//    }
     
 }
+- (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view {
+    UILabel *pickerLabel = (UILabel *)view;
+    // NSString *text = nil;
+    // Reuse the label if possible, otherwise create and configure a new one
+    if ((pickerLabel == nil) || ([pickerLabel class] != [UILabel class])) { //newlabel
+        CGRect frame = CGRectMake(0.0, 0.0, 270, 32.0);
+        pickerLabel = [[UILabel alloc] initWithFrame:frame];
+        pickerLabel.textAlignment = NSTextAlignmentCenter;
+        pickerLabel.backgroundColor = [UIColor clearColor];
+        pickerLabel.font = [UIFont fontWithName:@"ComicSansMS-Bold" size:[self getFontSize:14]];
+        [pickerLabel setText:AMLocalizedString([[langArr objectAtIndex:row]objectForKey:@"name"], nil) ];
+    }
+    pickerLabel.textColor = [UIColor whiteColor];
+    return pickerLabel;
+}
+- (CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component
+{
+    
+    return 50.0/480.0*FULLHEIGHT;
+    
+}
+
+-(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
+{
+    
+    return AMLocalizedString([[langArr objectAtIndex:row]objectForKey:@"name"], nil) ;
+    
+    
+}
+
+
+-(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
+{
+    rowSelected=(int)row;
+    
+    
+    
+}
+
 #pragma mark - Back Button Click
 - (IBAction)backClicked:(id)sender {
     
@@ -1016,7 +1179,7 @@
              //   urlString=[NSMutableString stringWithFormat:@"%@index.php/Signup",GLOBALAPI];
                 
                 
-                urlString=[NSMutableString stringWithFormat:@"%@index.php/Signup?register_type=1&name=%@&email=%@&password=%@&language=%@&device_token=%@&device_type=1&mode=%@",GLOBALAPI,[Nametxt.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[Emailtxt.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[Passwordtxt.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[LanguageLabel.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[[NSUserDefaults standardUserDefaults] objectForKey:@"deviceToken"],[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"]];
+                urlString=[NSMutableString stringWithFormat:@"%@index.php/Signup?register_type=1&name=%@&email=%@&password=%@&language=%@&country=&device_token=%@&device_type=1&mode=%@",GLOBALAPI,[Nametxt.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[Emailtxt.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[Passwordtxt.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[LanguageLabel.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[[NSUserDefaults standardUserDefaults] objectForKey:@"deviceToken"],[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"]];
             
             
             NSString *strEncoded,*requestBody;
@@ -1135,4 +1298,142 @@
     [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
 }
 
+- (IBAction)countryClicked:(id)sender {
+    
+    [_countryPopView setHidden:NO];
+    
+    
+}
+
+
+#pragma mark - UITableView Delegates
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section;
+{
+    return [CountryArray count];
+    
+}
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    NSString *identifier = @"CountryCell";
+    
+    CountryCell *cell = (CountryCell *)[tableView dequeueReusableCellWithIdentifier:identifier];
+    
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
+    //  cell.CheckImage.tag=indexPath.row+500;
+    //  cell.CheckButton.tag=indexPath.row;
+    //  [cell.CheckButton addTarget:self action:@selector(CheckButtonTap:) forControlEvents:UIControlEventTouchUpInside];
+    
+    
+    return cell;
+    
+    
+    
+    
+    
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (IsIphone5 || IsIphone4)
+    {
+        return 50;
+    }
+    else
+    {
+        return 60;
+    }
+    
+}
+
+-(void) tableView:(UITableView *)tableView willDisplayCell:(CountryCell *) cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if ([countrySelected isEqualToString:[[CountryArray objectAtIndex:indexPath.row]objectForKey:@"countryId"]])
+    {
+        
+        cell.CheckImage.image = [UIImage imageNamed:@"tick"];
+        
+        
+        
+    }
+    else
+    {
+        
+        cell.CheckImage.image = [UIImage imageNamed:@"uncheck"];
+    }
+    
+    
+    [cell.CountryImage sd_setImageWithURL:[NSURL URLWithString:[[CountryArray objectAtIndex:indexPath.row]objectForKey:@"image"]] placeholderImage:[UIImage imageNamed:@"noimage"]];
+    
+    [cell.CountryLabel setText:AMLocalizedString([[[CountryArray objectAtIndex:indexPath.row]objectForKey:@"countryName"] uppercaseString], nil) ];
+    
+    
+}
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    //  CountryCell *cCell=[_CountryTable cellForRowAtIndexPath:indexPath];
+    
+    
+    if (![countrySelected isEqualToString:[[CountryArray objectAtIndex:indexPath.row]objectForKey:@"countryId"]])
+    {
+        
+        countrySelected=[[CountryArray objectAtIndex:indexPath.row]objectForKey:@"countryId"];
+        
+        countryImage=[[CountryArray objectAtIndex:indexPath.row]objectForKey:@"image"];
+        
+           [_countryLbl setText:AMLocalizedString([[CountryArray objectAtIndex:indexPath.row]objectForKey:@"countryName"], nil)];
+    }
+    else
+    {
+        countrySelected=@"";
+        countryImage=@"";
+    }
+    
+    
+    [_countryTable reloadData];
+    
+    
+}
+- (IBAction)selectClicked:(id)sender {
+    
+    [LanguageLabel setText:AMLocalizedString([[langArr objectAtIndex:rowSelected]objectForKey:@"name"], nil)];
+    
+    langSelected=[[langArr objectAtIndex:rowSelected] objectForKey:@"id"];
+    
+
+
+    
+    
+    [_pickerView setHidden:YES];
+}
+- (IBAction)cancelClicked:(id)sender {
+    
+    [_pickerView setHidden:YES];
+}
+- (IBAction)countryChoosed:(id)sender
+{
+
+    
+    
+    [_countryPopView setHidden:YES];
+    
+    
+}
+- (IBAction)loaderClicked:(id)sender {
+    
+    
+    [_gifImage setHidden:NO];
+    [_noVideoView setHidden:YES];
+    [_noVideoLbl setText:@""];
+    [_loaderBtn setHidden:YES];
+    
+    langArr=[[NSMutableArray alloc] init];
+
+      CountryArray=[[NSMutableArray alloc]init];
+    [self loadData];
+    
+    
+}
 @end
