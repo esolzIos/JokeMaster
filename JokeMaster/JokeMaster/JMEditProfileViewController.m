@@ -1,40 +1,39 @@
 //
-//  JMRegistrationViewController.m
+//  JMEditProfileViewController.m
 //  JokeMaster
 //
-//  Created by priyanka on 02/06/17.
+//  Created by santanu on 26/07/17.
 //  Copyright © 2017 esolz. All rights reserved.
 //
 
-#import "JMRegistrationViewController.h"
-#import "JMHomeViewController.h"
+#import "JMEditProfileViewController.h"
+#import "JMProfileViewController.h"
 #import "DZNPhotoEditorViewController.h"
 #import "UIImagePickerController+Edit.h"
-@interface JMRegistrationViewController ()
+#import "JMHomeViewController.h"
+@interface JMEditProfileViewController ()
 {
     AppDelegate *app;
     
     NSMutableArray *langArr,*flagArr;
     
     NSMutableDictionary *langDict;
-    
-        NSMutableArray *CountryArray;
+    NSDictionary *jsonResponse;
+    NSMutableArray *CountryArray;
     int rowSelected;
     NSString *  countrySelected,*countryImage,*langSelected;
     NSURLSession *session;
-    
+    BOOL firedOnce;
     NSMutableArray *jsonArr;
 }
 @end
 
-@implementation JMRegistrationViewController
+@implementation JMEditProfileViewController
 @synthesize Nametxt,Emailtxt,Passwordtxt,ProfileImage,ProfileImageLabel,ConfirmPassword,mainscroll,Logintxtvw,LanguageView,LanguageLabel,LanguageBtn,SignUpBtn;
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
     
-    // sign in text view design
-      app = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    app = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     
     NSString *titleText=AMLocalizedString(@"Back to Log in", nil);
     
@@ -65,30 +64,30 @@
     
     
     [_gobackBtn setAttributedTitle:attributedText forState:UIControlStateNormal];
-
     
     
     
-//    UIFont *font1 = [UIFont fontWithName:@"ComicSansMS-Bold" size:15];
-//    NSDictionary *arialDict = [NSDictionary dictionaryWithObject:font1 forKey:NSFontAttributeName];
-//    NSMutableAttributedString *aAttrString1 = [[NSMutableAttributedString alloc] initWithString:AMLocalizedString(@"Back to",nil) attributes: arialDict];
-//    [aAttrString1 addAttribute:NSForegroundColorAttributeName
-//                         value:[UIColor whiteColor]
-//                         range:NSMakeRange(0, [aAttrString1 length])];
-//    
-//    UIFont *font2 = [UIFont fontWithName:@"ComicSansMS-Bold" size:20];
-//    NSDictionary *arialDict2 = [NSDictionary dictionaryWithObject:font2 forKey:NSFontAttributeName];
-//    NSMutableAttributedString *aAttrString2 = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@" %@",AMLocalizedString(@"Log in",nil)] attributes: arialDict2];
-//    [aAttrString2 addAttribute:NSForegroundColorAttributeName
-//                         value:[UIColor whiteColor]
-//                         range:NSMakeRange(0, [aAttrString2 length])];
-//    
-//    [aAttrString1 appendAttributedString:aAttrString2];
-//    Logintxtvw.attributedText = aAttrString1;
-//    Logintxtvw.textAlignment = NSTextAlignmentCenter;
-//    
-//    UITapGestureRecognizer *tapRecognizer1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedTextView:)];
-//    [Logintxtvw addGestureRecognizer:tapRecognizer1];
+    
+    //    UIFont *font1 = [UIFont fontWithName:@"ComicSansMS-Bold" size:15];
+    //    NSDictionary *arialDict = [NSDictionary dictionaryWithObject:font1 forKey:NSFontAttributeName];
+    //    NSMutableAttributedString *aAttrString1 = [[NSMutableAttributedString alloc] initWithString:AMLocalizedString(@"Back to",nil) attributes: arialDict];
+    //    [aAttrString1 addAttribute:NSForegroundColorAttributeName
+    //                         value:[UIColor whiteColor]
+    //                         range:NSMakeRange(0, [aAttrString1 length])];
+    //
+    //    UIFont *font2 = [UIFont fontWithName:@"ComicSansMS-Bold" size:20];
+    //    NSDictionary *arialDict2 = [NSDictionary dictionaryWithObject:font2 forKey:NSFontAttributeName];
+    //    NSMutableAttributedString *aAttrString2 = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@" %@",AMLocalizedString(@"Log in",nil)] attributes: arialDict2];
+    //    [aAttrString2 addAttribute:NSForegroundColorAttributeName
+    //                         value:[UIColor whiteColor]
+    //                         range:NSMakeRange(0, [aAttrString2 length])];
+    //
+    //    [aAttrString1 appendAttributedString:aAttrString2];
+    //    Logintxtvw.attributedText = aAttrString1;
+    //    Logintxtvw.textAlignment = NSTextAlignmentCenter;
+    //
+    //    UITapGestureRecognizer *tapRecognizer1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedTextView:)];
+    //    [Logintxtvw addGestureRecognizer:tapRecognizer1];
     
     
     // place holder design
@@ -97,34 +96,38 @@
     Passwordtxt.attributedPlaceholder = [[NSAttributedString alloc] initWithString:AMLocalizedString(@"Password",nil)attributes:@{NSForegroundColorAttributeName: [UIColor whiteColor]}];
     ConfirmPassword.attributedPlaceholder = [[NSAttributedString alloc] initWithString:AMLocalizedString(@"Confirm Password",nil) attributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
     
-//    
-//    ProfileImageLabel.frame=CGRectMake(ProfileImageLabel.frame.origin.x, ProfileImage.frame.origin.y+ProfileImage.frame.size.height/2-ProfileImageLabel.frame.size.height/2, ProfileImageLabel.frame.size.width, ProfileImageLabel.frame.size.height);
+    //
+    //    ProfileImageLabel.frame=CGRectMake(ProfileImageLabel.frame.origin.x, ProfileImage.frame.origin.y+ProfileImage.frame.size.height/2-ProfileImageLabel.frame.size.height/2, ProfileImageLabel.frame.size.width, ProfileImageLabel.frame.size.height);
     
     
     ProfileImageLabel.text= AMLocalizedString(@"Upload Profile Picture",nil);
-    LanguageLabel.text=AMLocalizedString(@"Language",nil);
-    [SignUpBtn setTitle:AMLocalizedString(@"SIGN UP",nil) forState:UIControlStateNormal];
+
+    [SignUpBtn setTitle:AMLocalizedString(@"SUBMIT",nil) forState:UIControlStateNormal];
     
+    
+    [LanguageLabel setText:AMLocalizedString(@"App interface language", nil)];
+    
+    [_countryLbl setText:AMLocalizedString(@"Country", nil)];
     
     [self setRoundCornertoView:_profileImgView withBorderColor:[UIColor clearColor] WithRadius:0.15];
     
     [ProfileImageLabel setFont:[UIFont fontWithName:ProfileImageLabel.font.fontName size:[self getFontSize:ProfileImageLabel.font.pointSize]]];
     
-  
     
-      [LanguageLabel setFont:[UIFont fontWithName:LanguageLabel.font.fontName size:[self getFontSize:LanguageLabel.font.pointSize]]];
     
-      [_countryLbl setFont:[UIFont fontWithName:_countryLbl.font.fontName size:[self getFontSize:_countryLbl.font.pointSize]]];
+    [LanguageLabel setFont:[UIFont fontWithName:LanguageLabel.font.fontName size:[self getFontSize:LanguageLabel.font.pointSize]]];
     
-        [Nametxt setFont:[UIFont fontWithName:Nametxt.font.fontName size:[self getFontSize:Nametxt.font.pointSize]]];
+    [_countryLbl setFont:[UIFont fontWithName:_countryLbl.font.fontName size:[self getFontSize:_countryLbl.font.pointSize]]];
     
-        [Emailtxt setFont:[UIFont fontWithName:Emailtxt.font.fontName size:[self getFontSize:Emailtxt.font.pointSize]]];
+    [Nametxt setFont:[UIFont fontWithName:Nametxt.font.fontName size:[self getFontSize:Nametxt.font.pointSize]]];
     
-        [Passwordtxt setFont:[UIFont fontWithName:Passwordtxt.font.fontName size:[self getFontSize:Passwordtxt.font.pointSize]]];
+    [Emailtxt setFont:[UIFont fontWithName:Emailtxt.font.fontName size:[self getFontSize:Emailtxt.font.pointSize]]];
     
-        [ConfirmPassword setFont:[UIFont fontWithName:ConfirmPassword.font.fontName size:[self getFontSize:ConfirmPassword.font.pointSize]]];
+    [Passwordtxt setFont:[UIFont fontWithName:Passwordtxt.font.fontName size:[self getFontSize:Passwordtxt.font.pointSize]]];
     
-        [SignUpBtn.titleLabel setFont:[UIFont fontWithName:SignUpBtn.titleLabel.font.fontName size:[self getFontSize:SignUpBtn.titleLabel.font.pointSize]]];
+    [ConfirmPassword setFont:[UIFont fontWithName:ConfirmPassword.font.fontName size:[self getFontSize:ConfirmPassword.font.pointSize]]];
+    
+    [SignUpBtn.titleLabel setFont:[UIFont fontWithName:SignUpBtn.titleLabel.font.fontName size:[self getFontSize:SignUpBtn.titleLabel.font.pointSize]]];
     
     
     urlobj=[[UrlconnectionObject alloc] init];
@@ -133,11 +136,11 @@
     langDict=[[NSMutableDictionary alloc]init];
     
     CountryArray=[[NSMutableArray alloc]init];
-
+    
     
     
     langArr=[[NSMutableArray alloc] init];
- 
+    
     
     //    engArr=[[NSMutableArray alloc] initWithObjects:@"UNITED STATES",@"UNITED KINGDOM",@"INDIA", nil];
     //
@@ -152,18 +155,16 @@
     //     [langDict setObject:hindiArr forKey:@"hi"] ;
     //
     [LanguageLabel setText:AMLocalizedString(@"App interface language", nil)];
-   
-     [_countryLbl setText:AMLocalizedString(@"Country", nil)];
     
     [_goBtn setTitle:AMLocalizedString(@"GO",nil) forState:UIControlStateNormal] ;
     
     [_languagePicker setDelegate:self];
     
     
-//    langSelected=[[NSUserDefaults standardUserDefaults ]objectForKey:@"langId"];
-//    countrySelected= [[NSUserDefaults standardUserDefaults ]objectForKey:@"countryId"];
-//    
-//    countryImage=[[NSUserDefaults standardUserDefaults ]objectForKey:@"flag"];
+    //    langSelected=[[NSUserDefaults standardUserDefaults ]objectForKey:@"langId"];
+    //    countrySelected= [[NSUserDefaults standardUserDefaults ]objectForKey:@"countryId"];
+    //
+    //    countryImage=[[NSUserDefaults standardUserDefaults ]objectForKey:@"flag"];
     
     
     NSString* filePath = [[NSBundle mainBundle] pathForResource:@"giphy.gif" ofType:nil];
@@ -177,11 +178,25 @@
     [_noVideoLbl setFont:[UIFont fontWithName:_noVideoLbl.font.fontName size:[self getFontSize:_noVideoLbl.font.pointSize]]];
     
     
+    langSelected=@"";
+    countrySelected=@"";
+    
     [_selectBtn setTitle:AMLocalizedString(@"Select", nil)  forState:UIControlStateNormal];
     
     [_cancelBttn setTitle:AMLocalizedString(@"Cancel", nil) forState:UIControlStateNormal];
     
-    [mainscroll setContentSize:CGSizeMake(FULLWIDTH, 630.0/480.0*FULLHEIGHT)];
+    //[mainscroll setContentSize:CGSizeMake(FULLWIDTH, 420.0/480.0*FULLHEIGHT)];
+
+    // Do any additional setup after loading the view.
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appendPushView) name:@"pushReceived" object:nil];
+    
+    //   // Do any additional setup after loading the view.
+}
+
+
+-(void)appendPushView
+{
+    [self addPushView:self.view];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -198,8 +213,7 @@
     // Pass the selected object to the new view controller.
 }
 */
-
--(void)viewDidAppear:(BOOL)animated
+-(void)viewWillAppear:(BOOL)animated
 {
     [self loadData];
 }
@@ -242,7 +256,7 @@
                 
                 [_gifImage setHidden:YES];
                 [_noVideoView setHidden:NO];
-                  [_noVideoLbl setText:[NSString stringWithFormat:@"%@. \n\n %@",AMLocalizedString(@"Some error occured", nil),AMLocalizedString(@"Click to retry", nil)]];
+                   [_noVideoLbl setText:[NSString stringWithFormat:@"%@. \n\n %@",AMLocalizedString(@"Some error occured", nil),AMLocalizedString(@"Click to retry", nil)]];
                 [_loaderBtn setHidden:NO];
                 
                 
@@ -254,7 +268,7 @@
                 NSError *jsonError;
                 NSDictionary *jsonResponse = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
                 
-
+                
                 
                 if (jsonError) {
                     // Error Parsing JSON
@@ -280,7 +294,7 @@
                         
                         jsonArr=[[jsonResponse objectForKey:@"details"] copy];
                         
-                     
+                        
                         
                         
                         
@@ -291,12 +305,12 @@
                         for (NSDictionary *Dict in jsonArr) {
                             
                             [langArr addObject:Dict];
-              
-                   
+                            
+                            
                             
                         }
                         
-   
+                        
                         
                         [self getCountries];
                         
@@ -315,7 +329,7 @@
                         //
                         [_gifImage setHidden:YES];
                         [_noVideoView setHidden:NO];
-                        [_noVideoLbl setText:[NSString stringWithFormat:@"%@\n\n %@",[jsonResponse objectForKey:@"message"],AMLocalizedString(@"Click to retry", nil)]];
+                         [_noVideoLbl setText:[NSString stringWithFormat:@"%@\n\n %@",[jsonResponse objectForKey:@"message"],AMLocalizedString(@"Click to retry", nil)]];
                         [_loaderBtn setHidden:NO];
                         
                     }
@@ -342,7 +356,8 @@
         
         [_gifImage setHidden:YES];
         [_noVideoView setHidden:NO];
-        [_noVideoLbl setText:[NSString stringWithFormat:@"%@. \n\n %@",AMLocalizedString(@"Check your Internet connection", nil),AMLocalizedString(@"Click to retry", nil)]];
+              [_noVideoLbl setText:[NSString stringWithFormat:@"%@\n\n %@",AMLocalizedString(@"Check your Internet connection", nil),AMLocalizedString(@"Click to retry", nil)]];
+     
         [_loaderBtn setHidden:NO];
         
         //   [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
@@ -397,7 +412,7 @@
                 
                 [_gifImage setHidden:YES];
                 [_noVideoView setHidden:NO];
-                  [_noVideoLbl setText:[NSString stringWithFormat:@"%@. \n\n %@",AMLocalizedString(@"Some error occured", nil),AMLocalizedString(@"Click to retry", nil)]];
+                [_noVideoLbl setText:[NSString stringWithFormat:@"%@. \n\n %@",AMLocalizedString(@"Some error occured", nil),AMLocalizedString(@"Click to retry", nil)]];
                 [_loaderBtn setHidden:NO];
                 
                 
@@ -425,7 +440,7 @@
                     
                     [_gifImage setHidden:YES];
                     [_noVideoView setHidden:NO];
-                      [_noVideoLbl setText:[NSString stringWithFormat:@"%@. \n\n %@",AMLocalizedString(@"Some error occured", nil),AMLocalizedString(@"Click to retry", nil)]];
+       [_noVideoLbl setText:[NSString stringWithFormat:@"%@. \n\n %@",AMLocalizedString(@"Some error occured", nil),AMLocalizedString(@"Click to retry", nil)]];
                     [_loaderBtn setHidden:NO];
                     
                     //    [SVProgressHUD showInfoWithStatus:@"some error occured"];
@@ -441,7 +456,7 @@
                         jsonArr=[[jsonResponse objectForKey:@"countryData"] copy];
                         
                         
-                          [_goBtn setUserInteractionEnabled:YES];
+                        [_goBtn setUserInteractionEnabled:YES];
                         
                         
                         // [SVProgressHUD dismiss];
@@ -459,12 +474,12 @@
                         
                         
                         if (CountryArray.count>0) {
-                    
-            
+                            
+                        
                             
                             [_countryTable reloadData];
                             
-               
+                            
                         }
                         else{
                             
@@ -473,7 +488,7 @@
                             
                         }
                         
-            
+                        [self loadUserDetails];
                         
                     }
                     
@@ -517,7 +532,8 @@
         
         [_gifImage setHidden:YES];
         [_noVideoView setHidden:NO];
-        [_noVideoLbl setText:[NSString stringWithFormat:@"%@. \n\n %@",AMLocalizedString(@"Check your Internet connection", nil),AMLocalizedString(@"Click to retry", nil)]];
+            [_noVideoLbl setText:[NSString stringWithFormat:@"%@. \n\n %@",AMLocalizedString(@"Check your Internet connection", nil),AMLocalizedString(@"Click to retry", nil)]];
+  
         [_loaderBtn setHidden:NO];
         
         //   [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
@@ -527,6 +543,186 @@
     
     
     
+    
+    
+    
+    
+}
+
+-(void)loadUserDetails{
+    
+    [_loaderView setHidden:NO];
+    
+    if([self networkAvailable])
+    {
+        
+        firedOnce=true;
+        
+        // [SVProgressHUD show];
+        
+        
+        //     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+        
+        
+        //http://ec2-13-58-196-4.us-east-2.compute.amazonaws.com/jokemaster/index.php/Userprofile?loggedin_id=1&user_id=1
+        
+        NSURL *url=[NSURL URLWithString:[NSString stringWithFormat:@"%@%@Userprofile",GLOBALAPI,INDEX]];
+        
+        
+        
+        // configure the request
+        
+        NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
+        [request setHTTPMethod:@"POST"];
+        
+        
+        
+        //        NSString *boundary = @"---------------------------14737809831466499882746641449";
+        //        NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@", boundary];
+        //        [request addValue:contentType forHTTPHeaderField:@"Content-Type"];
+        
+        
+        app.authToken=[[NSUserDefaults standardUserDefaults]objectForKey:@"authToken"];
+        
+        NSString *sendData = @"loggedin_id=";
+        
+        
+   
+            sendData = [sendData stringByAppendingString:[NSString stringWithFormat:@"%@", app.userId]];
+            sendData = [sendData stringByAppendingString:@"&user_id="];
+        
+            
+            sendData = [sendData stringByAppendingString:[NSString stringWithFormat:@"%@",app.userId]];
+        
+        
+        
+        sendData = [sendData stringByAppendingString:@"&mode="];
+        sendData = [sendData stringByAppendingString: [[NSUserDefaults standardUserDefaults] objectForKey:@"langmode"]];
+        
+        
+        
+        
+        [request setValue:@"gzip" forHTTPHeaderField:@"Accept-Encoding"];
+        
+        NSMutableData *theBodyData = [NSMutableData data];
+        
+        theBodyData = [[sendData dataUsingEncoding:NSUTF8StringEncoding] mutableCopy];
+        
+        
+        //  self.session = [NSURLSession sharedSession];  // use sharedSession or create your own
+        
+        session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
+        
+        NSURLSessionTask *task = [session uploadTaskWithRequest:request fromData:theBodyData completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+            if (error) {
+                NSLog(@"error = %@", error);
+                firedOnce=false;
+                
+                [_gifImage setHidden:YES];
+                [_noVideoView setHidden:NO];
+        [_noVideoLbl setText:[NSString stringWithFormat:@"%@. \n\n %@",AMLocalizedString(@"Some error occured", nil),AMLocalizedString(@"Click to retry", nil)]];
+                [_loaderBtn setHidden:NO];
+                return;
+            }
+            
+            if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
+                NSError *jsonError;
+                jsonResponse = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
+                
+                firedOnce=false;
+                
+                
+                
+                
+                
+                if (jsonError) {
+                    // Error Parsing JSON
+                    
+                    
+                    
+                    NSString *responseString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                    
+                    NSLog(@"response = %@",responseString);
+                    
+                    //   [SVProgressHUD showInfoWithStatus:sendData];
+                    
+                    [_gifImage setHidden:YES];
+                    [_noVideoView setHidden:NO];
+ [_noVideoLbl setText:[NSString stringWithFormat:@"%@. \n\n %@",AMLocalizedString(@"Some error occured", nil),AMLocalizedString(@"Click to retry", nil)]];
+                    [_loaderBtn setHidden:NO];
+                    
+                    //[SVProgressHUD showInfoWithStatus:@"some error occured"];
+                    
+                } else {
+                    // Success Parsing JSON
+                    // Log NSDictionary response:
+                    NSLog(@"result = %@",jsonResponse);
+                    
+                    [_loaderView setHidden:YES];
+                    
+                    
+                    
+                    //[SVProgressHUD dismiss];
+                    
+                    if ([[jsonResponse objectForKey:@"status_code"]boolValue]) {
+                        
+                        
+                        // [_loaderView setHidden:YES];
+                        
+                        NSDictionary *userDetails=[jsonResponse objectForKey:@"userdetails"];
+
+                        [LanguageLabel setText:[userDetails objectForKey:@"language"]];
+                        
+                        [_countryLbl setText:[userDetails objectForKey:@"country"]];
+                        
+                        [Nametxt setText:[userDetails objectForKey:@"username"]];
+                        
+                        [Emailtxt setText:[userDetails objectForKey:@"email"]];
+                        
+                        [Passwordtxt setText:[userDetails objectForKey:@"password"]];
+                        
+                        [ConfirmPassword setText:[userDetails objectForKey:@"password"]];
+                        
+                        [ProfileImage sd_setImageWithURL:[userDetails objectForKey:@"user_image"] placeholderImage:[UIImage imageNamed:@"noimage"]];
+                        
+               }
+                    
+                    else{
+                        
+                        [_gifImage setHidden:YES];
+                        [_noVideoView setHidden:NO];
+                              [_noVideoLbl setText:[NSString stringWithFormat:@"%@\n\n %@",[jsonResponse objectForKey:@"message"],AMLocalizedString(@"Click to retry", nil)]];
+                
+                        [_loaderBtn setHidden:NO];
+                        
+                        // [SVProgressHUD showInfoWithStatus:[jsonResponse objectForKey:@"message"]];
+                        
+                        
+                    }
+                    
+                    
+                    
+                    
+                }
+                
+                
+                
+            }
+            
+            
+        }];
+        
+        
+        [task resume];
+        
+        
+    }
+    
+    else{
+        
+        [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
+        
+    }
     
     
     
@@ -552,222 +748,42 @@
         
         if([self textFieldBlankorNot:Nametxt.text]==YES)
         {
-//            UIAlertController * alert=   [UIAlertController
-//                                          alertControllerWithTitle:AMLocalizedString(@"Alert",nil)
-//
-//                                          message:AMLocalizedString(@"Enter Name", nil)
-//
-//
-//                                          preferredStyle:UIAlertControllerStyleAlert];
-//            
-//            UIAlertAction* ok = [UIAlertAction
-//                                 actionWithTitle:AMLocalizedString(@"OK",nil)
-//                                 style:UIAlertActionStyleDefault
-//                                 handler:^(UIAlertAction * action)
-//                                 {
-//                                     [alert dismissViewControllerAnimated:YES completion:nil];
-//                                     
-//                                     
-//                                     
-//                                     
-//                                 }];
-//            
-//            [alert addAction:ok];
-//            [self presentViewController:alert animated:YES completion:nil];
+            //            UIAlertController * alert=   [UIAlertController
+            //                                          alertControllerWithTitle:AMLocalizedString(@"Alert",nil)
+            //
+            //                                          message:AMLocalizedString(@"Enter Name", nil)
+            //
+            //
+            //                                          preferredStyle:UIAlertControllerStyleAlert];
+            //
+            //            UIAlertAction* ok = [UIAlertAction
+            //                                 actionWithTitle:AMLocalizedString(@"OK",nil)
+            //                                 style:UIAlertActionStyleDefault
+            //                                 handler:^(UIAlertAction * action)
+            //                                 {
+            //                                     [alert dismissViewControllerAnimated:YES completion:nil];
+            //
+            //
+            //
+            //
+            //                                 }];
+            //
+            //            [alert addAction:ok];
+            //            [self presentViewController:alert animated:YES completion:nil];
             
             [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Enter Name", nil)];
             
             
         }
-        else if ([self textFieldBlankorNot:Emailtxt.text]==YES)
-        {
-//            UIAlertController * alert=   [UIAlertController
-//                                          alertControllerWithTitle:AMLocalizedString(@"Alert",nil)
-//                                          message:AMLocalizedString(@"Enter Email Address",nil)
-//                                          preferredStyle:UIAlertControllerStyleAlert];
-//            
-//            UIAlertAction* ok = [UIAlertAction
-//                                 actionWithTitle:AMLocalizedString(@"OK",nil)
-//                                 style:UIAlertActionStyleDefault
-//                                 handler:^(UIAlertAction * action)
-//                                 {
-//                                     [alert dismissViewControllerAnimated:YES completion:nil];
-//                                     
-//                                     
-//                                     
-//                                     
-//                                 }];
-//            
-//            [alert addAction:ok];
-//            [self presentViewController:alert animated:YES completion:nil];
-            
-               [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Enter Email Address",nil)];
-        }
-        else if ([self validateEmailWithString:Emailtxt.text]==NO)
-        {
-//            UIAlertController * alert=   [UIAlertController
-//                                          alertControllerWithTitle:AMLocalizedString(@"Alert",nil)
-//                                          message:AMLocalizedString(@"Enter Valid Email Address",nil)
-//                                          preferredStyle:UIAlertControllerStyleAlert];
-//            
-//            UIAlertAction* ok = [UIAlertAction
-//                                 actionWithTitle:AMLocalizedString(@"OK",nil)
-//                                 style:UIAlertActionStyleDefault
-//                                 handler:^(UIAlertAction * action)
-//                                 {
-//                                     [alert dismissViewControllerAnimated:YES completion:nil];
-//                                     
-//                                     
-//                                     
-//                                     
-//                                 }];
-//            
-//            [alert addAction:ok];
-//            [self presentViewController:alert animated:YES completion:nil];
-            
-              [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Enter Valid Email Address",nil)];
-        }
-//        else if ([LanguageLabel.text isEqualToString:AMLocalizedString(@"Language",nil)])
-//        {
-////            UIAlertController * alert=   [UIAlertController
-////                                          alertControllerWithTitle:AMLocalizedString(@"Alert",nil)
-////                                          message:AMLocalizedString(@"Select Language",nil)
-////                                          preferredStyle:UIAlertControllerStyleAlert];
-////            
-////            UIAlertAction* ok = [UIAlertAction
-////                                 actionWithTitle:AMLocalizedString(@"OK",nil)
-////                                 style:UIAlertActionStyleDefault
-////                                 handler:^(UIAlertAction * action)
-////                                 {
-////                                     [alert dismissViewControllerAnimated:YES completion:nil];
-////                                     
-////                                     
-////                                     
-////                                     
-////                                 }];
-////            
-////            [alert addAction:ok];
-////            [self presentViewController:alert animated:YES completion:nil];
-//            
-//            
-//                         [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Select Language",nil)];
-//        }
-        else if ([self textFieldBlankorNot:Passwordtxt.text]==YES)
-        {
-//            UIAlertController * alert=   [UIAlertController
-//                                          alertControllerWithTitle:AMLocalizedString(@"Alert",nil)
-//                                          message:AMLocalizedString(@"Enter Password", nil)
-//                                          preferredStyle:UIAlertControllerStyleAlert];
-//            
-//            UIAlertAction* ok = [UIAlertAction
-//                                 actionWithTitle:AMLocalizedString(@"OK",nil)
-//                                 style:UIAlertActionStyleDefault
-//                                 handler:^(UIAlertAction * action)
-//                                 {
-//                                     [alert dismissViewControllerAnimated:YES completion:nil];
-//                                     
-//                                     
-//                                     
-//                                     
-//                                 }];
-//            
-//            [alert addAction:ok];
-//            [self presentViewController:alert animated:YES completion:nil];
-            
-                          [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Enter Password", nil)];
-        }
-        else if (Passwordtxt.text.length<6)
-        {
-//            UIAlertController * alert=   [UIAlertController
-//                                          alertControllerWithTitle:AMLocalizedString(@"Alert",nil)
-//                                          message:AMLocalizedString(@"Password Should be at least 6 characters",nil)
-//                                          preferredStyle:UIAlertControllerStyleAlert];
-//            
-//            UIAlertAction* ok = [UIAlertAction
-//                                 actionWithTitle:AMLocalizedString(@"OK",nil)
-//                                 style:UIAlertActionStyleDefault
-//                                 handler:^(UIAlertAction * action)
-//                                 {
-//                                     [alert dismissViewControllerAnimated:YES completion:nil];
-//                                     
-//                                     
-//                                     
-//                                     
-//                                 }];
-//            
-//            [alert addAction:ok];
-//            [self presentViewController:alert animated:YES completion:nil];
-            
-                      [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Password Should be at least 6 characters",nil)];
-        }
-        else if ([self textFieldBlankorNot:ConfirmPassword.text]==YES)
-        {
-//            UIAlertController * alert=   [UIAlertController
-//                                          alertControllerWithTitle:AMLocalizedString(@"Alert",nil)
-//                                          message:AMLocalizedString(@"Enter Confirm Password",nil)
-//                                          preferredStyle:UIAlertControllerStyleAlert];
-//            
-//            UIAlertAction* ok = [UIAlertAction
-//                                 actionWithTitle:AMLocalizedString(@"OK",nil)
-//                                 style:UIAlertActionStyleDefault
-//                                 handler:^(UIAlertAction * action)
-//                                 {
-//                                     [alert dismissViewControllerAnimated:YES completion:nil];
-//                                     
-//                                     
-//                                     
-//                                     
-//                                 }];
-//            
-//            [alert addAction:ok];
-//            [self presentViewController:alert animated:YES completion:nil];
-            
-               [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Enter Confirm Password",nil)];
-        }
-        
-        else if (![Passwordtxt.text isEqualToString:ConfirmPassword.text])
-        {
-//            UIAlertController * alert=   [UIAlertController
-//                                          alertControllerWithTitle:AMLocalizedString(@"Alert",nil)
-//                                          message:AMLocalizedString(@"Password and confirm password should be same.",nil)
-//                                          preferredStyle:UIAlertControllerStyleAlert];
-//            
-//            UIAlertAction* ok = [UIAlertAction
-//                                 actionWithTitle:AMLocalizedString(@"OK",nil)
-//                                 style:UIAlertActionStyleDefault
-//                                 handler:^(UIAlertAction * action)
-//                                 {
-//                                     [alert dismissViewControllerAnimated:YES completion:nil];
-//                                     
-//                                     
-//                                     
-//                                     
-//                                 }];
-//            
-//            [alert addAction:ok];
-//            [self presentViewController:alert animated:YES completion:nil];
-            
-               [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Password and confirm password should be same.",nil)];
-        }
-      else if (langSelected.length==0)
-      {
-              [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"App interface Language required",nil)];
-      
-      }
-      else if (countrySelected.length==0)
-      {
-          [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Please select your country",nil)];
-          
-      }
         else
         {
-           // [self SignUpApi];
+            // [self SignUpApi];
             [self SignUpAPI1];
             
         }
-    
+        
     }];
-
+    
 }
 
 #pragma mark - textfield delegate
@@ -864,9 +880,9 @@
     
     UIImagePickerController *picker = [[UIImagePickerController alloc]init];
     picker.delegate = (id)self;
-     picker.allowsEditing=YES;
+    picker.allowsEditing=YES;
     
-       picker.cropMode=DZNPhotoEditorViewControllerCropModeSquare;
+    picker.cropMode=DZNPhotoEditorViewControllerCropModeSquare;
     
     //  PHAuthorizationStatus authorizationStatus = [PHPhotoLibrary authorizationStatus];
     
@@ -884,7 +900,7 @@
 //                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"No Camera Available." delegate:self cancelButtonTitle:AMLocalizedString(@"OK",nil) otherButtonTitles:nil];
 //                [alert show];
                 
-                         [SVProgressHUD showInfoWithStatus:@"No Camera Available."];
+                [SVProgressHUD showInfoWithStatus:@"No Camera Available."];
             }
             break;
             
@@ -913,20 +929,20 @@
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     
-//    imgData = UIImageJPEGRepresentation(info[UIImagePickerControllerOriginalImage],0.9895);
-//    DebugLog(@"Size of Image(bytes):%lu",(unsigned long)[imgData length]);
+    //    imgData = UIImageJPEGRepresentation(info[UIImagePickerControllerOriginalImage],0.9895);
+    //    DebugLog(@"Size of Image(bytes):%lu",(unsigned long)[imgData length]);
     
     
- //   AttachImage=info[UIImagePickerControllerOriginalImage];
+    //   AttachImage=info[UIImagePickerControllerOriginalImage];
     ProfileImage.image=info[UIImagePickerControllerEditedImage];
     
     ProfileImage.contentMode = UIViewContentModeScaleAspectFill;
     
-  //  ProfileImage.layer.cornerRadius=ProfileImage.frame.size.height/2;
+    //  ProfileImage.layer.cornerRadius=ProfileImage.frame.size.height/2;
     
     ProfileImage.clipsToBounds=YES;
     
- //   [ProfileImage setUserInteractionEnabled:YES];
+    //   [ProfileImage setUserInteractionEnabled:YES];
     
     
     
@@ -935,11 +951,11 @@
     
     [picker dismissViewControllerAnimated:YES completion:^{
         
-       
+        
         
     }];
     
-  
+    
     
 }
 
@@ -983,7 +999,7 @@
     
     
     [_languagePicker selectRow:rowSelected inComponent:0 animated:NO];
-
+    
 }
 #pragma mark -  title picker cancel
 -(void)CategoryCancel
@@ -1055,14 +1071,16 @@
 #pragma mark - Back Button Click
 - (IBAction)backClicked:(id)sender {
     
-        [self.navigationController popViewControllerAnimated:NO];
+    [self.navigationController popViewControllerAnimated:NO];
 }
 #pragma mark -signup api call
 -(void)SignUpAPI1
 {
-    NSString *urlString = [NSMutableString stringWithFormat:@"%@index.php/Signup?register_type=1&name=%@&email=%@&password=%@&language=&device_token=%@&device_type=2&mode=%@&language=%@&country=%@",GLOBALAPI,[Nametxt.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[Emailtxt.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[Passwordtxt.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[[NSUserDefaults standardUserDefaults] objectForKey:@"deviceToken"],[[NSUserDefaults standardUserDefaults] objectForKey:@"langmode"],langSelected,countrySelected];
     
-        urlString=[urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+    //http://ec2-13-58-196-4.us-east-2.compute.amazonaws.com/jokemaster/index.php/useraction/profileupdate?userid=&name=&language=&country=
+    NSString *urlString = [NSMutableString stringWithFormat:@"%@index.php/useraction/profileupdate?userid=%@&name=%@&language=%@&country=%@",GLOBALAPI,app.userId,[Nametxt.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],langSelected,countrySelected];
+    
+    urlString=[urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
     
     NSString *strEncoded;
     
@@ -1081,7 +1099,7 @@
         
         
         strEncoded = [self encodeToBase64String:ProfileImage.image];
-       
+        
     }
     else
     {
@@ -1092,93 +1110,93 @@
     if (net==YES)
     {
         
-    self.view.userInteractionEnabled = NO;
-    [self checkLoader];
-    [urlobj globalImage:urlString ImageString:strEncoded ImageField:@"userimage" typerequest:@"array" withblock:^(id result, NSError *error,BOOL completed)
-    {
-        NSLog(@"event result----- %@", result);
-        DebugLog(@" Status Code:%ld",urlobj.statusCode);
-        
-        self.view.userInteractionEnabled = YES;
+        self.view.userInteractionEnabled = NO;
         [self checkLoader];
-        
-        if (urlobj.statusCode==200)
-        {
-            if ([[result objectForKey:@"status"] boolValue]==YES)
-            {
+        [urlobj globalImage:urlString ImageString:strEncoded ImageField:@"userimage" typerequest:@"array" withblock:^(id result, NSError *error,BOOL completed)
+         {
+             NSLog(@"event result----- %@", result);
+             DebugLog(@" Status Code:%ld",urlobj.statusCode);
+             
+             self.view.userInteractionEnabled = YES;
+             [self checkLoader];
+             
+             if (urlobj.statusCode==200)
+             {
+                 if ([[result objectForKey:@"status"] boolValue]==YES)
+                 {
+                     
+                     [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Profile Updated successfully.",nil)];
+                     //                AlertView = [[UIAlertView alloc] initWithTitle:@"Success"
+                     //                                                       message:@"Registration successful."
+                     //                                                      delegate:self
+                     //                                             cancelButtonTitle:nil
+                     //                                             otherButtonTitles:nil];
+                     //
+                     //                [AlertView show];
+                     
+         
+                     [[NSUserDefaults standardUserDefaults] setObject:[[result objectForKey:@"Details"] valueForKey:@"name"] forKey:@"Name"];
+                     [[NSUserDefaults standardUserDefaults] setObject:[[result objectForKey:@"Details"] valueForKey:@"image"] forKey:@"Image"];
+                     
+           
+                     
+   
+                     app.userName=[[result objectForKey:@"Details"] valueForKey:@"name"];
+                     app.userImage=[[result objectForKey:@"Details"] valueForKey:@"image"];
+                     
+                     app.isLogged=true;
+                     
                 
-                [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Registration successful.",nil)];
-//                AlertView = [[UIAlertView alloc] initWithTitle:@"Success"
-//                                                       message:@"Registration successful."
-//                                                      delegate:self
-//                                             cancelButtonTitle:nil
-//                                             otherButtonTitles:nil];
-//                
-//                [AlertView show];
-                
-                [[NSUserDefaults standardUserDefaults] setObject:[[result objectForKey:@"Details"] valueForKey:@"user_id"] forKey:@"UserId"];
-                [[NSUserDefaults standardUserDefaults] setObject:[[result objectForKey:@"Details"] valueForKey:@"name"] forKey:@"Name"];
-                [[NSUserDefaults standardUserDefaults] setObject:[[result objectForKey:@"Details"] valueForKey:@"image"] forKey:@"Image"];
-                
-                DebugLog(@"%@",[[result objectForKey:@"Details"] valueForKey:@"user_id"]);
-                
-                app.userId=[[result objectForKey:@"Details"] valueForKey:@"user_id"];
-                app.userName=[[result objectForKey:@"Details"] valueForKey:@"name"];
-                app.userImage=[[result objectForKey:@"Details"] valueForKey:@"image"];
-                
-                app.isLogged=true;
-                
-                [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"loggedIn"];
-               
-                          [[NSUserDefaults standardUserDefaults ]setObject:[[result objectForKey:@"Details"]valueForKey:@"language"] forKey:@"langname"];
-                
-                [[NSUserDefaults standardUserDefaults]setObject:[[result objectForKey:@"Details"]valueForKey:@"short_name"] forKey:@"language"];
-                
-                [[NSUserDefaults standardUserDefaults]setObject:[[result objectForKey:@"Details"]valueForKey:@"languageid"] forKey:@"langmode"];
-                
-                   [[NSUserDefaults standardUserDefaults]setObject:[[result objectForKey:@"Details"]valueForKey:@"languageid"] forKey:@"langId"];
-                
-                
-                LocalizationSetLanguage([[result objectForKey:@"Details"]valueForKey:@"short_name"]);
-                
-                [[NSUserDefaults standardUserDefaults]setObject:[[result objectForKey:@"Details"]valueForKey:@"country"] forKey:@"userCountry"];
-
-                
-                
-                // (success message) dismiss delay of 1 sec
-                [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(GotoNextPageAfterSuccess) userInfo:nil repeats: NO];
-            }
-            else
-            {
-               [SVProgressHUD showInfoWithStatus:[result objectForKey:@"message"]];
-//                [[[UIAlertView alloc]initWithTitle:@"Error!" message:[result objectForKey:@"message"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
-            }
-            
-        }
-        else if (urlobj.statusCode==500 || urlobj.statusCode==400)
-        {
-            [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Server Failed to Respond",nil)];
-//            [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Server Failed to Respond" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
-            
-        }
-        else
-        {
-            [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Server Failed to Respond",nil)];
-//            [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Server Failed to Respond" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
-        }
-    }];
+                     
+                     [[NSUserDefaults standardUserDefaults ]setObject:[[result objectForKey:@"Details"]valueForKey:@"language"] forKey:@"langname"];
+                     
+                     [[NSUserDefaults standardUserDefaults]setObject:[[result objectForKey:@"Details"]valueForKey:@"short_name"] forKey:@"language"];
+                     
+                     [[NSUserDefaults standardUserDefaults]setObject:[[result objectForKey:@"Details"]valueForKey:@"languageid"] forKey:@"langmode"];
+                     
+                     [[NSUserDefaults standardUserDefaults]setObject:[[result objectForKey:@"Details"]valueForKey:@"languageid"] forKey:@"langId"];
+                     
+                     
+                     LocalizationSetLanguage([[result objectForKey:@"Details"]objectForKey:@"short_name"]);
+                     
+                     [[NSUserDefaults standardUserDefaults]setObject:[[result objectForKey:@"Details"]valueForKey:@"country"] forKey:@"userCountry"];
+                     
+                     
+                     
+                     // (success message) dismiss delay of 1 sec
+                     [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(GotoNextPageAfterSuccess) userInfo:nil repeats: NO];
+                 }
+                 else
+                 {
+                     [SVProgressHUD showInfoWithStatus:[result objectForKey:@"message"]];
+                     //                [[[UIAlertView alloc]initWithTitle:@"Error!" message:[result objectForKey:@"message"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
+                 }
+                 
+             }
+             else if (urlobj.statusCode==500 || urlobj.statusCode==400)
+             {
+                 [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Server Failed to Respond",nil)];
+                 //            [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Server Failed to Respond" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
+                 
+             }
+             else
+             {
+                 [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Server Failed to Respond",nil)];
+                 //            [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Server Failed to Respond" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
+             }
+         }];
     }
     else
     {
         [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
         
-//        [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Network Not Available." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
+        //        [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Network Not Available." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
     }
 }
 #pragma mark -signup api call-- not used
 -(void)SignUpApi
 {
-   
+    
     
     BOOL net=[urlobj connectedToNetwork];
     if (net==YES)
@@ -1190,13 +1208,13 @@
         [[NSOperationQueue new] addOperationWithBlock:^{
             
             NSMutableString *urlString;
-          
             
-          
-             //   urlString=[NSMutableString stringWithFormat:@"%@index.php/Signup",GLOBALAPI];
-                
-                
-                urlString=[NSMutableString stringWithFormat:@"%@index.php/Signup?register_type=1&name=%@&email=%@&password=%@&language=%@&country=&device_token=%@&device_type=1&mode=%@",GLOBALAPI,[Nametxt.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[Emailtxt.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[Passwordtxt.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[LanguageLabel.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[[NSUserDefaults standardUserDefaults] objectForKey:@"deviceToken"],[[NSUserDefaults standardUserDefaults] objectForKey:@"langmode"]];
+            
+            
+            //   urlString=[NSMutableString stringWithFormat:@"%@index.php/Signup",GLOBALAPI];
+            
+            
+            urlString=[NSMutableString stringWithFormat:@"%@index.php/Signup?register_type=1&name=%@&email=%@&password=%@&language=%@&country=&device_token=%@&device_type=1&mode=%@",GLOBALAPI,[Nametxt.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[Emailtxt.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[Passwordtxt.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[LanguageLabel.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[[NSUserDefaults standardUserDefaults] objectForKey:@"deviceToken"],[[NSUserDefaults standardUserDefaults] objectForKey:@"langmode"]];
             
             
             NSString *strEncoded,*requestBody;
@@ -1212,7 +1230,7 @@
                 //             AttachmentImage.image=[self compressImage:AttachmentImage.image];
                 //
                 //            imgData = UIImageJPEGRepresentation(AttachmentImage.image, 1.0);
-              //  DebugLog(@"Size of Image(bytes):%lu",(unsigned long)[imgData length]);
+                //  DebugLog(@"Size of Image(bytes):%lu",(unsigned long)[imgData length]);
                 
                 
                 strEncoded = [self encodeToBase64String:ProfileImage.image];
@@ -1222,7 +1240,7 @@
             {
                 requestBody= [NSString stringWithFormat:@"userimage="];
             }
-           
+            
             
             DebugLog(@"post string: %@",urlString);
             DebugLog(@"requestBody string: %@",requestBody);
@@ -1241,13 +1259,13 @@
                      if ([[responseDict objectForKey:@"status"] boolValue]==YES)
                      {
                          [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Registration successful.",nil)];
-//                         AlertView = [[UIAlertView alloc] initWithTitle:@"Success"
-//                                                                message:@"Registration successful."
-//                                                               delegate:self
-//                                                      cancelButtonTitle:nil
-//                                                      otherButtonTitles:nil];
-//                         
-//                         [AlertView show];
+                         //                         AlertView = [[UIAlertView alloc] initWithTitle:@"Success"
+                         //                                                                message:@"Registration successful."
+                         //                                                               delegate:self
+                         //                                                      cancelButtonTitle:nil
+                         //                                                      otherButtonTitles:nil];
+                         //
+                         //                         [AlertView show];
                          
                          [[NSUserDefaults standardUserDefaults] setObject:[[responseDict objectForKey:@"Details"] valueForKey:@"user_id"] forKey:@"UserId"];
                          [[NSUserDefaults standardUserDefaults] setObject:[[responseDict objectForKey:@"Details"] valueForKey:@"name"] forKey:@"Name"];
@@ -1286,7 +1304,7 @@
                  [self checkLoader];
                  self.view.userInteractionEnabled = YES;
                  NSLog(@"Failure");
-//                 [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Server Failed to Respond" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
+                 //                 [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Server Failed to Respond" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
                  
                  [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Server Failed to Respond",nil)];
                  
@@ -1299,20 +1317,20 @@
     {
         
         [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
-//        [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Network Not Available." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
+        //        [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Network Not Available." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
     }
 }
 #pragma mark -After registration go to Home screen
 -(void)GotoNextPageAfterSuccess
 {
+
+   // [AlertView dismissWithClickedButtonIndex:0 animated:NO];
     
-       app.isLogged=true;
-    [AlertView dismissWithClickedButtonIndex:0 animated:NO];
-    
-    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"loggedIn"];
     JMHomeViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMHomeViewController"];
     
     [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
+   // [self.navigationController popViewControllerAnimated:YES];
+    
 }
 
 - (IBAction)countryClicked:(id)sender {
@@ -1385,7 +1403,7 @@
     
     [cell.CountryLabel setText:AMLocalizedString([[[CountryArray objectAtIndex:indexPath.row]objectForKey:@"countryName"] uppercaseString], nil) ];
     
-        [cell.CountryLabel setFont:[UIFont fontWithName:cell.CountryLabel.font.fontName size:[self getFontSize:11.0]]];
+    [cell.CountryLabel setFont:[UIFont fontWithName:cell.CountryLabel.font.fontName size:[self getFontSize:11.0]]];
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -1400,7 +1418,7 @@
         
         countryImage=[[CountryArray objectAtIndex:indexPath.row]objectForKey:@"image"];
         
-           [_countryLbl setText:AMLocalizedString([[CountryArray objectAtIndex:indexPath.row]objectForKey:@"countryName"], nil)];
+        [_countryLbl setText:AMLocalizedString([[CountryArray objectAtIndex:indexPath.row]objectForKey:@"countryName"], nil)];
     }
     else
     {
@@ -1419,8 +1437,8 @@
     
     langSelected=[[langArr objectAtIndex:rowSelected] objectForKey:@"id"];
     
-
-
+    
+    
     
     
     [_pickerView setHidden:YES];
@@ -1431,7 +1449,7 @@
 }
 - (IBAction)countryChoosed:(id)sender
 {
-
+    
     
     
     [_countryPopView setHidden:YES];
@@ -1447,10 +1465,11 @@
     [_loaderBtn setHidden:YES];
     
     langArr=[[NSMutableArray alloc] init];
-
-      CountryArray=[[NSMutableArray alloc]init];
+    
+    CountryArray=[[NSMutableArray alloc]init];
     [self loadData];
     
     
 }
+
 @end

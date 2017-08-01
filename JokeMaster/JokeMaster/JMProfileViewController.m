@@ -18,9 +18,10 @@
 #import "JTSImageInfo.h"
 #import "UrlconnectionObject.h"
 #import "JMCategoryVideoListViewController.h"
+#import "JMProfileVidViewController.h"
 @interface JMProfileViewController ()<UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 {
-
+    NSDictionary *userDetails;
     UIImagePickerController *ipc;
     NSURLSession *session;
     BOOL firedOnce,catFonteSet;
@@ -29,7 +30,7 @@
     UIImage *selectedImage;
    UrlconnectionObject *urlobj;
     NSMutableArray *videoArr;
-    NSString *categoryId;
+    NSString *selectedcategoryId;
     int totalCount,page;
     UIFont *catFont,*videoFont;
 }
@@ -57,6 +58,8 @@
     
      [_scoreLbl setFont:[UIFont fontWithName:_scoreLbl.font.fontName size:[self getFontSize:_scoreLbl.font.pointSize]]];
     
+       [_rankLbl setFont:[UIFont fontWithName:_rankLbl.font.fontName size:[self getFontSize:_rankLbl.font.pointSize]]];
+       [_countryName setFont:[UIFont fontWithName:_countryName.font.fontName size:[self getFontSize:_countryName.font.pointSize]]];
     
       [_membershipDate setFont:[UIFont fontWithName:_membershipDate.font.fontName size:[self getFontSize:_membershipDate.font.pointSize]]];
     
@@ -64,7 +67,7 @@
     
 
         if ([_ProfileUserId isEqualToString:appDelegate.userId]) {
-            [_followBtn setTitle:@"UPLOAD A JOKE" forState:UIControlStateNormal];
+            [_followBtn setTitle:@"Upload a Joke" forState:UIControlStateNormal];
             
         }
         else{
@@ -73,19 +76,7 @@
 
     
   
-    
-    if (_ProfileUserId==nil)
-    {
-        self.HeaderView.HeaderLabel.text=@"My Channel";
-    }
-    else if (_ProfileUserId==[[NSUserDefaults standardUserDefaults] valueForKey:@"UserId"])
-    {
-        self.HeaderView.HeaderLabel.text=@"My Channel";
-    }
-    else
-    {
-        self.HeaderView.HeaderLabel.text=@"Profile";
-    }
+  
     
     
     NSString* filePath = [[NSBundle mainBundle] pathForResource:@"giphy.gif" ofType:nil];
@@ -98,17 +89,45 @@
     [self setRoundCornertoView:_loaderImage withBorderColor:[UIColor clearColor] WithRadius:0.15];
     [_noVideoLbl setFont:[UIFont fontWithName:_noVideoLbl.font.fontName size:[self getFontSize:_noVideoLbl.font.pointSize]]];
     
+selectedcategoryId=@"";
+    
     // Do any additional setup after loading the view.
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appendPushView) name:@"pushReceived" object:nil];
+    
+    //   // Do any additional setup after loading the view.
+}
+
+
+-(void)appendPushView
+{
+    [self addPushView:self.view];
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
+    
+    
+    if (_ProfileUserId==nil)
+    {
+        self.HeaderView.HeaderLabel.text=@"My Channel";
+    }
+    else if (_ProfileUserId==appDelegate.userId)
+    {
+        self.HeaderView.HeaderLabel.text=@"My Channel";
+    }
+    else
+    {
+        self.HeaderView.HeaderLabel.text=@"Profile";
+    }
+    
     jsonResponse=[[NSDictionary alloc]init];
     videoArr=[[NSMutableArray alloc]init];
-      categoryId=@"";
+    //  categoryId=@"";
     page=1;
     totalCount=0;
 [self loadData];
+    
+    
 }
 
 -(void)loadData
@@ -166,7 +185,7 @@
     
 
         sendData = [sendData stringByAppendingString:@"&mode="];
-        sendData = [sendData stringByAppendingString: [[NSUserDefaults standardUserDefaults] objectForKey:@"langId"]];
+        sendData = [sendData stringByAppendingString: [[NSUserDefaults standardUserDefaults] objectForKey:@"langmode"]];
 
 
         
@@ -189,7 +208,7 @@
                 
                 [_gifImage setHidden:YES];
                 [_noVideoView setHidden:NO];
-                [_noVideoLbl setText:@"Some error occured.\n\n Click to retry"];
+                  [_noVideoLbl setText:[NSString stringWithFormat:@"%@. \n\n %@",AMLocalizedString(@"Some error occured", nil),AMLocalizedString(@"Click to retry", nil)]];
                 [_loaderBtn setHidden:NO];
                 return;
             }
@@ -217,7 +236,7 @@
                     
                     [_gifImage setHidden:YES];
                     [_noVideoView setHidden:NO];
-                    [_noVideoLbl setText:@"Some error occured.\n\n Click to retry"];
+                      [_noVideoLbl setText:[NSString stringWithFormat:@"%@. \n\n %@",AMLocalizedString(@"Some error occured", nil),AMLocalizedString(@"Click to retry", nil)]];
                     [_loaderBtn setHidden:NO];
                     
                     //[SVProgressHUD showInfoWithStatus:@"some error occured"];
@@ -238,20 +257,27 @@
                             
                               // [_loaderView setHidden:YES];
                             
-                       NSDictionary *userDetails=[jsonResponse objectForKey:@"userdetails"];
+                userDetails=[jsonResponse objectForKey:@"userdetails"];
                             
                             
                             [_userName setText:[[NSString stringWithFormat:@"%@",[userDetails objectForKey:@"username"]] capitalizedString]];
                             
-                            [_scoreLbl setText:[NSString stringWithFormat:@"%@ : %@/5 | %@: %@",AMLocalizedString(@"SCORE", nil),[userDetails objectForKey:@"score"],AMLocalizedString(@"JOKE MASTER RANK", nil),[userDetails objectForKey:@"rank"]]];
+                                    [_countryName setText:[[NSString stringWithFormat:@"%@",[userDetails objectForKey:@"country"]] capitalizedString]];
+                            
+                            [_scoreLbl setText:[NSString stringWithFormat:@"%@ : %@/5",AMLocalizedString(@"SCORE", nil),[userDetails objectForKey:@"score"]]];
+                            
+                            
+                                 [_rankLbl setText:[NSString stringWithFormat:@"%@: %@",AMLocalizedString(@"Joke Master Rank", nil),[userDetails objectForKey:@"rank"]]];
                             
                             [_membershipDate setText:[NSString stringWithFormat:@"%@ %@",AMLocalizedString(@"MEMBER SINCE", nil),[userDetails objectForKey:@"memberSince"]]];
                             
                             
                             [_profileImage sd_setImageWithURL:[NSURL URLWithString:[userDetails objectForKey:@"user_image"]] placeholderImage:[UIImage imageNamed:@"noimage"]];
                             
+                             [_countryImage sd_setImageWithURL:[NSURL URLWithString:[userDetails objectForKey:@"country_image"]] placeholderImage:[UIImage imageNamed:@"noimage"]];
+                            
                             if ([_ProfileUserId isEqualToString:appDelegate.userId]) {
-                                [_followBtn setTitle:@"UPLOAD A JOKE" forState:UIControlStateNormal];
+                                [_followBtn setTitle:@"Upload a Joke" forState:UIControlStateNormal];
                                 
                             }
                             else{
@@ -260,14 +286,18 @@
                             
                             if ([[userDetails objectForKey:@"follow_status"]boolValue]) {
                                 
+                                [_FollowImg setImage:[UIImage imageNamed:@"followFill"]];
+                                
                                 [_followBtn setTitle:@"UNFOLLOW" forState:UIControlStateNormal];
                             }
                             else{
                                             [_followBtn setTitle:@"FOLLOW" forState:UIControlStateNormal];
+                                
+                                 [_FollowImg setImage:[UIImage imageNamed:@"follow"]];
                             }
                             }
                           
-                            [self loadVideos];
+                            [self loadCategories];
                             
                             
                         }
@@ -276,7 +306,7 @@
                             
                             [_gifImage setHidden:YES];
                             [_noVideoView setHidden:NO];
-                            [_noVideoLbl setText:[NSString stringWithFormat:@"%@\n\n Click to retry",[jsonResponse objectForKey:@"message"]]];
+                            [_noVideoLbl setText:[NSString stringWithFormat:@"%@\n\n %@",[jsonResponse objectForKey:@"message"],AMLocalizedString(@"Click to retry", nil)]];
                             [_loaderBtn setHidden:NO];
                             
                            // [SVProgressHUD showInfoWithStatus:[jsonResponse objectForKey:@"message"]];
@@ -346,7 +376,7 @@
 //        return CGSizeMake(self.view.frame.size.width/3,135);
 //    }
     
- return CGSizeMake(self.view.frame.size.width/3,105.0/480.0*FULLHEIGHT);
+ return CGSizeMake(self.view.frame.size.width/3,130.0/480.0*FULLHEIGHT);
     
     
 }
@@ -368,10 +398,10 @@
     [cell.CategoryNameLabel setFont:[UIFont fontWithName:cell.CategoryNameLabel.font.fontName size:[self getFontSize:9.0]]];
     
     //   NSLog(@"%@",[arrCategory objectAtIndex:indexPath.row]);
+
+        cell.CategoryNameLabel.text = [[[[videoArr objectAtIndex:indexPath.row]objectForKey:@"name" ]stringByReplacingOccurrencesOfString:@"&amp;" withString:@"&"] uppercaseString];
     
-        cell.CategoryNameLabel.text = [[[videoArr objectAtIndex:indexPath.row]objectForKey:@"videoname" ] uppercaseString];
-    
-        [cell.VideoThumpnailImage sd_setImageWithURL:[NSURL URLWithString:[[videoArr objectAtIndex:indexPath.row]objectForKey:@"videoimagename" ]] placeholderImage:[UIImage imageNamed: @"noimage"]];
+        [cell.VideoThumpnailImage sd_setImageWithURL:[NSURL URLWithString:[[videoArr objectAtIndex:indexPath.row]objectForKey:@"image" ]] placeholderImage:[UIImage imageNamed: @"noimage"]];
     //
     //    cell.categoryImage.layer.masksToBounds = YES;
     //    cell.categoryImage.layer.cornerRadius=5.0;
@@ -384,11 +414,20 @@
 - (void)collectionView:(UICollectionViewCell *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 
 {
+    JMProfileVidViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMProfileVid"];
+    VC.categoryId=[NSString stringWithFormat:@"%@",[[videoArr objectAtIndex:indexPath.row]objectForKey:@"id"]];
+    VC.categoryName=[NSString stringWithFormat:@"%@",[[[[videoArr objectAtIndex:indexPath.row]objectForKey:@"name"]stringByReplacingOccurrencesOfString:@"&amp;" withString:@"&"] uppercaseString]];
     
-    
-    JMPlayVideoViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMPlayVideoViewController"];
-    VC.VideoId=[[videoArr objectAtIndex:indexPath.row] valueForKey:@"id"];
+    VC.ProfileUserId=_ProfileUserId;
+    VC.ProfileUserName=[userDetails objectForKey:@"username"];
+    VC.ProfileuserImage=[userDetails objectForKey:@"user_image"];
+    VC.ProfileFlag=[userDetails objectForKey:@"country_image"];
+    VC.ProfileCountry=[userDetails objectForKey:@"country"];
     [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
+    
+//    JMPlayVideoViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMPlayVideoViewController"];
+//    VC.VideoId=[[videoArr objectAtIndex:indexPath.row] valueForKey:@"id"];
+//    [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
     
 }
 /*
@@ -463,7 +502,7 @@
         sendData = [sendData stringByAppendingString:[NSString stringWithFormat:@"%@", appDelegate.userId]];
   
         sendData = [sendData stringByAppendingString:@"&mode="];
-        sendData = [sendData stringByAppendingString: [[NSUserDefaults standardUserDefaults] objectForKey:@"langId"]];
+        sendData = [sendData stringByAppendingString: [[NSUserDefaults standardUserDefaults] objectForKey:@"langmode"]];
         
         sendData = [sendData stringByAppendingString:@"&pushmode="];
         sendData = [sendData stringByAppendingString: PUSHTYPE];
@@ -517,7 +556,7 @@
                             
                             jsonResponse=[[NSDictionary alloc]init];
                             videoArr=[[NSMutableArray alloc]init];
-                            categoryId=@"";
+                            //categoryId=@"";
                             page=1;
                             totalCount=0;
 
@@ -670,7 +709,7 @@
     //    [cell.CheckButton addTarget:self action:@selector(CheckButtonTap:) forControlEvents:UIControlEventTouchUpInside];
     
     
-    if ([categoryId isEqualToString:[[CategoryArray objectAtIndex:indexPath.row] valueForKey:@"id"]])
+    if ([selectedcategoryId isEqualToString:[[CategoryArray objectAtIndex:indexPath.row] valueForKey:@"id"]])
     {
         
         cell.CheckImage.image = [UIImage imageNamed:@"tick"];
@@ -690,16 +729,16 @@
     JMCategoryCell *cell = [_CategoryTable
                             cellForRowAtIndexPath:indexPath];
     
-    if (![categoryId isEqualToString:[[CategoryArray objectAtIndex:indexPath.row] valueForKey:@"id"]])
+    if (![selectedcategoryId isEqualToString:[[CategoryArray objectAtIndex:indexPath.row] valueForKey:@"id"]])
     {
-         categoryId=[[CategoryArray objectAtIndex:indexPath.row] valueForKey:@"id"];
+               selectedcategoryId=[[CategoryArray objectAtIndex:indexPath.row] valueForKey:@"id"];
        cell.CheckImage.image = [UIImage imageNamed:@"tick"];
     }
-    else
-    {
-            categoryId=@"";
-        cell.CheckImage.image = [UIImage imageNamed:@"uncheck"];
-    }
+//    else
+//    {
+//            selectedcategoryId=@"";
+//        cell.CheckImage.image = [UIImage imageNamed:@"uncheck"];
+//    }
     
     
  //   [cell.CheckButton setHighlighted:YES];
@@ -720,7 +759,8 @@
          [_categoryCollectionView reloadData];
          page=1;
          totalCount=0;
-         [self loadVideos];
+   
+         [self loadCategories];
          
              }];
 
@@ -1026,7 +1066,7 @@
                 sendData = [sendData stringByAppendingString:[NSString stringWithFormat:@"%@", encodedString]];
                 
                 sendData = [sendData stringByAppendingString:@"&mode="];
-                sendData = [sendData stringByAppendingString: [[NSUserDefaults standardUserDefaults] objectForKey:@"langId"]];
+                sendData = [sendData stringByAppendingString: [[NSUserDefaults standardUserDefaults] objectForKey:@"langmode"]];
                 
                 [request setValue:@"gzip" forHTTPHeaderField:@"Accept-Encoding"];
                 
@@ -1164,7 +1204,7 @@
 
 #pragma mark - video list API
 
--(void)loadVideos
+-(void)loadCategories
 {
     
    // [_loaderView setHidden:NO];
@@ -1177,15 +1217,9 @@
         
             NSString *urlString;
             
-      //  if ([_ProfileUserId isEqualToString:appDelegate.userId]) {
-                   urlString=[NSString stringWithFormat:@"%@%@Video?categoryid=%@&language=&country=&userid=%@&page=%d&limit=15&mode=%@",GLOBALAPI,INDEX,categoryId,_ProfileUserId,page,[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"]];
-//        }
-//        else{
-//            
-//            urlString=[NSString stringWithFormat:@"%@%@Video?categoryid=%@&language=%@&country=%@&userid=%@&page=%d&limit=15&mode=%@",GLOBALAPI,INDEX,categoryId,[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"],[[NSUserDefaults standardUserDefaults] objectForKey:@"countryId"],_ProfileUserId,page,[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"]];
-//            
-//      
-//        }
+//http://ec2-13-58-196-4.us-east-2.compute.amazonaws.com/jokemaster/index.php/video/category?user_id=
+                urlString=[NSString stringWithFormat:@"%@%@video/category?user_id=%@&mode=%@",GLOBALAPI,INDEX,_ProfileUserId,[[NSUserDefaults standardUserDefaults] objectForKey:@"langmode"]];
+
         
             
             
@@ -1204,7 +1238,7 @@
                 
 //                [_gifImage setHidden:YES];
 //                [_noVideoView setHidden:NO];
-//                [_noVideoLbl setText:@"Some error occured.\n\n Click to retry"];
+//                  [_noVideoLbl setText:[NSString stringWithFormat:@"%@. \n\n %@",AMLocalizedString(@"Some error occured", nil),AMLocalizedString(@"Click to retry", nil)]];
 //                [_loaderBtn setHidden:NO];
                 
                 // [_chooseBtn setUserInteractionEnabled:YES];
@@ -1236,7 +1270,7 @@
                     
 //                    [_gifImage setHidden:YES];
 //                    [_noVideoView setHidden:NO];
-//                    [_noVideoLbl setText:@"Some error occured.\n\n Click to retry"];
+//                      [_noVideoLbl setText:[NSString stringWithFormat:@"%@. \n\n %@",AMLocalizedString(@"Some error occured", nil),AMLocalizedString(@"Click to retry", nil)]];
 //                    [_loaderBtn setHidden:NO];
                     
                 } else {
@@ -1246,16 +1280,26 @@
                     if ([[jsonResponse objectForKey:@"status"]boolValue]) {
                          [SVProgressHUD dismiss];
                         
+             
+                        
                        // [_loaderView setHidden:YES];
                         
-                         totalCount=[[jsonResponse objectForKey:@"totalcount"] intValue];
+                      //   totalCount=[[jsonResponse objectForKey:@"totalcount"] intValue];
                          
-                    NSArray     *resultArr=[[jsonResponse objectForKey:@"videoDetails"] mutableCopy];
+                    NSArray     *resultArr=[[jsonResponse objectForKey:@"details"] mutableCopy];
                          
                          
                          for(NSDictionary *dict in resultArr) {
-                             [videoArr addObject:dict];
                              
+                             if (selectedcategoryId.length>0) {
+                                 
+                                 if ([selectedcategoryId isEqualToString:[dict objectForKey:@"id"]]) {
+                                        [videoArr addObject:dict];
+                                 }
+                             }
+                             else{
+                             [videoArr addObject:dict];
+                             }
                          }
                          
                          
@@ -1268,13 +1312,13 @@
                              DebugLog(@"%f",ceil((float)videoArr.count/3.0));
                              
                             
-                             float collectionHeight= (105.0/480.0*FULLHEIGHT)*ceil(((float)videoArr.count/3.0));
+                             float collectionHeight= (130.0/480.0*FULLHEIGHT)*ceil(((float)videoArr.count/3.0));
                              
                              
                              [_categoryCollectionView setFrame:CGRectMake(_categoryCollectionView.frame.origin.x, _categoryCollectionView.frame.origin.y, FULLWIDTH, collectionHeight)];
                              
                              
-                             [_MainScroll setContentSize:CGSizeMake(FULLWIDTH, 280.0/480.0*FULLHEIGHT + _categoryCollectionView.frame.size.height)];
+                             [_MainScroll setContentSize:CGSizeMake(FULLWIDTH, 300.0/480.0*FULLHEIGHT + _categoryCollectionView.frame.size.height)];
     
                              [_categoryCollectionView  reloadData];
                          }
@@ -1286,19 +1330,19 @@
                             
                           //  [_loaderView setHidden:YES];
                             
-                 
+                            [_categoryBtn setHidden:NO];
                                    [_noVidLbl setHidden:YES];
                         }
                         else{
                             
-                        
+                          [_categoryBtn setHidden:YES];
                             [_noVidLbl setHidden:NO];
                             
                           //  [SVProgressHUD showInfoWithStatus:@"No videos Found"];
                             
 //                            [_gifImage setHidden:YES];
 //                            [_noVideoView setHidden:NO];
-//                            [_noVideoLbl setText:[NSString stringWithFormat:@"%@\n\n Click to retry",[jsonResponse objectForKey:@"message"]]];
+//                            [_noVideoLbl setText:[NSString stringWithFormat:@"%@\n\n %@",[jsonResponse objectForKey:@"message"],AMLocalizedString(@"Click to retry", nil)]];
 //                            [_loaderBtn setHidden:NO];
                         }
                         
@@ -1322,7 +1366,7 @@
         
         [_gifImage setHidden:YES];
         [_noVideoView setHidden:NO];
-        [_noVideoLbl setText:[NSString stringWithFormat:@"Check your Internet connection\n\n Click to retry"]];
+        [_noVideoLbl setText:[NSString stringWithFormat:@"%@. \n\n %@",AMLocalizedString(@"Check your Internet connection", nil),AMLocalizedString(@"Click to retry", nil)]];
         [_loaderBtn setHidden:NO];
         
         // [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
@@ -1350,7 +1394,7 @@
             NSString *urlString;
             
             
-            urlString=[NSString stringWithFormat:@"%@index.php/video/category?mode=%@",GLOBALAPI,[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"]];
+            urlString=[NSString stringWithFormat:@"%@index.php/video/category?user_id=%@&mode=%@",GLOBALAPI,_ProfileUserId,[[NSUserDefaults standardUserDefaults] objectForKey:@"langmode"]];
             
             
             
@@ -1380,7 +1424,7 @@
                          
                          NSMutableDictionary *zerodict=[[NSMutableDictionary alloc]init];
                          
-                         [zerodict setObject:@"All" forKey:@"name"];
+                         [zerodict setObject:AMLocalizedString(@"All", nil)  forKey:@"name"];
                          [zerodict setObject:@"" forKey:@"id"];
                          [zerodict setObject:@"" forKey:@"image"];
                          
@@ -1481,7 +1525,7 @@
                 firedOnce=true;
                 page++;
                 
-                [self loadVideos];
+                [self loadCategories];
                 
             }
         }
@@ -1497,7 +1541,7 @@
     
     jsonResponse=[[NSDictionary alloc]init];
     videoArr=[[NSMutableArray alloc]init];
-    categoryId=@"";
+    //categoryId=@"";
     page=1;
     totalCount=0;
     [self loadData];

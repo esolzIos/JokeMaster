@@ -30,7 +30,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self addMoreView:self.view];
-    self.HeaderView.HeaderLabel.text= @"Recently Uploaded";
+    self.HeaderView.HeaderLabel.text= AMLocalizedString(@"Recently Uploaded",nil);
     
     ChooseCategoryLabel.frame=CGRectMake(ChooseCatImage.frame.origin.x-ChooseCategoryLabel.frame.size.width-6, ChooseCategoryLabel.frame.origin.y, ChooseCategoryLabel.frame.size.width, ChooseCategoryLabel.frame.size.height);
     
@@ -70,6 +70,15 @@
     [self setRoundCornertoView:_loaderImage withBorderColor:[UIColor clearColor] WithRadius:0.15];
     [_noVideoLbl setFont:[UIFont fontWithName:_noVideoLbl.font.fontName size:[self getFontSize:_noVideoLbl.font.pointSize]]];
   
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appendPushView) name:@"pushReceived" object:nil];
+    
+    //   // Do any additional setup after loading the view.
+}
+
+
+-(void)appendPushView
+{
+    [self addPushView:self.view];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -114,19 +123,20 @@
                   layout:(UICollectionViewLayout *)collectionViewLayout
   sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (IsIphone5)
-    {
-        return CGSizeMake(self.view.frame.size.width/3,105);
-    }
-    else if (IsIphone6)
-    {
-        return CGSizeMake(self.view.frame.size.width/3,123);
-    }
-    else
-    {
-        return CGSizeMake(self.view.frame.size.width/3,135);
-    }
-    
+//    if (IsIphone5)
+//    {
+//        return CGSizeMake(self.view.frame.size.width/3,105);
+//    }
+//    else if (IsIphone6)
+//    {
+//        return CGSizeMake(self.view.frame.size.width/3,123);
+//    }
+//    else
+//    {
+//        return CGSizeMake(self.view.frame.size.width/3,135);
+//    }
+//
+     return CGSizeMake(self.view.frame.size.width/3,130.0/480.0*FULLHEIGHT);
 }
 
 
@@ -445,7 +455,7 @@
             NSString *urlString;
             
             
-            urlString=[NSString stringWithFormat:@"%@index.php/video/category?mode=%@",GLOBALAPI,[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"]];
+            urlString=[NSString stringWithFormat:@"%@index.php/video/category?mode=%@",GLOBALAPI,[[NSUserDefaults standardUserDefaults] objectForKey:@"langmode"]];
             
             
             
@@ -473,7 +483,7 @@
                          
                          NSMutableDictionary *zerodict=[[NSMutableDictionary alloc]init];
                          
-                         [zerodict setObject:@"All" forKey:@"name"];
+                         [zerodict setObject:AMLocalizedString(@"All", nil)  forKey:@"name"];
                          [zerodict setObject:@"" forKey:@"id"];
                          [zerodict setObject:@"" forKey:@"image"];
                          
@@ -565,7 +575,7 @@
             
             
             
-            urlString=[NSString stringWithFormat:@"%@%@Video?categoryid=%@&language=%@&country=%@&userid=&page=%d&limit=15&mode=%@",GLOBALAPI,INDEX,categoryId,[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"],[[NSUserDefaults standardUserDefaults] objectForKey:@"countryId"],page,[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"]];
+            urlString=[NSString stringWithFormat:@"%@%@Video?categoryid=%@&language=%@&country=%@&userid=&page=%d&limit=15&mode=%@",GLOBALAPI,INDEX,categoryId,[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"],[[NSUserDefaults standardUserDefaults] objectForKey:@"countryId"],page,[[NSUserDefaults standardUserDefaults] objectForKey:@"langmode"]];
             
             
             
@@ -587,7 +597,7 @@
                 
                 [_gifImage setHidden:YES];
                 [_noVideoView setHidden:NO];
-                [_noVideoLbl setText:@"Some error occured.\n\n Click to retry"];
+                  [_noVideoLbl setText:[NSString stringWithFormat:@"%@. \n\n %@",AMLocalizedString(@"Some error occured", nil),AMLocalizedString(@"Click to retry", nil)]];
                 [_loaderBtn setHidden:NO];
                 
                 return;
@@ -608,7 +618,7 @@
                     
                     [_gifImage setHidden:YES];
                     [_noVideoView setHidden:NO];
-                    [_noVideoLbl setText:@"Some error occured.\n\n Click to retry"];
+                      [_noVideoLbl setText:[NSString stringWithFormat:@"%@. \n\n %@",AMLocalizedString(@"Some error occured", nil),AMLocalizedString(@"Click to retry", nil)]];
                     [_loaderBtn setHidden:NO];
                     
                     //  [SVProgressHUD showInfoWithStatus:@"some error occured"];
@@ -686,7 +696,7 @@
     else{
         [_gifImage setHidden:YES];
         [_noVideoView setHidden:NO];
-        [_noVideoLbl setText:[NSString stringWithFormat:@"Check your Internet connection\n\n Click to retry"]];
+        [_noVideoLbl setText:[NSString stringWithFormat:@"%@. \n\n %@",AMLocalizedString(@"Check your Internet connection", nil),AMLocalizedString(@"Click to retry", nil)]];
         [_loaderBtn setHidden:NO];
         
         // [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;

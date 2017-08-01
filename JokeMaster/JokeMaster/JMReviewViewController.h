@@ -55,5 +55,5 @@
 @property (strong, nonatomic) IBOutlet UILabel *noVideoLbl;
 
 @property (strong, nonatomic) NSString *VideoId;
-
+@property (nonatomic)NSString *userRating;
 @end

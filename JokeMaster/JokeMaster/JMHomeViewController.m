@@ -8,6 +8,7 @@
 
 #import "JMHomeViewController.h"
 #import "JMRecentlyUploadedViewController.h"
+#import "JMProfileViewController.h"
 @interface JMHomeViewController ()
 {
     BOOL liked,jokeNotFound;
@@ -92,7 +93,17 @@
     [self setRoundCornertoView:_loaderImage withBorderColor:[UIColor clearColor] WithRadius:0.15];
     [_noVideoLbl setFont:[UIFont fontWithName:_noVideoLbl.font.fontName size:[self getFontSize:_noVideoLbl.font.pointSize]]];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appendPushView) name:@"pushReceived" object:nil];
+    
+    //   // Do any additional setup after loading the view.
 }
+
+
+-(void)appendPushView
+{
+    [self addPushView:self.view];
+}
+
 -(void)viewWillAppear:(BOOL)animated
 {
     RecentVideoArray=[[NSMutableArray alloc] init];
@@ -127,7 +138,7 @@
             NSString *urlString;
             
             
-            urlString=[NSString stringWithFormat:@"%@%@Video/jokeoftheday?language=%@&country=%@&userid=%@&mode=%@",GLOBALAPI,INDEX,[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"],[[NSUserDefaults standardUserDefaults] objectForKey:@"countryId"],appDelegate.userId,[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"]];
+            urlString=[NSString stringWithFormat:@"%@%@Video/jokeoftheday?language=%@&country=%@&userid=%@&mode=%@",GLOBALAPI,INDEX,[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"],[[NSUserDefaults standardUserDefaults] objectForKey:@"countryId"],appDelegate.userId,[[NSUserDefaults standardUserDefaults] objectForKey:@"langmode"]];
             
             
             
@@ -154,7 +165,7 @@
 //                
 //                [_gifImage setHidden:YES];
 //                [_noVideoView setHidden:NO];
-//                [_noVideoLbl setText:@"Some error occured.\n\n Click to retry"];
+//                  [_noVideoLbl setText:[NSString stringWithFormat:@"%@. \n\n %@",AMLocalizedString(@"Some error occured", nil),AMLocalizedString(@"Click to retry", nil)]];
 //                [_loaderBtn setHidden:NO];
                 
                 return;
@@ -181,7 +192,7 @@
                     
 //                    [_gifImage setHidden:YES];
 //                    [_noVideoView setHidden:NO];
-//                    [_noVideoLbl setText:@"Some error occured.\n\n Click to retry"];
+//                      [_noVideoLbl setText:[NSString stringWithFormat:@"%@. \n\n %@",AMLocalizedString(@"Some error occured", nil),AMLocalizedString(@"Click to retry", nil)]];
 //                    [_loaderBtn setHidden:NO];
                     
                     //  [SVProgressHUD showInfoWithStatus:@"some error occured"];
@@ -255,7 +266,7 @@
                             
 //                            [_gifImage setHidden:YES];
 //                            [_noVideoView setHidden:NO];
-//                            [_noVideoLbl setText:[NSString stringWithFormat:@"%@\n\n Click to retry",[jsonResponse objectForKey:@"message"]]];
+//                            [_noVideoLbl setText:[NSString stringWithFormat:@"%@\n\n %@",[jsonResponse objectForKey:@"message"],AMLocalizedString(@"Click to retry", nil)]];
 //                            [_loaderBtn setHidden:NO];
                      
                         
@@ -280,7 +291,7 @@
     else{
         [_gifImage setHidden:YES];
         [_errorView setHidden:NO];
-        [_noVideoLbl setText:[NSString stringWithFormat:@"Check your Internet connection\n\n Click to retry"]];
+        [_noVideoLbl setText:[NSString stringWithFormat:@"%@. \n\n %@",AMLocalizedString(@"Check your Internet connection", nil),AMLocalizedString(@"Click to retry", nil)]];
         [_loaderBtn setHidden:NO];
         
         // [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
@@ -304,7 +315,7 @@
             NSString *urlString;
             
             
-            urlString=[NSString stringWithFormat:@"%@%@Useraction/commentrating?user_id=%@&videoid=%@&rating=%d&comment=&mode=%@",GLOBALAPI,INDEX,appDelegate.userId,[jokeDict objectForKey:@"id"],(int)btn.tag,[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"]];
+            urlString=[NSString stringWithFormat:@"%@%@Useraction/commentrating?user_id=%@&videoid=%@&rating=%d&comment=&mode=%@",GLOBALAPI,INDEX,appDelegate.userId,[jokeDict objectForKey:@"id"],(int)btn.tag,[[NSUserDefaults standardUserDefaults] objectForKey:@"langmode"]];
             
             
             
@@ -328,7 +339,7 @@
                 
                 //                [_gifImage setHidden:YES];
                 //                [_noVideoView setHidden:NO];
-                //                [_noVideoLbl setText:@"Some error occured.\n\n Click to retry"];
+                //                  [_noVideoLbl setText:[NSString stringWithFormat:@"%@. \n\n %@",AMLocalizedString(@"Some error occured", nil),AMLocalizedString(@"Click to retry", nil)]];
                 //                [_loaderBtn setHidden:NO];
                 
                 // [_chooseBtn setUserInteractionEnabled:YES];
@@ -358,7 +369,7 @@
                     
                     //                    [_gifImage setHidden:YES];
                     //                    [_noVideoView setHidden:NO];
-                    //                    [_noVideoLbl setText:@"Some error occured.\n\n Click to retry"];
+                    //                      [_noVideoLbl setText:[NSString stringWithFormat:@"%@. \n\n %@",AMLocalizedString(@"Some error occured", nil),AMLocalizedString(@"Click to retry", nil)]];
                     //                    [_loaderBtn setHidden:NO];
                     
                 } else {
@@ -403,7 +414,7 @@
         //
         //        [_gifImage setHidden:YES];
         //        [_noVideoView setHidden:NO];
-        //        [_noVideoLbl setText:[NSString stringWithFormat:@"Check your Internet connection\n\n Click to retry"]];
+        //        [_noVideoLbl setText:[NSString stringWithFormat:@"%@. \n\n %@",AMLocalizedString(@"Check your Internet connection", nil),AMLocalizedString(@"Click to retry", nil)]];
         //        [_loaderBtn setHidden:NO];
         
         [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
@@ -575,8 +586,20 @@
     [_ratingImage.layer removeAllAnimations];
     
     if (appDelegate.isLogged) {
-       [_ratingView setHidden:NO];
+        
+                  if (![appDelegate.userId isEqualToString:[jokeDict objectForKey:@"userid"]]) {
+        
+        if([[jokeDict objectForKey:@"video_rating"] intValue]==0)
+            [_ratingView setHidden:NO];
+        else
+            [SVProgressHUD showInfoWithStatus:@"You have already rated this video"];
+   
+                  } else{
+                      [SVProgressHUD showInfoWithStatus:@"You cannot like your own videos"];
+                  }
     }
+   
+
     else{
         [SVProgressHUD showInfoWithStatus:@"Login required to rate videos"];
     }
@@ -585,8 +608,11 @@
 }
 - (IBAction)likeClicked:(id)sender {
     
-      if (appDelegate.isLogged) {
+      if (appDelegate.isLogged ) {
     
+          if (![appDelegate.userId isEqualToString:[jokeDict objectForKey:@"userid"]]) {
+        
+          
     if([self networkAvailable])
     {
         
@@ -619,7 +645,7 @@
         sendData = [sendData stringByAppendingString:[NSString stringWithFormat:@"%@",appDelegate.userId]];
         
         sendData = [sendData stringByAppendingString:@"&mode="];
-        sendData = [sendData stringByAppendingString: [[NSUserDefaults standardUserDefaults] objectForKey:@"langId"]];
+        sendData = [sendData stringByAppendingString: [[NSUserDefaults standardUserDefaults] objectForKey:@"langmode"]];
         
         sendData = [sendData stringByAppendingString:@"&pushmode="];
         sendData = [sendData stringByAppendingString: PUSHTYPE];
@@ -715,7 +741,10 @@
     else{
         [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
     }
-    
+          }
+          else{
+                [SVProgressHUD showInfoWithStatus:@"You cannot like your own videos"];
+          }
 
       }
       else{
@@ -829,7 +858,7 @@
             NSString *urlString;
             
             
-            urlString=[NSString stringWithFormat:@"%@%@Video?categoryid=&language=%@&country=%@&userid=&page=1&limit=10&mode=%@",GLOBALAPI,INDEX,[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"],[[NSUserDefaults standardUserDefaults] objectForKey:@"countryId"],[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"]];
+            urlString=[NSString stringWithFormat:@"%@%@Video?categoryid=&language=%@&country=%@&userid=&page=1&limit=10&mode=%@",GLOBALAPI,INDEX,[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"],[[NSUserDefaults standardUserDefaults] objectForKey:@"countryId"],[[NSUserDefaults standardUserDefaults] objectForKey:@"langmode"]];
             
             
             
@@ -853,12 +882,13 @@
                 if (jokeNotFound) {
                     [_gifImage setHidden:YES];
                     [_errorView setHidden:NO];
-                    [_noVideoLbl setText:@"Some error occured.\n\n Click to retry"];
+                      [_noVideoLbl setText:[NSString stringWithFormat:@"%@. \n\n %@",AMLocalizedString(@"Some error occured", nil),AMLocalizedString(@"Click to retry", nil)]];
                     [_loaderBtn setHidden:NO];
                 }
                 else{
                 
-                    [_jokeCollectionView setUserInteractionEnabled:false];
+                      [_jokeCollectionView setHidden:YES];
+                  //  [_jokeCollectionView setUserInteractionEnabled:false];
                     
                 }
           
@@ -882,12 +912,13 @@
                     if (jokeNotFound) {
                         [_gifImage setHidden:YES];
                         [_errorView setHidden:NO];
-                        [_noVideoLbl setText:@"Some error occured.\n\n Click to retry"];
+                          [_noVideoLbl setText:[NSString stringWithFormat:@"%@. \n\n %@",AMLocalizedString(@"Some error occured", nil),AMLocalizedString(@"Click to retry", nil)]];
                         [_loaderBtn setHidden:NO];
                     }
                     else{
-                        
-                        [_jokeCollectionView setUserInteractionEnabled:false];
+                            [_loaderView setHidden:YES];
+                      //  [_jokeCollectionView setUserInteractionEnabled:false];
+                        [_jokeCollectionView setHidden:YES];
                         
                     }
                     
@@ -922,6 +953,7 @@
                     else{
                         
                     
+                        
                         if (jokeNotFound) {
                             [_gifImage setHidden:YES];
                             [_errorView setHidden:NO];
@@ -930,8 +962,11 @@
                         }
                         else{
                             
-                            [_jokeCollectionView setUserInteractionEnabled:false];
+                          
+    [_loaderView setHidden:YES];
                             
+                           // [_jokeCollectionView setUserInteractionEnabled:false];
+                              [_jokeCollectionView setHidden:YES];
                         }
                         
                  
@@ -958,12 +993,13 @@
         if (jokeNotFound) {
             [_gifImage setHidden:YES];
             [_errorView setHidden:NO];
-            [_noVideoLbl setText:@"Some error occured.\n\n Click to retry"];
+              [_noVideoLbl setText:[NSString stringWithFormat:@"%@. \n\n %@",AMLocalizedString(@"Some error occured", nil),AMLocalizedString(@"Click to retry", nil)]];
             [_loaderBtn setHidden:NO];
         }
         else{
             
-            [_jokeCollectionView setUserInteractionEnabled:false];
+              [_jokeCollectionView setHidden:YES];
+            //[_jokeCollectionView setUserInteractionEnabled:false];
             
         }
         
@@ -1030,5 +1066,13 @@
     
     
     
+}
+- (IBAction)gotoJokeUser:(id)sender {
+    
+    
+    JMProfileViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMProfile"];
+    VC.ProfileUserId=[jokeDict objectForKey:@"userid"];
+    
+    [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
 }
 @end

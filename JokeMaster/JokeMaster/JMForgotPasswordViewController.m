@@ -21,9 +21,15 @@
      _txtEmail.attributedPlaceholder = [[NSAttributedString alloc] initWithString:AMLocalizedString(@"Email",nil) attributes:@{NSForegroundColorAttributeName: [UIColor whiteColor]}];
     _txtCode.attributedPlaceholder = [[NSAttributedString alloc] initWithString:AMLocalizedString(@"Security Code",nil) attributes:@{NSForegroundColorAttributeName: [UIColor whiteColor]}];
     _txtPassword.attributedPlaceholder = [[NSAttributedString alloc] initWithString:AMLocalizedString(@"Password",nil) attributes:@{NSForegroundColorAttributeName: [UIColor whiteColor]}];
-    _txtConfirmPassword.attributedPlaceholder = [[NSAttributedString alloc] initWithString:AMLocalizedString(@" Confirm Password",nil) attributes:@{NSForegroundColorAttributeName: [UIColor whiteColor]}];
+    _txtConfirmPassword.attributedPlaceholder = [[NSAttributedString alloc] initWithString:AMLocalizedString(@"Confirm Password",nil) attributes:@{NSForegroundColorAttributeName: [UIColor whiteColor]}];
     
      [_btnBackToLogin setTitle:AMLocalizedString(@"Back to Log In", nil) forState:UIControlStateNormal];
+    
+       [_btnPasswordSubmit setTitle:AMLocalizedString(@"SUBMIT", nil) forState:UIControlStateNormal];
+    
+     [_btnEmailSubmit setTitle:AMLocalizedString(@"SUBMIT", nil) forState:UIControlStateNormal];
+    
+    
     
     _btnBackToLogin.titleLabel.font=[UIFont fontWithName:@"ComicSansMS-Bold" size:[self getFontSize:11.0f]];
     
@@ -241,7 +247,7 @@
             NSMutableString *urlString;
             
             
-            urlString=[NSMutableString stringWithFormat:@"%@index.php/Useraction/forgotpassword?email=%@&mode=%@",GLOBALAPI,[_txtEmail.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"]];
+            urlString=[NSMutableString stringWithFormat:@"%@index.php/Useraction/forgotpassword?email=%@&mode=%@",GLOBALAPI,[_txtEmail.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[[NSUserDefaults standardUserDefaults] objectForKey:@"langmode"]];
             
             //                [[[UIAlertView alloc]initWithTitle:@"Error!" message:[NSString stringWithFormat:@"%@",urlString] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
             
@@ -338,7 +344,7 @@
             
            
             
-               urlString=[NSMutableString stringWithFormat:@"%@index.php/Useraction/updatepassword?code=%@&password=%@&mode=%@",GLOBALAPI,[Code stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[Password stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"]];
+               urlString=[NSMutableString stringWithFormat:@"%@index.php/Useraction/updatepassword?code=%@&password=%@&mode=%@",GLOBALAPI,[Code stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[Password stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[[NSUserDefaults standardUserDefaults] objectForKey:@"langmode"]];
             
 //            urlString=[NSMutableString stringWithFormat:@"%@index.php/Useraction/updatepassword?code=%@&password=%@&mode=%@",GLOBALAPI,[_txtCode.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[_txtPassword.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"]];
             
@@ -410,5 +416,10 @@
 - (IBAction)BackToLogin:(id)sender
 {
     [self POPViewController];
+}
+- (IBAction)goBackClicked:(id)sender {
+    
+    _EmailScroll.hidden=NO;
+    _PasswordScroll.hidden=YES;
 }
 @end

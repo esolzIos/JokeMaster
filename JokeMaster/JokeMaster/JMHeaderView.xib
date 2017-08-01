@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11542" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
         <array key="GROBOLD.ttf">
             <string>GROBOLD</string>
+        </array>
+        <array key="comicbd_1.ttf">
+            <string>ComicSansMS-Bold</string>
         </array>
     </customFonts>
     <objects>
@@ -22,7 +25,7 @@
                 <outlet property="HeaderLabel" destination="isb-Gx-rfe" id="8wO-u9-oqk"/>
                 <outlet property="MenuButton" destination="dFz-MY-4bI" id="9AW-uu-xNm"/>
                 <outlet property="langBtn" destination="jr6-xA-2pX" id="f9e-hZ-BHm"/>
-                <outlet property="langImage" destination="Ze8-dU-S0K" id="y0s-Ml-6b6"/>
+                <outlet property="langLbl" destination="vD5-6g-Eth" id="91R-Ko-5gl"/>
                 <outlet property="langView" destination="Hqf-c0-Pm4" id="2ag-dN-LnM"/>
                 <outlet property="menuView" destination="daC-dK-w47" id="hWd-xz-upw"/>
                 <outlet property="moreBtn" destination="sD7-cg-r8x" id="fL5-vr-lzD"/>
@@ -70,19 +73,24 @@
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 </view>
                 <view hidden="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Hqf-c0-Pm4">
-                    <rect key="frame" x="54" y="23" width="25" height="15"/>
+                    <rect key="frame" x="43" y="23" width="57" height="15"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                     <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="INDIA" translatesAutoresizingMaskIntoConstraints="NO" id="Ze8-dU-S0K">
-                            <rect key="frame" x="0.0" y="0.0" width="25" height="15"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="en" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vD5-6g-Eth">
+                            <rect key="frame" x="0.0" y="0.0" width="57" height="15"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                        </imageView>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <fontDescription key="fontDescription" name="ComicSansMS-Bold" family="Comic Sans MS" pointSize="11"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
                         <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jr6-xA-2pX">
-                            <rect key="frame" x="0.0" y="0.0" width="25" height="15"/>
+                            <rect key="frame" x="0.0" y="0.0" width="57" height="15"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" name="ComicSansMS-Bold" family="Comic Sans MS" pointSize="10"/>
                         </button>
                     </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 </view>
                 <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="isb-Gx-rfe" customClass="JMStrokeLabel">
                     <rect key="frame" x="87" y="16" width="150" height="40"/>
@@ -93,7 +101,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="emotion" translatesAutoresizingMaskIntoConstraints="NO" id="dGT-1Y-huL">
-                    <rect key="frame" x="223" y="24" width="15" height="15"/>
+                    <rect key="frame" x="223" y="15" width="25" height="25"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                 </imageView>
                 <view hidden="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vQ9-uq-duh">
@@ -131,11 +139,10 @@
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="-91" y="-375"/>
+            <point key="canvasLocation" x="-324" y="-678"/>
         </view>
     </objects>
     <resources>
-        <image name="INDIA" width="640" height="427"/>
         <image name="back" width="36" height="13"/>
         <image name="emotion" width="119" height="147"/>
         <image name="hamburger-menu" width="32" height="25"/>

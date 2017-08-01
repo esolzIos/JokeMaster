@@ -70,15 +70,58 @@
 
     if ([[[NSUserDefaults standardUserDefaults] valueForKey:@"language"] length]==0)
     {
-        LocalizationSetLanguage(@"en");
         
-      //  LocalizationSetLanguage(@"he");
+        NSLocale *currentLocale = [NSLocale currentLocale];  // get the current locale.
+        NSString *countryCode = [currentLocale objectForKey:NSLocaleCountryCode];
+        
+        NSString *language = [[NSLocale preferredLanguages] objectAtIndex:0];
+        
+NSDictionary *languageDic = [NSLocale componentsFromLocaleIdentifier:language];
+        
+        NSString *languageCode = [languageDic objectForKey:@"kCFLocaleLanguageCodeKey"];
+        
+        DebugLog(@"country %@ and language %@",countryCode,languageCode);
+        
+        if ([languageCode isEqualToString:@"he"]) {
+            
+            LocalizationSetLanguage(@"he");
+
+                     [[NSUserDefaults standardUserDefaults]setObject:@"he" forKey:@"language"];
+            [[NSUserDefaults standardUserDefaults]setObject:@"3" forKey:@"langmode"];
+        }
+       else if ([languageCode isEqualToString:@"zh"]) {
+           LocalizationSetLanguage(@"zh");
+           
+                  [[NSUserDefaults standardUserDefaults]setObject:@"zh" forKey:@"language"];
+           [[NSUserDefaults standardUserDefaults]setObject:@"4" forKey:@"langmode"];
+       }
+       else if ([languageCode isEqualToString:@"es"]) {
+           LocalizationSetLanguage(@"es");
+           
+                    [[NSUserDefaults standardUserDefaults]setObject:@"es" forKey:@"language"];
+           [[NSUserDefaults standardUserDefaults]setObject:@"5" forKey:@"langmode"];
+       }
+       else if ([languageCode isEqualToString:@"hi"]) {
+           LocalizationSetLanguage(@"hi");
+           
+           [[NSUserDefaults standardUserDefaults]setObject:@"hi" forKey:@"language"];
+           [[NSUserDefaults standardUserDefaults]setObject:@"2" forKey:@"langmode"];
+       }
+        else{
+        LocalizationSetLanguage(@"en");
+           [[NSUserDefaults standardUserDefaults]setObject:@"en" forKey:@"language"];
+               [[NSUserDefaults standardUserDefaults]setObject:@"1" forKey:@"langmode"];
+            
+        }
+     
     }
     else
     {
         NSString *lang=[NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] valueForKey:@"language"]];
         LocalizationSetLanguage(lang);
+        
     }
+
 
     
     
@@ -91,6 +134,16 @@
 
            };
    
+    
+    if(SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"9.0")) {
+        [[UIView appearance] setSemanticContentAttribute:UISemanticContentAttributeForceLeftToRight];
+        
+        [[UIView appearanceWhenContainedIn:[UIAlertController class], nil] setSemanticContentAttribute:UISemanticContentAttributeUnspecified];
+        [[UIView appearanceWhenContainedIn:[UIAlertView class], nil] setSemanticContentAttribute:UISemanticContentAttributeUnspecified];
+        
+        
+        
+    }
     
     return YES;
 }
@@ -464,10 +517,10 @@
         }
 
     
-   // [[NSNotificationCenter defaultCenter] postNotificationName:@"ReadPush" object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"ReadPush" object:nil];
         
-  //  }
- 
+ //   }
+
     completionHandler();
 }
 

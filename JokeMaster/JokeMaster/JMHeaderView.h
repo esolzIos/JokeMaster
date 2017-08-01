@@ -25,6 +25,7 @@
 
 @property (weak, nonatomic) IBOutlet UIImageView *RecentUploadImage;
 @property (strong, nonatomic) IBOutlet UIButton *langBtn;
+@property (strong, nonatomic) IBOutlet UILabel *langLbl;
 
 @property (weak, nonatomic) IBOutlet JMStrokeLabel *HeaderLabel;
 -(CGFloat)getFontSize:(CGFloat)size;

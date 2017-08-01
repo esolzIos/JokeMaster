@@ -26,5 +26,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *btnBackToLogin;
 - (IBAction)BackToLogin:(id)sender;
 
+@property (strong, nonatomic) IBOutlet UIView *gobackView;
+@property (strong, nonatomic) IBOutlet UIButton *goBackBtn;
+- (IBAction)goBackClicked:(id)sender;
 
 @end

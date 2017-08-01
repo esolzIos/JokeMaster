@@ -7,6 +7,7 @@
 */
 "Save" = "לשמור";
 "Cancel" = "לְבַטֵל";
+"Select" = "בחר";
 "Upload Profile Picture" = "טען תמונת פרופיל";
 "Back to" = "בחזרה ל";
 "Log in" = "התחברות";
@@ -53,7 +54,7 @@
 "PAKISTAN" = "פקיסטן";
 "ISRAEL"="ישראל";
 "INDIA"="הודו";
-
+"Upload a Joke" = "להעלות בדיחה";
 "MY CHANNEL" ="הערוץ שלי";
 "MY FAVOURITES" ="החביבים עליי ביותר";
 "FOLLOWING" ="הבא";
@@ -74,11 +75,11 @@
 "Server Failed to Respond" ="";
 "RANKINGS" ="דירוגים";
 "UPLOAD A VIDEO" ="העלה סרטון";
-"CLICK TO RETRY" = "נסה שוב";
+"Click to retry" = "לחץ כדי לנסות שוב";
 "Joke Category" = "בדיחה קטגוריה";
 "Forgot Password?" = "שכחת את הסיסמא?";
 "Guest" = "אוֹרֵחַ";
-
+"Some error occured" = "אירעה שגיאה";
 // amlocalized required
 "Login required to rate videos" = "נדרשת כניסה כדי לדרג סרטונים";
 "REVIEWS" = "ביקורות";
@@ -86,3 +87,21 @@
 "NO REVIEW FOUND" = "לא ראה סקירה";
 "Login required to create your channel" = "נדרשת התחברות כדי ליצור את הערוץ שלך";
 "No videos found" = "לא נמצאו סרטונים";
+"View All"="צפה בהכל";
+"Joke Master Rank" = "ג'וקה מאסטר רנק";
+"Edit Profile" = "प्ערוך פרופיל";
+"Check your Internet connection"= "תבדוק את חיבור האינטרנט שלך";
+"App interface language" ="שפת ממשק אפליקציה";
+"Country" = "מדינה";
+"SUBMIT" = "שלח";
+"Security Code" = "קוד אבטחה";
+"Choose your country" = "בחר את מדינתך";
+"Choose app language" = "בחר שפת אפליקציה";
+"Do you want to Filter by Country?" = "האם ברצונך לסנן לפי ארץ?";
+"Choose Video language" = "בחר בשפה של הסרטון";
+"reviews" = "ביקורות";
+"comments" = "הערות";
+"RANK" = "דַרגָה";
+"VIEWS" = "צפיות";
+"All" = "את כל";
+"Recently Uploaded" = "הועלה לאחרונה";

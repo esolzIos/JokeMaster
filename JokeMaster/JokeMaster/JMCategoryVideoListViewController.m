@@ -67,6 +67,15 @@
     [self setRoundCornertoView:_noVideoView withBorderColor:[UIColor clearColor] WithRadius:0.15];
     [self setRoundCornertoView:_loaderImage withBorderColor:[UIColor clearColor] WithRadius:0.15];
     [_noVideoLbl setFont:[UIFont fontWithName:_noVideoLbl.font.fontName size:[self getFontSize:_noVideoLbl.font.pointSize]]];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appendPushView) name:@"pushReceived" object:nil];
+    
+    //   // Do any additional setup after loading the view.
+}
+
+
+-(void)appendPushView
+{
+    [self addPushView:self.view];
 }
 
 
@@ -85,7 +94,7 @@
             
             
             
-            urlString=[NSString stringWithFormat:@"%@%@Video?categoryid=%@&language=%@&country=%@&userid=&page=%d&limit=15&mode=%@",GLOBALAPI,INDEX,CategoryId,[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"],[[NSUserDefaults standardUserDefaults] objectForKey:@"countryId"],page,[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"]];
+            urlString=[NSString stringWithFormat:@"%@%@Video?categoryid=%@&language=%@&country=%@&userid=&page=%d&limit=15&mode=%@",GLOBALAPI,INDEX,CategoryId,[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"],[[NSUserDefaults standardUserDefaults] objectForKey:@"countryId"],page,[[NSUserDefaults standardUserDefaults] objectForKey:@"langmode"]];
             
             
             
@@ -105,7 +114,7 @@
                     
                     [_gifImage setHidden:YES];
                     [_noVideoView setHidden:NO];
-                    [_noVideoLbl setText:@"Some error occured.\n\n Click to retry"];
+                      [_noVideoLbl setText:[NSString stringWithFormat:@"%@. \n\n %@",AMLocalizedString(@"Some error occured", nil),AMLocalizedString(@"Click to retry", nil)]];
                     [_loaderBtn setHidden:NO];
                     
                     // [_chooseBtn setUserInteractionEnabled:YES];
@@ -135,7 +144,7 @@
                         
                         [_gifImage setHidden:YES];
                         [_noVideoView setHidden:NO];
-                        [_noVideoLbl setText:@"Some error occured.\n\n Click to retry"];
+                        [_noVideoLbl setText:[NSString stringWithFormat:@"%@. \n\n %@",AMLocalizedString(@"Some error occured", nil),AMLocalizedString(@"Click to retry", nil)]];
                         [_loaderBtn setHidden:NO];
                         
                     } else {
@@ -183,7 +192,7 @@
                                 
                                 [_gifImage setHidden:YES];
                                 [_noVideoView setHidden:NO];
-                                [_noVideoLbl setText:[NSString stringWithFormat:@"%@\n\n Click to retry",[jsonResponse objectForKey:@"message"]]];
+                                [_noVideoLbl setText:[NSString stringWithFormat:@"%@\n\n %@",[jsonResponse objectForKey:@"message"],AMLocalizedString(@"Click to retry", nil) ]];
                                 [_loaderBtn setHidden:NO];
                             }
 
@@ -207,7 +216,7 @@
              
              [_gifImage setHidden:YES];
              [_noVideoView setHidden:NO];
-             [_noVideoLbl setText:[NSString stringWithFormat:@"Check your Internet connection\n\n Click to retry"]];
+             [_noVideoLbl setText:[NSString stringWithFormat:@"%@. \n\n %@",AMLocalizedString(@"Check your Internet connection", nil),AMLocalizedString(@"Click to retry", nil)]];
              [_loaderBtn setHidden:NO];
              
               // [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
@@ -244,19 +253,19 @@
                   layout:(UICollectionViewLayout *)collectionViewLayout
   sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (IsIphone5)
-    {
-        return CGSizeMake(self.view.frame.size.width/3,105);
-    }
-    else if (IsIphone6)
-    {
-        return CGSizeMake(self.view.frame.size.width/3,123);
-    }
-    else
-    {
-        return CGSizeMake(self.view.frame.size.width/3,135);
-    }
-    
+//    if (IsIphone5)
+//    {
+//        return CGSizeMake(self.view.frame.size.width/3,105);
+//    }
+//    else if (IsIphone6)
+//    {
+//        return CGSizeMake(self.view.frame.size.width/3,123);
+//    }
+//    else
+//    {
+//        return CGSizeMake(self.view.frame.size.width/3,135);
+//    }
+  return CGSizeMake(self.view.frame.size.width/3,130.0/480.0*FULLHEIGHT);
 }
 
 
@@ -516,7 +525,7 @@
             NSString *urlString;
             
             
-            urlString=[NSString stringWithFormat:@"%@index.php/video/category?mode=%@",GLOBALAPI,[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"]];
+            urlString=[NSString stringWithFormat:@"%@index.php/video/category?mode=%@",GLOBALAPI,[[NSUserDefaults standardUserDefaults] objectForKey:@"langmode"]];
             
             
             
@@ -537,7 +546,7 @@
                 
 //                [_gifImage setHidden:YES];
 //                [_noVideoView setHidden:NO];
-//                [_noVideoLbl setText:@"Some error occured.\n\n Click to retry"];
+//                  [_noVideoLbl setText:[NSString stringWithFormat:@"%@. \n\n %@",AMLocalizedString(@"Some error occured", nil),AMLocalizedString(@"Click to retry", nil)]];
 //                [_loaderBtn setHidden:NO];
                 
                      [ChooseCategoryBtn setUserInteractionEnabled:YES];
@@ -567,7 +576,7 @@
                     
 //                    [_gifImage setHidden:YES];
 //                    [_noVideoView setHidden:NO];
-//                    [_noVideoLbl setText:@"Some error occured.\n\n Click to retry"];
+//                      [_noVideoLbl setText:[NSString stringWithFormat:@"%@. \n\n %@",AMLocalizedString(@"Some error occured", nil),AMLocalizedString(@"Click to retry", nil)]];
 //                    [_loaderBtn setHidden:NO];
                     
                 } else {
@@ -609,7 +618,7 @@
                         
 //                        [_gifImage setHidden:YES];
 //                        [_noVideoView setHidden:NO];
-//                        [_noVideoLbl setText:[NSString stringWithFormat:@"%@\n\n Click to retry",[jsonResponse objectForKey:@"message"]]];
+//                        [_noVideoLbl setText:[NSString stringWithFormat:@"%@\n\n %@",[jsonResponse objectForKey:@"message"],AMLocalizedString(@"Click to retry", nil)]];
 //                        [_loaderBtn setHidden:NO];
                         
                     }
@@ -633,7 +642,7 @@
         
 //        [_gifImage setHidden:YES];
 //        [_noVideoView setHidden:NO];
-//        [_noVideoLbl setText:[NSString stringWithFormat:@"Check your Internet connection\n\n Click to retry"]];
+//        [_noVideoLbl setText:[NSString stringWithFormat:@"%@. \n\n %@",AMLocalizedString(@"Check your Internet connection", nil),AMLocalizedString(@"Click to retry", nil)]];
 //        [_loaderBtn setHidden:NO];
         
           [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;

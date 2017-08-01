@@ -22,4 +22,6 @@
 @property (strong, nonatomic) IBOutlet UIImageView *profileFrame;
 @property (strong, nonatomic) IBOutlet UIImageView *countryImage;
 
+
+@property (strong, nonatomic) IBOutlet UILabel *CountryName;
 @end

@@ -44,7 +44,17 @@
     [self setRoundCornertoView:_loaderImage withBorderColor:[UIColor clearColor] WithRadius:0.15];
     [_noVideoLbl setFont:[UIFont fontWithName:_noVideoLbl.font.fontName size:[self getFontSize:_noVideoLbl.font.pointSize]]];
     // Do any additional setup after loading the view.
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appendPushView) name:@"pushReceived" object:nil];
+    
+    //   // Do any additional setup after loading the view.
 }
+
+
+-(void)appendPushView
+{
+    [self addPushView:self.view];
+}
+
 -(void)viewWillAppear:(BOOL)animated
 {
     
@@ -74,7 +84,14 @@
         
         //http://ec2-13-58-196-4.us-east-2.compute.amazonaws.com/jokemaster/index.php/Useraction/userankinglisting?page=1&limit=15
         
-        url=[NSString stringWithFormat:@"%@%@Useraction/userankinglisting?page=%d&limit=15&mode=%@",GLOBALAPI,INDEX,page,[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"]];
+        
+        if (appDelegate.isLogged) {
+                    url=[NSString stringWithFormat:@"%@%@Useraction/userankinglisting?page=%d&limit=15&mode=%@&language=%@",GLOBALAPI,INDEX,page,[[NSUserDefaults standardUserDefaults] objectForKey:@"langmode"],[[NSUserDefaults standardUserDefaults] objectForKey:@"langmode"]];
+        }
+        else{
+             url=[NSString stringWithFormat:@"%@%@Useraction/userankinglisting?page=%d&limit=15&mode=%@&language=%@",GLOBALAPI,INDEX,page,[[NSUserDefaults standardUserDefaults] objectForKey:@"langmode"],[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"]];
+        }
+
         
         
         
@@ -95,7 +112,7 @@
                 
                 [_gifImage setHidden:YES];
                 [_noVideoView setHidden:NO];
-                [_noVideoLbl setText:@"Some error occured.\n\n Click to retry"];
+                  [_noVideoLbl setText:[NSString stringWithFormat:@"%@. \n\n %@",AMLocalizedString(@"Some error occured", nil),AMLocalizedString(@"Click to retry", nil)]];
                 [_loaderBtn setHidden:NO];
                 
                 return;
@@ -116,7 +133,7 @@
                     
                     [_gifImage setHidden:YES];
                     [_noVideoView setHidden:NO];
-                    [_noVideoLbl setText:@"Some error occured.\n\n Click to retry"];
+                      [_noVideoLbl setText:[NSString stringWithFormat:@"%@. \n\n %@",AMLocalizedString(@"Some error occured", nil),AMLocalizedString(@"Click to retry", nil)]];
                     [_loaderBtn setHidden:NO];
                     
                     //  [SVProgressHUD showInfoWithStatus:@"some error occured"];
@@ -154,6 +171,13 @@
                             
                             [_RankTable reloadData];
                             
+                            
+                            
+                            [_RankTable setFrame:CGRectMake(0, 0, FULLWIDTH, (75.0/480.0*FULLHEIGHT)* videoArr.count)];
+                            
+                            
+                            [_mainscroll setContentSize:CGSizeMake(FULLWIDTH, _RankTable.frame.size.height)];
+                            
                         }
                         else{
                             
@@ -173,7 +197,7 @@
                             
                             [_gifImage setHidden:YES];
                             [_noVideoView setHidden:NO];
-                            [_noVideoLbl setText:[NSString stringWithFormat:@"%@\n\n Click to retry",[jsonResponse objectForKey:@"message"]]];
+                            [_noVideoLbl setText:[NSString stringWithFormat:@"%@\n\n %@",[jsonResponse objectForKey:@"message"],AMLocalizedString(@"Click to retry", nil)]];
                             [_loaderBtn setHidden:NO];
                         }
 
@@ -202,7 +226,7 @@
         
         [_gifImage setHidden:YES];
         [_noVideoView setHidden:NO];
-        [_noVideoLbl setText:[NSString stringWithFormat:@"Check your Internet connection\n\n Click to retry"]];
+        [_noVideoLbl setText:[NSString stringWithFormat:@"%@. \n\n %@",AMLocalizedString(@"Check your Internet connection", nil),AMLocalizedString(@"Click to retry", nil)]];
         [_loaderBtn setHidden:NO];
         
         // [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
@@ -242,22 +266,25 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (IsIphone4 || IsIphone5)
-    {
-        return 95;
-    }
-    else if (IsIphone6)
-    {
-        return 108;
-    }
-    else if (IsIphone6plus)
-    {
-        return 120;
-    }
-    else
-    {
-        return 100;
-    }
+
+//    if (IsIphone4 || IsIphone5)
+//    {
+//        return 95;
+//    }
+//    else if (IsIphone6)
+//    {
+//        return 108;
+//    }
+//    else if (IsIphone6plus)
+//    {
+//        return 120;
+//    }
+//    else
+//    {
+//        return 100;
+//    }
+
+    return  75.0/480.0*FULLHEIGHT;
     
 }
 -(void) tableView:(UITableView *)tableView willDisplayCell:(JMFavouriteCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
@@ -271,7 +298,7 @@
 //        oneTime=YES;
 //    }
     
-    [self setRoundCornertoView:cell.ProfileImage withBorderColor:[UIColor clearColor] WithRadius:0.36];
+ //   [self setRoundCornertoView:cell.ProfileImage withBorderColor:[UIColor clearColor] WithRadius:0.36];
     
     
     NSDictionary *videoDict=[videoArr objectAtIndex:indexPath.row];
@@ -283,7 +310,18 @@
         cell.WhiteView.frame =CGRectMake(23.0/320.0*FULLWIDTH,  cell.WhiteView.frame.origin.y,  cell.WhiteView.frame.size.width,  cell.WhiteView.frame.size.height);
     }
     
+    
+    [cell.RankLabel setFont:[UIFont fontWithName:cell.RankLabel.font.fontName size:[self getFontSize:7.0]]];
+    
+    [cell.ProfileNameLabel setFont:[UIFont fontWithName:cell.ProfileNameLabel.font.fontName size:[self getFontSize:10.0]]];
+    
+    [cell.RatingLabel setFont:[UIFont fontWithName:cell.RatingLabel.font.fontName size:[self getFontSize:9.0]]];
+    
+    [cell.CountryName setFont:[UIFont fontWithName:cell.CountryName.font.fontName size:[self getFontSize:7.0]]];
+    
     [cell.ProfileImage sd_setImageWithURL:[NSURL URLWithString:[videoDict objectForKey:@"user_image"]] placeholderImage:[UIImage imageNamed:@"noimage"]];
+    
+        [cell.countryImage sd_setImageWithURL:[NSURL URLWithString:[videoDict objectForKey:@"country_image"]] placeholderImage:[UIImage imageNamed:@"noimage"]];
     
      [cell.RankLabel setText:[NSString stringWithFormat:@"RANK %@",[videoDict objectForKey:@"rank"]]];
     
@@ -291,9 +329,10 @@
     
     [cell.RatingLabel setText:[NSString stringWithFormat:@"%@/5",[videoDict objectForKey:@"score"]]];
     
+        [cell.CountryName setText:[NSString stringWithFormat:@"%@",[videoDict objectForKey:@"country"]]];
     
-    [self setRoundCornertoView:cell.profileFrame withBorderColor:[UIColor clearColor] WithRadius:0.2];
-    [self setRoundCornertoView:cell.ProfileImage withBorderColor:[UIColor clearColor] WithRadius:0.15];
+    [self setRoundCornertoView:cell.profileFrame withBorderColor:[UIColor clearColor] WithRadius:0.4];
+    [self setRoundCornertoView:cell.ProfileImage withBorderColor:[UIColor clearColor] WithRadius:0.36];
     
     cell.RatingView.maximumValue = 5;
     cell.RatingView.minimumValue = 0;
@@ -360,7 +399,7 @@
 {
     
     
-    if (scrollView==_RankTable && totalCount>videoArr.count)
+    if (scrollView==_mainscroll && totalCount>videoArr.count)
     {
         CGPoint offset = scrollView.contentOffset;
         CGRect bounds = scrollView.bounds;

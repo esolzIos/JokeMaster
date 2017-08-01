@@ -73,6 +73,15 @@
     CategoryArray=[[NSMutableArray alloc] init];
     
     [self CategoryApi];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appendPushView) name:@"pushReceived" object:nil];
+    
+    //   // Do any additional setup after loading the view.
+}
+
+
+-(void)appendPushView
+{
+    [self addPushView:self.view];
 }
 
 
@@ -92,19 +101,19 @@
                   layout:(UICollectionViewLayout *)collectionViewLayout
   sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (IsIphone5)
-    {
-        return CGSizeMake(self.view.frame.size.width/3,105);
-    }
-    else if (IsIphone6)
-    {
-        return CGSizeMake(self.view.frame.size.width/3,123);
-    }
-    else
-    {
-        return CGSizeMake(self.view.frame.size.width/3,135);
-    }
-    
+//    if (IsIphone5)
+//    {
+//        return CGSizeMake(self.view.frame.size.width/3,105);
+//    }
+//    else if (IsIphone6)
+//    {
+//        return CGSizeMake(self.view.frame.size.width/3,123);
+//    }
+//    else
+//    {
+//        return CGSizeMake(self.view.frame.size.width/3,135);
+//    }
+     return CGSizeMake(self.view.frame.size.width/3,130.0/480.0*FULLHEIGHT);
 }
 
 
@@ -144,6 +153,7 @@
     JMCategoryVideoListViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMVideoList"];
     VC.CategoryId=[NSString stringWithFormat:@"%@",[[CategoryArray objectAtIndex:indexPath.row]objectForKey:@"id"]];
     VC.CategoryName=[NSString stringWithFormat:@"%@",[[[[CategoryArray objectAtIndex:indexPath.row]objectForKey:@"name"]stringByReplacingOccurrencesOfString:@"&amp;" withString:@"&"] uppercaseString]];
+
     [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
     
     
@@ -311,7 +321,7 @@
             NSString *urlString;
             
             
-            urlString=[NSString stringWithFormat:@"%@index.php/video/category?mode=%@",GLOBALAPI,[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"]];
+            urlString=[NSString stringWithFormat:@"%@index.php/video/category?mode=%@",GLOBALAPI,[[NSUserDefaults standardUserDefaults] objectForKey:@"langmode"]];
             
             
             
@@ -334,7 +344,7 @@
                 
                 [_gifImage setHidden:YES];
                 [_noVideoView setHidden:NO];
-                [_noVideoLbl setText:@"Some error occured.\n\n Click to retry"];
+                  [_noVideoLbl setText:[NSString stringWithFormat:@"%@. \n\n %@",AMLocalizedString(@"Some error occured", nil),AMLocalizedString(@"Click to retry", nil)]];
                 [_loaderBtn setHidden:NO];
                 
                 
@@ -357,7 +367,7 @@
                     
                     [_gifImage setHidden:YES];
                     [_noVideoView setHidden:NO];
-                    [_noVideoLbl setText:@"Some error occured.\n\n Click to retry"];
+                      [_noVideoLbl setText:[NSString stringWithFormat:@"%@. \n\n %@",AMLocalizedString(@"Some error occured", nil),AMLocalizedString(@"Click to retry", nil)]];
                     [_loaderBtn setHidden:NO];
                     
                     //  [SVProgressHUD showInfoWithStatus:@"some error occured"];
@@ -398,7 +408,7 @@
                             
                             [_gifImage setHidden:YES];
                             [_noVideoView setHidden:NO];
-                            [_noVideoLbl setText:[NSString stringWithFormat:@"%@\n\n Click to retry",[jsonResponse objectForKey:@"message"]]];
+                            [_noVideoLbl setText:[NSString stringWithFormat:@"%@\n\n %@",[jsonResponse objectForKey:@"message"],AMLocalizedString(@"Click to retry", nil)]];
                             [_loaderBtn setHidden:NO];
                         }
                         
@@ -423,7 +433,7 @@
     else{
         [_gifImage setHidden:YES];
         [_noVideoView setHidden:NO];
-        [_noVideoLbl setText:[NSString stringWithFormat:@"Check your Internet connection\n\n Click to retry"]];
+        [_noVideoLbl setText:[NSString stringWithFormat:@"%@. \n\n %@",AMLocalizedString(@"Check your Internet connection", nil),AMLocalizedString(@"Click to retry", nil)]];
         [_loaderBtn setHidden:NO];
         
         //  [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;

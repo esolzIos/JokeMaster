@@ -5,6 +5,9 @@
 //  Created by priyanka on 12/06/17.
 //  Copyright © 2017 esolz. All rights reserved.
 //
+#define degreeToRadian(x) (M_PI * x / 180.0)
+#define radianToDegree(x) (180.0 * x / M_PI)
+
 
 #import "JMPlayVideoViewController.h"
 #import "ReviewsTableViewCell.h"
@@ -38,9 +41,13 @@ UITextView *demoTxt;
     if (UIInterfaceOrientationIsLandscape(orientation)) {
         NSLog(@"Landscape");
         
-     
-        
     
+       
+    
+        if (self.childViewControllers.count>0) {
+            [controller.view.layer setAffineTransform:CGAffineTransformIdentity];
+        }
+        
         controller.player = player;
         [controller setVideoGravity:AVLayerVideoGravityResizeAspect];
         
@@ -58,9 +65,11 @@ UITextView *demoTxt;
        // [self.navigationController presentViewController:controller animated:YES completion:nil];
     
         [self addChildViewController:controller];
-        [self.view addSubview:controller.view];
-        
+    [self.view addSubview:controller.view];
+         
         controller.view.frame = self.view.frame;
+        
+    
 
 
       //  inFullscreen=TRUE;
@@ -84,8 +93,9 @@ UITextView *demoTxt;
      [[NSNotificationCenter defaultCenter] addObserver:self  selector:@selector(didChangeOrientation:)    name:UIDeviceOrientationDidChangeNotification  object:nil];
 
     controller = [[AVPlayerViewController alloc]init];
-
     
+     [_ratingImage.layer removeAllAnimations];
+         [_optionView setHidden:YES];
        [_noreviewLbl setHidden:YES];
     
    DebugLog(@"video details %@",VideoDictionary);
@@ -144,6 +154,10 @@ UITextView *demoTxt;
         [_commentTitle setFont:[UIFont fontWithName:_commentTitle.font.fontName size:[self getFontSize:_commentTitle.font.pointSize]]];
     
     
+    [_reviewsLbl setText:AMLocalizedString(@"reviews", nil)];
+       [_commentTitle setText:AMLocalizedString(@"comments", nil)];
+    
+    
     [_ratingBtnOne addTarget:self action:@selector(rateVideo:) forControlEvents:UIControlEventTouchUpInside];
     [_ratingBtnTwo addTarget:self action:@selector(rateVideo:) forControlEvents:UIControlEventTouchUpInside];
     [_ratingBtnThree addTarget:self action:@selector(rateVideo:) forControlEvents:UIControlEventTouchUpInside];
@@ -170,7 +184,15 @@ demoTxt = [[UITextView alloc] init];
 
   
 
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appendPushView) name:@"pushReceived" object:nil];
     
+    //   // Do any additional setup after loading the view.
+}
+
+
+-(void)appendPushView
+{
+    [self addPushView:self.view];
 }
 
 
@@ -311,14 +333,14 @@ demoTxt = [[UITextView alloc] init];
     if([self networkAvailable])
     {
         
-        
+
         
         [SVProgressHUD show];
         
             NSString *urlString;
             
             
-            urlString=[NSString stringWithFormat:@"%@index.php/Useraction/commentrating?user_id=%@&videoid=%@&rating=%d&comment=&mode=%@",GLOBALAPI,app.userId,VideoId,(int)btn.tag,[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"]];
+            urlString=[NSString stringWithFormat:@"%@index.php/Useraction/commentrating?user_id=%@&videoid=%@&rating=%d&comment=&mode=%@",GLOBALAPI,app.userId,VideoId,(int)btn.tag,[[NSUserDefaults standardUserDefaults] objectForKey:@"langmode"]];
             
             
             
@@ -340,7 +362,7 @@ demoTxt = [[UITextView alloc] init];
                 
 //                [_gifImage setHidden:YES];
 //                [_noVideoView setHidden:NO];
-//                [_noVideoLbl setText:@"Some error occured.\n\n Click to retry"];
+//                  [_noVideoLbl setText:[NSString stringWithFormat:@"%@. \n\n %@",AMLocalizedString(@"Some error occured", nil),AMLocalizedString(@"Click to retry", nil)]];
 //                [_loaderBtn setHidden:NO];
                 
                 // [_chooseBtn setUserInteractionEnabled:YES];
@@ -370,7 +392,7 @@ demoTxt = [[UITextView alloc] init];
                     
 //                    [_gifImage setHidden:YES];
 //                    [_noVideoView setHidden:NO];
-//                    [_noVideoLbl setText:@"Some error occured.\n\n Click to retry"];
+//                      [_noVideoLbl setText:[NSString stringWithFormat:@"%@. \n\n %@",AMLocalizedString(@"Some error occured", nil),AMLocalizedString(@"Click to retry", nil)]];
 //                    [_loaderBtn setHidden:NO];
                     
                 } else {
@@ -406,6 +428,7 @@ demoTxt = [[UITextView alloc] init];
         
         
         
+    
     }
     
     else{
@@ -413,7 +436,7 @@ demoTxt = [[UITextView alloc] init];
 //        
 //        [_gifImage setHidden:YES];
 //        [_noVideoView setHidden:NO];
-//        [_noVideoLbl setText:[NSString stringWithFormat:@"Check your Internet connection\n\n Click to retry"]];
+//        [_noVideoLbl setText:[NSString stringWithFormat:@"%@. \n\n %@",AMLocalizedString(@"Check your Internet connection", nil),AMLocalizedString(@"Click to retry", nil)]];
 //        [_loaderBtn setHidden:NO];
         
           [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
@@ -445,9 +468,16 @@ demoTxt = [[UITextView alloc] init];
 [_ratingImage.layer removeAllAnimations];
     
     if (app.isLogged) {
-     
-    
+        if (![app.userId isEqualToString:[VideoDictionary objectForKey:@"user_id"]]) {
+       
+
+    if([[VideoDictionary objectForKey:@"video_rating"] intValue]==0)
         [_rateView setHidden:NO];
+        else
+         [SVProgressHUD showInfoWithStatus:@"You have already rated this video"];
+        } else{
+            [SVProgressHUD showInfoWithStatus:@"You cannot rate your own videos"];
+        }
     }
     else{
         [SVProgressHUD showInfoWithStatus:@"Login required to rate videos"];
@@ -519,7 +549,8 @@ demoTxt = [[UITextView alloc] init];
     
     if (app.isLogged) {
       
-    
+          if (![app.userId isEqualToString:[VideoDictionary objectForKey:@"user_id"]]) {
+              
     if([self networkAvailable])
     {
         
@@ -552,7 +583,7 @@ demoTxt = [[UITextView alloc] init];
         sendData = [sendData stringByAppendingString:[NSString stringWithFormat:@"%@",app.userId]];
         
         sendData = [sendData stringByAppendingString:@"&mode="];
-        sendData = [sendData stringByAppendingString: [[NSUserDefaults standardUserDefaults] objectForKey:@"langId"]];
+        sendData = [sendData stringByAppendingString: [[NSUserDefaults standardUserDefaults] objectForKey:@"langmode"]];
         
         sendData = [sendData stringByAppendingString:@"&pushmode="];
         sendData = [sendData stringByAppendingString: PUSHTYPE];
@@ -647,7 +678,11 @@ demoTxt = [[UITextView alloc] init];
     else{
         [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
     }
-    
+          }
+    else{
+        [SVProgressHUD showInfoWithStatus:@"You cannot like your own videos"];
+    }
+
     }
     else{
         [SVProgressHUD showInfoWithStatus:@"Login required to like videos"];
@@ -765,7 +800,7 @@ demoTxt = [[UITextView alloc] init];
         
         
         NSString *sendData = @"videoid=";
-        sendData = [sendData stringByAppendingString:[NSString stringWithFormat:@"%@",[VideoDictionary objectForKey:@"id"]]];
+        sendData = [sendData stringByAppendingString:[NSString stringWithFormat:@"%@",[VideoDictionary objectForKey:@"video_id"]]];
         
         sendData = [sendData stringByAppendingString:@"&userid="];
         sendData = [sendData stringByAppendingString:[NSString stringWithFormat:@"%@",app.userId]];
@@ -818,7 +853,7 @@ demoTxt = [[UITextView alloc] init];
                     
                     if ([[Response objectForKey:@"status"]boolValue]) {
                         
-                          [SVProgressHUD dismiss];
+                          [SVProgressHUD showInfoWithStatus:[Response objectForKey:@"message"]];
                         
                                      }
                     
@@ -893,7 +928,7 @@ demoTxt = [[UITextView alloc] init];
             sendData = [sendData stringByAppendingString:[NSString stringWithFormat:@"%@",[VideoDictionary objectForKey:@"video_id"]]];
             
   sendData = [sendData stringByAppendingString:@"&mode="];
-            sendData = [sendData stringByAppendingString: [[NSUserDefaults standardUserDefaults] objectForKey:@"langId"]];
+            sendData = [sendData stringByAppendingString: [[NSUserDefaults standardUserDefaults] objectForKey:@"langmode"]];
      
             [request setValue:@"gzip" forHTTPHeaderField:@"Accept-Encoding"];
             
@@ -985,6 +1020,12 @@ demoTxt = [[UITextView alloc] init];
 - (IBAction)resizeClicked:(id)sender {
     
     
+
+
+
+    
+
+    
 //    AVPlayerViewController *controller = [[AVPlayerViewController alloc]init];
     controller.player = player;
     [controller setVideoGravity:AVLayerVideoGravityResizeAspect];
@@ -1002,10 +1043,15 @@ demoTxt = [[UITextView alloc] init];
     //                [controller.player play];
     // [self.navigationController presentViewController:controller animated:YES completion:nil];
     
+
+        [controller.view.layer setAffineTransform:CGAffineTransformMakeRotation(degreeToRadian(90.0))];
+ 
+    
     [self addChildViewController:controller];
     [self.view addSubview:controller.view];
     
     controller.view.frame = self.view.frame;
+    
     
     
    // inFullscreen=TRUE;
@@ -1018,9 +1064,24 @@ demoTxt = [[UITextView alloc] init];
     
     if (app.isLogged) {
         
-        JMReviewViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMReview"];
-        VC.VideoId=[VideoDictionary objectForKey:@"video_id"];
-        [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
+                if (![app.userId isEqualToString:[VideoDictionary objectForKey:@"user_id"]]) {
+        
+//        if([[VideoDictionary objectForKey:@"video_rating"] intValue]==0)
+//        {
+            JMReviewViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMReview"];
+            VC.VideoId=[VideoDictionary objectForKey:@"video_id"];
+        VC.userRating=[VideoDictionary objectForKey:@"video_rating"];
+        
+            [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
+//        }
+//        else{
+//            [SVProgressHUD showInfoWithStatus:@"You have already rated this video"];
+//        }
+    
+                }
+                else{
+                    [SVProgressHUD showInfoWithStatus:@"You cannot rate or comment your own videos"];
+                }
     }
     else{
         [SVProgressHUD showInfoWithStatus:@"Login required to Comment on videos"];
@@ -1101,10 +1162,10 @@ else
             NSString *urlString;
             
             if (app.isLogged) {
-                  urlString=[NSString stringWithFormat:@"%@index.php/Videodetails?videoid=%@&loggedinid=%@&mode=%@",GLOBALAPI,VideoId,app.userId,[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"]];
+                  urlString=[NSString stringWithFormat:@"%@index.php/Videodetails?videoid=%@&loggedinid=%@&mode=%@",GLOBALAPI,VideoId,app.userId,[[NSUserDefaults standardUserDefaults] objectForKey:@"langmode"]];
             }
             else{
-                  urlString=[NSString stringWithFormat:@"%@index.php/Videodetails?videoid=%@&loggedinid=&mode=%@",GLOBALAPI,VideoId,[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"]];
+                  urlString=[NSString stringWithFormat:@"%@index.php/Videodetails?videoid=%@&loggedinid=&mode=%@",GLOBALAPI,VideoId,[[NSUserDefaults standardUserDefaults] objectForKey:@"langmode"]];
             }
           
             
@@ -1132,7 +1193,7 @@ else
                 
                 [_gifImage setHidden:YES];
                 [_errorView setHidden:NO];
-                [_noVideoLbl setText:@"Some error occured.\n\n Click to retry"];
+                  [_noVideoLbl setText:[NSString stringWithFormat:@"%@. \n\n %@",AMLocalizedString(@"Some error occured", nil),AMLocalizedString(@"Click to retry", nil)]];
                 [_loaderBtn setHidden:NO];
                 
                 // [_chooseBtn setUserInteractionEnabled:YES];
@@ -1162,7 +1223,7 @@ else
                     
                     [_gifImage setHidden:YES];
                     [_errorView setHidden:NO];
-                    [_noVideoLbl setText:@"Some error occured.\n\n Click to retry"];
+                      [_noVideoLbl setText:[NSString stringWithFormat:@"%@. \n\n %@",AMLocalizedString(@"Some error occured", nil),AMLocalizedString(@"Click to retry", nil)]];
                     [_loaderBtn setHidden:NO];
                     
                 } else {
@@ -1243,9 +1304,9 @@ else
                                 }];
                                 
                                 [player seekToTime:kCMTimeZero];
-                                paused=true;
-                                [_playPauseImg setImage:[UIImage imageNamed:@"play-1"]];
-                                // [player play];
+                                paused=false;
+                                [_playPauseImg setImage:[UIImage imageNamed:@"pause"]];
+                                 [player play];
                                 
                                 mainscroll.userInteractionEnabled=YES;
                                 [_commentView setUserInteractionEnabled:YES];
@@ -1277,9 +1338,9 @@ else
                                 
                                 _ratingLbl.text=[NSString stringWithFormat:@"%@/5",[VideoDictionary objectForKey:@"video_average_rating"]];
                                 
-                                _viewCountLbl.text=[NSString stringWithFormat:@"%@ VIEWS",[VideoDictionary objectForKey:@"views"]];
+                                _viewCountLbl.text=[NSString stringWithFormat:@"%@ %@",[VideoDictionary objectForKey:@"views"],AMLocalizedString(@"VIEWS", nil)];
                                 
-                                _rankLbl.text=[NSString stringWithFormat:@"RANK %@",[VideoDictionary objectForKey:@"rank"]];
+                                _rankLbl.text=[NSString stringWithFormat:@"%@ %@",[VideoDictionary objectForKey:@"rank"],AMLocalizedString(@"RANK",nil)];
                                 
                                 _ratingView.maximumValue = 5;
                                 _ratingView.minimumValue = 0;
@@ -1336,7 +1397,7 @@ else
                         
 //                        [_gifImage setHidden:YES];
 //                        [_noVideoView setHidden:NO];
-//                        [_noVideoLbl setText:[NSString stringWithFormat:@"%@\n\n Click to retry",[jsonResponse objectForKey:@"message"]]];
+//                        [_noVideoLbl setText:[NSString stringWithFormat:@"%@\n\n %@",[jsonResponse objectForKey:@"message"],AMLocalizedString(@"Click to retry", nil)]];
 //                        [_loaderBtn setHidden:NO];
                         
                     }
@@ -1363,7 +1424,7 @@ else
         
         [_gifImage setHidden:YES];
         [_errorView setHidden:NO];
-        [_noVideoLbl setText:[NSString stringWithFormat:@"Check your Internet connection\n\n Click to retry"]];
+        [_noVideoLbl setText:[NSString stringWithFormat:@"%@. \n\n %@",AMLocalizedString(@"Check your Internet connection", nil),AMLocalizedString(@"Click to retry", nil)]];
         [_loaderBtn setHidden:NO];
         
          // [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
@@ -1386,7 +1447,7 @@ else
         NSString *url;
         
         
-        url=[NSString stringWithFormat:@"%@%@useraction/reviewlisting?videoid=%@&page=%d&limit=10&mode=%@",GLOBALAPI,INDEX,VideoId,page,[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"]];
+        url=[NSString stringWithFormat:@"%@%@useraction/reviewlisting?videoid=%@&page=%d&limit=10&mode=%@",GLOBALAPI,INDEX,VideoId,page,[[NSUserDefaults standardUserDefaults] objectForKey:@"langmode"]];
         
         
         
@@ -1574,7 +1635,7 @@ else
         NSString *url;
         
         
-        url=[NSString stringWithFormat:@"%@%@useraction/videoviewcount?videoid=%@&mode=%@",GLOBALAPI,INDEX,VideoId,[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"]];
+        url=[NSString stringWithFormat:@"%@%@useraction/videoviewcount?videoid=%@&mode=%@",GLOBALAPI,INDEX,VideoId,[[NSUserDefaults standardUserDefaults] objectForKey:@"langmode"]];
         
         
         

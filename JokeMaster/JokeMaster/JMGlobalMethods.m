@@ -12,6 +12,7 @@
 #import "AppDelegate.h"
 #import <SystemConfiguration/SCNetworkReachability.h>
 #import "JMProfileViewController.h"
+#import "JMPlayVideoViewController.h"
 @interface JMGlobalMethods ()<UITabBarControllerDelegate,UITabBarDelegate,UISearchBarDelegate,UIGestureRecognizerDelegate>
 {
     
@@ -56,16 +57,37 @@
     
      _filterView= [[[NSBundle mainBundle] loadNibNamed:@"ExtendedViews" owner:self options:nil] objectAtIndex:0];
     
-    _filterView.frame=CGRectMake(185.0/320.0*FULLWIDTH, 40.0/480.0*FULLHEIGHT, 130.0/320.0*FULLWIDTH, 140.0/480.0*FULLHEIGHT);
+    _filterView.frame=CGRectMake(185.0/320.0*FULLWIDTH, 40.0/480.0*FULLHEIGHT, 130.0/320.0*FULLWIDTH, 30.0/480.0*FULLHEIGHT);
     
 
     
+    
+    _editBtn = (UIButton *)[_filterView viewWithTag:1];
+    
+        [_editBtn setTitle:AMLocalizedString(@"Edit Profile", nil) forState:UIControlStateNormal];
+    
      [mainView addSubview:_filterView];
+    
+    [_editBtn addTarget:self action:@selector(editClicked) forControlEvents:UIControlEventTouchUpInside];
+    
     
     [_filterView setHidden:YES];
     
     
 
+}
+
+-(void)editClicked
+{
+    if (app.isLogged) {
+        JMGlobalMethods *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMEditViewController"];
+        [self.navigationController pushViewController:VC animated:YES];
+    }
+    else{
+        [SVProgressHUD showInfoWithStatus:@"You need to login first"];
+    }
+    
+       [_filterView setHidden:YES];
 }
 
 -(void)showMore
@@ -110,11 +132,15 @@
     
        [HeaderView.langBtn addTarget:self action:@selector(gotoCountrySelect) forControlEvents:UIControlEventTouchUpInside];
     
-    [HeaderView.langImage sd_setImageWithURL:[NSURL URLWithString:[[NSUserDefaults standardUserDefaults] objectForKey:@"flag"]]placeholderImage:[UIImage imageNamed:@"noimage"]];
+  //  [HeaderView.langImage sd_setImageWithURL:[NSURL URLWithString:[[NSUserDefaults standardUserDefaults] objectForKey:@"flag"]]placeholderImage:[UIImage imageNamed:@"noimage"]];
+    
+    [HeaderView.langLbl setText:[[NSUserDefaults standardUserDefaults] objectForKey:@"langname"]];
+    
+    [HeaderView.langLbl setFont:[UIFont fontWithName:HeaderView.langLbl.font.fontName size:[self getFontSize:13.0]]];
     
     
-    HeaderView.langView.hidden=NO;
-    HeaderView.searchView.hidden=NO;
+ 
+   
     HeaderView.moreView.hidden=NO;
     HeaderView.menuView.hidden=YES;
           HeaderView.HeaderLabel.hidden=NO;
@@ -126,12 +152,12 @@
     {
         // leftmenurowindex=2;
         
-      
+      HeaderView.langView.hidden=NO;
         HeaderView.menuView.hidden=NO;
         
  HeaderView.HeaderLabel.text=@"jokeMASTER";
         HeaderView.BackView.hidden=YES;
-    
+     HeaderView.searchView.hidden=NO;
     
         
 
@@ -146,7 +172,7 @@
 
           HeaderView.logoImage.hidden=YES;
          HeaderView.HeaderLabel.hidden=YES;
-        HeaderView.langView.hidden=YES;
+        
         HeaderView.searchView.hidden=YES;
         HeaderView.moreView.hidden=YES;
             HeaderView.EmojiImage.hidden=YES;
@@ -180,17 +206,24 @@
         HeaderView.EmojiImage.image=[UIImage imageNamed:@"like"];
         
     }
-    else if ([CurrentViewController isEqualToString:@"JMProfileViewController"] )
+    else if ([CurrentViewController isEqualToString:@"JMEditProfileViewController"] )
     {
-
-
-        HeaderView.HeaderLabel.text=AMLocalizedString(@"My Channel", nil) ;
-
-    
         
- 
+        HeaderView.HeaderLabel.text=AMLocalizedString(@"Edit Profile", nil) ;
+        
         
     }
+//    else if ([CurrentViewController isEqualToString:@"JMProfileViewController"] )
+//    {
+//
+//
+//        HeaderView.HeaderLabel.text=AMLocalizedString(@"My Channel", nil) ;
+//
+//    
+//        
+// 
+//        
+//    }
     else if ([CurrentViewController isEqualToString:@"JMJokeMasterRankViewController"] )
     {
 
@@ -233,17 +266,224 @@
     
 }
 
+
+
+-(void)pushClicked
+{
+    
+    [pushView removeFromSuperview];
+    //  app.badgeCount--;
+    
+    
+    if([self networkAvailable])
+    {
+        
+        
+        
+        //  [SVProgressHUD showWithStatus:@"Please Wait"];
+        
+        
+        //  AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+        //
+        //http://ec2-13-58-196-4.us-east-2.compute.amazonaws.com/jokemaster/index.php/useraction/updateBatchCount?userid=
+        NSURL *url=[NSURL URLWithString:[NSString stringWithFormat:@"%@%@useraction/updateBatchCount",GLOBALAPI,INDEX]];
+        
+        
+        
+        
+        // configure the request
+        
+        NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
+        [request setHTTPMethod:@"POST"];
+        
+        
+        
+        //        NSString *boundary = @"---------------------------14737809831466499882746641449";
+        //        NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@", boundary];
+        //        [request addValue:contentType forHTTPHeaderField:@"Content-Type"];
+        
+        NSString *sendData = @"userid=";
+        sendData = [sendData stringByAppendingString:[NSString stringWithFormat:@"%@", app.userId]];
+        
+        
+        [request setValue:@"gzip" forHTTPHeaderField:@"Accept-Encoding"];
+        
+        NSMutableData *theBodyData = [NSMutableData data];
+        
+        theBodyData = [[sendData dataUsingEncoding:NSUTF8StringEncoding] mutableCopy];
+        
+        
+        //  self.session = [NSURLSession sharedSession];  // use sharedSession or create your own
+        
+        session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
+        
+        NSURLSessionTask *task = [session uploadTaskWithRequest:request fromData:theBodyData completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+            if (error) {
+                NSLog(@"error = %@", error);
+                
+                return;
+            }
+            
+            if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
+                NSError *jsonError;
+                NSDictionary *response = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
+                
+                
+                
+                
+                
+                
+                if (jsonError) {
+                    // Error Parsing JSON
+                    
+                    NSString *responseString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                    
+                    NSLog(@"response = %@",responseString);
+                    
+                    //    [SVProgressHUD showInfoWithStatus:@"some error occured"];
+                    
+                } else {
+                    // Success Parsing JSON
+                    // Log NSDictionary response:
+                    NSLog(@"result = %@",response);
+                    
+                    
+                    if ([[response objectForKey:@"status"]boolValue]) {
+                        
+       
+                            
+                        if ( [[app.pushDict objectForKey:@"type"]intValue]==1) {
+                            
+                            
+                            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main"
+                                                                                 bundle: nil];
+                            //
+                            JMPlayVideoViewController *VC=[storyboard instantiateViewControllerWithIdentifier:@"JMPlayVideoViewController"];
+                            VC.VideoId=[app.pushDict valueForKey:@"videoid"];
+                            
+                            [self.navigationController pushViewController:VC animated:YES];
+                            
+                        }
+                        else
+                            if ( [[app.pushDict objectForKey:@"type"]intValue]==2) {
+                                
+                                
+                                UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main"
+                                                                                     bundle: nil];
+                                //
+                                JMProfileViewController *VC=[storyboard instantiateViewControllerWithIdentifier:@"JMProfile"];
+                                VC.ProfileUserId=[app.pushDict valueForKey:@"followingid"];
+                                
+                                
+                                
+                                [self.navigationController pushViewController:VC animated:YES];
+                                
+                            }
+                            
+                        }
+                    
+                        else{
+                            
+                            
+                            if ( [[app.pushDict objectForKey:@"type"]intValue]==1) {
+                                
+                                
+                                UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main"
+                                                                                     bundle: nil];
+                                //
+                                JMPlayVideoViewController *VC=[storyboard instantiateViewControllerWithIdentifier:@"JMPlayVideoViewController"];
+                                VC.VideoId=[app.pushDict valueForKey:@"videoid"];
+                                
+                                [self.navigationController pushViewController:VC animated:YES];
+                                
+                            }
+                            else
+                                if ( [[app.pushDict objectForKey:@"type"]intValue]==2) {
+                                    
+                                    
+                                    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main"
+                                                                                         bundle: nil];
+                                    //
+                                    JMProfileViewController *VC=[storyboard instantiateViewControllerWithIdentifier:@"JMProfile"];
+                                    VC.ProfileUserId=[app.pushDict valueForKey:@"followingid"];
+                                    
+                                    
+                                    
+                                    [self.navigationController pushViewController:VC animated:YES];
+                                    
+                                }
+
+                        }
+                    
+                    
+                    
+                    
+                }
+                
+                
+            }
+            
+            
+        }];
+        
+        
+        [task resume];
+        
+        
+    }
+    
+    else{
+        
+        
+        if ( [[app.pushDict objectForKey:@"type"]intValue]==1) {
+            
+            
+            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main"
+                                                                 bundle: nil];
+            //
+            JMPlayVideoViewController *VC=[storyboard instantiateViewControllerWithIdentifier:@"JMPlayVideoViewController"];
+            VC.VideoId=[app.pushDict valueForKey:@"videoid"];
+            
+            [self.navigationController pushViewController:VC animated:YES];
+            
+        }
+        else
+            if ( [[app.pushDict objectForKey:@"type"]intValue]==2) {
+                
+                
+                UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main"
+                                                                     bundle: nil];
+                //
+                JMProfileViewController *VC=[storyboard instantiateViewControllerWithIdentifier:@"JMProfile"];
+                VC.ProfileUserId=[app.pushDict valueForKey:@"followingid"];
+                
+                
+                
+                [self.navigationController pushViewController:VC animated:YES];
+                
+            }
+
+        
+      //  [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
+        
+        
+        
+    }
+    
+    
+}
+
 -(void)readAfterPush
 {
 
-
+  [pushView removeFromSuperview];
 
     if([self networkAvailable])
     {
 
 
 
-        [SVProgressHUD showWithStatus:@"Please Wait"];
+      //  [SVProgressHUD showWithStatus:@"Please Wait"];
 
 
         //  AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
@@ -303,7 +543,7 @@
 
                     NSLog(@"response = %@",responseString);
 
-                    [SVProgressHUD showInfoWithStatus:@"some error occured"];
+                //    [SVProgressHUD showInfoWithStatus:@"some error occured"];
 
                 } else {
                     // Success Parsing JSON
@@ -313,7 +553,7 @@
             
                         if ([[response objectForKey:@"status"]boolValue]) {
 
-                            [SVProgressHUD dismiss];
+                          //  [SVProgressHUD dismiss];
 
                           //  app.badgeCount=[[response objectForKey:@"batchcount"]intValue];
 
@@ -357,7 +597,7 @@
     else{
 
 
-        [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
+       // [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
 
 
 
@@ -381,9 +621,13 @@
 
 -(void)addPushView:(UIView *)mainView
 {
+    
+    DebugLog(@"%@",app.pushDict);
+    
+    
     [pushView removeFromSuperview];
 
-    pushView= [[[NSBundle mainBundle] loadNibNamed:@"extendedView" owner:self options:nil] objectAtIndex:3];
+    pushView= [[[NSBundle mainBundle] loadNibNamed:@"ExtendedViews" owner:self options:nil] objectAtIndex:1];
 
 
     [ pushView setFrame:CGRectMake(0, -70.0/480.0*FULLHEIGHT, FULLWIDTH,70.0/480.0*FULLHEIGHT)];
@@ -445,7 +689,7 @@
         
         [pushView removeFromSuperview];
         
-        [self checkPushCount];
+       // [self checkPushCount];
     }];
 }
 -(void)swipeRight
@@ -456,7 +700,7 @@
         
         
         [pushView removeFromSuperview];
-        [self checkPushCount];
+       // [self checkPushCount];
     }];
 }
 -(void)hidePush
@@ -472,7 +716,7 @@
             
             
             [pushView removeFromSuperview];
-            [self checkPushCount];
+          //  [self checkPushCount];
             
         }];
     }
@@ -480,200 +724,6 @@
 
 
 
-
-//-(void)pushClicked
-//{
-//
-//    [pushView removeFromSuperview];
-//    //  app.badgeCount--;
-//
-//
-//    if([self networkAvailable])
-//    {
-//
-//
-//
-//        [SVProgressHUD showWithStatus:@"Please Wait"];
-//
-//
-//        //  AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-//        //
-//
-//        NSURL *url=[NSURL URLWithString:[NSString stringWithFormat:@"%@badgecountminus_control",GLOBALAPI]];
-//
-//
-//
-//
-//        // configure the request
-//
-//        NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
-//        [request setHTTPMethod:@"POST"];
-//
-//
-//
-//        //        NSString *boundary = @"---------------------------14737809831466499882746641449";
-//        //        NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@", boundary];
-//        //        [request addValue:contentType forHTTPHeaderField:@"Content-Type"];
-//
-//        NSString *sendData = @"authtoken=";
-//        sendData = [sendData stringByAppendingString:[NSString stringWithFormat:@"%@", app.authToken]];
-//
-//
-//        [request setValue:@"gzip" forHTTPHeaderField:@"Accept-Encoding"];
-//
-//        NSMutableData *theBodyData = [NSMutableData data];
-//
-//        theBodyData = [[sendData dataUsingEncoding:NSUTF8StringEncoding] mutableCopy];
-//
-//
-//        //  self.session = [NSURLSession sharedSession];  // use sharedSession or create your own
-//
-//        session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
-//
-//        NSURLSessionTask *task = [session uploadTaskWithRequest:request fromData:theBodyData completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-//            if (error) {
-//                NSLog(@"error = %@", error);
-//
-//                return;
-//            }
-//
-//            if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
-//                NSError *jsonError;
-//                NSDictionary *response = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
-//
-//
-//
-//
-//
-//
-//                if (jsonError) {
-//                    // Error Parsing JSON
-//
-//                    NSString *responseString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-//
-//                    NSLog(@"response = %@",responseString);
-//
-//                    [SVProgressHUD showInfoWithStatus:@"some error occured"];
-//
-//                } else {
-//                    // Success Parsing JSON
-//                    // Log NSDictionary response:
-//                    NSLog(@"result = %@",response);
-//
-//                    if ([[response objectForKey:@"status_code"]intValue]==406) {
-//
-//                        app.userId=@"";
-//
-//                        app.authToken=@"";
-//
-//                        NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
-//                        [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
-//
-//
-//
-//                        ADLoginViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"ADLogin"];
-//                        VC.forcedToLogin=true;
-//                        [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
-//
-//                    }
-//                    else
-//
-//                        if ([[response objectForKey:@"status_code"]intValue]==200) {
-//
-//                            [SVProgressHUD dismiss];
-//
-//                            app.badgeCount=[[response objectForKey:@"batchcount"]intValue];
-//
-//                            if (app.badgeCount>0) {
-//
-//                                [badgeLbl setHidden:NO];
-//                                [badgeLbl setText:[NSString stringWithFormat:@"%d", app.badgeCount]];
-//
-//
-//                            }
-//                            else{
-//                                [badgeLbl setHidden:YES];
-//                            }
-//
-//                            if ( [[app.pushDict objectForKey:@"type"]intValue]==3) {
-//
-//                                UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main"
-//                                                                                     bundle: nil];
-//
-//                                ADChatViewController *VC=[storyboard instantiateViewControllerWithIdentifier:@"ADChat"];
-//                                VC.userId=[app.pushDict objectForKey:@"senderid"];
-//                                VC.userName=[[app.pushDict objectForKey:@"sendername"] capitalizedString];
-//                                //  VC.userImage=[pushDict objectForKey:@"profile_image"];
-//
-//                                [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
-//
-//
-//                            }
-//
-//                            else if ([[app.pushDict objectForKey:@"type"]intValue]==2) {
-//
-//
-//                                UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main"
-//                                                                                     bundle: nil];
-//
-//                                ADUserProfileViewController *VC=[storyboard instantiateViewControllerWithIdentifier:@"ADProfile"];
-//                                VC.profileId=[app.pushDict objectForKey:@"senderid"];
-//                                //  VC.userImage=[pushDict objectForKey:@"profile_image"];
-//                                VC.isFromList=true;
-//                                [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
-//
-//
-//                            }   else
-//                            {
-//                                UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main"
-//                                                                                     bundle: nil];
-//
-//                                ADEventDetailViewController *VC=[storyboard instantiateViewControllerWithIdentifier:@"ADEventDetail"];
-//                                VC.eventId=[app.pushDict objectForKey:@"eventid"];
-//                                //  VC.userImage=[pushDict objectForKey:@"profile_image"];
-//
-//                                [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
-//
-//
-//
-//                            }
-//
-//
-//                        }
-//
-//                        else{
-//
-//
-//                        }
-//
-//
-//
-//
-//                }
-//
-//
-//            }
-//
-//
-//        }];
-//
-//
-//        [task resume];
-//
-//
-//    }
-//
-//    else{
-//
-//
-//        [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
-//
-//
-//
-//    }
-//
-//
-//}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -2972,7 +3022,7 @@
 
 -(void)gotoCountrySelect
 {
-    JMGlobalMethods *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMChooseCountryViewController"];
+    JMGlobalMethods *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMLanguageViewController"];
     [self.navigationController pushViewController:VC animated:kCAMediaTimingFunctionEaseIn];
 }
 
@@ -3252,7 +3302,7 @@
                                                NSString *deviceToken;
                                                NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
                                                
-                                               NSString *countryImage=[prefs valueForKey:@"flag"];
+                                         
                                                NSString *countrySelected=[prefs valueForKey:@"countryId"];
                                                NSString *langSelected=[prefs valueForKey:@"langId"];
                                                BOOL homevisited=[prefs boolForKey:@"HomeVisited"];
@@ -3266,12 +3316,86 @@
                                                [[NSUserDefaults standardUserDefaults] setObject:deviceToken  forKey:@"deviceToken"];
                                                [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"loggedIn"];
                                                
-                                               [[NSUserDefaults standardUserDefaults ]setObject:countryImage forKey:@"flag"];
+                                  
                                                [[NSUserDefaults standardUserDefaults ]setObject:countrySelected forKey:@"countryId"];
-                                               [[NSUserDefaults standardUserDefaults ]setObject:langSelected forKey:@"langId"];
+                                              // [[NSUserDefaults standardUserDefaults ]setObject:langSelected forKey:@"langId"];
                                                [[NSUserDefaults standardUserDefaults] setBool:homevisited forKey:@"HomeVisited"];
+                                           
+                                         //  LocalizationSetLanguage(@"en");
+                                      
+//                                                     [[NSUserDefaults standardUserDefaults]setObject:@"en" forKey:@"language"];
+//                                           [[NSUserDefaults standardUserDefaults]setObject:@"1" forKey:@"langmode"];
+                                           
+                                           
+                               
+                                           
+                                           NSLocale *currentLocale = [NSLocale currentLocale];  // get the current locale.
+                                           NSString *countryCode = [currentLocale objectForKey:NSLocaleCountryCode];
+                                           
+                                           NSString *language = [[NSLocale preferredLanguages] objectAtIndex:0];
+                                           
+                                           NSDictionary *languageDic = [NSLocale componentsFromLocaleIdentifier:language];
+                                           
+                                           NSString *languageCode = [languageDic objectForKey:@"kCFLocaleLanguageCodeKey"];
+                                           
+                                           DebugLog(@"country %@ and language %@",countryCode,languageCode);
+                                           
+                                           if ([languageCode isEqualToString:@"he"]) {
                                                
+                                               LocalizationSetLanguage(@"he");
                                                
+                                               [[NSUserDefaults standardUserDefaults]setObject:@"he" forKey:@"language"];
+                                               [[NSUserDefaults standardUserDefaults]setObject:@"3" forKey:@"langmode"];
+                                               
+                                               [[NSUserDefaults standardUserDefaults ]setObject:@"עִברִית" forKey:@"langname"];
+                                               
+                                               [[NSUserDefaults standardUserDefaults] setObject:@"3" forKey:@"langId"];
+                                           }
+                                           else if ([languageCode isEqualToString:@"zh"]) {
+                                               LocalizationSetLanguage(@"zh");
+                                               
+                                               [[NSUserDefaults standardUserDefaults]setObject:@"zh" forKey:@"language"];
+                                               [[NSUserDefaults standardUserDefaults]setObject:@"4" forKey:@"langmode"];
+                                               
+                                               [[NSUserDefaults standardUserDefaults ]setObject:@"中文" forKey:@"langname"];
+                                               
+                                               [[NSUserDefaults standardUserDefaults] setObject:@"4" forKey:@"langId"];
+                                           }
+                                           else if ([languageCode isEqualToString:@"es"]) {
+                                               LocalizationSetLanguage(@"es");
+                                               
+                                               [[NSUserDefaults standardUserDefaults]setObject:@"es" forKey:@"language"];
+                                               [[NSUserDefaults standardUserDefaults]setObject:@"5" forKey:@"langmode"];
+                                               
+                                               [[NSUserDefaults standardUserDefaults ]setObject:@"Español" forKey:@"langname"];
+                                               
+                                               [[NSUserDefaults standardUserDefaults] setObject:@"5" forKey:@"langId"];
+                                           }
+                                           else if ([languageCode isEqualToString:@"hi"]) {
+                                               LocalizationSetLanguage(@"hi");
+                                               
+                                               [[NSUserDefaults standardUserDefaults]setObject:@"hi" forKey:@"language"];
+                                               [[NSUserDefaults standardUserDefaults]setObject:@"2" forKey:@"langmode"];
+                                               
+                                               [[NSUserDefaults standardUserDefaults ]setObject:@"हिंदी" forKey:@"langname"];
+                                               
+                                               [[NSUserDefaults standardUserDefaults] setObject:@"2" forKey:@"langId"];
+                                               
+                                           }
+                                           else{
+                                               LocalizationSetLanguage(@"en");
+                                               [[NSUserDefaults standardUserDefaults]setObject:@"en" forKey:@"language"];
+                                               [[NSUserDefaults standardUserDefaults]setObject:@"1" forKey:@"langmode"];
+                                               [[NSUserDefaults standardUserDefaults ]setObject:@"English" forKey:@"langname"];
+                                               
+                                               [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:@"langId"];
+                                           }
+                             
+                                           
+                                           
+                                           
+                                           
+                  // [[NSUserDefaults standardUserDefaults ]setObject:@"en" forKey:@"langName"];
                                                app.userId=@"";
                                                app.userName=@"";
                                                app.userImage=@"";

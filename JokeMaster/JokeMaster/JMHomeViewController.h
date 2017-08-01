@@ -79,5 +79,7 @@
 @property (strong, nonatomic) IBOutlet UIView *errorView;
 @property (strong, nonatomic) IBOutlet FLAnimatedImageView *gifImage;
 @property (strong, nonatomic) IBOutlet UILabel *noVideoLbl;
+@property (strong, nonatomic) IBOutlet UIButton *jokeUserBtn;
+- (IBAction)gotoJokeUser:(id)sender;
 
 @end

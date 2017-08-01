@@ -25,4 +25,5 @@
 @property (strong, nonatomic) IBOutlet UIView *noVideoView;
 @property (strong, nonatomic) IBOutlet FLAnimatedImageView *gifImage;
 @property (strong, nonatomic) IBOutlet UILabel *noVideoLbl;
+@property (strong, nonatomic) IBOutlet UIImageView *crownImage;
 @end

@@ -28,8 +28,8 @@
 - (IBAction)selectClicked:(id)sender;
 @property (strong, nonatomic) IBOutlet UIButton *cancelBttn;
 - (IBAction)cancelClicked:(id)sender;
-
-
+@property(nonatomic) NSMutableDictionary *userDict;
+@property (nonatomic)BOOL fromLogin;
 @property (strong, nonatomic) IBOutlet UIView *loaderView;
 @property (strong, nonatomic) IBOutlet UIView *loadertvView;
 @property (strong, nonatomic) IBOutlet UIImageView *loaderImage;
@@ -38,5 +38,9 @@
 @property (strong, nonatomic) IBOutlet UIView *noVideoView;
 @property (strong, nonatomic) IBOutlet FLAnimatedImageView *gifImage;
 @property (strong, nonatomic) IBOutlet UILabel *noVideoLbl;
+@property (strong, nonatomic) IBOutlet UILabel *countryTitle;
+@property (nonatomic) NSString * langSelected;
+@property (nonatomic) NSString * langName;
+@property (nonatomic)int langrow;
 
 @end

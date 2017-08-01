@@ -7,6 +7,7 @@
 */
 "Save" ="सहेजें";
 "Cancel" ="रद्द";
+"Select" = "इसे चुनें";
 "Upload Profile Picture" ="प्रोफ़ाइल चित्र अपलोड करें";
 "Back to" ="बीएसी के लिए";
 "Log in" ="प्रवेश करें";
@@ -84,3 +85,24 @@
 "NO REVIEW FOUND" = "कोई समीक्षा नहीं मिला";
 "Login required to create your channel" = "अपना चैनल बनाने के लिए लॉगिन आवश्यक है";
 "No videos found" = "कोई वीडियो नहीं मिले";
+"View All"="सभी को देखें";
+"Upload a Joke" = "मजाक अपलोड करें";
+"Edit Profile" = "प्रोफाइल एडिट करें";
+"Click to retry" = "पुनः प्रयास करने के लिए क्लिक करें";
+"Some error occured" = "कुछ त्रुटि हुई है";
+"Check your Internet connection"= "अपना इंटरनेट संपर्क जांचे";
+"Joke Master Rank" = "मजाक मास्टर रैंक";
+"App interface language" ="एप्लिकेशन इंटरफ़ेस की भाषा";
+"Country" = "देश";
+"Security Code" = "सुरक्षा कोड";
+"SUBMIT" = "सबमिट करें";
+"Choose your country" = "अपना देश चुनो";
+"Choose app language" = "ऐप की भाषा चुनें";
+"Do you want to Filter by Country?" = "क्या आप देश द्वारा फ़िल्टर करना चाहते हैं?";
+"Choose Video language" = "वीडियो की भाषा चुनें";
+"reviews" = "समीक्षा";
+"comments" = "टिप्पणियाँ";
+"RANK" = "श्रेणी";
+"VIEWS" = "लोगों ने देखा है";
+"All" = "सब";
+"Recently Uploaded" = "हाल ही में अपलोड";

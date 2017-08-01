@@ -50,7 +50,10 @@
             [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
         }
         else{
-            JMChooseCountryViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMChooseCountryViewController"];
+//            JMChooseCountryViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMChooseCountryViewController"];
+//            
+//            [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
+            JMLanguageViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMLanguageViewController"];
             
             [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
         }
@@ -59,12 +62,12 @@
     
         //
         
-        //JMLanguageViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMLanguage"];
+        JMLanguageViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMLanguageViewController"];
         
-//[self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
-        JMChooseCountryViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMChooseCountryViewController"];
-        
-        [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
+[self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
+//        JMChooseCountryViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMChooseCountryViewController"];
+//        
+//        [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
     }
 }
 
