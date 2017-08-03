@@ -35,6 +35,8 @@
 		0C91CFBD1EEE5B7A00123303 /* JMCategoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C91CFBC1EEE5B7A00123303 /* JMCategoryCell.m */; };
 		0C91CFC31EEE92F400123303 /* JMJokesCategoryVideoListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C91CFC21EEE92F400123303 /* JMJokesCategoryVideoListViewController.m */; };
 		0CE2FB481EE190E50031C0E6 /* JMRegistrationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CE2FB471EE190E50031C0E6 /* JMRegistrationViewController.m */; };
+		B01F63801F33053E00E2F961 /* JMNotificationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B01F637F1F33053E00E2F961 /* JMNotificationViewController.m */; };
+		B03E5EEA1F31D90900AAA3F1 /* JMEditVideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B03E5EE91F31D90900AAA3F1 /* JMEditVideoViewController.m */; };
 		B07134691F137AE0006178E7 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B07134681F137AE0006178E7 /* QuartzCore.framework */; };
 		B071346B1F137AE6006178E7 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B071346A1F137AE6006178E7 /* ImageIO.framework */; };
 		B071346D1F137AF1006178E7 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B071346C1F137AF1006178E7 /* MobileCoreServices.framework */; };
@@ -200,6 +202,10 @@
 		0C91CFC21EEE92F400123303 /* JMJokesCategoryVideoListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMJokesCategoryVideoListViewController.m; sourceTree = "<group>"; };
 		0CE2FB461EE190E50031C0E6 /* JMRegistrationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMRegistrationViewController.h; sourceTree = "<group>"; };
 		0CE2FB471EE190E50031C0E6 /* JMRegistrationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMRegistrationViewController.m; sourceTree = "<group>"; };
+		B01F637E1F33053E00E2F961 /* JMNotificationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMNotificationViewController.h; sourceTree = "<group>"; };
+		B01F637F1F33053E00E2F961 /* JMNotificationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMNotificationViewController.m; sourceTree = "<group>"; };
+		B03E5EE81F31D90900AAA3F1 /* JMEditVideoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMEditVideoViewController.h; sourceTree = "<group>"; };
+		B03E5EE91F31D90900AAA3F1 /* JMEditVideoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMEditVideoViewController.m; sourceTree = "<group>"; };
 		B07134681F137AE0006178E7 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		B071346A1F137AE6006178E7 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		B071346C1F137AF1006178E7 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
@@ -739,6 +745,10 @@
 				B0EAAA971F28C28200EE5A8E /* JMEditProfileViewController.m */,
 				B0B1B77B1F29FC0B00660CC8 /* JMProfileVidViewController.h */,
 				B0B1B77C1F29FC0B00660CC8 /* JMProfileVidViewController.m */,
+				B03E5EE81F31D90900AAA3F1 /* JMEditVideoViewController.h */,
+				B03E5EE91F31D90900AAA3F1 /* JMEditVideoViewController.m */,
+				B01F637E1F33053E00E2F961 /* JMNotificationViewController.h */,
+				B01F637F1F33053E00E2F961 /* JMNotificationViewController.m */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -1002,6 +1012,7 @@
 				B0A32B4C1EE129300044D443 /* JokeMaster.xcdatamodeld in Sources */,
 				B077641F1F0132F3007FAEE5 /* UIImage+WebP.m in Sources */,
 				B0A5C4CC1EFE7EFF002FB26D /* DZNPhotoEditorViewController.m in Sources */,
+				B01F63801F33053E00E2F961 /* JMNotificationViewController.m in Sources */,
 				0C3AFB781EF15CA90037834A /* JMFavouriteViewController.m in Sources */,
 				0C91CFBD1EEE5B7A00123303 /* JMCategoryCell.m in Sources */,
 				B08D168F1F1892A900767164 /* AFURLResponseSerialization.m in Sources */,
@@ -1044,6 +1055,7 @@
 				B08609D01EF118CF00E8D84A /* ReviewsTableViewCell.m in Sources */,
 				B07764201F0132F3007FAEE5 /* UIImageView+HighlightedWebCache.m in Sources */,
 				0C58274E1EE9316F00480E19 /* JMLeftMenuView.m in Sources */,
+				B03E5EEA1F31D90900AAA3F1 /* JMEditVideoViewController.m in Sources */,
 				0C429BFA1EEFAB2900A42F07 /* JMPlayVideoViewController.m in Sources */,
 				0C337AD31EF3B75D00BE2BB3 /* JMStrokeLabel.m in Sources */,
 				B09139841EFE4B5000B17C8B /* JMCategoryVideoListViewController.m in Sources */,
@@ -1170,8 +1182,8 @@
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Manish Sethia (6Y3K8LCSQQ)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Manish Sethia (6Y3K8LCSQQ)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: ESolz Technologies Pvt Ltd (K22GQFS8BW)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: ESolz Technologies Pvt Ltd (K22GQFS8BW)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = K22GQFS8BW;
@@ -1194,7 +1206,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "114b26d7-b348-4835-9e5f-e2360b6c3aa9";
+				PROVISIONING_PROFILE = "355b4a9c-9bc0-4439-9e82-2eefabb7dbec";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1222,8 +1234,8 @@
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Manish Sethia (6Y3K8LCSQQ)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Manish Sethia (6Y3K8LCSQQ)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: ESolz Technologies Pvt Ltd (K22GQFS8BW)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: ESolz Technologies Pvt Ltd (K22GQFS8BW)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = K22GQFS8BW;
@@ -1239,7 +1251,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "114b26d7-b348-4835-9e5f-e2360b6c3aa9";
+				PROVISIONING_PROFILE = "355b4a9c-9bc0-4439-9e82-2eefabb7dbec";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -1251,8 +1263,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = JokeMaster/JokeMaster.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Manish Sethia (6Y3K8LCSQQ)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Manish Sethia (6Y3K8LCSQQ)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: ESolz Technologies Pvt Ltd (K22GQFS8BW)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: ESolz Technologies Pvt Ltd (K22GQFS8BW)";
 				DEVELOPMENT_TEAM = K22GQFS8BW;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1270,8 +1282,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.esolz.JokeMaster;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "114b26d7-b348-4835-9e5f-e2360b6c3aa9";
-				PROVISIONING_PROFILE_SPECIFIER = jokemaster_dev;
+				PROVISIONING_PROFILE = "355b4a9c-9bc0-4439-9e82-2eefabb7dbec";
+				PROVISIONING_PROFILE_SPECIFIER = Jokemaster_new_adhoc;
 			};
 			name = Debug;
 		};
@@ -1280,8 +1292,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = JokeMaster/JokeMaster.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Manish Sethia (6Y3K8LCSQQ)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Manish Sethia (6Y3K8LCSQQ)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: ESolz Technologies Pvt Ltd (K22GQFS8BW)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: ESolz Technologies Pvt Ltd (K22GQFS8BW)";
 				DEVELOPMENT_TEAM = K22GQFS8BW;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1298,8 +1310,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.esolz.JokeMaster;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "114b26d7-b348-4835-9e5f-e2360b6c3aa9";
-				PROVISIONING_PROFILE_SPECIFIER = jokemaster_dev;
+				PROVISIONING_PROFILE = "355b4a9c-9bc0-4439-9e82-2eefabb7dbec";
+				PROVISIONING_PROFILE_SPECIFIER = Jokemaster_new_adhoc;
 			};
 			name = Release;
 		};

@@ -94,7 +94,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section;
 {
     
-    return 6;
+    return 7;
 //    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
 //    NSString *userid=[prefs valueForKey:@"UserId"];
 //    if (userid.length==0)
@@ -197,6 +197,11 @@
             cell.menuImg.image = [UIImage imageNamed:@"settings"];
         }
         else if (indexPath.row==5)
+        {
+            cell.menuName.text = AMLocalizedString(@"NOTIFICATIONS",nil);
+            cell.menuImg.image = [UIImage imageNamed:@"bell"];
+        }
+        else if (indexPath.row==6)
         {
             if ([[NSUserDefaults standardUserDefaults]boolForKey:@"loggedIn"]) {
                 cell.menuName.text = AMLocalizedString(@"LOG OUT",nil);

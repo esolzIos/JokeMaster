@@ -95,10 +95,15 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appendPushView) name:@"pushReceived" object:nil];
     
+      //  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showWarning) name:@"showWarning" object:nil];
+    
     //   // Do any additional setup after loading the view.
 }
 
-
+//-(void)showWarning
+//{
+//    [self addWarningView:self.view];
+//}
 -(void)appendPushView
 {
     [self addPushView:self.view];
@@ -601,7 +606,9 @@
    
 
     else{
-        [SVProgressHUD showInfoWithStatus:@"Login required to rate videos"];
+      //  [SVProgressHUD showInfoWithStatus:@"Login required to rate videos"];
+        
+        [self addWarningView:self.view];
     }
     
     
@@ -748,7 +755,9 @@
 
       }
       else{
-          [SVProgressHUD showInfoWithStatus:@"Login required to like videos"];
+             [self addWarningView:self.view];
+          
+         // [SVProgressHUD showInfoWithStatus:@"Login required to like videos"];
       }
     
  

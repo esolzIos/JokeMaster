@@ -33,7 +33,7 @@
 
 @implementation JMGlobalMethods
 @synthesize HeaderView,MainView;
-@synthesize headerLbl,footerTabBar,favImage,myQueue,searchBar,footerLoadView,footerReloadView,profileBtn,profileView,chatBtn,chatView,notifyBtn,notifyView,pushTitle,pushDesc,pushBtn,pushInnerView,badgeLbl;
+@synthesize headerLbl,footerTabBar,favImage,myQueue,searchBar,footerLoadView,footerReloadView,profileBtn,profileView,chatBtn,chatView,notifyBtn,notifyView,pushTitle,pushDesc,pushBtn,pushInnerView,badgeLbl,warningView;
 @synthesize managedObjectCon = _managedObjectContext;
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
@@ -77,6 +77,35 @@
 
 }
 
+-(void)addVideoMoreView:(UIView *)mainView
+{
+    
+    
+    
+    _filterView= [[[NSBundle mainBundle] loadNibNamed:@"ExtendedViews" owner:self options:nil] objectAtIndex:3];
+    
+    _filterView.frame=CGRectMake(200.0/320.0*FULLWIDTH, 40.0/480.0*FULLHEIGHT, 130.0/320.0*FULLWIDTH, 70.0/480.0*FULLHEIGHT);
+    
+    
+    
+    
+    _editBtn = (UIButton *)[_filterView viewWithTag:1];
+    
+    [_editBtn setTitle:AMLocalizedString(@"Edit Video", nil) forState:UIControlStateNormal];
+    
+    _delBtn = (UIButton *)[_filterView viewWithTag:2];
+    
+    [_delBtn setTitle:AMLocalizedString(@"Delete Video", nil) forState:UIControlStateNormal];
+    
+    [mainView addSubview:_filterView];
+    
+
+    [_filterView setHidden:YES];
+    
+    
+    
+}
+
 -(void)editClicked
 {
     if (app.isLogged) {
@@ -84,7 +113,9 @@
         [self.navigationController pushViewController:VC animated:YES];
     }
     else{
-        [SVProgressHUD showInfoWithStatus:@"You need to login first"];
+       // [SVProgressHUD showInfoWithStatus:@"You need to login first"];
+        
+          [self addWarningView:self.view]; 
     }
     
        [_filterView setHidden:YES];
@@ -141,7 +172,7 @@
     
  
    
-    HeaderView.moreView.hidden=NO;
+    HeaderView.moreView.hidden=YES;
     HeaderView.menuView.hidden=YES;
           HeaderView.HeaderLabel.hidden=NO;
       HeaderView.logoImage.hidden=NO;
@@ -159,7 +190,7 @@
         HeaderView.BackView.hidden=YES;
      HeaderView.searchView.hidden=NO;
     
-        
+            HeaderView.moreView.hidden=NO;
 
         
         
@@ -195,6 +226,13 @@
 
         
    }
+    
+    else if ([CurrentViewController isEqualToString:@"JMNotificationViewController"])
+    {
+        HeaderView.HeaderLabel.text=AMLocalizedString(@"Notification", nil) ;
+        
+        
+    }
     else if ([CurrentViewController isEqualToString:@"JMFavouriteViewController"] )
     {
 
@@ -213,28 +251,31 @@
         
         
     }
-//    else if ([CurrentViewController isEqualToString:@"JMProfileViewController"] )
-//    {
-//
-//
-//        HeaderView.HeaderLabel.text=AMLocalizedString(@"My Channel", nil) ;
-//
-//    
-//        
-// 
-//        
-//    }
+    else if ([CurrentViewController isEqualToString:@"JMProfileViewController"] )
+    {
+
+      
+    }
     else if ([CurrentViewController isEqualToString:@"JMJokeMasterRankViewController"] )
     {
 
         HeaderView.HeaderLabel.text=AMLocalizedString(@"Joke Master Rank", nil) ;
-
+     HeaderView.moreView.hidden=NO;
         
     }
     else if ([CurrentViewController isEqualToString:@"JMUploadVideoViewController"] )
     {
         
         HeaderView.HeaderLabel.text=AMLocalizedString(@"Upload a Joke", nil) ;
+        
+        
+        
+        
+    }
+    else if ([CurrentViewController isEqualToString:@"JMEditVideoViewController"] )
+    {
+        
+        HeaderView.HeaderLabel.text=AMLocalizedString(@"Edit Joke", nil) ;
         
         
         
@@ -616,6 +657,64 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:@"pushReceived" object:nil];
         
  
+    
+}
+
+
+-(void)addWarningView:(UIView *)mainView
+{
+    
+    DebugLog(@"%@",app.pushDict);
+    
+    
+    [warningView removeFromSuperview];
+    
+    warningView= [[[NSBundle mainBundle] loadNibNamed:@"ExtendedViews" owner:self options:nil] objectAtIndex:2];
+    
+    
+    [ warningView setFrame:CGRectMake(0, 0, FULLWIDTH,FULLHEIGHT)];
+    
+    
+    
+    _warningTitle=(UILabel *)[warningView viewWithTag:1];
+    [_warningTitle setFont:[UIFont fontWithName:_warningTitle.font.fontName size:[self getFontSize:_warningTitle.font.pointSize]]];
+    
+    _warningtext=(UILabel *)[warningView viewWithTag:2];
+    [_warningtext setFont:[UIFont fontWithName:_warningtext.font.fontName size:[self getFontSize:_warningtext.font.pointSize]]];
+    
+    _warnChoice1=(UILabel *)[warningView viewWithTag:3];
+    [_warnChoice1 setFont:[UIFont fontWithName:_warnChoice1.font.fontName size:[self getFontSize:_warnChoice1.font.pointSize]]];
+    
+    _warnChoice2=(UILabel *)[warningView viewWithTag:4];
+    [_warnChoice2 setFont:[UIFont fontWithName:_warnChoice2.font.fontName size:[self getFontSize:_warnChoice2.font.pointSize]]];
+    
+    _warnBtn1=(UIButton *)[warningView viewWithTag:5];
+    [_warnBtn1 addTarget:self action:@selector(warnOneClicked) forControlEvents:UIControlEventTouchUpInside];
+    
+    _warnBtn2=(UIButton *)[warningView viewWithTag:6];
+    [_warnBtn2 addTarget:self action:@selector(warnTwoClicked) forControlEvents:UIControlEventTouchUpInside];
+    
+    _warnCrossBtn=(UIButton *)[warningView viewWithTag:7];
+    [_warnCrossBtn addTarget:self action:@selector(warnTwoClicked) forControlEvents:UIControlEventTouchUpInside];
+    
+    
+    [mainView addSubview:warningView];
+    
+ 
+    
+}
+-(void)warnOneClicked
+{
+        [warningView removeFromSuperview];
+    
+    JMGlobalMethods *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMLogin"];
+    [self.navigationController pushViewController:VC animated:YES];
+
+}
+-(void)warnTwoClicked
+{
+    [warningView removeFromSuperview];
+    
     
 }
 
@@ -3102,7 +3201,9 @@
                 [leftmenu removeFromSuperview];
                 [UIView commitAnimations];
                 [MainView removeGestureRecognizer:tapRecognizer];
-                   [SVProgressHUD showInfoWithStatus:@"You need to login first"];
+                 //  [SVProgressHUD showInfoWithStatus:@"You need to login first"];
+                
+                    [self addWarningView:self.view];
             }];
 
         
@@ -3152,7 +3253,10 @@
                     [UIView commitAnimations];
                     [MainView removeGestureRecognizer:tapRecognizer];
                     
-     [SVProgressHUD showInfoWithStatus:@"You need to login first"];
+     //[SVProgressHUD showInfoWithStatus:@"You need to login first"];
+                    
+                        [self addWarningView:self.view];
+                    
                 }];
 
             
@@ -3204,8 +3308,9 @@
                   [UIView commitAnimations];
                   [MainView removeGestureRecognizer:tapRecognizer];
                   
-                 [SVProgressHUD showInfoWithStatus:@"Login required to create your channel"];
+               //  [SVProgressHUD showInfoWithStatus:@"Login required to create your channel"];
                   
+                  [self addWarningView:self.view];
                   
               }];
 
@@ -3256,15 +3361,68 @@
                 [leftmenu removeFromSuperview];
                 [UIView commitAnimations];
                 [MainView removeGestureRecognizer:tapRecognizer];
-       [SVProgressHUD showInfoWithStatus:@"Login required to upload videos"];
-       
+     // [SVProgressHUD showInfoWithStatus:@"Login required to upload videos"];
+            [self addWarningView:self.view];
+           //  [[NSNotificationCenter defaultCenter] postNotificationName:@"showWarning" object:nil];
+                
             }];
 
         
         }
 
+    } else if (sender==5)
+    {
+        //        if ([CurrentViewController isEqualToString:@"JMUploadVideoViewController"])
+        //        {
+        if (app.isLogged) {
+            
+            [UIView animateWithDuration:0.0 animations:^{
+                
+                
+                MainView.center = CGPointMake(self.view.center.x,self.view.center.y);
+                
+                leftmenu.frame = CGRectMake(-leftmenu.frame.size.width, 0,[[UIScreen mainScreen] bounds].size.width/4*3, self.view.frame.size.height);
+                
+                
+            } completion:^(BOOL finished) {
+                
+                [leftmenu removeFromSuperview];
+                [UIView commitAnimations];
+                [MainView removeGestureRecognizer:tapRecognizer];
+                
+                
+                JMGlobalMethods *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMNotificationViewController"];
+                [self.navigationController pushViewController:VC animated:YES];
+                
+            }];
+            
+        }
+        else{
+            [UIView animateWithDuration:0.5 animations:^{
+                
+                
+                MainView.center = CGPointMake(self.view.center.x,self.view.center.y);
+                
+                leftmenu.frame = CGRectMake(-leftmenu.frame.size.width, 0,[[UIScreen mainScreen] bounds].size.width/4*3, self.view.frame.size.height);
+                
+                
+            } completion:^(BOOL finished) {
+                
+                [leftmenu removeFromSuperview];
+                [UIView commitAnimations];
+                [MainView removeGestureRecognizer:tapRecognizer];
+                // [SVProgressHUD showInfoWithStatus:@"Login required to upload videos"];
+                [self addWarningView:self.view];
+                //  [[NSNotificationCenter defaultCenter] postNotificationName:@"showWarning" object:nil];
+                
+            }];
+            
+            
+        }
+        
     }
-        else if (sender==5)
+
+        else if (sender==6)
         {
             
                                   if ([[NSUserDefaults standardUserDefaults]boolForKey:@"loggedIn"]) {

@@ -40,6 +40,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self addMoreView:self.view];
+    
+       self.HeaderView.HeaderLabel.text=_categoryName;
     MenuViewY=_MenuBaseView.frame.origin.y;
     
     _TransparentView.frame = CGRectMake(0, self.view.frame.size.height, _TransparentView.frame.size.width, _TransparentView.frame.size.height);

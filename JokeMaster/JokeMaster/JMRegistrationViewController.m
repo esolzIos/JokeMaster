@@ -22,7 +22,7 @@
     int rowSelected;
     NSString *  countrySelected,*countryImage,*langSelected;
     NSURLSession *session;
-    
+    BOOL countryOpen,langOpen;
     NSMutableArray *jsonArr;
 }
 @end
@@ -111,7 +111,7 @@
     [ProfileImageLabel setFont:[UIFont fontWithName:ProfileImageLabel.font.fontName size:[self getFontSize:ProfileImageLabel.font.pointSize]]];
     
   
-    
+      [_popTitle setFont:[UIFont fontWithName:_popTitle.font.fontName size:[self getFontSize:_popTitle.font.pointSize]]];
       [LanguageLabel setFont:[UIFont fontWithName:LanguageLabel.font.fontName size:[self getFontSize:LanguageLabel.font.pointSize]]];
     
       [_countryLbl setFont:[UIFont fontWithName:_countryLbl.font.fontName size:[self getFontSize:_countryLbl.font.pointSize]]];
@@ -462,7 +462,7 @@
                     
             
                             
-                            [_countryTable reloadData];
+                            [_popTable reloadData];
                             
                
                         }
@@ -976,13 +976,25 @@
     [Passwordtxt resignFirstResponder];
     [ConfirmPassword resignFirstResponder];
     
+    if (langArr.count>0) {
+        
+         countryOpen=NO;
+        langOpen=YES;
+         [_popTitle setText:@"APP INTERFACE LANGUAGE"];
+        [_PopView setHidden:NO];
+        [_popTable reloadData];
+        
+        
+    }
+
     
-    [_pickerView setHidden:NO];
     
-    [_languagePicker reloadAllComponents];
-    
-    
-    [_languagePicker selectRow:rowSelected inComponent:0 animated:NO];
+//    [_pickerView setHidden:NO];
+//
+//    [_languagePicker reloadAllComponents];
+//
+//
+//    [_languagePicker selectRow:rowSelected inComponent:0 animated:NO];
 
 }
 #pragma mark -  title picker cancel
@@ -1317,8 +1329,17 @@
 
 - (IBAction)countryClicked:(id)sender {
     
-    [_countryPopView setHidden:NO];
-    
+
+    if (CountryArray.count>0) {
+        
+        langOpen=NO;
+        countryOpen=YES;
+        [_popTitle setText:@"CHOOSE YOUR COUNTRY"];
+        [_popTable reloadData];
+        [_PopView setHidden:NO];
+        
+    }
+ 
     
 }
 
@@ -1327,7 +1348,16 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section;
 {
-    return [CountryArray count];
+    
+    if (langOpen) {
+        return [langArr count];
+    }
+    else if (countryOpen)
+    {
+        return [CountryArray count];
+    }
+    else
+        return 0;
     
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -1366,6 +1396,8 @@
 
 -(void) tableView:(UITableView *)tableView willDisplayCell:(CountryCell *) cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (countryOpen) {
+  
     if ([countrySelected isEqualToString:[[CountryArray objectAtIndex:indexPath.row]objectForKey:@"countryId"]])
     {
         
@@ -1381,18 +1413,49 @@
     }
     
     
+           [cell.CountryImage setHidden:NO];
+        
     [cell.CountryImage sd_setImageWithURL:[NSURL URLWithString:[[CountryArray objectAtIndex:indexPath.row]objectForKey:@"image"]] placeholderImage:[UIImage imageNamed:@"noimage"]];
     
     [cell.CountryLabel setText:AMLocalizedString([[[CountryArray objectAtIndex:indexPath.row]objectForKey:@"countryName"] uppercaseString], nil) ];
     
         [cell.CountryLabel setFont:[UIFont fontWithName:cell.CountryLabel.font.fontName size:[self getFontSize:11.0]]];
+        
+    
+    }
+    else if (langOpen)
+    {
+        if ([langSelected isEqualToString:[[langArr objectAtIndex:indexPath.row]objectForKey:@"id"]])
+        {
+            
+            cell.CheckImage.image = [UIImage imageNamed:@"tick"];
+            
+            
+            
+        }
+        else
+        {
+            
+            cell.CheckImage.image = [UIImage imageNamed:@"uncheck"];
+        }
+        
+        
+        [cell.CountryImage setHidden:YES];
+        
+        
+        [cell.CountryLabel setText:AMLocalizedString([[[langArr objectAtIndex:indexPath.row]objectForKey:@"name"] uppercaseString], nil) ];
+        
+        [cell.CountryLabel setFont:[UIFont fontWithName:cell.CountryLabel.font.fontName size:[self getFontSize:11.0]]];
+    }
+    
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
     //  CountryCell *cCell=[_CountryTable cellForRowAtIndexPath:indexPath];
     
-    
+    if (countryOpen) {
+   
     if (![countrySelected isEqualToString:[[CountryArray objectAtIndex:indexPath.row]objectForKey:@"countryId"]])
     {
         
@@ -1409,9 +1472,31 @@
     }
     
     
-    [_countryTable reloadData];
+    [_popTable reloadData];
+    
+        
+    }
+    else if (langOpen){
+
+        
+    
+        if (![langSelected isEqualToString:[[langArr objectAtIndex:indexPath.row]objectForKey:@"id"]])
+        {
+            
+                    langSelected=[[langArr objectAtIndex:indexPath.row]objectForKey:@"id"];
+        [LanguageLabel setText:AMLocalizedString([[langArr objectAtIndex:indexPath.row]objectForKey:@"name"], nil)];
+    }
+    else
+    {
+        langSelected=@"";
+    
+    }
     
     
+    [_popTable reloadData];
+    
+
+    }
 }
 - (IBAction)selectClicked:(id)sender {
     
@@ -1429,12 +1514,12 @@
     
     [_pickerView setHidden:YES];
 }
-- (IBAction)countryChoosed:(id)sender
+- (IBAction)popChoosed:(id)sender
 {
 
     
     
-    [_countryPopView setHidden:YES];
+    [_PopView setHidden:YES];
     
     
 }

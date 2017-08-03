@@ -1,18 +1,19 @@
 //
-//  JMJokeMasterRankViewController.m
+//  JMNotificationViewController.m
 //  JokeMaster
 //
-//  Created by priyanka on 16/06/17.
+//  Created by santanu on 03/08/17.
 //  Copyright © 2017 esolz. All rights reserved.
 //
 
-#import "JMJokeMasterRankViewController.h"
+#import "JMNotificationViewController.h"
 #import "JMProfileViewController.h"
-@interface JMJokeMasterRankViewController ()
+#import "JMPlayVideoViewController.h"
+@interface JMNotificationViewController ()
 {
     // int listcount;
     
-    NSMutableArray *swipedRows;
+  
     
     NSURLSession *session;
     BOOL firedOnce,fontSet;
@@ -26,13 +27,13 @@
 }
 @end
 
-@implementation JMJokeMasterRankViewController
-
+@implementation JMNotificationViewController
+@synthesize FollowTable,mainscroll;
 - (void)viewDidLoad {
     [super viewDidLoad];
-        [self addMoreView:self.view];
-    appDelegate=(AppDelegate *)[[UIApplication sharedApplication]delegate];
-    swipedRows=[[NSMutableArray alloc]init];
+    // Do any additional setup after loading the view.
+    
+       appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     
     NSString* filePath = [[NSBundle mainBundle] pathForResource:@"giphy.gif" ofType:nil];
     NSData* imageData = [NSData dataWithContentsOfFile:filePath];
@@ -43,13 +44,8 @@
     [self setRoundCornertoView:_noVideoView withBorderColor:[UIColor clearColor] WithRadius:0.15];
     [self setRoundCornertoView:_loaderImage withBorderColor:[UIColor clearColor] WithRadius:0.15];
     [_noVideoLbl setFont:[UIFont fontWithName:_noVideoLbl.font.fontName size:[self getFontSize:_noVideoLbl.font.pointSize]]];
-    // Do any additional setup after loading the view.
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appendPushView) name:@"pushReceived" object:nil];
-    
-    //   // Do any additional setup after loading the view.
 }
-
-
 -(void)appendPushView
 {
     [self addPushView:self.view];
@@ -67,31 +63,26 @@
     
     
 }
+
 -(void)loadData
 {
-          [_loaderView setHidden:NO];
+    
+    [_loaderView setHidden:NO];
     
     if([self networkAvailable])
     {
         
         
         
-       // [SVProgressHUD show];
+        //   [SVProgressHUD show];
         
         
         
         NSString *url;
         
-        //http://ec2-13-58-196-4.us-east-2.compute.amazonaws.com/jokemaster/index.php/Useraction/userankinglisting?page=1&limit=15
+        //http://ec2-13-58-196-4.us-east-2.compute.amazonaws.com/jokemaster/index.php/Useraction/getNotification?userid=14&page=1&limit=10&mode=1
         
-        
-        if (appDelegate.isLogged) {
-                    url=[NSString stringWithFormat:@"%@%@Useraction/userankinglisting?page=%d&limit=15&mode=%@&language=%@",GLOBALAPI,INDEX,page,[[NSUserDefaults standardUserDefaults] objectForKey:@"langmode"],[[NSUserDefaults standardUserDefaults] objectForKey:@"langmode"]];
-        }
-        else{
-             url=[NSString stringWithFormat:@"%@%@Useraction/userankinglisting?page=%d&limit=15&mode=%@&language=%@",GLOBALAPI,INDEX,page,[[NSUserDefaults standardUserDefaults] objectForKey:@"langmode"],[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"]];
-        }
-
+        url=[NSString stringWithFormat:@"%@%@Useraction/getNotification?userid=%@&page=%d&limit=15&mode=%@",GLOBALAPI,INDEX,appDelegate.userId,page,[[NSUserDefaults standardUserDefaults] objectForKey:@"langmode"]];
         
         
         
@@ -112,7 +103,7 @@
                 
                 [_gifImage setHidden:YES];
                 [_noVideoView setHidden:NO];
-                  [_noVideoLbl setText:[NSString stringWithFormat:@"%@. \n\n %@",AMLocalizedString(@"Some error occured", nil),AMLocalizedString(@"Click to retry", nil)]];
+                [_noVideoLbl setText:[NSString stringWithFormat:@"%@. \n\n %@",AMLocalizedString(@"Some error occured", nil),AMLocalizedString(@"Click to retry", nil)]];
                 [_loaderBtn setHidden:NO];
                 
                 return;
@@ -133,7 +124,7 @@
                     
                     [_gifImage setHidden:YES];
                     [_noVideoView setHidden:NO];
-                      [_noVideoLbl setText:[NSString stringWithFormat:@"%@. \n\n %@",AMLocalizedString(@"Some error occured", nil),AMLocalizedString(@"Click to retry", nil)]];
+                    [_noVideoLbl setText:[NSString stringWithFormat:@"%@. \n\n %@",AMLocalizedString(@"Some error occured", nil),AMLocalizedString(@"Click to retry", nil)]];
                     [_loaderBtn setHidden:NO];
                     
                     //  [SVProgressHUD showInfoWithStatus:@"some error occured"];
@@ -149,7 +140,6 @@
                         NSArray    *resultArr=[[jsonResponse objectForKey:@"details"] copy];
                         
                         totalCount=[[jsonResponse objectForKey:@"totalcount"]intValue];
-                        
                         
                         
                         [_loaderView setHidden:YES];
@@ -169,19 +159,12 @@
                         if (videoArr.count>0) {
                             
                             
-                            [_RankTable reloadData];
-                            
-                            
-                            
-                            [_RankTable setFrame:CGRectMake(0, 15.0/480.0*FULLHEIGHT, FULLWIDTH, (75.0/480.0*FULLHEIGHT)* videoArr.count)];
-                            
-                            
-                            [_mainscroll setContentSize:CGSizeMake(FULLWIDTH, _RankTable.frame.size.height+15.0/480.0*FULLHEIGHT)];
+                            [FollowTable reloadData];
                             
                         }
                         else{
                             
-                            [_RankTable setUserInteractionEnabled:NO];
+                            [FollowTable setUserInteractionEnabled:NO];
                             
                         }
                     }
@@ -200,8 +183,6 @@
                             [_noVideoLbl setText:[NSString stringWithFormat:@"%@\n\n %@",[jsonResponse objectForKey:@"message"],AMLocalizedString(@"Click to retry", nil)]];
                             [_loaderBtn setHidden:NO];
                         }
-
-                        
                         
                         
                     }
@@ -222,8 +203,6 @@
     }
     
     else{
-        
-        
         [_gifImage setHidden:YES];
         [_noVideoView setHidden:NO];
         [_noVideoLbl setText:[NSString stringWithFormat:@"%@. \n\n %@",AMLocalizedString(@"Check your Internet connection", nil),AMLocalizedString(@"Click to retry", nil)]];
@@ -240,7 +219,10 @@
 }
 
 
-
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
 #pragma mark - UITableView Delegates
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section;
@@ -266,49 +248,44 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-
-//    if (IsIphone4 || IsIphone5)
-//    {
-//        return 95;
-//    }
-//    else if (IsIphone6)
-//    {
-//        return 108;
-//    }
-//    else if (IsIphone6plus)
-//    {
-//        return 120;
-//    }
-//    else
-//    {
-//        return 100;
-//    }
-
-    return  75.0/480.0*FULLHEIGHT;
+    if (IsIphone4 || IsIphone5)
+    {
+        return 95;
+    }
+    else if (IsIphone6)
+    {
+        return 108;
+    }
+    else if (IsIphone6plus)
+    {
+        return 120;
+    }
+    else
+    {
+        return 100;
+    }
     
 }
 -(void) tableView:(UITableView *)tableView willDisplayCell:(JMFavouriteCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  
-//    DebugLog(@"tag %ld",(long)cell.WhiteView.tag);
-//    
-//    if (oneTime==NO)
-//    {
-//        WhiteViewX=cell.WhiteView.frame.origin.x;
-//        oneTime=YES;
-//    }
-    
- //   [self setRoundCornertoView:cell.ProfileImage withBorderColor:[UIColor clearColor] WithRadius:0.36];
-    
+    //    cell.WhiteView.tag=indexPath.row+500;
+    //    DebugLog(@"tag %ld",(long)cell.WhiteView.tag);
+    //
+    //    if (oneTime==NO)
+    //    {
+    //        WhiteViewX=cell.WhiteView.frame.origin.x;
+    //        oneTime=YES;
+    //    }
     
     NSDictionary *videoDict=[videoArr objectAtIndex:indexPath.row];
     
-    if ([swipedRows containsObject:[NSString stringWithFormat:@"%ld",indexPath.row]]) {
-        cell.WhiteView.frame =CGRectMake(-50.0/320.0*FULLWIDTH,  cell.WhiteView.frame.origin.y,  cell.WhiteView.frame.size.width,  cell.WhiteView.frame.size.height);
-    }
-    else{
-        cell.WhiteView.frame =CGRectMake(23.0/320.0*FULLWIDTH,  cell.WhiteView.frame.origin.y,  cell.WhiteView.frame.size.width,  cell.WhiteView.frame.size.height);
-    }
+
+    
+    [self setRoundCornertoView:cell.profileFrame withBorderColor:[UIColor clearColor] WithRadius:0.2];
+    [self setRoundCornertoView:cell.ProfileImage withBorderColor:[UIColor clearColor] WithRadius:0.15];
+    //    [cell.ProfileNameLabel setFont:[UIFont fontWithName:cell.ProfileNameLabel.font.fontName size:[self getFontSize:cell.ProfileNameLabel.font.pointSize]]];
+    //    [cell.JokesNameLabel setFont:[UIFont fontWithName:cell.JokesNameLabel.font.fontName size:[self getFontSize:cell.JokesNameLabel.font.pointSize]]];
+    //    [cell.RatingLabel setFont:[UIFont fontWithName:cell.RatingLabel.font.fontName size:[self getFontSize:cell.RatingLabel.font.pointSize]]];
     
     
     [cell.RankLabel setFont:[UIFont fontWithName:cell.RankLabel.font.fontName size:[self getFontSize:7.0]]];
@@ -319,62 +296,114 @@
     
     [cell.CountryName setFont:[UIFont fontWithName:cell.CountryName.font.fontName size:[self getFontSize:7.0]]];
     
-    [cell.ProfileImage sd_setImageWithURL:[NSURL URLWithString:[videoDict objectForKey:@"user_image"]] placeholderImage:[UIImage imageNamed:@"noimage"]];
+    [cell.countryImage sd_setImageWithURL:[NSURL URLWithString:[videoDict objectForKey:@"countryimage"]] placeholderImage:[UIImage imageNamed:@"noimage"]];
     
-        [cell.countryImage sd_setImageWithURL:[NSURL URLWithString:[videoDict objectForKey:@"country_image"]] placeholderImage:[UIImage imageNamed:@"noimage"]];
+    [cell.ProfileImage sd_setImageWithURL:[NSURL URLWithString:[videoDict objectForKey:@"senderimage"]] placeholderImage:[UIImage imageNamed:@"noimage"]];
     
-     [cell.RankLabel setText:[NSString stringWithFormat:@"RANK %@",[videoDict objectForKey:@"rank"]]];
     
-    [cell.ProfileNameLabel setText:[videoDict objectForKey:@"username"]];
     
-    [cell.RatingLabel setText:[NSString stringWithFormat:@"%@/5",[videoDict objectForKey:@"score"]]];
+    [cell.RankLabel setText:[NSString stringWithFormat:@"RANK %@",[videoDict objectForKey:@"rank"]]];
     
-        [cell.CountryName setText:[NSString stringWithFormat:@"%@",[videoDict objectForKey:@"country"]]];
+    [cell.ProfileNameLabel setText:[videoDict objectForKey:@"sendername"]];
     
-    [self setRoundCornertoView:cell.profileFrame withBorderColor:[UIColor clearColor] WithRadius:0.4];
-    [self setRoundCornertoView:cell.ProfileImage withBorderColor:[UIColor clearColor] WithRadius:0.36];
+    [cell.CountryName setText:[NSString stringWithFormat:@"%@",[videoDict objectForKey:@"message"]]];
     
-    cell.RatingView.maximumValue = 5;
-    cell.RatingView.minimumValue = 0;
-    cell.RatingView.value =[[videoDict objectForKey:@"score"] floatValue];
-    cell.RatingView.userInteractionEnabled=NO;
-    //    _RatingView.tintColor = [UIColor clearColor];
-    cell.RatingView.allowsHalfStars = YES;
-    cell.RatingView.emptyStarImage = [[UIImage imageNamed:@"emotion"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    cell.RatingView.filledStarImage = [[UIImage imageNamed:@"emotion2"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-     cell.RatingView.accurateHalfStars = YES;
-     cell.RatingView.halfStarImage = [[UIImage imageNamed:@"emotion1"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    if (indexPath.row==0)
-    {
-        cell.CrownImage.hidden=NO;
-       
-      
-    }
-    else
-    {
-        cell.CrownImage.hidden=YES;
-    }
     
-   
+    
+//    cell.RatingView.maximumValue = 5;
+//    cell.RatingView.minimumValue = 0;
+//    cell.RatingView.value = [[videoDict objectForKey:@"score"] floatValue];
+//    cell.RatingView.userInteractionEnabled=NO;
+//    //    _RatingView.tintColor = [UIColor clearColor];
+//    cell.RatingView.allowsHalfStars = YES;
+//    cell.RatingView.emptyStarImage = [[UIImage imageNamed:@"emotion"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+//    cell.RatingView.filledStarImage = [[UIImage imageNamed:@"emotion2"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+//    cell.RatingView.accurateHalfStars = YES;
+//    cell.RatingView.halfStarImage = [[UIImage imageNamed:@"emotion1"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+//    
+
 }
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSDictionary *videoDict=[videoArr objectAtIndex:indexPath.row];
     
-    JMProfileViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMProfile"];
-    VC.ProfileUserId=[videoDict objectForKey:@"user_id"];
     
-    [self.navigationController pushViewController:VC animated:kCAMediaTimingFunctionEaseIn];
+    if ( [[videoDict objectForKey:@"type"]intValue]==1) {
+        
+        
+
+        //
+        JMPlayVideoViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMPlayVideoViewController"];
+        VC.VideoId=[videoDict valueForKey:@"videoid"];
+        
+        [self.navigationController pushViewController:VC animated:YES];
+        
+    }
+    else
+        if ( [[videoDict objectForKey:@"type"]intValue]==2) {
+            
+            
+   
+            //
+            JMProfileViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMProfile"];
+            VC.ProfileUserId=[videoDict valueForKey:@"senderid"];
+            
+            
+            
+            [self.navigationController pushViewController:VC animated:YES];
+            
+        }
+
+    
+//    JMProfileViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMProfile"];
+//    VC.ProfileUserId=[videoDict objectForKey:@"followingid"];
+//
+//    [self.navigationController pushViewController:VC animated:kCAMediaTimingFunctionEaseIn];
 }
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
+
 #pragma mark - status bar white color
 - (UIStatusBarStyle)preferredStatusBarStyle
 {
     return UIStatusBarStyleLightContent;
 }
+//-(NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
+//
+//    // [[UIButton appearance] setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
+//    UITableViewRowAction *delete = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:@"                 " handler:^(UITableViewRowAction *action, NSIndexPath *indexPath)
+//                                    {
+//                                        // row=indexPath.row;
+//                                        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@" Do You Want To Delete This Property?" delegate:self cancelButtonTitle:@"NO" otherButtonTitles:@"YES", nil];
+//                                        [alertView show];
+//
+//                                    }];
+//        delete.backgroundColor = [UIColor blueColor];
+//
+//  //  delete.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Delete"]];
+//
+//
+//
+//    return @[delete]; //array with all the buttons you want. 1,2,3, etc...
+//}
+/*
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
+
+/*
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 - (IBAction)loaderClicked:(id)sender {
     
     
@@ -394,12 +423,11 @@
     
     
 }
-
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
     
     
-    if (scrollView==_mainscroll && totalCount>videoArr.count)
+    if (scrollView==FollowTable && totalCount>videoArr.count)
     {
         CGPoint offset = scrollView.contentOffset;
         CGRect bounds = scrollView.bounds;
@@ -424,14 +452,4 @@
         }
     }
 }
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-
 @end

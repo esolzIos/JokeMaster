@@ -13,6 +13,7 @@
 #import "ReviewsTableViewCell.h"
 #import "JMReviewViewController.h"
 #import "JMProfileViewController.h"
+#import "JMEditVideoViewController.h"
 @interface JMPlayVideoViewController ()<AVPlayerViewControllerDelegate>
 {
 AVPlayer *player;
@@ -117,6 +118,16 @@ UITextView *demoTxt;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    
+  
+    [self addVideoMoreView:self.view];
+    
+    
+    [self.editBtn addTarget:self action:@selector(editClicked) forControlEvents:UIControlEventTouchUpInside];
+    
+    
+    [self.delBtn addTarget:self action:@selector(deleteClicked) forControlEvents:UIControlEventTouchUpInside];
     
     app=(AppDelegate *)[[UIApplication sharedApplication]delegate];
     
@@ -480,7 +491,9 @@ demoTxt = [[UITextView alloc] init];
         }
     }
     else{
-        [SVProgressHUD showInfoWithStatus:@"Login required to rate videos"];
+           [self addWarningView:self.view];
+        
+       // [SVProgressHUD showInfoWithStatus:@"Login required to rate videos"];
     }
 }
 
@@ -685,7 +698,9 @@ demoTxt = [[UITextView alloc] init];
 
     }
     else{
-        [SVProgressHUD showInfoWithStatus:@"Login required to like videos"];
+       // [SVProgressHUD showInfoWithStatus:@"Login required to like videos"];
+        
+           [self addWarningView:self.view];
     }
     
 }
@@ -897,101 +912,143 @@ demoTxt = [[UITextView alloc] init];
     [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
 }
 
-- (IBAction)deleteClicked:(id)sender {
+- (IBAction)videoOptionClicked:(id)sender {
     
-        if([self networkAvailable])
-        {
-            
-            [_deleteBtn setUserInteractionEnabled:NO];
-            
-            
-            
-            
-            [SVProgressHUD show];
-            
-            //http://ec2-13-58-196-4.us-east-2.compute.amazonaws.com/jokemaster/index.php/video/deletevideo?videoid=3&mode=1
-            
-            NSURL *url=[NSURL URLWithString:[NSString stringWithFormat:@"%@%@video/deletevideo",GLOBALAPI,INDEX]];
-            
-            // configure the request
-            
-            NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
-            [request setHTTPMethod:@"POST"];
-            
-            
-            
-            //        NSString *boundary = @"---------------------------14737809831466499882746641449";
-            //        NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@", boundary];
-            //        [request addValue:contentType forHTTPHeaderField:@"Content-Type"];
-            
-            NSString *sendData = @"videoid=";
-            sendData = [sendData stringByAppendingString:[NSString stringWithFormat:@"%@",[VideoDictionary objectForKey:@"video_id"]]];
-            
-  sendData = [sendData stringByAppendingString:@"&mode="];
-            sendData = [sendData stringByAppendingString: [[NSUserDefaults standardUserDefaults] objectForKey:@"langmode"]];
-     
-            [request setValue:@"gzip" forHTTPHeaderField:@"Accept-Encoding"];
-            
-            NSMutableData *theBodyData = [NSMutableData data];
-            
-            theBodyData = [[sendData dataUsingEncoding:NSUTF8StringEncoding] mutableCopy];
-            
-            
-            //  self.session = [NSURLSession sharedSession];  // use sharedSession or create your own
-            
-            session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
-            
-            NSURLSessionTask *task = [session uploadTaskWithRequest:request fromData:theBodyData completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-                if (error) {
-                    NSLog(@"error = %@", error);
-                    
-                    [SVProgressHUD showErrorWithStatus:@"Some error occured"];
-                    
-                    return;
-                }
+    
+    if ([self.filterView isHidden]) {
+        [self.filterView setHidden:NO];
+    }
+    else{
+        [self.filterView setHidden:YES];
+    }
+    
+}
+
+- (void)editClicked
+{
+
+   [self.filterView setHidden:YES];
+    
+    JMEditVideoViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMEditVideoViewController"];
+    
+    VC.videoDict=VideoDictionary;
+    
+    [self.navigationController pushViewController:VC animated:YES];
+    
+
+}
+
+- (void)deleteClicked {
+    
+       [self.filterView setHidden:YES];
+    [self addWarningView:self.view];
+    
+    [self.warningTitle setText:AMLocalizedString(@"Are you Sure?", nil) ];
+    
+    [self.warningtext setText:AMLocalizedString(@"Confirm YES to Delete", nil)];
+    
+        [self.warnChoice1 setText:AMLocalizedString(@"YES", nil)];
+    
+        [self.warnChoice2 setText:AMLocalizedString(@"NO", nil)];
+
+    
+}
+
+-(void)warnOneClicked
+{
+    [self.warningView removeFromSuperview];
+    
+    if (app.isLogged) {
+ 
+    
+    if([self networkAvailable])
+    {
+        
+  
+        
+        
+        
+        
+        [SVProgressHUD show];
+        
+        //http://ec2-13-58-196-4.us-east-2.compute.amazonaws.com/jokemaster/index.php/video/deletevideo?videoid=3&mode=1
+        
+        NSURL *url=[NSURL URLWithString:[NSString stringWithFormat:@"%@%@video/deletevideo",GLOBALAPI,INDEX]];
+        
+        // configure the request
+        
+        NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
+        [request setHTTPMethod:@"POST"];
+        
+        
+        
+        //        NSString *boundary = @"---------------------------14737809831466499882746641449";
+        //        NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@", boundary];
+        //        [request addValue:contentType forHTTPHeaderField:@"Content-Type"];
+        
+        NSString *sendData = @"videoid=";
+        sendData = [sendData stringByAppendingString:[NSString stringWithFormat:@"%@",[VideoDictionary objectForKey:@"video_id"]]];
+        
+        sendData = [sendData stringByAppendingString:@"&mode="];
+        sendData = [sendData stringByAppendingString: [[NSUserDefaults standardUserDefaults] objectForKey:@"langmode"]];
+        
+        [request setValue:@"gzip" forHTTPHeaderField:@"Accept-Encoding"];
+        
+        NSMutableData *theBodyData = [NSMutableData data];
+        
+        theBodyData = [[sendData dataUsingEncoding:NSUTF8StringEncoding] mutableCopy];
+        
+        
+        //  self.session = [NSURLSession sharedSession];  // use sharedSession or create your own
+        
+        session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
+        
+        NSURLSessionTask *task = [session uploadTaskWithRequest:request fromData:theBodyData completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+            if (error) {
+                NSLog(@"error = %@", error);
                 
-                if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
-                    NSError *jsonError;
-                    NSDictionary *Response = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
+                [SVProgressHUD showErrorWithStatus:@"Some error occured"];
+                
+                return;
+            }
+            
+            if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
+                NSError *jsonError;
+                NSDictionary *Response = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
+                
+                [_likeBtn setUserInteractionEnabled:YES];
+                
+                if (jsonError) {
+                    // Error Parsing JSON
                     
-                    [_likeBtn setUserInteractionEnabled:YES];
+                    NSString *responseString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
                     
-                    if (jsonError) {
-                        // Error Parsing JSON
-                        
-                        NSString *responseString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-                        
-                        NSLog(@"response = %@",responseString);
-                        
-                        [SVProgressHUD showInfoWithStatus:@"Some error occured"];
-                        
-                        
-                        
-                    } else {
-                        // Success Parsing JSON
-                        // Log NSDictionary response:
-                        
-                        [SVProgressHUD dismiss];
-                        
-                        NSLog(@"result = %@",Response);
+                    NSLog(@"response = %@",responseString);
+                    
+                    [SVProgressHUD showInfoWithStatus:@"Some error occured"];
+                    
+                    
+                    
+                } else {
+                    // Success Parsing JSON
+                    // Log NSDictionary response:
+                    
+                    [SVProgressHUD dismiss];
+                    
+                    NSLog(@"result = %@",Response);
+                    
+                    
+                    if ([[Response objectForKey:@"status"]boolValue]) {
                         
                         
-                        if ([[Response objectForKey:@"status"]boolValue]) {
-                            
-                            
-                      [self.navigationController popViewControllerAnimated:YES];
-                            
-                            
-                                               }
-                        
-                        else{
-                            
-                            [SVProgressHUD showInfoWithStatus:[Response objectForKey:@"message"]];
-                            
-                            
-                        }
+                        [self.navigationController popViewControllerAnimated:YES];
                         
                         
+                    }
+                    
+                    else{
+                        
+                        [SVProgressHUD showInfoWithStatus:[Response objectForKey:@"message"]];
                         
                         
                     }
@@ -999,23 +1056,35 @@ demoTxt = [[UITextView alloc] init];
                     
                     
                     
-                    
                 }
-            }];
-            
-            
-            [task resume];
-            
-            
-        }
-        else{
-            [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
-        }
+                
+                
+                
+                
+                
+            }
+        }];
         
+        
+        [task resume];
+        
+        
+    }
+    else{
+        [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
+    }
     
-
+    }
+    else{
+    
+   
+        
+        JMGlobalMethods *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMLogin"];
+        [self.navigationController pushViewController:VC animated:YES];
+    }
     
 }
+
 
 - (IBAction)resizeClicked:(id)sender {
     
@@ -1084,7 +1153,9 @@ demoTxt = [[UITextView alloc] init];
                 }
     }
     else{
-        [SVProgressHUD showInfoWithStatus:@"Login required to Comment on videos"];
+      //  [SVProgressHUD showInfoWithStatus:@"Login required to Comment on videos"];
+        
+           [self addWarningView:self.view];
     }
     
    
@@ -1126,6 +1197,11 @@ else
   [player seekToTime:kCMTimeZero];
     
     [player pause];
+    
+    [[player currentItem] removeObserver:self forKeyPath:@"playbackBufferEmpty" context:nil];
+    [[player currentItem] removeObserver:self forKeyPath:@"playbackLikelyToKeepUp" context:nil];
+    [player removeObserver:self forKeyPath:@"status" context:nil];
+    [player removeObserver:self forKeyPath:@"rate" context:nil];
     
     [[NSNotificationCenter defaultCenter]removeObserver:self name:UIDeviceOrientationDidChangeNotification object:nil];
  
@@ -1248,11 +1324,21 @@ else
                             
                             videoURL = [NSURL URLWithString:[VideoDictionary objectForKey:@"video_file"]];
                             
+//                            if (player != nil && [player currentItem] != nil)
+//                            {
+//                            [[player currentItem] removeObserver:self forKeyPath:@"playbackBufferEmpty"];
+//                            [[player currentItem] removeObserver:self forKeyPath:@"playbackLikelyToKeepUp"];
+//                            }
+                            
                             AVPlayerItem *item = [AVPlayerItem playerItemWithURL:videoURL];
                             
-                            player = [AVPlayer playerWithPlayerItem:item];
-                            
-                            
+//                         
+//                              if (player != nil && [player currentItem] != nil)
+//                              {
+//                              [player removeObserver:self forKeyPath:@"status"];
+//                                  [player removeObserver:self forKeyPath:@"rate"];
+//                              }
+                               player = [AVPlayer playerWithPlayerItem:item];
                             [player addObserver:self forKeyPath:@"rate" options:0 context:nil];
                             
                             [player addObserver:self forKeyPath:@"status" options:0 context:nil];
@@ -1325,7 +1411,7 @@ else
                                   if (app.isLogged) {
                                 if ([[VideoDictionary objectForKey:@"user_id"]isEqualToString:app.userId]) {
                                     
-                                    [_deleteView setHidden:NO];
+                                    [_videoOptionView setHidden:NO];
                                     
                                 }
                                   }
@@ -1340,7 +1426,7 @@ else
                                 
                                 _viewCountLbl.text=[NSString stringWithFormat:@"%@ %@",[VideoDictionary objectForKey:@"views"],AMLocalizedString(@"VIEWS", nil)];
                                 
-                                _rankLbl.text=[NSString stringWithFormat:@"%@ %@",[VideoDictionary objectForKey:@"rank"],AMLocalizedString(@"RANK",nil)];
+                                _rankLbl.text=[NSString stringWithFormat:@"%@ %@",AMLocalizedString(@"RANK",nil),[VideoDictionary objectForKey:@"rank"]];
                                 
                                 _ratingView.maximumValue = 5;
                                 _ratingView.minimumValue = 0;
@@ -1373,7 +1459,7 @@ else
                                 [_ownerView setHidden:NO];
                                 [_reviewHeaderView setHidden:NO];
                                 [_reviewTable setHidden:NO];
-                                [_loaderView setHidden:YES];
+                          
                                 //Run UI Updates
                             });
                         });
@@ -1771,22 +1857,28 @@ else
     {
 
         
+        DebugLog(@"rate: %.2f",player.rate);
+        
         if (player.rate>0) {
             
-            if (paused) {
+            
+                  [_loaderView setHidden:YES];
+            
+            
+           // if (paused) {
            
             
-            paused=false;
-            [_playPauseImg setImage:[UIImage imageNamed:@"pause"]];
+           // paused=false;
+           // [_playPauseImg setImage:[UIImage imageNamed:@"pause"]];
             
-            [player play];
+           // [player play];
             
             [self addViewCount];
             
             [_ratingImage.layer removeAllAnimations];
             [_optionView setHidden:YES];
                 
-            }
+           // }
         }
         else{
             if (!paused) {

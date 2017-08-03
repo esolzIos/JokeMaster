@@ -110,13 +110,16 @@ selectedcategoryId=@"";
     if (_ProfileUserId==nil)
     {
         self.HeaderView.HeaderLabel.text=@"My Channel";
+         self.HeaderView.moreView.hidden=NO;
     }
     else if (_ProfileUserId==appDelegate.userId)
     {
         self.HeaderView.HeaderLabel.text=@"My Channel";
+         self.HeaderView.moreView.hidden=NO;
     }
     else
     {
+          self.HeaderView.moreView.hidden=YES;
         self.HeaderView.HeaderLabel.text=@"Profile";
     }
     
@@ -459,7 +462,9 @@ selectedcategoryId=@"";
          
         }
         else{
-            [SVProgressHUD showInfoWithStatus:@"You need to login first"];
+            //[SVProgressHUD showInfoWithStatus:@"You need to login first"];
+            
+              [self addWarningView:self.view];
             
         }
 
@@ -1330,12 +1335,12 @@ selectedcategoryId=@"";
                             
                           //  [_loaderView setHidden:YES];
                             
-                            [_categoryBtn setHidden:NO];
+                            [_CategoryView setHidden:NO];
                                    [_noVidLbl setHidden:YES];
                         }
                         else{
                             
-                          [_categoryBtn setHidden:YES];
+                          [_CategoryView setHidden:YES];
                             [_noVidLbl setHidden:NO];
                             
                           //  [SVProgressHUD showInfoWithStatus:@"No videos Found"];

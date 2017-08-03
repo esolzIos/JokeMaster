@@ -54,10 +54,11 @@
 - (IBAction)selectClicked:(id)sender;
 @property (strong, nonatomic) IBOutlet UIButton *cancelBttn;
 - (IBAction)cancelClicked:(id)sender;
-@property (strong, nonatomic) IBOutlet UIView *countryPopView;
-@property (strong, nonatomic) IBOutlet UITableView *countryTable;
+@property (strong, nonatomic) IBOutlet UIView *PopView;
+@property (strong, nonatomic) IBOutlet UILabel *popTitle;
+@property (strong, nonatomic) IBOutlet UITableView *popTable;
 @property (strong, nonatomic) IBOutlet UIButton *goBtn;
-- (IBAction)countryChoosed:(id)sender;
+- (IBAction)popChoosed:(id)sender;
 @property (strong, nonatomic) IBOutlet UIView *loaderView;
 @property (strong, nonatomic) IBOutlet UIView *loadertvView;
 @property (strong, nonatomic) IBOutlet UIImageView *loaderImage;
