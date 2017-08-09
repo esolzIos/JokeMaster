@@ -78,8 +78,13 @@
 @property (strong, nonatomic) IBOutlet UIButton *cancelVidBtn;
 - (IBAction)cancelVidClicked:(id)sender;
 @property (strong, nonatomic) IBOutlet UIView *PopView;
-@property (strong, nonatomic) IBOutlet UILabel *popTitle;
+@property (strong, nonatomic) IBOutlet JMStrokeLabel *popTitle;
 @property (strong, nonatomic) IBOutlet UITableView *popTable;
 @property (strong, nonatomic) IBOutlet UIButton *goBtn;
+
+@property (strong, nonatomic) IBOutlet UIView *goBackView;
+@property (strong, nonatomic) IBOutlet UIButton *goBackBtn;
+- (IBAction)goBackClicked:(id)sender;
+
 - (IBAction)popChoosed:(id)sender;
 @end

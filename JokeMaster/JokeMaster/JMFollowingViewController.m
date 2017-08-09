@@ -67,9 +67,18 @@
     
     page=1;
     totalCount=0;
-    
+    [FollowTable reloadData];
     [self loadData];
     
+    if (_fromProfile) {
+      self.HeaderView.HeaderLabel.text=AMLocalizedString(@"Followers", nil) ;
+    }
+    else if (_fromVideo) {
+        self.HeaderView.HeaderLabel.text=AMLocalizedString(@"Favourites", nil) ;
+           self.HeaderView.EmojiImage.image=[UIImage imageNamed:@"like"];
+    }else{
+      self.HeaderView.HeaderLabel.text=AMLocalizedString(@"Following", nil) ;
+    }
     
 }
 
@@ -90,9 +99,18 @@
         NSString *url;
         
         //http://ec2-13-58-196-4.us-east-2.compute.amazonaws.com/jokemaster/index.php/Follow/followerlisting?userid=3&page=1&limit=15
-        
-        url=[NSString stringWithFormat:@"%@%@Follow/followerlisting?userid=%@&page=%d&limit=15&mode=%@",GLOBALAPI,INDEX,appDelegate.userId,page,[[NSUserDefaults standardUserDefaults] objectForKey:@"langmode"]];
-        
+      
+        if (_fromProfile) {
+             url=[NSString stringWithFormat:  @"%@%@follow/who_are_following_me?userid=%@&page=%d&limit=15&mode=%@",GLOBALAPI,INDEX,_profileId,page,[[NSUserDefaults standardUserDefaults] objectForKey:@"langmode"]];
+        }
+     else   if (_fromVideo) {
+            http://ec2-13-58-196-4.us-east-2.compute.amazonaws.com/jokemaster/index.php/follow/likeduserlisting?videoid=13&page=1&limit=10&mode=1
+            
+            url=[NSString stringWithFormat:  @"%@%@follow/likeduserlisting?videoid=%@&page=%d&limit=15&mode=%@",GLOBALAPI,INDEX,_profileId,page,[[NSUserDefaults standardUserDefaults] objectForKey:@"langmode"]];
+        }
+        else{
+        url=[NSString stringWithFormat:@"%@%@Follow/followerlisting?userid=%@&page=%d&limit=15&mode=%@",GLOBALAPI,INDEX,_profileId,page,[[NSUserDefaults standardUserDefaults] objectForKey:@"langmode"]];
+        }
         
         
         NSLog(@"Url String..%@",url);
@@ -299,9 +317,9 @@
     
     [self setRoundCornertoView:cell.profileFrame withBorderColor:[UIColor clearColor] WithRadius:0.2];
        [self setRoundCornertoView:cell.ProfileImage withBorderColor:[UIColor clearColor] WithRadius:0.15];
-    //    [cell.ProfileNameLabel setFont:[UIFont fontWithName:cell.ProfileNameLabel.font.fontName size:[self getFontSize:cell.ProfileNameLabel.font.pointSize]]];
-    //    [cell.JokesNameLabel setFont:[UIFont fontWithName:cell.JokesNameLabel.font.fontName size:[self getFontSize:cell.JokesNameLabel.font.pointSize]]];
-    //    [cell.RatingLabel setFont:[UIFont fontWithName:cell.RatingLabel.font.fontName size:[self getFontSize:cell.RatingLabel.font.pointSize]]];
+        [cell.ProfileNameLabel setFont:[UIFont fontWithName:cell.ProfileNameLabel.font.fontName size:[self getFontSize:10]]];
+        [cell.JokesNameLabel setFont:[UIFont fontWithName:cell.JokesNameLabel.font.fontName size:[self getFontSize:9]]];
+        [cell.RatingLabel setFont:[UIFont fontWithName:cell.RatingLabel.font.fontName size:[self getFontSize:9]]];
     
     
     [cell.RankLabel setFont:[UIFont fontWithName:cell.RankLabel.font.fontName size:[self getFontSize:7.0]]];
@@ -312,7 +330,7 @@
     
     [cell.CountryName setFont:[UIFont fontWithName:cell.CountryName.font.fontName size:[self getFontSize:7.0]]];
     
-       [cell.countryImage sd_setImageWithURL:[NSURL URLWithString:[videoDict objectForKey:@"country_image"]] placeholderImage:[UIImage imageNamed:@"noimage"]];
+       [cell.countryImage sd_setImageWithURL:[NSURL URLWithString:[videoDict objectForKey:@"country_image"]] placeholderImage:[UIImage imageNamed:@"world"]];
     
     [cell.ProfileImage sd_setImageWithURL:[NSURL URLWithString:[videoDict objectForKey:@"image"]] placeholderImage:[UIImage imageNamed:@"noimage"]];
     
@@ -337,16 +355,20 @@
   cell.RatingView.accurateHalfStars = YES;
     cell.RatingView.halfStarImage = [[UIImage imageNamed:@"emotion1"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     
-    UISwipeGestureRecognizer *gestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeHandler:)];
-    gestureRecognizer.view.tag=cell.WhiteView.tag;
-    [gestureRecognizer setDirection:(UISwipeGestureRecognizerDirectionLeft)];
-    [cell.WhiteView addGestureRecognizer:gestureRecognizer];
+    if (!_fromVideo && !_fromProfile) {
+        UISwipeGestureRecognizer *gestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeHandler:)];
+        gestureRecognizer.view.tag=cell.WhiteView.tag;
+        [gestureRecognizer setDirection:(UISwipeGestureRecognizerDirectionLeft)];
+        [cell.WhiteView addGestureRecognizer:gestureRecognizer];
+        
+        
+        UISwipeGestureRecognizer *rightgestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(rightswipeHandler:)];
+        rightgestureRecognizer.view.tag=cell.WhiteView.tag;
+        [rightgestureRecognizer setDirection:(UISwipeGestureRecognizerDirectionRight)];
+        [cell.WhiteView addGestureRecognizer:rightgestureRecognizer];
+    }
     
-    
-    UISwipeGestureRecognizer *rightgestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(rightswipeHandler:)];
-    rightgestureRecognizer.view.tag=cell.WhiteView.tag;
-    [rightgestureRecognizer setDirection:(UISwipeGestureRecognizerDirectionRight)];
-    [cell.WhiteView addGestureRecognizer:rightgestureRecognizer];
+
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -354,7 +376,12 @@
      NSDictionary *videoDict=[videoArr objectAtIndex:indexPath.row];
     
     JMProfileViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMProfile"];
+    if (_fromVideo) {
+     VC.ProfileUserId=[videoDict objectForKey:@"userid"];
+    }
+    else{
     VC.ProfileUserId=[videoDict objectForKey:@"followingid"];
+    }
     
     [self.navigationController pushViewController:VC animated:kCAMediaTimingFunctionEaseIn];
 }

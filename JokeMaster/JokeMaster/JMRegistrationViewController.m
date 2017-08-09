@@ -106,12 +106,11 @@
     [SignUpBtn setTitle:AMLocalizedString(@"SIGN UP",nil) forState:UIControlStateNormal];
     
     
-    [self setRoundCornertoView:_profileImgView withBorderColor:[UIColor clearColor] WithRadius:0.15];
+    [self setRoundCornertoView:ProfileImage withBorderColor:[UIColor clearColor] WithRadius:0.15];
     
     [ProfileImageLabel setFont:[UIFont fontWithName:ProfileImageLabel.font.fontName size:[self getFontSize:ProfileImageLabel.font.pointSize]]];
     
-  
-      [_popTitle setFont:[UIFont fontWithName:_popTitle.font.fontName size:[self getFontSize:_popTitle.font.pointSize]]];
+
       [LanguageLabel setFont:[UIFont fontWithName:LanguageLabel.font.fontName size:[self getFontSize:LanguageLabel.font.pointSize]]];
     
       [_countryLbl setFont:[UIFont fontWithName:_countryLbl.font.fontName size:[self getFontSize:_countryLbl.font.pointSize]]];
@@ -124,7 +123,15 @@
     
         [ConfirmPassword setFont:[UIFont fontWithName:ConfirmPassword.font.fontName size:[self getFontSize:ConfirmPassword.font.pointSize]]];
     
+    
+      [_popTitle setFont:[UIFont fontWithName:_popTitle.font.fontName size:[self getFontSize:_popTitle.font.pointSize]]];
+    
         [SignUpBtn.titleLabel setFont:[UIFont fontWithName:SignUpBtn.titleLabel.font.fontName size:[self getFontSize:SignUpBtn.titleLabel.font.pointSize]]];
+    
+    _popTitle.layer.shadowColor = [[UIColor colorWithRed:10.0/255.0 green:10.0/255.0 blue:10.0/255.0 alpha:0.3] CGColor];
+    _popTitle.layer.shadowOffset = CGSizeMake(-2.0f,3.0f);
+    _popTitle.layer.shadowOpacity = 1.0f;
+    _popTitle.layer.shadowRadius = 1.0f;
     
     
     urlobj=[[UrlconnectionObject alloc] init];
@@ -182,6 +189,13 @@
     [_cancelBttn setTitle:AMLocalizedString(@"Cancel", nil) forState:UIControlStateNormal];
     
     [mainscroll setContentSize:CGSizeMake(FULLWIDTH, 630.0/480.0*FULLHEIGHT)];
+    
+      [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appendPushView) name:@"pushReceived" object:nil];
+}
+
+-(void)appendPushView
+{
+    [self addPushView:self.view];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -1415,7 +1429,7 @@
     
            [cell.CountryImage setHidden:NO];
         
-    [cell.CountryImage sd_setImageWithURL:[NSURL URLWithString:[[CountryArray objectAtIndex:indexPath.row]objectForKey:@"image"]] placeholderImage:[UIImage imageNamed:@"noimage"]];
+    [cell.CountryImage sd_setImageWithURL:[NSURL URLWithString:[[CountryArray objectAtIndex:indexPath.row]objectForKey:@"image"]] placeholderImage:[UIImage imageNamed:@"world"]];
     
     [cell.CountryLabel setText:AMLocalizedString([[[CountryArray objectAtIndex:indexPath.row]objectForKey:@"countryName"] uppercaseString], nil) ];
     
@@ -1537,5 +1551,9 @@
     [self loadData];
     
     
+}
+- (IBAction)goBackClicked:(id)sender {
+    
+     [_PopView setHidden:YES];
 }
 @end

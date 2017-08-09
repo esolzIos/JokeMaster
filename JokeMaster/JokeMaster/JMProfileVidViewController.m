@@ -108,7 +108,7 @@
     
  [_profileImage sd_setImageWithURL:[NSURL URLWithString:_ProfileuserImage] placeholderImage:[UIImage imageNamed:@"noimage"]];
     
-    [_countryImage sd_setImageWithURL:[NSURL URLWithString:_ProfileFlag] placeholderImage:[UIImage imageNamed:@"noimage"]];
+    [_countryImage sd_setImageWithURL:[NSURL URLWithString:_ProfileFlag] placeholderImage:[UIImage imageNamed:@"world"]];
     
         [_profileCountryLbl setText:[NSString stringWithFormat:@"%@",_ProfileCountry]];
     
@@ -150,7 +150,7 @@
 //        return CGSizeMake(self.view.frame.size.width/3,135);
 //    }
     
-   return CGSizeMake(self.view.frame.size.width/3,130.0/480.0*FULLHEIGHT);
+   return CGSizeMake(self.view.frame.size.width/3,120.0/480.0*FULLHEIGHT);
     
     
 }
@@ -181,6 +181,19 @@
     //    cell.categoryImage.layer.cornerRadius=5.0;
     //
     //    cell.OverlayView.layer.cornerRadius=5.0;
+    
+    cell.contentView.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.001, 0.001);
+    [UIView animateWithDuration:0.3/1.5 animations:^{
+        cell.contentView.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1.1, 1.1);
+    } completion:^(BOOL finished) {
+        [UIView animateWithDuration:0.3/2 animations:^{
+            cell.contentView.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.9, 0.9);
+        } completion:^(BOOL finished) {
+            [UIView animateWithDuration:0.3/2 animations:^{
+                cell.contentView.transform = CGAffineTransformIdentity;
+            }];
+        }];
+    }];
     
     return cell;
 }
@@ -306,7 +319,7 @@
                             DebugLog(@"%f",ceil((float)videoArr.count/3.0));
                             
                             
-                            float collectionHeight= (130.0/480.0*FULLHEIGHT)*ceil(((float)videoArr.count/3.0));
+                            float collectionHeight= (120.0/480.0*FULLHEIGHT)*ceil(((float)videoArr.count/3.0));
                             
                             
                             [_categoryCollectionView setFrame:CGRectMake(_categoryCollectionView.frame.origin.x, _categoryCollectionView.frame.origin.y, FULLWIDTH, collectionHeight)];

@@ -64,6 +64,15 @@
     
        [_uploadBtn.titleLabel setFont:[UIFont fontWithName:_uploadBtn.titleLabel.font.fontName size:[self getFontSize:_uploadBtn.titleLabel.font.pointSize]]];
     
+    
+    [_popTitle setFont:[UIFont fontWithName:_popTitle.font.fontName size:[self getFontSize:_popTitle.font.pointSize]]];
+    
+    _popTitle.layer.shadowColor = [[UIColor colorWithRed:10.0/255.0 green:10.0/255.0 blue:10.0/255.0 alpha:0.3] CGColor];
+    _popTitle.layer.shadowOffset = CGSizeMake(-2.0f,3.0f);
+    _popTitle.layer.shadowOpacity = 1.0f;
+    _popTitle.layer.shadowRadius = 1.0f;
+    
+    
     // Do any additional setup after loading the view.
     
     [_mainScroll setContentSize:CGSizeMake(FULLWIDTH,  470.0/480.0*FULLHEIGHT)];
@@ -1165,5 +1174,8 @@
     
 }
 
-
+- (IBAction)goBackClicked:(id)sender
+{
+    [_PopView setHidden:YES];
+}
 @end

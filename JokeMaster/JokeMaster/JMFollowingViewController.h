@@ -24,4 +24,6 @@
 @property (strong, nonatomic) IBOutlet UIView *noVideoView;
 @property (strong, nonatomic) IBOutlet FLAnimatedImageView *gifImage;
 @property (strong, nonatomic) IBOutlet UILabel *noVideoLbl;
+@property (nonatomic) NSString *profileId;
+@property (nonatomic) BOOL fromProfile,fromVideo;
 @end

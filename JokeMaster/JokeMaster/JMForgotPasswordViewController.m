@@ -23,7 +23,7 @@
     _txtPassword.attributedPlaceholder = [[NSAttributedString alloc] initWithString:AMLocalizedString(@"Password",nil) attributes:@{NSForegroundColorAttributeName: [UIColor whiteColor]}];
     _txtConfirmPassword.attributedPlaceholder = [[NSAttributedString alloc] initWithString:AMLocalizedString(@"Confirm Password",nil) attributes:@{NSForegroundColorAttributeName: [UIColor whiteColor]}];
     
-     [_btnBackToLogin setTitle:AMLocalizedString(@"Back to Log In", nil) forState:UIControlStateNormal];
+     [_btnBackToLogin setTitle:AMLocalizedString(@"Back to Log in", nil) forState:UIControlStateNormal];
     
        [_btnPasswordSubmit setTitle:AMLocalizedString(@"SUBMIT", nil) forState:UIControlStateNormal];
     

@@ -78,6 +78,15 @@
     [_cameraLbl setFont:[UIFont fontWithName:_cameraLbl.font.fontName size:[self getFontSize:_cameraLbl.font.pointSize]]];
     
     [_galleryLbl setFont:[UIFont fontWithName:_galleryLbl.font.fontName size:[self getFontSize:_galleryLbl.font.pointSize]]];
+    
+     [_popTitle setFont:[UIFont fontWithName:_popTitle.font.fontName size:[self getFontSize:_popTitle.font.pointSize]]];
+    
+      
+    _popTitle.layer.shadowColor = [[UIColor colorWithRed:10.0/255.0 green:10.0/255.0 blue:10.0/255.0 alpha:0.3] CGColor];
+    _popTitle.layer.shadowOffset = CGSizeMake(-2.0f,3.0f);
+    _popTitle.layer.shadowOpacity = 1.0f;
+    _popTitle.layer.shadowRadius = 1.0f;
+    
     [_uploadBtn.titleLabel setFont:[UIFont fontWithName:_uploadBtn.titleLabel.font.fontName size:[self getFontSize:_uploadBtn.titleLabel.font.pointSize]]];
     
     // Do any additional setup after loading the view.
@@ -274,59 +283,58 @@
                             //    [self getMediaName:nil url:assetURL];
                                 
                           
-                                
-                                
-                                PHFetchResult *refResult = [PHAsset fetchAssetsWithALAssetURLs:@[assetURL] options:nil];
-                                PHVideoRequestOptions *videoRequestOptions = [[PHVideoRequestOptions alloc] init];
-                                videoRequestOptions.version = PHVideoRequestOptionsVersionCurrent;
-                                videoRequestOptions.deliveryMode=PHVideoRequestOptionsDeliveryModeFastFormat;
-                                
-                                [[PHImageManager defaultManager] requestAVAssetForVideo:[refResult firstObject] options:videoRequestOptions resultHandler:^(AVAsset *asset, AVAudioMix *audioMix, NSDictionary *info) {
-                                    if ([asset isKindOfClass:[AVURLAsset class]]) {
-                                        NSURL *compressedUrl = [(AVURLAsset *)asset URL];
-                                        videoData = [NSData dataWithContentsOfURL:[NSURL fileURLWithPath:[compressedUrl path]]];
-                                        
-                                        
-                                        dispatch_async(dispatch_get_main_queue(), ^{
+                                if (assetURL!=nil) {
+                                    PHFetchResult *refResult = [PHAsset fetchAssetsWithALAssetURLs:@[assetURL] options:nil];
+                                    PHVideoRequestOptions *videoRequestOptions = [[PHVideoRequestOptions alloc] init];
+                                    videoRequestOptions.version = PHVideoRequestOptionsVersionCurrent;
+                                    videoRequestOptions.deliveryMode=PHVideoRequestOptionsDeliveryModeFastFormat;
+                                    
+                                    [[PHImageManager defaultManager] requestAVAssetForVideo:[refResult firstObject] options:videoRequestOptions resultHandler:^(AVAsset *asset, AVAudioMix *audioMix, NSDictionary *info) {
+                                        if ([asset isKindOfClass:[AVURLAsset class]]) {
+                                            NSURL *compressedUrl = [(AVURLAsset *)asset URL];
+                                            videoData = [NSData dataWithContentsOfURL:[NSURL fileURLWithPath:[compressedUrl path]]];
                                             
-                                            [_loadingView setHidden:NO];
-                                            [_infoLbl setText:@"GENERATING IMAGE"];
                                             
-                                            AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:compressedUrl options:nil];
-                                            AVAssetImageGenerator *generator = [[AVAssetImageGenerator alloc] initWithAsset:asset];
-                                            generator.appliesPreferredTrackTransform = YES;
-                                            CMTime thumbTime = CMTimeMakeWithSeconds(0,30);
-                                            NSError *error = nil;
-                                            CMTime actualTime;
-                                            
-                                            CGImageRef image = [generator copyCGImageAtTime:thumbTime actualTime:&actualTime error:&error];
-                                            UIImage *thumb = [[UIImage alloc] initWithCGImage:image];
-                                       
+                                            dispatch_async(dispatch_get_main_queue(), ^{
+                                                
+                                                [_loadingView setHidden:NO];
+                                                [_infoLbl setText:@"GENERATING IMAGE"];
+                                                
+                                                AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:compressedUrl options:nil];
+                                                AVAssetImageGenerator *generator = [[AVAssetImageGenerator alloc] initWithAsset:asset];
+                                                generator.appliesPreferredTrackTransform = YES;
+                                                CMTime thumbTime = CMTimeMakeWithSeconds(0,30);
+                                                NSError *error = nil;
+                                                CMTime actualTime;
+                                                
+                                                CGImageRef image = [generator copyCGImageAtTime:thumbTime actualTime:&actualTime error:&error];
+                                                UIImage *thumb = [[UIImage alloc] initWithCGImage:image];
+                                                
                                                 imageData = UIImagePNGRepresentation(thumb);
-                                            
-                                              CGSize maxSize = CGSizeMake(640, 360);
-                                              generator.maximumSize = maxSize;
-                                            
-                                            
-//                                            AVURLAsset *asset=[[AVURLAsset alloc] initWithURL:compressedUrl options:nil];
-//                                            AVAssetImageGenerator *generator = [[AVAssetImageGenerator alloc] initWithAsset:asset];
-//                                            generator.appliesPreferredTrackTransform=TRUE;
-//                                            
-//                                            CMTime thumbTime = CMTimeMakeWithSeconds(0,30);
-//                                            
-//                                            
-//                                            
-//                                            AVAssetImageGeneratorCompletionHandler handler = ^(CMTime requestedTime, CGImageRef im, CMTime actualTime, AVAssetImageGeneratorResult result, NSError *error){
-//                                                if (result != AVAssetImageGeneratorSucceeded) {
-//                                                    DebugLog(@"couldn't generate thumbnail, error:%@", error);
-//                                                    
-//                                                    
-//                                                    
-//                                                    // [SVProgressHUD showInfoWithStatus:@"Something went wrong"];
-//                                                    
-//                                                }
-                                            
-                                             //   imageData = UIImagePNGRepresentation([UIImage imageWithCGImage:im]);
+                                                
+                                                CGSize maxSize = CGSizeMake(640, 360);
+                                                generator.maximumSize = maxSize;
+                                                
+                                                
+                                                //                                            AVURLAsset *asset=[[AVURLAsset alloc] initWithURL:compressedUrl options:nil];
+                                                //                                            AVAssetImageGenerator *generator = [[AVAssetImageGenerator alloc] initWithAsset:asset];
+                                                //                                            generator.appliesPreferredTrackTransform=TRUE;
+                                                //
+                                                //                                            CMTime thumbTime = CMTimeMakeWithSeconds(0,30);
+                                                //
+                                                //
+                                                //
+                                                //                                            AVAssetImageGeneratorCompletionHandler handler = ^(CMTime requestedTime, CGImageRef im, CMTime actualTime, AVAssetImageGeneratorResult result, NSError *error){
+                                                //                                                if (result != AVAssetImageGeneratorSucceeded) {
+                                                //                                                    DebugLog(@"couldn't generate thumbnail, error:%@", error);
+                                                //
+                                                //
+                                                //
+                                                //                                                    // [SVProgressHUD showInfoWithStatus:@"Something went wrong"];
+                                                //
+                                                //                                                }
+                                                
+                                                //   imageData = UIImagePNGRepresentation([UIImage imageWithCGImage:im]);
                                                 
                                                 if ( imageData!=nil )
                                                 {
@@ -346,11 +354,11 @@
                                                     [_cancelView setHidden:NO];
                                                     
                                                     
-
                                                     
                                                     
                                                     
-                                                  //  [SVProgressHUD dismiss];
+                                                    
+                                                    //  [SVProgressHUD dismiss];
                                                 }
                                                 else{
                                                     
@@ -360,20 +368,25 @@
                                                 
                                                 
                                                 
-                                         //   };
+                                                //   };
+                                                
+                                                //  CGSize maxSize = CGSizeMake(640, 360);
+                                                //  generator.maximumSize = CGSizeZero;
+                                                //  [generator generateCGImagesAsynchronouslyForTimes:[NSArray arrayWithObject:[NSValue valueWithCMTime:thumbTime]] completionHandler:handler];
+                                                
+                                                
+                                            });
                                             
-                                          //  CGSize maxSize = CGSizeMake(640, 360);
-                                          //  generator.maximumSize = CGSizeZero;
-                                          //  [generator generateCGImagesAsynchronouslyForTimes:[NSArray arrayWithObject:[NSValue valueWithCMTime:thumbTime]] completionHandler:handler];
                                             
-                                            
-                                        });
-                                        
-                                        
-                                    }
-                                }];
-                                
-                                
+                                        }
+                                    }];
+                                    
+                                    
+                                }
+                                else{
+                                    [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Some error occured",nil)];
+                                }
+                           
 
                                 
                             }
@@ -1429,6 +1442,11 @@
         
     }
 }
+- (IBAction)goBackClicked:(id)sender {
+    
+        [_PopView setHidden:YES];
+}
+
 - (IBAction)popChoosed:(id)sender
 {
     

@@ -9,6 +9,8 @@
 #import "JMNotificationViewController.h"
 #import "JMProfileViewController.h"
 #import "JMPlayVideoViewController.h"
+#import "JMFollowingViewController.h"
+#import "JMRatingListViewController.h"
 @interface JMNotificationViewController ()
 {
     // int listcount;
@@ -280,12 +282,12 @@
     NSDictionary *videoDict=[videoArr objectAtIndex:indexPath.row];
     
 
-    
-    [self setRoundCornertoView:cell.profileFrame withBorderColor:[UIColor clearColor] WithRadius:0.2];
-    [self setRoundCornertoView:cell.ProfileImage withBorderColor:[UIColor clearColor] WithRadius:0.15];
-    //    [cell.ProfileNameLabel setFont:[UIFont fontWithName:cell.ProfileNameLabel.font.fontName size:[self getFontSize:cell.ProfileNameLabel.font.pointSize]]];
-    //    [cell.JokesNameLabel setFont:[UIFont fontWithName:cell.JokesNameLabel.font.fontName size:[self getFontSize:cell.JokesNameLabel.font.pointSize]]];
-    //    [cell.RatingLabel setFont:[UIFont fontWithName:cell.RatingLabel.font.fontName size:[self getFontSize:cell.RatingLabel.font.pointSize]]];
+//    
+//    [self setRoundCornertoView:cell.profileFrame withBorderColor:[UIColor clearColor] WithRadius:0.2];
+//    [self setRoundCornertoView:cell.ProfileImage withBorderColor:[UIColor clearColor] WithRadius:0.15];
+//        [cell.ProfileNameLabel setFont:[UIFont fontWithName:cell.ProfileNameLabel.font.fontName size:[self getFontSize:10]]];
+//        [cell.CountryName setFont:[UIFont fontWithName:cell.CountryName.font.fontName size:[self getFontSize:9]]];
+//        [cell.RatingLabel setFont:[UIFont fontWithName:cell.RatingLabel.font.fontName size:[self getFontSize:9]]];
     
     
     [cell.RankLabel setFont:[UIFont fontWithName:cell.RankLabel.font.fontName size:[self getFontSize:7.0]]];
@@ -294,9 +296,9 @@
     
     [cell.RatingLabel setFont:[UIFont fontWithName:cell.RatingLabel.font.fontName size:[self getFontSize:9.0]]];
     
-    [cell.CountryName setFont:[UIFont fontWithName:cell.CountryName.font.fontName size:[self getFontSize:7.0]]];
+    [cell.CountryName setFont:[UIFont fontWithName:cell.CountryName.font.fontName size:[self getFontSize:9.0]]];
     
-    [cell.countryImage sd_setImageWithURL:[NSURL URLWithString:[videoDict objectForKey:@"countryimage"]] placeholderImage:[UIImage imageNamed:@"noimage"]];
+    [cell.countryImage sd_setImageWithURL:[NSURL URLWithString:[videoDict objectForKey:@"countryimage"]] placeholderImage:[UIImage imageNamed:@"world"]];
     
     [cell.ProfileImage sd_setImageWithURL:[NSURL URLWithString:[videoDict objectForKey:@"senderimage"]] placeholderImage:[UIImage imageNamed:@"noimage"]];
     
@@ -328,11 +330,30 @@
 {
     NSDictionary *videoDict=[videoArr objectAtIndex:indexPath.row];
     
-    
     if ( [[videoDict objectForKey:@"type"]intValue]==1) {
         
+//        JMFollowingViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMFollowingViewController"];
+//        VC.profileId=[videoDict valueForKey:@"videoid"];
+//        VC.fromVideo=YES;
+//        [self.navigationController pushViewController:VC animated:YES];
         
-
+//        
+        
+        //
+        JMPlayVideoViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMPlayVideoViewController"];
+        VC.VideoId=[videoDict valueForKey:@"videoid"];
+        
+        [self.navigationController pushViewController:VC animated:YES];
+        
+    }
+    else if ( [[videoDict objectForKey:@"type"]intValue]==2) {
+        
+//        JMRatingListViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMRatingListViewController"];
+//        
+//        VC.videoId=[videoDict valueForKey:@"videoid"];
+//        
+//        [self.navigationController pushViewController:VC animated:YES];
+//
         //
         JMPlayVideoViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMPlayVideoViewController"];
         VC.VideoId=[videoDict valueForKey:@"videoid"];
@@ -341,17 +362,22 @@
         
     }
     else
-        if ( [[videoDict objectForKey:@"type"]intValue]==2) {
+        if ( [[videoDict objectForKey:@"type"]intValue]==3) {
             
             
+            JMFollowingViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMFollowingViewController"];
+            VC.profileId=[videoDict valueForKey:@"receiverid"];
+            VC.fromProfile=true;
+            
+            [self.navigationController pushViewController:VC animated:kCAMediaTimingFunctionEaseIn];
    
             //
-            JMProfileViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMProfile"];
-            VC.ProfileUserId=[videoDict valueForKey:@"senderid"];
-            
-            
-            
-            [self.navigationController pushViewController:VC animated:YES];
+//            JMProfileViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMProfile"];
+//            VC.ProfileUserId=[videoDict valueForKey:@"senderid"];
+//            
+//            
+//            
+//            [self.navigationController pushViewController:VC animated:YES];
             
         }
 

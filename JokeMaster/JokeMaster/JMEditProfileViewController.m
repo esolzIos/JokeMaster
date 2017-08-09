@@ -25,6 +25,7 @@
     NSURLSession *session;
     BOOL firedOnce;
     NSMutableArray *jsonArr;
+       BOOL countryOpen,langOpen;
 }
 @end
 
@@ -109,7 +110,9 @@
     
     [_countryLbl setText:AMLocalizedString(@"Country", nil)];
     
-    [self setRoundCornertoView:_profileImgView withBorderColor:[UIColor clearColor] WithRadius:0.15];
+    [self setRoundCornertoView:ProfileImage withBorderColor:[UIColor clearColor] WithRadius:0.15];
+    
+
     
     [ProfileImageLabel setFont:[UIFont fontWithName:ProfileImageLabel.font.fontName size:[self getFontSize:ProfileImageLabel.font.pointSize]]];
     
@@ -126,6 +129,14 @@
     [Passwordtxt setFont:[UIFont fontWithName:Passwordtxt.font.fontName size:[self getFontSize:Passwordtxt.font.pointSize]]];
     
     [ConfirmPassword setFont:[UIFont fontWithName:ConfirmPassword.font.fontName size:[self getFontSize:ConfirmPassword.font.pointSize]]];
+    
+      [_popTitle setFont:[UIFont fontWithName:_popTitle.font.fontName size:[self getFontSize:_popTitle.font.pointSize]]];
+    
+    _popTitle.layer.shadowColor = [[UIColor colorWithRed:10.0/255.0 green:10.0/255.0 blue:10.0/255.0 alpha:0.3] CGColor];
+    _popTitle.layer.shadowOffset = CGSizeMake(-2.0f,3.0f);
+    _popTitle.layer.shadowOpacity = 1.0f;
+    _popTitle.layer.shadowRadius = 1.0f;
+    
     
     [SignUpBtn.titleLabel setFont:[UIFont fontWithName:SignUpBtn.titleLabel.font.fontName size:[self getFontSize:SignUpBtn.titleLabel.font.pointSize]]];
     
@@ -154,7 +165,7 @@
     //
     //     [langDict setObject:hindiArr forKey:@"hi"] ;
     //
-    [LanguageLabel setText:AMLocalizedString(@"App interface language", nil)];
+//    [LanguageLabel setText:AMLocalizedString(@"App interface language", nil)];
     
     [_goBtn setTitle:AMLocalizedString(@"GO",nil) forState:UIControlStateNormal] ;
     
@@ -190,6 +201,9 @@
     // Do any additional setup after loading the view.
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appendPushView) name:@"pushReceived" object:nil];
     
+    
+     [self loadData];
+    
     //   // Do any additional setup after loading the view.
 }
 
@@ -215,7 +229,7 @@
 */
 -(void)viewWillAppear:(BOOL)animated
 {
-    [self loadData];
+   
 }
 -(void)loadData
 {
@@ -685,6 +699,11 @@
                         
                         [ProfileImage sd_setImageWithURL:[userDetails objectForKey:@"user_image"] placeholderImage:[UIImage imageNamed:@"noimage"]];
                         
+                        
+                        langSelected=[userDetails objectForKey:@"loggedInUserLanguage"];
+                        
+                        countrySelected=[userDetails objectForKey:@"loggedInUserCountry"];
+                        
                }
                     
                     else{
@@ -993,12 +1012,17 @@
     [ConfirmPassword resignFirstResponder];
     
     
-    [_pickerView setHidden:NO];
-    
-    [_languagePicker reloadAllComponents];
-    
-    
-    [_languagePicker selectRow:rowSelected inComponent:0 animated:NO];
+    if (langArr.count>0) {
+        
+        countryOpen=NO;
+        langOpen=YES;
+
+        [_countryPopView setHidden:NO];
+            [_popTitle setText:AMLocalizedString(@"App interface language", nil) ];
+        [_countryTable reloadData];
+        
+        
+    }
     
 }
 #pragma mark -  title picker cancel
@@ -1105,20 +1129,21 @@
     {
         strEncoded =@"";
     }
-    
+       [_loaderView setHidden:NO];
     BOOL net=[urlobj connectedToNetwork];
     if (net==YES)
     {
         
         self.view.userInteractionEnabled = NO;
-        [self checkLoader];
+     
+        
         [urlobj globalImage:urlString ImageString:strEncoded ImageField:@"userimage" typerequest:@"array" withblock:^(id result, NSError *error,BOOL completed)
          {
              NSLog(@"event result----- %@", result);
              DebugLog(@" Status Code:%ld",urlobj.statusCode);
              
              self.view.userInteractionEnabled = YES;
-             [self checkLoader];
+                  [_loaderView setHidden:YES];
              
              if (urlobj.statusCode==200)
              {
@@ -1188,7 +1213,15 @@
     }
     else
     {
-        [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
+        
+        
+        [_gifImage setHidden:YES];
+        [_noVideoView setHidden:NO];
+        [_noVideoLbl setText:[NSString stringWithFormat:@"%@. \n\n %@",AMLocalizedString(@"Check your Internet connection", nil),AMLocalizedString(@"Click to retry", nil)]];
+        
+        [_loaderBtn setHidden:NO];
+        
+      //  [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
         
         //        [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Network Not Available." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
     }
@@ -1335,7 +1368,17 @@
 
 - (IBAction)countryClicked:(id)sender {
     
-    [_countryPopView setHidden:NO];
+    
+    if (CountryArray.count>0) {
+        
+        langOpen=NO;
+        countryOpen=YES;
+
+        [_countryTable reloadData];
+       [_countryPopView setHidden:NO];
+        
+    }
+
     
     
 }
@@ -1345,7 +1388,16 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section;
 {
-    return [CountryArray count];
+    
+    if (langOpen) {
+        return [langArr count];
+    }
+    else if (countryOpen)
+    {
+        return [CountryArray count];
+    }
+    else
+        return 0;
     
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -1384,6 +1436,7 @@
 
 -(void) tableView:(UITableView *)tableView willDisplayCell:(CountryCell *) cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
+     if (countryOpen) {
     if ([countrySelected isEqualToString:[[CountryArray objectAtIndex:indexPath.row]objectForKey:@"countryId"]])
     {
         
@@ -1398,19 +1451,44 @@
         cell.CheckImage.image = [UIImage imageNamed:@"uncheck"];
     }
     
-    
+      [cell.CountryImage setHidden:NO];
     [cell.CountryImage sd_setImageWithURL:[NSURL URLWithString:[[CountryArray objectAtIndex:indexPath.row]objectForKey:@"image"]] placeholderImage:[UIImage imageNamed:@"noimage"]];
     
     [cell.CountryLabel setText:AMLocalizedString([[[CountryArray objectAtIndex:indexPath.row]objectForKey:@"countryName"] uppercaseString], nil) ];
     
     [cell.CountryLabel setFont:[UIFont fontWithName:cell.CountryLabel.font.fontName size:[self getFontSize:11.0]]];
+     }
+    else if (langOpen)
+    {
+        if ([langSelected isEqualToString:[[langArr objectAtIndex:indexPath.row]objectForKey:@"id"]])
+        {
+            
+            cell.CheckImage.image = [UIImage imageNamed:@"tick"];
+            
+            
+            
+        }
+        else
+        {
+            
+            cell.CheckImage.image = [UIImage imageNamed:@"uncheck"];
+        }
+        
+        
+        [cell.CountryImage setHidden:YES];
+        
+        
+        [cell.CountryLabel setText:AMLocalizedString([[[langArr objectAtIndex:indexPath.row]objectForKey:@"name"] uppercaseString], nil) ];
+        
+        [cell.CountryLabel setFont:[UIFont fontWithName:cell.CountryLabel.font.fontName size:[self getFontSize:11.0]]];
+    }
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
     //  CountryCell *cCell=[_CountryTable cellForRowAtIndexPath:indexPath];
     
-    
+    if (countryOpen) {
     if (![countrySelected isEqualToString:[[CountryArray objectAtIndex:indexPath.row]objectForKey:@"countryId"]])
     {
         
@@ -1429,7 +1507,28 @@
     
     [_countryTable reloadData];
     
-    
+    }
+    else if (langOpen){
+        
+        
+        
+        if (![langSelected isEqualToString:[[langArr objectAtIndex:indexPath.row]objectForKey:@"id"]])
+        {
+            
+            langSelected=[[langArr objectAtIndex:indexPath.row]objectForKey:@"id"];
+            [LanguageLabel setText:AMLocalizedString([[langArr objectAtIndex:indexPath.row]objectForKey:@"name"], nil)];
+        }
+        else
+        {
+            langSelected=@"";
+            
+        }
+        
+        
+        [_countryTable reloadData];
+        
+        
+    }
 }
 - (IBAction)selectClicked:(id)sender {
     
@@ -1472,4 +1571,9 @@
     
 }
 
+- (IBAction)goBackClicked:(id)sender {
+    
+    [_countryPopView setHidden:YES];
+    
+}
 @end

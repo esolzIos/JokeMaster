@@ -59,6 +59,10 @@
 @property (strong, nonatomic) IBOutlet UIView *countryPopView;
 @property (strong, nonatomic) IBOutlet UITableView *countryTable;
 @property (strong, nonatomic) IBOutlet UIButton *goBtn;
+@property (strong, nonatomic) IBOutlet JMStrokeLabel *popTitle;
+
+
+
 - (IBAction)countryChoosed:(id)sender;
 @property (strong, nonatomic) IBOutlet UIView *loaderView;
 @property (strong, nonatomic) IBOutlet UIView *loadertvView;
@@ -68,5 +72,8 @@
 @property (strong, nonatomic) IBOutlet UIView *noVideoView;
 @property (strong, nonatomic) IBOutlet FLAnimatedImageView *gifImage;
 @property (strong, nonatomic) IBOutlet UILabel *noVideoLbl;
+@property (strong, nonatomic) IBOutlet UIView *goBackView;
+@property (strong, nonatomic) IBOutlet UIButton *goBackbtn;
+- (IBAction)goBackClicked:(id)sender;
 
 @end

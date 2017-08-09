@@ -113,7 +113,7 @@
 //    {
 //        return CGSizeMake(self.view.frame.size.width/3,135);
 //    }
-     return CGSizeMake(self.view.frame.size.width/3,130.0/480.0*FULLHEIGHT);
+     return CGSizeMake(self.view.frame.size.width/3,120.0/480.0*FULLHEIGHT);
 }
 
 
@@ -137,6 +137,20 @@
     
     cell.VideoThumpnailImage.layer.cornerRadius=12.0;
     cell.VideoThumpnailImage.clipsToBounds=YES;
+    
+    
+    cell.contentView.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.001, 0.001);
+    [UIView animateWithDuration:0.3/1.5 animations:^{
+        cell.contentView.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1.1, 1.1);
+    } completion:^(BOOL finished) {
+        [UIView animateWithDuration:0.3/2 animations:^{
+            cell.contentView.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.9, 0.9);
+        } completion:^(BOOL finished) {
+            [UIView animateWithDuration:0.3/2 animations:^{
+                cell.contentView.transform = CGAffineTransformIdentity;
+            }];
+        }];
+    }];
     //
     //    cell.categoryImage.layer.masksToBounds = YES;
     //    cell.categoryImage.layer.cornerRadius=5.0;

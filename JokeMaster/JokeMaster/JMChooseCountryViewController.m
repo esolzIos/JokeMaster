@@ -67,6 +67,11 @@
        [_countryTitle setFont:[UIFont fontWithName:_countryTitle.font.fontName size:[self getFontSize:_countryTitle.font.pointSize]]];
     
     
+    _countryTitle.layer.shadowColor = [[UIColor colorWithRed:10.0/255.0 green:10.0/255.0 blue:10.0/255.0 alpha:0.3] CGColor];
+    _countryTitle.layer.shadowOffset = CGSizeMake(-2.0f,3.0f);
+    _countryTitle.layer.shadowOpacity = 1.0f;
+    _countryTitle.layer.shadowRadius = 1.0f;
+    
     [_LanguageLabel setText:AMLocalizedString(@"Choose Video Language", nil)];
     
         [_GoButton setTitle:AMLocalizedString(@"GO",nil) forState:UIControlStateNormal] ;
@@ -108,6 +113,11 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appendPushView) name:@"pushReceived" object:nil];
     
+    if (_fromSplash) {
+        [self.HeaderView.BackView setHidden:YES];
+        
+    }
+    
     //   // Do any additional setup after loading the view.
 }
 
@@ -118,7 +128,7 @@
 }
 
 
--(void)viewDidAppear:(BOOL)animated
+-(void)viewWillAppear:(BOOL)animated
 {
     
   [self getCountries];
@@ -560,7 +570,7 @@
     }
 
 
-      [cell.CountryImage sd_setImageWithURL:[NSURL URLWithString:[[CountryArray objectAtIndex:indexPath.row]objectForKey:@"image"]] placeholderImage:[UIImage imageNamed:@"noimage"]];
+      [cell.CountryImage sd_setImageWithURL:[NSURL URLWithString:[[CountryArray objectAtIndex:indexPath.row]objectForKey:@"image"]] placeholderImage:[UIImage imageNamed:@"world"]];
     
     [cell.CountryLabel setFont:[UIFont fontWithName:cell.CountryLabel.font.fontName size:[self getFontSize:11.0]]];
     

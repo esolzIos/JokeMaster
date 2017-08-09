@@ -7,7 +7,7 @@
 //
 
 #import "JMLeftMenuView.h"
-
+#import "AppDelegate.h"
 @implementation JMLeftMenuView
 @synthesize SideDelegate;
 /*
@@ -136,22 +136,41 @@
         cell.menuName.font = [UIFont fontWithName:ComicbkITalic size:12];
         [cell addSubview:cell.menuName];
         
+        cell.notiCount = [[UILabel alloc] init];
+        cell.notiCount.frame = CGRectMake(cell.frame.size.width-120,9,30,30);
+        cell.notiCount.tag=indexPath.row;
+        cell.notiCount.textColor=[UIColor whiteColor];
+        cell.notiCount.backgroundColor=[UIColor redColor];
+        cell.notiCount.layer.cornerRadius=cell.notiCount.frame.size.height*0.5;
+        cell.notiCount.layer.borderColor=[UIColor clearColor].CGColor;
+        cell.notiCount.layer.borderWidth=0.5;
+        [cell.notiCount.layer setMasksToBounds:YES];
+        [cell.notiCount setHidden:YES];
+        cell.notiCount.textAlignment = NSTextAlignmentCenter;
+        cell.notiCount.font = [UIFont fontWithName:@"ComicBook" size:8];
+
+        [cell addSubview:cell.notiCount];
+        
         if (IsIphone5)
         {
             cell.menuImg.frame = CGRectMake(30,14,20,20);
             cell.menuName.frame = CGRectMake(62,14, cell.frame.size.width-70,20);
             cell.menuName.font = [UIFont fontWithName:@"ComicBook" size:12];
+              cell.notiCount.frame = CGRectMake(cell.frame.size.width-120,9,30,30);
+            
         }
         else if (IsIphone6)
         {
             cell.menuImg.frame = CGRectMake(30,16,22,22);
             cell.menuName.frame = CGRectMake(64,16, cell.frame.size.width-70,20);
             cell.menuName.font = [UIFont fontWithName:@"ComicBook" size:14];
+                          cell.notiCount.frame = CGRectMake(cell.frame.size.width-125,9,30,30);
         }
         else if (IsIphone6plus)
         {
             cell.menuImg.frame = CGRectMake(30,18,24,24);
             cell.menuName.frame = CGRectMake(66,18, cell.frame.size.width-70,20);
+                          cell.notiCount.frame = CGRectMake(cell.frame.size.width-130,9,30,30);
             cell.menuName.font = [UIFont fontWithName:@"ComicBook" size:16];
         }
         
@@ -160,11 +179,13 @@
         
         if (indexPath.row==0)
         {
+                          [cell.notiCount setHidden:YES];
             cell.menuName.text = [AMLocalizedString(@"MY CHANNEL",nil) uppercaseString];
             cell.menuImg.image = [UIImage imageNamed:@"my-chanel"];
         }
         else if (indexPath.row==1)
         {
+                          [cell.notiCount setHidden:YES];
             cell.menuName.text = [AMLocalizedString(@"MY FAVOURITES",nil)uppercaseString];;
             cell.menuImg.image = [UIImage imageNamed:@"favourite"];
             
@@ -172,11 +193,13 @@
         }
         else if (indexPath.row==2)
         {
+                          [cell.notiCount setHidden:YES];
             cell.menuName.text = AMLocalizedString(@"FOLLOWING",nil);
             cell.menuImg.image = [UIImage imageNamed:@"following"];
         }
         else if (indexPath.row==3)
         {
+                          [cell.notiCount setHidden:YES];
             cell.menuName.text = AMLocalizedString(@"RANKINGS",nil);
              cell.menuImg.image = [UIImage imageNamed:@"menucrown"];
             
@@ -193,16 +216,31 @@
 //        }
         else if (indexPath.row==4)
         {
+                          [cell.notiCount setHidden:YES];
             cell.menuName.text = AMLocalizedString(@"UPLOAD A VIDEO",nil);
             cell.menuImg.image = [UIImage imageNamed:@"settings"];
         }
         else if (indexPath.row==5)
         {
             cell.menuName.text = AMLocalizedString(@"NOTIFICATIONS",nil);
+            
+            
+               AppDelegate *app=(AppDelegate *)[[UIApplication sharedApplication]delegate];
+            if (app.badgeCount>0) {
+                [cell.notiCount setHidden:NO];
+         [cell.notiCount setText:[NSString stringWithFormat:@"%d",app.badgeCount]];
+            }
+           else if ([UIApplication sharedApplication].applicationIconBadgeNumber>0) {
+                [cell.notiCount setHidden:NO];
+                [cell.notiCount setText:[NSString stringWithFormat:@"%ld",(long)[UIApplication sharedApplication].applicationIconBadgeNumber]];
+            }
+            
+    
             cell.menuImg.image = [UIImage imageNamed:@"bell"];
         }
         else if (indexPath.row==6)
         {
+                      [cell.notiCount setHidden:YES];
             if ([[NSUserDefaults standardUserDefaults]boolForKey:@"loggedIn"]) {
                 cell.menuName.text = AMLocalizedString(@"LOG OUT",nil);
                 cell.menuImg.image = [UIImage imageNamed:@"logout"];

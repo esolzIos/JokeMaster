@@ -57,6 +57,7 @@
 "Upload a Joke" = "להעלות בדיחה";
 "MY CHANNEL" ="הערוץ שלי";
 "MY FAVOURITES" ="החביבים עליי ביותר";
+"FAVOURITES" ="מועדפים";
 "FOLLOWING" ="הבא";
 "LATEST" ="הכי מאוחר";
 "HISTORY" ="הִיסטוֹרִיָה";
@@ -106,3 +107,8 @@
 "All" = "את כל";
 "Recently Uploaded" = "הועלה לאחרונה";
 "NOTIFICATIONS"= "התראות";
+
+"Not Logged in !!" ="לא מחובר !!";
+"You need to login to access this feature" ="עליך להתחבר כדי לגשת לתכונה זו";
+"LOGIN" ="התחברות";
+"CANCEL" ="रלְבַטֵל";

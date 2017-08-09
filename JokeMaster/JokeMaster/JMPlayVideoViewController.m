@@ -14,6 +14,8 @@
 #import "JMReviewViewController.h"
 #import "JMProfileViewController.h"
 #import "JMEditVideoViewController.h"
+#import "JMRatingListViewController.h"
+#import "JMFollowingViewController.h"
 @interface JMPlayVideoViewController ()<AVPlayerViewControllerDelegate>
 {
 AVPlayer *player;
@@ -163,6 +165,8 @@ UITextView *demoTxt;
         [_reviewsLbl setFont:[UIFont fontWithName:_reviewsLbl.font.fontName size:[self getFontSize:_reviewsLbl.font.pointSize]]];
     
         [_commentTitle setFont:[UIFont fontWithName:_commentTitle.font.fontName size:[self getFontSize:_commentTitle.font.pointSize]]];
+    
+            [_favouriteCountBtn.titleLabel setFont:[UIFont fontWithName:_favouriteCountBtn.titleLabel.font.fontName size:[self getFontSize:_favouriteCountBtn.titleLabel.font.pointSize]]];
     
     
     [_reviewsLbl setText:AMLocalizedString(@"reviews", nil)];
@@ -1424,6 +1428,11 @@ else
                                 
                                 _ratingLbl.text=[NSString stringWithFormat:@"%@/5",[VideoDictionary objectForKey:@"video_average_rating"]];
                                 
+                                [_favouriteCountBtn setTitle:[NSString stringWithFormat:@"%@ %@" ,[VideoDictionary objectForKey:@"favouritecount"],AMLocalizedString(@"FAVOURITES", nil) ] forState:UIControlStateNormal];
+                                
+                                
+                                
+                                
                                 _viewCountLbl.text=[NSString stringWithFormat:@"%@ %@",[VideoDictionary objectForKey:@"views"],AMLocalizedString(@"VIEWS", nil)];
                                 
                                 _rankLbl.text=[NSString stringWithFormat:@"%@ %@",AMLocalizedString(@"RANK",nil),[VideoDictionary objectForKey:@"rank"]];
@@ -1847,11 +1856,18 @@ else
     }
     if (object == player && [keyPath isEqualToString:@"status"]) {
         if (player.status == AVPlayerStatusReadyToPlay) {
+            
+                          [_loaderView setHidden:YES];
             _playBackView.userInteractionEnabled = YES;
+            
         } else if (player.status == AVPlayerStatusFailed) {
             _playBackView.userInteractionEnabled = NO;
             // something went wrong. player.error should contain some information
         }
+//        else
+//        {
+//          [SVProgressHUD showWithStatus:@"Buffering"];
+//        }
     }
     else if (object == player && [keyPath isEqualToString:@"rate"])
     {
@@ -1862,7 +1878,7 @@ else
         if (player.rate>0) {
             
             
-                  [_loaderView setHidden:YES];
+    
             
             
            // if (paused) {
@@ -1883,7 +1899,8 @@ else
         else{
             if (!paused) {
            
-            
+           //playback has ended
+                
             paused=true;
             [_playPauseImg setImage:[UIImage imageNamed:@"play-1"]];
             
@@ -1906,9 +1923,9 @@ else
     
     else if (object == player.currentItem && [keyPath isEqualToString:@"playbackBufferEmpty"])
     {
-        if (player.currentItem.playbackBufferEmpty) {
+       // if (player.currentItem.playbackBufferEmpty) {
             [SVProgressHUD showWithStatus:@"Buffering"];
-        }
+       // }
     }
     
     else if (object == player.currentItem && [keyPath isEqualToString:@"playbackLikelyToKeepUp"])
@@ -1921,4 +1938,39 @@ else
 }
 
 
+- (IBAction)jokeDetailClicked:(id)sender {
+    
+    paused=true;
+    [_playPauseImg setImage:[UIImage imageNamed:@"play-1"]];
+    
+    [player pause];
+    [_optionView setHidden:NO];
+    CABasicAnimation* anim = [CABasicAnimation animationWithKeyPath:@"transform.scale"];
+    anim.duration = 0.4;
+    anim.toValue = [NSNumber numberWithFloat:0.8];
+    anim.removedOnCompletion = NO;
+    anim.fillMode = kCAFillModeForwards;
+    
+    [anim setRepeatCount:NSUIntegerMax];
+    [anim setAutoreverses:YES];
+    
+    [[_ratingImage layer] addAnimation:anim forKey:nil];
+
+}
+- (IBAction)favouriteListClicked:(id)sender {
+    
+    JMFollowingViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMFollowingViewController"];
+    VC.profileId=[VideoDictionary objectForKey:@"video_id"];
+    VC.fromVideo=YES;
+        [self.navigationController pushViewController:VC animated:YES];
+
+}
+- (IBAction)ratingListClicked:(id)sender {
+    
+    JMRatingListViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMRatingListViewController"];
+  
+    VC.videoId=VideoId;
+    
+    [self.navigationController pushViewController:VC animated:YES];
+}
 @end

@@ -34,6 +34,7 @@
 
 - (IBAction)categoryClicked:(id)sender;
 @property (weak, nonatomic) IBOutlet UICollectionView *categoryCollectionView;
+@property (strong, nonatomic) IBOutlet UIImageView *crownImage;
 
 @property (weak, nonatomic) IBOutlet UIView *TransparentView;
 @property (weak, nonatomic) IBOutlet UIView *MenuBaseView;
@@ -51,6 +52,8 @@
 @property (strong, nonatomic) IBOutlet UIImageView *countryImage;
 @property (strong, nonatomic) IBOutlet UILabel *rankLbl;
 @property (strong, nonatomic) IBOutlet UILabel *countryName;
+@property (strong, nonatomic) IBOutlet UIButton *followerCountBtn;
+- (IBAction)followerClicked:(id)sender;
 
 @property (strong, nonatomic) IBOutlet UIView *loaderView;
 @property (strong, nonatomic) IBOutlet UIView *loadertvView;

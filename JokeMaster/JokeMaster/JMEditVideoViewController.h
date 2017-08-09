@@ -57,9 +57,11 @@
 @property (strong, nonatomic) IBOutlet FLAnimatedImageView *gifImage;
 @property (strong, nonatomic) IBOutlet UILabel *noVideoLbl;
 
-
+@property (strong, nonatomic) IBOutlet UIView *goBackView;
+@property (strong, nonatomic) IBOutlet UIButton *goBackbtn;
+- (IBAction)goBackClicked:(id)sender;
 @property (strong, nonatomic) IBOutlet UIView *PopView;
-@property (strong, nonatomic) IBOutlet UILabel *popTitle;
+@property (strong, nonatomic) IBOutlet JMStrokeLabel *popTitle;
 @property (strong, nonatomic) IBOutlet UITableView *popTable;
 @property (strong, nonatomic) IBOutlet UIButton *goBtn;
 - (IBAction)popChoosed:(id)sender;

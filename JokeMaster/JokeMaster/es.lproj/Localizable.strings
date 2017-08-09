@@ -24,7 +24,20 @@
 "Don't have an account? Sign Up" = "¿No tiene una cuenta? Regístrate";
 "Sign Up" ="Regístrate";
 "Back to Log in" = "Atrás para iniciar sesión";
-
+"My Channel" ="Mi canal";
+"MY CHANNEL" ="MI CANAL";
+"MY FAVOURITES" ="MIS FAVORITOS";
+"FAVOURITES" ="FAVORITOS";
+"Favourite" ="favorito";
+"FOLLOWING" ="SIGUIENDO";
+"Following" ="Siguiendo";
+"LATEST" ="ÚLTIMO";
+"HISTORY" ="HISTORIA";
+"PROFILE" ="PERFIL";
+"SETTINGS" ="AJUSTES";
+"RANKINGS" ="CLASIFICACIÓN";
+"UPLOAD A VIDEO" ="SUBIR UN VIDEO";
+"LOG OUT" ="CERRAR SESIÓN";
 "Choose Language" = "Elige lengua";
 "GO" = "IR";
 "Enter Name" = "Ingrese su nombre";
@@ -65,3 +78,12 @@
 "All" = "Todas";
 "Recently Uploaded" = "Recientemente cargado";
 "NOTIFICATIONS"= "NOTIFICACIONES";
+"SEARCH BY NAME"="BUSCAR POR NOMBRE";
+"Not Logged in !!" ="Sin iniciar sesión !!";
+"You need to login to access this feature" ="Necesita iniciar sesión para acceder a esta función";
+"LOGIN" ="INICIAR SESIÓN";
+"CANCEL" ="CANCELAR";
+"Enter Password" = "Introducir la contraseña";
+"Password Should be at least 6 characters" = "Contraseña Debe tener al menos 6 caracteres";
+"Enter Confirm Password" = "Introduzca Confirmar contraseña";
+"Password and confirm password should be same." = "Contraseña y confirmar la contraseña debe ser la misma.";

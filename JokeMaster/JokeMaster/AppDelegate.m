@@ -13,6 +13,10 @@
 #import <GoogleSignIn/GoogleSignIn.h>
 #import "JMPlayVideoViewController.h"
 #import "JMProfileViewController.h"
+
+#import "iVersion.h"
+
+
 @interface AppDelegate ()
 {
     NSString *CurrentViewController;
@@ -21,6 +25,23 @@
 
 @implementation AppDelegate
 
++ (void)initialize
+{
+    //set the bundle ID. normally you wouldn't need to do this
+    //as it is picked up automatically from your Info.plist file
+    //but we want to test with an app that's actually on the store
+    [iVersion sharedInstance].checkPeriod=0;
+    [iVersion sharedInstance].checkAtLaunch=YES;
+
+    [iVersion sharedInstance].applicationBundleID = @"com.esolz.JokeMaster";
+    
+    //configure iVersion. These paths are optional - if you don't set
+    //them, iVersion will just get the release notes from iTunes directly (if your app is on the store)
+//    [iVersion sharedInstance].remoteVersionsPlistURL = @"http://charcoaldesign.co.uk/iVersion/versions.plist";
+//    [iVersion sharedInstance].localVersionsPlistPath = @"versions.plist";
+    
+    
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
@@ -34,6 +55,7 @@
     [Fabric with:@[[Crashlytics class]]];
 
        _badgeCount=0;
+      [UIApplication sharedApplication].applicationIconBadgeNumber = _badgeCount;
     [self registerForRemoteNotifications];
     
     
@@ -159,7 +181,8 @@ NSDictionary *languageDic = [NSLocale componentsFromLocaleIdentifier:language];
         }];
     }
     else {
-        // Code for old versions
+        [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
+        [[UIApplication sharedApplication] registerForRemoteNotifications];
     }
 }
 
@@ -288,34 +311,79 @@ NSDictionary *languageDic = [NSLocale componentsFromLocaleIdentifier:language];
 #pragma mark - Push Notification
 
 //
-//- (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings
+- (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings {
+    [application registerForRemoteNotifications];
+}
+
 //
-//{
-//    
-//    //register to receive notifications
-//    
-//    [application registerForRemoteNotifications];
-//    
-//}
-//
-//- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
-//{
-//    DebugLog(@"didReceiveRemoteNotification %@",userInfo);
-//    
-//   
-//    
-//    UIApplicationState state = [application applicationState];
-//    if (state == UIApplicationStateActive)
-//    {
-//        
-//    }
-//    else if (state == UIApplicationStateInactive || state == UIApplicationStateBackground)
-//    {
-//        
-//    }
-//    
-//    
-//}
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
+{
+    DebugLog(@"didReceiveRemoteNotification %@",userInfo);
+    
+   
+    
+    UIApplicationState state = [application applicationState];
+    if (state == UIApplicationStateActive)
+    {
+        
+        AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
+        
+        _pushDict=[userInfo objectForKey:@"aps"];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"ReceivedPush" object:nil];
+        
+    }
+    else if (state == UIApplicationStateInactive || state == UIApplicationStateBackground)
+    {
+        
+        UINavigationController *navigationController = (UINavigationController *)self.window.rootViewController;
+        
+        
+        
+        _pushDict=[userInfo objectForKey:@"aps"];
+        
+        
+        
+        
+        
+        
+        if ( [[_pushDict objectForKey:@"type"]intValue]==1) {
+            
+            
+            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main"
+                                                                 bundle: nil];
+            //
+            JMPlayVideoViewController *VC=[storyboard instantiateViewControllerWithIdentifier:@"JMPlayVideoViewController"];
+            VC.VideoId=[_pushDict valueForKey:@"videoid"];
+            
+            [navigationController pushViewController:VC animated:YES];
+            
+        }
+        else
+            if ( [[_pushDict objectForKey:@"type"]intValue]==2) {
+                
+                
+                UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main"
+                                                                     bundle: nil];
+                //
+                JMProfileViewController *VC=[storyboard instantiateViewControllerWithIdentifier:@"JMProfile"];
+                VC.ProfileUserId=[_pushDict valueForKey:@"followingid"];
+                
+                
+                
+                [navigationController pushViewController:VC animated:YES];
+                
+            }
+        
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"ReadPush" object:nil];
+        
+
+        
+    }
+    
+    
+}
 //- (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forRemoteNotification:(NSDictionary *)userInfo completionHandler:(void(^)())completionHandler
 //
 //{

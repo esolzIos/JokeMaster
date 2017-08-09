@@ -36,20 +36,7 @@
     // Do any additional setup after loading the view.
     app = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     
-    urlobj=[[UrlconnectionObject alloc] init];
-    
-    langDict=[[NSMutableDictionary alloc]init];
-    
-    CountryArray=[[NSMutableArray alloc]init];
-    langCodeArr=[[NSMutableArray alloc]init];
-    
-    
-    
-    langArr=[[NSMutableArray alloc] init];
-    
-    codeArr=[[NSMutableArray alloc] init];
-    
-    //    engArr=[[NSMutableArray alloc] initWithObjects:@"UNITED STATES",@"UNITED KINGDOM",@"INDIA", nil];
+      //    engArr=[[NSMutableArray alloc] initWithObjects:@"UNITED STATES",@"UNITED KINGDOM",@"INDIA", nil];
     //
     //     hindiArr=[[NSMutableArray alloc] initWithObjects:@"INDIA",@"PAKISTAN", nil];
     //
@@ -66,8 +53,11 @@
     
     [_countryTitle setFont:[UIFont fontWithName:_countryTitle.font.fontName size:[self getFontSize:_countryTitle.font.pointSize]]];
     
-    
-    [_LanguageLabel setText:AMLocalizedString(@"Choose Video Language", nil)];
+    _countryTitle.layer.shadowColor = [[UIColor colorWithRed:10.0/255.0 green:10.0/255.0 blue:10.0/255.0 alpha:0.3] CGColor];
+    _countryTitle.layer.shadowOffset = CGSizeMake(-2.0f,3.0f);
+    _countryTitle.layer.shadowOpacity = 1.0f;
+    _countryTitle.layer.shadowRadius = 1.0f;
+   // [_LanguageLabel setText:AMLocalizedString(@"Choose Video Language", nil)];
     
     [_GoButton setTitle:AMLocalizedString(@"GO",nil) forState:UIControlStateNormal] ;
     
@@ -108,6 +98,11 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appendPushView) name:@"pushReceived" object:nil];
     
+    if (_fromSplash) {
+        [self.HeaderView.BackView setHidden:YES];
+        
+    }
+    
     //   // Do any additional setup after loading the view.
 }
 
@@ -118,13 +113,32 @@
 }
 
 
--(void)viewDidAppear:(BOOL)animated
+-(void)viewWillAppear:(BOOL)animated
 {
+    
+    
+    urlobj=[[UrlconnectionObject alloc] init];
+    
+    langDict=[[NSMutableDictionary alloc]init];
+    
+    CountryArray=[[NSMutableArray alloc]init];
+    langCodeArr=[[NSMutableArray alloc]init];
+    
+    
+    
+    langArr=[[NSMutableArray alloc] init];
+    
+    codeArr=[[NSMutableArray alloc] init];
+    
+
     
     [self loadData];
 }
 -(void)loadData
 {
+    
+    
+    
     
     [_loaderView setHidden:NO];
     
@@ -661,7 +675,7 @@
                }
         
          JMChooseCountryViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMChooseCountryViewController"];
-        
+        VC.fromSplash=_fromSplash;
         VC.langSelected=langSelected;
         VC.langName=langName;
         VC.fromLogin=_fromLogin;

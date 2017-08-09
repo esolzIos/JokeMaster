@@ -54,7 +54,7 @@
 //            
 //            [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
             JMLanguageViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMLanguageViewController"];
-            
+            VC.fromSplash=true;
             [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
         }
     }
@@ -63,7 +63,7 @@
         //
         
         JMLanguageViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMLanguageViewController"];
-        
+          VC.fromSplash=true;
 [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
 //        JMChooseCountryViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMChooseCountryViewController"];
 //        

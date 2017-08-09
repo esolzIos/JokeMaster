@@ -13,6 +13,7 @@
 #import <SystemConfiguration/SCNetworkReachability.h>
 #import "JMProfileViewController.h"
 #import "JMPlayVideoViewController.h"
+#import "JMFollowingViewController.h"
 @interface JMGlobalMethods ()<UITabBarControllerDelegate,UITabBarDelegate,UISearchBarDelegate,UIGestureRecognizerDelegate>
 {
     
@@ -172,10 +173,10 @@
     
  
    
-    HeaderView.moreView.hidden=YES;
+    
     HeaderView.menuView.hidden=YES;
           HeaderView.HeaderLabel.hidden=NO;
-      HeaderView.logoImage.hidden=NO;
+      HeaderView.logoImage.hidden=YES;
     HeaderView.BackView.hidden=NO;
         HeaderView.EmojiImage.hidden=NO;
     
@@ -199,21 +200,39 @@
   else  if ([CurrentViewController isEqualToString:@"JMReviewViewController"])
     {
         // leftmenurowindex=2;
-        
-
-          HeaderView.logoImage.hidden=YES;
+       
          HeaderView.HeaderLabel.hidden=YES;
-        
-        HeaderView.searchView.hidden=YES;
-        HeaderView.moreView.hidden=YES;
+
             HeaderView.EmojiImage.hidden=YES;
-        
+        HeaderView.moreView.hidden=YES;
         
     }
+  else  if ([CurrentViewController isEqualToString:@"JMLanguageViewController"])
+  {
+      // leftmenurowindex=2;
+      
+     
+      HeaderView.HeaderLabel.text=AMLocalizedString(@"Choose Language", nil) ;
+      
+      HeaderView.moreView.hidden=YES;
+      
+      
+  }
+  else  if ([CurrentViewController isEqualToString:@"JMChooseCountryViewController"])
+  {
+      // leftmenurowindex=2;
+
+      
+      HeaderView.HeaderLabel.text=AMLocalizedString(@"Choose Country", nil) ;
+      
+      HeaderView.moreView.hidden=YES;
+      
+      
+  }
   else  if ([CurrentViewController isEqualToString:@"JMSearchViewController"])
     {
         
-        
+        HeaderView.moreView.hidden=YES;
         [_searchHeaderView.backBtn addTarget:self action:@selector(BackClicked) forControlEvents:UIControlEventTouchUpInside];
         
              [_searchHeaderView.moreBtn addTarget:self action:@selector(showMore) forControlEvents:UIControlEventTouchUpInside];
@@ -223,7 +242,7 @@
     else if ([CurrentViewController isEqualToString:@"JMJokesCategoryVideoListViewController"])
     {
         HeaderView.HeaderLabel.text=AMLocalizedString(@"Joke Category", nil) ;
-
+    HeaderView.moreView.hidden=NO;
         
    }
     
@@ -231,14 +250,14 @@
     {
         HeaderView.HeaderLabel.text=AMLocalizedString(@"Notification", nil) ;
         
-        
+        HeaderView.moreView.hidden=YES;
     }
     else if ([CurrentViewController isEqualToString:@"JMFavouriteViewController"] )
     {
 
         HeaderView.HeaderLabel.text=AMLocalizedString(@"Favourite", nil) ;
-
-        
+      HeaderView.moreView.hidden=YES;
+        HeaderView.moreView.hidden=NO;
 
         
         HeaderView.EmojiImage.image=[UIImage imageNamed:@"like"];
@@ -249,7 +268,7 @@
         
         HeaderView.HeaderLabel.text=AMLocalizedString(@"Edit Profile", nil) ;
         
-        
+              HeaderView.moreView.hidden=YES;
     }
     else if ([CurrentViewController isEqualToString:@"JMProfileViewController"] )
     {
@@ -261,11 +280,11 @@
 
         HeaderView.HeaderLabel.text=AMLocalizedString(@"Joke Master Rank", nil) ;
      HeaderView.moreView.hidden=NO;
-        
+              HeaderView.moreView.hidden=YES;
     }
     else if ([CurrentViewController isEqualToString:@"JMUploadVideoViewController"] )
     {
-        
+              HeaderView.moreView.hidden=YES;
         HeaderView.HeaderLabel.text=AMLocalizedString(@"Upload a Joke", nil) ;
         
         
@@ -277,17 +296,23 @@
         
         HeaderView.HeaderLabel.text=AMLocalizedString(@"Edit Joke", nil) ;
         
-        
+              HeaderView.moreView.hidden=YES;
         
         
     }
     else if ([CurrentViewController isEqualToString:@"JMFollowingViewController"] )
     {
-
-        HeaderView.HeaderLabel.text=AMLocalizedString(@"Following", nil) ;
+      HeaderView.moreView.hidden=YES;
+      
 
      
- }
+    }   else if ([CurrentViewController isEqualToString:@"JMRatingListViewController"] )
+    {
+        HeaderView.moreView.hidden=YES;
+        
+            HeaderView.HeaderLabel.text=AMLocalizedString(@"Rated By Users", nil) ;
+        
+    }
     
     
     if (HeaderView.HeaderLabel.text.length>0) {
@@ -378,7 +403,8 @@
                     // Error Parsing JSON
                     
                     NSString *responseString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-                    
+                    app.badgeCount=0;
+                      [UIApplication sharedApplication].applicationIconBadgeNumber = app.badgeCount;
                     NSLog(@"response = %@",responseString);
                     
                     //    [SVProgressHUD showInfoWithStatus:@"some error occured"];
@@ -391,68 +417,179 @@
                     
                     if ([[response objectForKey:@"status"]boolValue]) {
                         
-       
-                            
+                        
+                        app.badgeCount=0;
+                [UIApplication sharedApplication].applicationIconBadgeNumber = app.badgeCount;
+                        
+                        
+ 
+                        
                         if ( [[app.pushDict objectForKey:@"type"]intValue]==1) {
                             
+                            //        JMFollowingViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMFollowingViewController"];
+                            //        VC.profileId=[videoDict valueForKey:@"videoid"];
+                            //        VC.fromVideo=YES;
+                            //        [self.navigationController pushViewController:VC animated:YES];
                             
-                            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main"
-                                                                                 bundle: nil];
                             //
-                            JMPlayVideoViewController *VC=[storyboard instantiateViewControllerWithIdentifier:@"JMPlayVideoViewController"];
+                            
+                            //
+                            JMPlayVideoViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMPlayVideoViewController"];
+                            VC.VideoId=[app.pushDict valueForKey:@"videoid"];
+                            
+                            [self.navigationController pushViewController:VC animated:YES];
+                            
+                        }
+                        else if ( [[app.pushDict objectForKey:@"type"]intValue]==2) {
+                            
+                            //        JMRatingListViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMRatingListViewController"];
+                            //
+                            //        VC.videoId=[videoDict valueForKey:@"videoid"];
+                            //
+                            //        [self.navigationController pushViewController:VC animated:YES];
+                            //
+                            //
+                            JMPlayVideoViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMPlayVideoViewController"];
                             VC.VideoId=[app.pushDict valueForKey:@"videoid"];
                             
                             [self.navigationController pushViewController:VC animated:YES];
                             
                         }
                         else
-                            if ( [[app.pushDict objectForKey:@"type"]intValue]==2) {
+                            if ( [[app.pushDict objectForKey:@"type"]intValue]==3) {
                                 
                                 
-                                UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main"
-                                                                                     bundle: nil];
+                                JMFollowingViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMFollowingViewController"];
+                                VC.profileId=[app.pushDict valueForKey:@"followerid"];
+                                VC.fromProfile=true;
+                                
+                                   [self.navigationController pushViewController:VC animated:YES];
+                                
                                 //
-                                JMProfileViewController *VC=[storyboard instantiateViewControllerWithIdentifier:@"JMProfile"];
-                                VC.ProfileUserId=[app.pushDict valueForKey:@"followingid"];
-                                
-                                
-                                
-                                [self.navigationController pushViewController:VC animated:YES];
+                                //            JMProfileViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMProfile"];
+                                //            VC.ProfileUserId=[videoDict valueForKey:@"senderid"];
+                                //            
+                                //            
+                                //            
+                                //            [self.navigationController pushViewController:VC animated:YES];
                                 
                             }
-                            
+                        
+                        
+//                        if ( [[app.pushDict objectForKey:@"type"]intValue]==1) {
+//                            
+//                            
+//                            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main"
+//                                                                                 bundle: nil];
+//                            //
+//                            JMPlayVideoViewController *VC=[storyboard instantiateViewControllerWithIdentifier:@"JMPlayVideoViewController"];
+//                            VC.VideoId=[app.pushDict valueForKey:@"videoid"];
+//                            
+//                            [self.navigationController pushViewController:VC animated:YES];
+//                            
+//                        }
+//                        else
+//                            if ( [[app.pushDict objectForKey:@"type"]intValue]==2) {
+//                                
+//                                
+//                                UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main"
+//                                                                                     bundle: nil];
+//                                //
+//                                JMProfileViewController *VC=[storyboard instantiateViewControllerWithIdentifier:@"JMProfile"];
+//                                VC.ProfileUserId=[app.pushDict valueForKey:@"followingid"];
+//                                
+//                                
+//                                
+//                                [self.navigationController pushViewController:VC animated:YES];
+//                                
+//                            }
+                        
                         }
                     
                         else{
                             
+                            app.badgeCount=0;
+                                     [UIApplication sharedApplication].applicationIconBadgeNumber = app.badgeCount;
+                            
                             
                             if ( [[app.pushDict objectForKey:@"type"]intValue]==1) {
                                 
+                                //        JMFollowingViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMFollowingViewController"];
+                                //        VC.profileId=[videoDict valueForKey:@"videoid"];
+                                //        VC.fromVideo=YES;
+                                //        [self.navigationController pushViewController:VC animated:YES];
                                 
-                                UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main"
-                                                                                     bundle: nil];
                                 //
-                                JMPlayVideoViewController *VC=[storyboard instantiateViewControllerWithIdentifier:@"JMPlayVideoViewController"];
+                                
+                                //
+                                JMPlayVideoViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMPlayVideoViewController"];
+                                VC.VideoId=[app.pushDict valueForKey:@"videoid"];
+                                
+                                [self.navigationController pushViewController:VC animated:YES];
+                                
+                            }
+                            else if ( [[app.pushDict objectForKey:@"type"]intValue]==2) {
+                                
+                                //        JMRatingListViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMRatingListViewController"];
+                                //
+                                //        VC.videoId=[videoDict valueForKey:@"videoid"];
+                                //
+                                //        [self.navigationController pushViewController:VC animated:YES];
+                                //
+                                //
+                                JMPlayVideoViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMPlayVideoViewController"];
                                 VC.VideoId=[app.pushDict valueForKey:@"videoid"];
                                 
                                 [self.navigationController pushViewController:VC animated:YES];
                                 
                             }
                             else
-                                if ( [[app.pushDict objectForKey:@"type"]intValue]==2) {
+                                if ( [[app.pushDict objectForKey:@"type"]intValue]==3) {
                                     
                                     
-                                    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main"
-                                                                                         bundle: nil];
-                                    //
-                                    JMProfileViewController *VC=[storyboard instantiateViewControllerWithIdentifier:@"JMProfile"];
-                                    VC.ProfileUserId=[app.pushDict valueForKey:@"followingid"];
-                                    
-                                    
+                                    JMFollowingViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMFollowingViewController"];
+                                    VC.profileId=[app.pushDict valueForKey:@"receiverid"];
+                                    VC.fromProfile=true;
                                     
                                     [self.navigationController pushViewController:VC animated:YES];
                                     
+                                    //
+                                    //            JMProfileViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMProfile"];
+                                    //            VC.ProfileUserId=[videoDict valueForKey:@"senderid"];
+                                    //
+                                    //
+                                    //
+                                    //            [self.navigationController pushViewController:VC animated:YES];
+                                    
                                 }
+                            
+//                            if ( [[app.pushDict objectForKey:@"type"]intValue]==1) {
+//                                
+//                                
+//                                UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main"
+//                                                                                     bundle: nil];
+//                                //
+//                                JMPlayVideoViewController *VC=[storyboard instantiateViewControllerWithIdentifier:@"JMPlayVideoViewController"];
+//                                VC.VideoId=[app.pushDict valueForKey:@"videoid"];
+//                                
+//                                [self.navigationController pushViewController:VC animated:YES];
+//                                
+//                            }
+//                            else
+//                                if ( [[app.pushDict objectForKey:@"type"]intValue]==2) {
+//                                    
+//                                    
+//                                    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main"
+//                                                                                         bundle: nil];
+//                                    //
+//                                    JMProfileViewController *VC=[storyboard instantiateViewControllerWithIdentifier:@"JMProfile"];
+//                                    VC.ProfileUserId=[app.pushDict valueForKey:@"followingid"];
+//                                    
+//                                    
+//                                    
+//                                    [self.navigationController pushViewController:VC animated:YES];
+//                                    
+//                                }
 
                         }
                     
@@ -475,7 +612,8 @@
     
     else{
         
-        
+               app.badgeCount=0;
+                 [UIApplication sharedApplication].applicationIconBadgeNumber = app.badgeCount;
         if ( [[app.pushDict objectForKey:@"type"]intValue]==1) {
             
             
@@ -579,7 +717,8 @@
 
                 if (jsonError) {
                     // Error Parsing JSON
-
+       app.badgeCount=0;
+                             [UIApplication sharedApplication].applicationIconBadgeNumber = app.badgeCount;
                     NSString *responseString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
 
                     NSLog(@"response = %@",responseString);
@@ -590,10 +729,14 @@
                     // Success Parsing JSON
                     // Log NSDictionary response:
                     NSLog(@"result = %@",response);
-
+       app.badgeCount=0;
+                             [UIApplication sharedApplication].applicationIconBadgeNumber = app.badgeCount;
             
                         if ([[response objectForKey:@"status"]boolValue]) {
 
+                            
+                     
+                            
                           //  [SVProgressHUD dismiss];
 
                           //  app.badgeCount=[[response objectForKey:@"batchcount"]intValue];
@@ -637,9 +780,9 @@
 
     else{
 
-
+       app.badgeCount=0;
        // [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
-
+         [UIApplication sharedApplication].applicationIconBadgeNumber = app.badgeCount;
 
 
     }
@@ -679,14 +822,23 @@
     _warningTitle=(UILabel *)[warningView viewWithTag:1];
     [_warningTitle setFont:[UIFont fontWithName:_warningTitle.font.fontName size:[self getFontSize:_warningTitle.font.pointSize]]];
     
+    [_warningTitle setText:AMLocalizedString(@"Not Logged in !!", nil) ];
+    
     _warningtext=(UILabel *)[warningView viewWithTag:2];
     [_warningtext setFont:[UIFont fontWithName:_warningtext.font.fontName size:[self getFontSize:_warningtext.font.pointSize]]];
+    
+    
+        [_warningtext setText:AMLocalizedString(@"You need to login to access this feature", nil) ];
     
     _warnChoice1=(UILabel *)[warningView viewWithTag:3];
     [_warnChoice1 setFont:[UIFont fontWithName:_warnChoice1.font.fontName size:[self getFontSize:_warnChoice1.font.pointSize]]];
     
+            [_warnChoice1 setText:AMLocalizedString(@"LOGIN", nil) ];
+    
     _warnChoice2=(UILabel *)[warningView viewWithTag:4];
     [_warnChoice2 setFont:[UIFont fontWithName:_warnChoice2.font.fontName size:[self getFontSize:_warnChoice2.font.pointSize]]];
+    
+        [_warnChoice2 setText:AMLocalizedString(@"CANCEL", nil) ];
     
     _warnBtn1=(UIButton *)[warningView viewWithTag:5];
     [_warnBtn1 addTarget:self action:@selector(warnOneClicked) forControlEvents:UIControlEventTouchUpInside];
@@ -785,6 +937,7 @@
         [ pushView setFrame:CGRectMake(-FULLWIDTH, 0, FULLWIDTH,70.0/480.0*FULLHEIGHT)];
     } completion:^(BOOL finished) {
         
+        app.badgeCount++;
         
         [pushView removeFromSuperview];
         
@@ -797,7 +950,7 @@
         [ pushView setFrame:CGRectMake(FULLWIDTH, 0, FULLWIDTH,70.0/480.0*FULLHEIGHT)];
     } completion:^(BOOL finished) {
         
-        
+           app.badgeCount++;
         [pushView removeFromSuperview];
        // [self checkPushCount];
     }];
@@ -812,7 +965,7 @@
             [ pushView setFrame:CGRectMake(0, -70.0/480.0*FULLHEIGHT, FULLWIDTH,70.0/480.0*FULLHEIGHT)];
         } completion:^(BOOL finished) {
             
-            
+            app.badgeCount++;
             
             [pushView removeFromSuperview];
           //  [self checkPushCount];
@@ -3231,7 +3384,8 @@
                 [UIView commitAnimations];
                 [MainView removeGestureRecognizer:tapRecognizer];
                 
-                JMGlobalMethods *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMFollowingViewController"];
+                JMFollowingViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMFollowingViewController"];
+                VC.profileId=app.userId;
                 [self.navigationController pushViewController:VC animated:kCAMediaTimingFunctionEaseIn];
            }];
                 
@@ -3393,6 +3547,8 @@
                 
                 JMGlobalMethods *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMNotificationViewController"];
                 [self.navigationController pushViewController:VC animated:YES];
+                
+                [self  readAfterPush];
                 
             }];
             
@@ -3573,8 +3729,23 @@
             
             
             
-          
-                [self presentViewController:alertController animated:YES completion:nil];
+                                      
+                                      if (IDIOM==IPAD) {
+                                          
+                                          
+                                          
+                                          
+                                          UIPopoverPresentationController *popPresenter = [alertController
+                                                                                           popoverPresentationController];
+                                          popPresenter.sourceView = self.view;
+                                          //popPresenter.sourceRect = self.view.bounds;
+                                          [self presentViewController:alertController animated:YES completion:nil];
+                                      }
+                                      else{
+                                          [self presentViewController:alertController animated:YES completion:nil];
+                                      }
+                                      
+                                      
     
                     
                         }

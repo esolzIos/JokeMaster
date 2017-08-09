@@ -19,6 +19,7 @@
 #import "UrlconnectionObject.h"
 #import "JMCategoryVideoListViewController.h"
 #import "JMProfileVidViewController.h"
+#import "JMFollowingViewController.h"
 @interface JMProfileViewController ()<UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 {
     NSDictionary *userDetails;
@@ -64,6 +65,8 @@
       [_membershipDate setFont:[UIFont fontWithName:_membershipDate.font.fontName size:[self getFontSize:_membershipDate.font.pointSize]]];
     
        [_CategoryLabel setFont:[UIFont fontWithName:_CategoryLabel.font.fontName size:[self getFontSize:_CategoryLabel.font.pointSize]]];
+    
+           [_followerCountBtn.titleLabel setFont:[UIFont fontWithName:_followerCountBtn.titleLabel.font.fontName size:[self getFontSize:_followerCountBtn.titleLabel.font.pointSize]]];
     
 
         if ([_ProfileUserId isEqualToString:appDelegate.userId]) {
@@ -265,19 +268,35 @@ selectedcategoryId=@"";
                             
                             [_userName setText:[[NSString stringWithFormat:@"%@",[userDetails objectForKey:@"username"]] capitalizedString]];
                             
-                                    [_countryName setText:[[NSString stringWithFormat:@"%@",[userDetails objectForKey:@"country"]] capitalizedString]];
+                              if ([[userDetails objectForKey:@"leader"]boolValue]) {
                             
-                            [_scoreLbl setText:[NSString stringWithFormat:@"%@ : %@/5",AMLocalizedString(@"SCORE", nil),[userDetails objectForKey:@"score"]]];
+                                    [_countryName setText:[[NSString stringWithFormat:@"%@ %@",@"JOKE MASTER",[userDetails objectForKey:@"country"]] capitalizedString]];
+                              }
+                            else
+                            {
+                              [_countryName setText:[[NSString stringWithFormat: @"%@",[userDetails objectForKey:@"country"]] capitalizedString]];
+                            }
+                            
+                            [_scoreLbl setText:[NSString stringWithFormat:@"%@ : %@/5",AMLocalizedString(@"TOTAL SCORE", nil),[userDetails objectForKey:@"score"]]];
                             
                             
                                  [_rankLbl setText:[NSString stringWithFormat:@"%@: %@",AMLocalizedString(@"Joke Master Rank", nil),[userDetails objectForKey:@"rank"]]];
                             
-                            [_membershipDate setText:[NSString stringWithFormat:@"%@ %@",AMLocalizedString(@"MEMBER SINCE", nil),[userDetails objectForKey:@"memberSince"]]];
+                            [_membershipDate setText:[NSString stringWithFormat:@"%@ %@",AMLocalizedString(@"JOINED ON", nil),[userDetails objectForKey:@"memberSince"]]];
                             
                             
                             [_profileImage sd_setImageWithURL:[NSURL URLWithString:[userDetails objectForKey:@"user_image"]] placeholderImage:[UIImage imageNamed:@"noimage"]];
                             
-                             [_countryImage sd_setImageWithURL:[NSURL URLWithString:[userDetails objectForKey:@"country_image"]] placeholderImage:[UIImage imageNamed:@"noimage"]];
+                             [_countryImage sd_setImageWithURL:[NSURL URLWithString:[userDetails objectForKey:@"country_image"]] placeholderImage:[UIImage imageNamed:@"world"]];
+                            
+                            
+                            [_followerCountBtn setTitle:[NSString stringWithFormat:@"%@ FOLLOWERS",[userDetails objectForKey:@"followingcount"]] forState:UIControlStateNormal];
+                            
+                            
+                            if ([[userDetails objectForKey:@"leader"]boolValue]) {
+                                [_crownImage setHidden:NO];
+                            }
+                            
                             
                             if ([_ProfileUserId isEqualToString:appDelegate.userId]) {
                                 [_followBtn setTitle:@"Upload a Joke" forState:UIControlStateNormal];
@@ -379,7 +398,7 @@ selectedcategoryId=@"";
 //        return CGSizeMake(self.view.frame.size.width/3,135);
 //    }
     
- return CGSizeMake(self.view.frame.size.width/3,130.0/480.0*FULLHEIGHT);
+ return CGSizeMake(self.view.frame.size.width/3,120.0/480.0*FULLHEIGHT);
     
     
 }
@@ -812,6 +831,10 @@ selectedcategoryId=@"";
 }
 - (IBAction)profileClicked:(id)sender {
     
+    
+    if ([_ProfileUserId isEqualToString:appDelegate.userId]) {
+    
+    
     UIAlertController *alertController = [UIAlertController
                                           alertControllerWithTitle:@"Choose what to do"
                                           message:nil
@@ -881,7 +904,10 @@ selectedcategoryId=@"";
     
     
     
-    
+    }
+    else{
+        [self showImage];
+    }
     
 
 }
@@ -1323,7 +1349,7 @@ selectedcategoryId=@"";
                              [_categoryCollectionView setFrame:CGRectMake(_categoryCollectionView.frame.origin.x, _categoryCollectionView.frame.origin.y, FULLWIDTH, collectionHeight)];
                              
                              
-                             [_MainScroll setContentSize:CGSizeMake(FULLWIDTH, 300.0/480.0*FULLHEIGHT + _categoryCollectionView.frame.size.height)];
+                             [_MainScroll setContentSize:CGSizeMake(FULLWIDTH, 320.0/480.0*FULLHEIGHT + _categoryCollectionView.frame.size.height)];
     
                              [_categoryCollectionView  reloadData];
                          }
@@ -1553,5 +1579,13 @@ selectedcategoryId=@"";
     
     
     
+}
+- (IBAction)followerClicked:(id)sender {
+    
+    JMFollowingViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMFollowingViewController"];
+    VC.profileId=_ProfileUserId;
+    VC.fromProfile=true;
+    
+    [self.navigationController pushViewController:VC animated:kCAMediaTimingFunctionEaseIn];
 }
 @end

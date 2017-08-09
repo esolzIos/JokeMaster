@@ -105,6 +105,12 @@
 @property (strong, nonatomic) IBOutlet UIView *errorView;
 @property (strong, nonatomic) IBOutlet FLAnimatedImageView *gifImage;
 @property (strong, nonatomic) IBOutlet UILabel *noVideoLbl;
+@property (strong, nonatomic) IBOutlet UIButton *jokeDetailBtn;
+- (IBAction)jokeDetailClicked:(id)sender;
+@property (strong, nonatomic) IBOutlet UIButton *favouriteCountBtn;
+- (IBAction)favouriteListClicked:(id)sender;
+@property (strong, nonatomic) IBOutlet UIButton *ratingListBtn;
+- (IBAction)ratingListClicked:(id)sender;
 
 @property (strong, nonatomic) IBOutlet UIView *playBackView;
 @end

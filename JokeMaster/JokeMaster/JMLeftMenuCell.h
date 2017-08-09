@@ -11,4 +11,5 @@
 @interface JMLeftMenuCell : UITableViewCell
 @property (strong, nonatomic) UILabel *menuName;
 @property (strong, nonatomic) UIImageView *menuImg;
+@property (strong, nonatomic) UILabel *notiCount;
 @end

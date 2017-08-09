@@ -35,6 +35,9 @@
 		0C91CFBD1EEE5B7A00123303 /* JMCategoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C91CFBC1EEE5B7A00123303 /* JMCategoryCell.m */; };
 		0C91CFC31EEE92F400123303 /* JMJokesCategoryVideoListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C91CFC21EEE92F400123303 /* JMJokesCategoryVideoListViewController.m */; };
 		0CE2FB481EE190E50031C0E6 /* JMRegistrationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CE2FB471EE190E50031C0E6 /* JMRegistrationViewController.m */; };
+		B00338BC1F383779001D38D1 /* iVersion.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B00338B91F383779001D38D1 /* iVersion.bundle */; };
+		B00338BD1F383779001D38D1 /* iVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = B00338BB1F383779001D38D1 /* iVersion.m */; };
+		B00338C01F38747D001D38D1 /* JMRatingListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B00338BF1F38747D001D38D1 /* JMRatingListViewController.m */; };
 		B01F63801F33053E00E2F961 /* JMNotificationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B01F637F1F33053E00E2F961 /* JMNotificationViewController.m */; };
 		B03E5EEA1F31D90900AAA3F1 /* JMEditVideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B03E5EE91F31D90900AAA3F1 /* JMEditVideoViewController.m */; };
 		B07134691F137AE0006178E7 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B07134681F137AE0006178E7 /* QuartzCore.framework */; };
@@ -202,6 +205,11 @@
 		0C91CFC21EEE92F400123303 /* JMJokesCategoryVideoListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMJokesCategoryVideoListViewController.m; sourceTree = "<group>"; };
 		0CE2FB461EE190E50031C0E6 /* JMRegistrationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMRegistrationViewController.h; sourceTree = "<group>"; };
 		0CE2FB471EE190E50031C0E6 /* JMRegistrationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMRegistrationViewController.m; sourceTree = "<group>"; };
+		B00338B91F383779001D38D1 /* iVersion.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = iVersion.bundle; sourceTree = "<group>"; };
+		B00338BA1F383779001D38D1 /* iVersion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iVersion.h; sourceTree = "<group>"; };
+		B00338BB1F383779001D38D1 /* iVersion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iVersion.m; sourceTree = "<group>"; };
+		B00338BE1F38747D001D38D1 /* JMRatingListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMRatingListViewController.h; sourceTree = "<group>"; };
+		B00338BF1F38747D001D38D1 /* JMRatingListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMRatingListViewController.m; sourceTree = "<group>"; };
 		B01F637E1F33053E00E2F961 /* JMNotificationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMNotificationViewController.h; sourceTree = "<group>"; };
 		B01F637F1F33053E00E2F961 /* JMNotificationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMNotificationViewController.m; sourceTree = "<group>"; };
 		B03E5EE81F31D90900AAA3F1 /* JMEditVideoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMEditVideoViewController.h; sourceTree = "<group>"; };
@@ -452,9 +460,8 @@
 		0C6F9E321EE14E44005D31A0 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				0C6F9E331EE14E50005D31A0 /* Cell */,
-				0C48BFB71EE82DA400CD1C2A /* JMHeaderView.xib */,
 				B0A5C4C31EFE6F83002FB26D /* ExtendedViews.xib */,
+				0C48BFB71EE82DA400CD1C2A /* JMHeaderView.xib */,
 				0C48BFB91EE82EEF00CD1C2A /* JMHeaderView.h */,
 				0C48BFBA1EE82EEF00CD1C2A /* JMHeaderView.m */,
 				0C58274A1EE9308E00480E19 /* JMLeftMenuView.xib */,
@@ -463,6 +470,7 @@
 				B099B0C51EF8F741004AC64C /* JMSearchView.h */,
 				B099B0C61EF8F741004AC64C /* JMSearchView.m */,
 				B099B0C71EF8F741004AC64C /* JMSearchView.xib */,
+				0C6F9E331EE14E50005D31A0 /* Cell */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -486,6 +494,16 @@
 				0C3AFB7A1EF162820037834A /* JMFavouriteCell.m */,
 			);
 			name = Cell;
+			sourceTree = "<group>";
+		};
+		B00338B81F383779001D38D1 /* iVersion */ = {
+			isa = PBXGroup;
+			children = (
+				B00338B91F383779001D38D1 /* iVersion.bundle */,
+				B00338BA1F383779001D38D1 /* iVersion.h */,
+				B00338BB1F383779001D38D1 /* iVersion.m */,
+			);
+			path = iVersion;
 			sourceTree = "<group>";
 		};
 		B07134751F137C19006178E7 /* FLAnimatedImage */ = {
@@ -749,6 +767,8 @@
 				B03E5EE91F31D90900AAA3F1 /* JMEditVideoViewController.m */,
 				B01F637E1F33053E00E2F961 /* JMNotificationViewController.h */,
 				B01F637F1F33053E00E2F961 /* JMNotificationViewController.m */,
+				B00338BE1F38747D001D38D1 /* JMRatingListViewController.h */,
+				B00338BF1F38747D001D38D1 /* JMRatingListViewController.m */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -756,6 +776,7 @@
 		B0A32B811EE1313F0044D443 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B00338B81F383779001D38D1 /* iVersion */,
 				B07D12281F1CCA310066033C /* HPGrowingTextView */,
 				B08D167D1F1892A900767164 /* AFNetworking */,
 				B07134751F137C19006178E7 /* FLAnimatedImage */,
@@ -957,6 +978,7 @@
 				B0EAAA951F28B9F400EE5A8E /* giphy.gif in Resources */,
 				B0A5C4C41EFE6F83002FB26D /* ExtendedViews.xib in Resources */,
 				B0A32B511EE129300044D443 /* LaunchScreen.storyboard in Resources */,
+				B00338BC1F383779001D38D1 /* iVersion.bundle in Resources */,
 				B0A32B4E1EE129300044D443 /* Assets.xcassets in Resources */,
 				B07ABAC11EE527050011DD57 /* Temp.storyboard in Resources */,
 				B07ABAD61EE58E4E0011DD57 /* GoogleSignIn.bundle in Resources */,
@@ -1066,6 +1088,7 @@
 				0C337AD91EF40FC600BE2BB3 /* JMFollowingViewController.m in Sources */,
 				0C6F9E361EE14E84005D31A0 /* CountryCell.m in Sources */,
 				B077641D1F0132F3007FAEE5 /* UIImage+GIF.m in Sources */,
+				B00338C01F38747D001D38D1 /* JMRatingListViewController.m in Sources */,
 				B07764141F0132F3007FAEE5 /* SDImageCache.m in Sources */,
 				B0A32B911EE131680044D443 /* SVRadialGradientLayer.m in Sources */,
 				B0A5C4DC1EFE7F2F002FB26D /* JTSAnimatedGIFUtility.m in Sources */,
@@ -1079,6 +1102,7 @@
 				B0A5C4CD1EFE7EFF002FB26D /* DZNPhotoPickerControllerConstants.m in Sources */,
 				B0A5C4E01EFE7F2F002FB26D /* UIApplication+JTSImageViewController.m in Sources */,
 				B077641A1F0132F3007FAEE5 /* SDWebImageManager.m in Sources */,
+				B00338BD1F383779001D38D1 /* iVersion.m in Sources */,
 				B07764181F0132F3007FAEE5 /* SDWebImageDownloader.m in Sources */,
 				B0DA70901EEBF52900FD91A7 /* JokeCollectionViewCell.m in Sources */,
 				B07764191F0132F3007FAEE5 /* SDWebImageDownloaderOperation.m in Sources */,
@@ -1203,7 +1227,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PROVISIONING_PROFILE = "355b4a9c-9bc0-4439-9e82-2eefabb7dbec";
@@ -1249,7 +1273,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PROVISIONING_PROFILE = "355b4a9c-9bc0-4439-9e82-2eefabb7dbec";
 				SDKROOT = iphoneos;
@@ -1273,7 +1297,7 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = JokeMaster/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				"LD_MAP_FILE_PATH[arch=*]" = "$(TARGET_TEMP_DIR)/$(PRODUCT_NAME)-LinkMap-$(CURRENT_VARIANT)-$(CURRENT_ARCH).txt";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -1302,7 +1326,7 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = JokeMaster/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(OTHER_LDFLAGS)",

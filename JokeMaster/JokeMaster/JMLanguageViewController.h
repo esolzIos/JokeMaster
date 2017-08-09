@@ -28,7 +28,7 @@
 @property (strong, nonatomic) IBOutlet UIButton *cancelBttn;
 - (IBAction)cancelClicked:(id)sender;
 @property(nonatomic) NSMutableDictionary *userDict;
-@property (nonatomic)BOOL fromLogin;
+@property (nonatomic)BOOL fromLogin,fromSplash;
 @property (strong, nonatomic) IBOutlet UIView *loaderView;
 @property (strong, nonatomic) IBOutlet UIView *loadertvView;
 @property (strong, nonatomic) IBOutlet UIImageView *loaderImage;
@@ -38,4 +38,5 @@
 @property (strong, nonatomic) IBOutlet FLAnimatedImageView *gifImage;
 @property (strong, nonatomic) IBOutlet UILabel *noVideoLbl;
 @property (strong, nonatomic) IBOutlet UILabel *countryTitle;
+
 @end
