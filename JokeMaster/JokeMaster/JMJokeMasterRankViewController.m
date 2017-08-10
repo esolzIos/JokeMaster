@@ -323,7 +323,7 @@
     
         [cell.countryImage sd_setImageWithURL:[NSURL URLWithString:[videoDict objectForKey:@"country_image"]] placeholderImage:[UIImage imageNamed:@"world"]];
     
-     [cell.RankLabel setText:[NSString stringWithFormat:@"RANK %@",[videoDict objectForKey:@"rank"]]];
+     [cell.RankLabel setText:[NSString stringWithFormat:@"%@ %@",AMLocalizedString(@"RANK", nil),[videoDict objectForKey:@"rank"]]];
     
     [cell.ProfileNameLabel setText:[videoDict objectForKey:@"username"]];
     

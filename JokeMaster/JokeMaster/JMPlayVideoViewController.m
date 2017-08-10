@@ -164,6 +164,8 @@ UITextView *demoTxt;
     
         [_reviewsLbl setFont:[UIFont fontWithName:_reviewsLbl.font.fontName size:[self getFontSize:_reviewsLbl.font.pointSize]]];
     
+       [_noreviewLbl setFont:[UIFont fontWithName:_noreviewLbl.font.fontName size:[self getFontSize:_noreviewLbl.font.pointSize]]];
+    
         [_commentTitle setFont:[UIFont fontWithName:_commentTitle.font.fontName size:[self getFontSize:_commentTitle.font.pointSize]]];
     
             [_favouriteCountBtn.titleLabel setFont:[UIFont fontWithName:_favouriteCountBtn.titleLabel.font.fontName size:[self getFontSize:_favouriteCountBtn.titleLabel.font.pointSize]]];
@@ -172,6 +174,8 @@ UITextView *demoTxt;
     [_reviewsLbl setText:AMLocalizedString(@"reviews", nil)];
        [_commentTitle setText:AMLocalizedString(@"comments", nil)];
     
+    
+    [_noreviewLbl setText:AMLocalizedString(@"No reviews found", nil)];
     
     [_ratingBtnOne addTarget:self action:@selector(rateVideo:) forControlEvents:UIControlEventTouchUpInside];
     [_ratingBtnTwo addTarget:self action:@selector(rateVideo:) forControlEvents:UIControlEventTouchUpInside];
@@ -454,7 +458,7 @@ demoTxt = [[UITextView alloc] init];
 //        [_noVideoLbl setText:[NSString stringWithFormat:@"%@. \n\n %@",AMLocalizedString(@"Check your Internet connection", nil),AMLocalizedString(@"Click to retry", nil)]];
 //        [_loaderBtn setHidden:NO];
         
-          [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
+          [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:AMLocalizedString(@"Check your Internet connection",nil)] ;
         
         
     }
@@ -693,7 +697,7 @@ demoTxt = [[UITextView alloc] init];
         
     }
     else{
-        [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
+        [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:AMLocalizedString(@"Check your Internet connection",nil)] ;
     }
           }
     else{
@@ -809,7 +813,7 @@ demoTxt = [[UITextView alloc] init];
         
         //http://ec2-13-58-196-4.us-east-2.compute.amazonaws.com/jokemaster/index.php/useraction/reportabuse?videoid=21&userid=1
         
-        NSURL *url=[NSURL URLWithString:[NSString stringWithFormat:@"%@%@useraction/reportabuse",GLOBALAPI,INDEX]];
+        NSURL *url=[NSURL URLWithString:[NSString stringWithFormat:@"%@%@useraction/reportabuse?mode=%@",GLOBALAPI,INDEX,[[NSUserDefaults standardUserDefaults] objectForKey:@"langmode"]]];
         
         // configure the request
         
@@ -823,6 +827,9 @@ demoTxt = [[UITextView alloc] init];
         
         sendData = [sendData stringByAppendingString:@"&userid="];
         sendData = [sendData stringByAppendingString:[NSString stringWithFormat:@"%@",app.userId]];
+        
+        
+        DebugLog(@"url : %@&%@",url,sendData);
         
        [request setValue:@"gzip" forHTTPHeaderField:@"Accept-Encoding"];
         
@@ -901,7 +908,7 @@ demoTxt = [[UITextView alloc] init];
         
     }
     else{
-        [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
+        [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:AMLocalizedString(@"Check your Internet connection",nil)] ;
     }
     
     
@@ -1075,7 +1082,7 @@ demoTxt = [[UITextView alloc] init];
         
     }
     else{
-        [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
+        [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:AMLocalizedString(@"Check your Internet connection",nil)] ;
     }
     
     }
@@ -1676,7 +1683,7 @@ else
     else{
         
         
-        [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
+        [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:AMLocalizedString(@"Check your Internet connection",nil)] ;
         
         
     }

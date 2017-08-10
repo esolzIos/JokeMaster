@@ -66,6 +66,9 @@
     
        [_CategoryLabel setFont:[UIFont fontWithName:_CategoryLabel.font.fontName size:[self getFontSize:_CategoryLabel.font.pointSize]]];
     
+    [_CategoryLabel setText:AMLocalizedString(@"CHOOSE CATEGORY", nil)];
+    
+    
            [_followerCountBtn.titleLabel setFont:[UIFont fontWithName:_followerCountBtn.titleLabel.font.fontName size:[self getFontSize:_followerCountBtn.titleLabel.font.pointSize]]];
     
 
@@ -112,18 +115,20 @@ selectedcategoryId=@"";
     
     if (_ProfileUserId==nil)
     {
-        self.HeaderView.HeaderLabel.text=@"My Channel";
+        self.HeaderView.HeaderLabel.text=AMLocalizedString(@"My Channel", nil) ;
          self.HeaderView.moreView.hidden=NO;
     }
     else if (_ProfileUserId==appDelegate.userId)
     {
-        self.HeaderView.HeaderLabel.text=@"My Channel";
+            self.HeaderView.HeaderLabel.text=AMLocalizedString(@"My Channel", nil) ;
+      
          self.HeaderView.moreView.hidden=NO;
     }
     else
     {
           self.HeaderView.moreView.hidden=YES;
-        self.HeaderView.HeaderLabel.text=@"Profile";
+            self.HeaderView.HeaderLabel.text=AMLocalizedString(@"PROFILE", nil) ;
+       ;
     }
     
     jsonResponse=[[NSDictionary alloc]init];
@@ -194,7 +199,7 @@ selectedcategoryId=@"";
         sendData = [sendData stringByAppendingString: [[NSUserDefaults standardUserDefaults] objectForKey:@"langmode"]];
 
 
-        
+        DebugLog(@"url : %@?%@",url,sendData);
         
         [request setValue:@"gzip" forHTTPHeaderField:@"Accept-Encoding"];
         
@@ -270,7 +275,7 @@ selectedcategoryId=@"";
                             
                               if ([[userDetails objectForKey:@"leader"]boolValue]) {
                             
-                                    [_countryName setText:[[NSString stringWithFormat:@"%@ %@",@"JOKE MASTER",[userDetails objectForKey:@"country"]] capitalizedString]];
+                                    [_countryName setText:[[NSString stringWithFormat:@"%@ %@",AMLocalizedString(@"JOKE MASTER",nil),[userDetails objectForKey:@"country"]] capitalizedString]];
                               }
                             else
                             {
@@ -290,7 +295,7 @@ selectedcategoryId=@"";
                              [_countryImage sd_setImageWithURL:[NSURL URLWithString:[userDetails objectForKey:@"country_image"]] placeholderImage:[UIImage imageNamed:@"world"]];
                             
                             
-                            [_followerCountBtn setTitle:[NSString stringWithFormat:@"%@ FOLLOWERS",[userDetails objectForKey:@"followingcount"]] forState:UIControlStateNormal];
+                            [_followerCountBtn setTitle:[NSString stringWithFormat:@"%@ %@",[userDetails objectForKey:@"followingcount"],AMLocalizedString(@"FOLLOWERS", nil)] forState:UIControlStateNormal];
                             
                             
                             if ([[userDetails objectForKey:@"leader"]boolValue]) {
@@ -299,7 +304,7 @@ selectedcategoryId=@"";
                             
                             
                             if ([_ProfileUserId isEqualToString:appDelegate.userId]) {
-                                [_followBtn setTitle:@"Upload a Joke" forState:UIControlStateNormal];
+                                [_followBtn setTitle:AMLocalizedString(@"Upload a Joke",nil) forState:UIControlStateNormal];
                                 
                             }
                             else{
@@ -310,10 +315,10 @@ selectedcategoryId=@"";
                                 
                                 [_FollowImg setImage:[UIImage imageNamed:@"followFill"]];
                                 
-                                [_followBtn setTitle:@"UNFOLLOW" forState:UIControlStateNormal];
+                                [_followBtn setTitle:AMLocalizedString(@"UNFOLLOW",nil) forState:UIControlStateNormal];
                             }
                             else{
-                                            [_followBtn setTitle:@"FOLLOW" forState:UIControlStateNormal];
+                                            [_followBtn setTitle:AMLocalizedString(@"FOLLOW",nil) forState:UIControlStateNormal];
                                 
                                  [_FollowImg setImage:[UIImage imageNamed:@"follow"]];
                             }
@@ -356,7 +361,7 @@ selectedcategoryId=@"";
     
     else{
         
-        [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
+        [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:AMLocalizedString(@"Check your Internet connection",nil)] ;
         
        }
 
@@ -615,7 +620,7 @@ selectedcategoryId=@"";
         
     }
     else{
-        [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
+        [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:AMLocalizedString(@"Check your Internet connection",nil)] ;
     }
  
     
@@ -836,14 +841,14 @@ selectedcategoryId=@"";
     
     
     UIAlertController *alertController = [UIAlertController
-                                          alertControllerWithTitle:@"Choose what to do"
+                                          alertControllerWithTitle:AMLocalizedString(@"Choose what to do", nil)
                                           message:nil
                                           preferredStyle:UIAlertControllerStyleActionSheet];
     
     
     
     UIAlertAction *ViewImage = [UIAlertAction
-                                actionWithTitle:@"View image"
+                                actionWithTitle:AMLocalizedString(@"View image",nil)
                                 style:UIAlertActionStyleDefault
                                 handler:^(UIAlertAction *action)
                                 {
@@ -857,7 +862,7 @@ selectedcategoryId=@"";
     
     
     UIAlertAction *changeImage = [UIAlertAction
-                                  actionWithTitle:@"Change image"
+                                  actionWithTitle:AMLocalizedString(@"Change image",nil)
                                   style:UIAlertActionStyleDefault
                                   handler:^(UIAlertAction *action)
                                   {
@@ -867,7 +872,7 @@ selectedcategoryId=@"";
                                   }];
     
     UIAlertAction *cancelAction = [UIAlertAction
-                                   actionWithTitle:@"Cancel"
+                                   actionWithTitle:AMLocalizedString(@"CANCEL",nil)
                                    style:UIAlertActionStyleCancel
                                    handler:^(UIAlertAction *action)
                                    {
@@ -924,13 +929,13 @@ selectedcategoryId=@"";
     ipc.cropMode=DZNPhotoEditorViewControllerCropModeSquare;
     
     UIAlertController *alertController = [UIAlertController
-                                          alertControllerWithTitle:@"Select image source"
+                                          alertControllerWithTitle:AMLocalizedString(@"Select image source", nil)
                                           message:nil
                                           preferredStyle:UIAlertControllerStyleActionSheet];
     
     
     UIAlertAction *cameraAction = [UIAlertAction
-                                   actionWithTitle:@"Camera"
+                                   actionWithTitle:AMLocalizedString(@"Camera",nil)
                                    style:UIAlertActionStyleDefault
                                    handler:^(UIAlertAction *action)
                                    {
@@ -954,7 +959,7 @@ selectedcategoryId=@"";
                                            
                                            // [self showAlertwithTitle:@"" withMessage:@"No Camera Available."  withAlertType:UIAlertControllerStyleAlert withOk:YES withCancel:NO];
                                            
-                                           [SVProgressHUD showInfoWithStatus:@"Camera not supported"];
+                                           [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"No Camera Available", nil)];
                                            
                                            
                                        }
@@ -965,7 +970,7 @@ selectedcategoryId=@"";
                                    }];
     
     UIAlertAction *galleryAction = [UIAlertAction
-                                    actionWithTitle:@"Gallery"
+                                    actionWithTitle:AMLocalizedString(@"Photo Library",nil)
                                     style:UIAlertActionStyleDefault
                                     handler:^(UIAlertAction *action)
                                     {
@@ -983,7 +988,7 @@ selectedcategoryId=@"";
                                     }];
     
     UIAlertAction *cancelAction = [UIAlertAction
-                                   actionWithTitle:@"Cancel"
+                                   actionWithTitle:AMLocalizedString(@"CANCEL",nil)
                                    style:UIAlertActionStyleCancel
                                    handler:^(UIAlertAction *action)
                                    {
@@ -1180,7 +1185,7 @@ selectedcategoryId=@"";
                 
             {
                 
-                [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
+                [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:AMLocalizedString(@"Check your Internet connection",nil)] ;
             }
         }
                 }
@@ -1527,7 +1532,7 @@ selectedcategoryId=@"";
     }
     else
     {
-        [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
+        [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:AMLocalizedString(@"Check your Internet connection",nil)] ;
         //        [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Network Not Available." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
     }
 }

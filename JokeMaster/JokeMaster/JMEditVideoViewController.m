@@ -140,13 +140,13 @@
 
 - (IBAction)uploadClicked:(id)sender {
     if ([self textFieldBlankorNot:_videoName.text]) {
-        [SVProgressHUD showInfoWithStatus:@"Video name cannot be blank"];
+        [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Video name cannot be blank", nil)];
     }
     else if ([self textFieldBlankorNot:langSelected]) {
-        [SVProgressHUD showInfoWithStatus:@"Select joke language"];
+        [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Select joke language", nil) ];
     }
     else if ([self textFieldBlankorNot:categorySelected]) {
-        [SVProgressHUD showInfoWithStatus:@"Select joke Category"];
+        [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Select joke Category",nil)];
     }
    else
     {
@@ -286,7 +286,7 @@
         
         langPickerOpen=true;
         catPickerOpen=false;
-        [_popTitle setText:@"SELECT JOKE LANGUAGE"];
+        [_popTitle setText:AMLocalizedString( @"SELECT JOKE LANGUAGE", nil)];
         [_PopView setHidden:NO];
         [_popTable reloadData];
         
@@ -299,7 +299,7 @@
         
         catPickerOpen=true;
         langPickerOpen=false;
-        [_popTitle setText:@"CHOOSE CATEGORY"];
+        [_popTitle setText:AMLocalizedString(@"CHOOSE CATEGORY",nil)];
         [_PopView setHidden:NO];
         [_popTable reloadData];
         

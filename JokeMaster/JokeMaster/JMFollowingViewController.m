@@ -336,7 +336,7 @@
     
 
     
-    [cell.RankLabel setText:[NSString stringWithFormat:@"RANK %@",[videoDict objectForKey:@"rank"]]];
+    [cell.RankLabel setText:[NSString stringWithFormat:@"%@ %@",AMLocalizedString(@"RANK", nil),[videoDict objectForKey:@"rank"]]];
     
     [cell.ProfileNameLabel setText:[videoDict objectForKey:@"name"]];
     
@@ -573,7 +573,7 @@
         
     }
     else{
-        [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
+        [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:AMLocalizedString(@"Check your Internet connection",nil)] ;
     }
     
 

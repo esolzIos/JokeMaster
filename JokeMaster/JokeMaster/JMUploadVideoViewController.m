@@ -81,13 +81,23 @@
     
      [_popTitle setFont:[UIFont fontWithName:_popTitle.font.fontName size:[self getFontSize:_popTitle.font.pointSize]]];
     
-      
+    
+    [_jokeLang setText:AMLocalizedString(@"Select joke language", nil)];
+        [_categoryLbl setText:AMLocalizedString(@"Choose Category", nil)];
+    [_tapInfo setText:AMLocalizedString(@"TAP TO CHOOSE VIDEO", nil)];
+   [_cameraLbl setText:AMLocalizedString(@"CAMERA ROLL", nil)];
+    [_galleryLbl setText:AMLocalizedString(@"GALLERY", nil)];
+    
+    
     _popTitle.layer.shadowColor = [[UIColor colorWithRed:10.0/255.0 green:10.0/255.0 blue:10.0/255.0 alpha:0.3] CGColor];
     _popTitle.layer.shadowOffset = CGSizeMake(-2.0f,3.0f);
     _popTitle.layer.shadowOpacity = 1.0f;
     _popTitle.layer.shadowRadius = 1.0f;
     
     [_uploadBtn.titleLabel setFont:[UIFont fontWithName:_uploadBtn.titleLabel.font.fontName size:[self getFontSize:_uploadBtn.titleLabel.font.pointSize]]];
+    
+    [_uploadBtn setTitle:AMLocalizedString(@"Upload", nil) forState:UIControlStateNormal];
+    
     
     // Do any additional setup after loading the view.
     
@@ -156,17 +166,17 @@
 
 - (IBAction)uploadClicked:(id)sender {
     if ([self textFieldBlankorNot:_videoName.text]) {
-        [SVProgressHUD showInfoWithStatus:@"Video name cannot be blank"];
+        [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Video name cannot be blank",nil)];
     }
     else if ([self textFieldBlankorNot:langSelected]) {
-        [SVProgressHUD showInfoWithStatus:@"Select joke language"];
+        [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Select joke language", nil)];
     }
     else if ([self textFieldBlankorNot:categorySelected]) {
-        [SVProgressHUD showInfoWithStatus:@"Select joke Category"];
+        [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Select joke Category",nil)];
     }
     
     else if (!videoPicked) {
-        [SVProgressHUD showInfoWithStatus:@"Please select a video to continue"];
+        [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Please select a video to continue",nil)];
     }
     
     
@@ -217,7 +227,7 @@
         
         // [self showAlertwithTitle:@"" withMessage:@"No Camera Available."  withAlertType:UIAlertControllerStyleAlert withOk:YES withCancel:NO];
         
-        [SVProgressHUD showInfoWithStatus:@"Camera not supported"];
+        [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"No Camera Available", nil)];
         
         
     }
@@ -259,7 +269,7 @@
             if ([mediaType isEqualToString:(NSString *)kUTTypeImage])
             {
                 
-                [SVProgressHUD showInfoWithStatus:@"Only videos are allowed"];
+                [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Only videos are allowed", nil) ];
                 
             }
             else  if ([mediaType isEqualToString:(NSString *)kUTTypeMovie])
@@ -298,7 +308,7 @@
                                             dispatch_async(dispatch_get_main_queue(), ^{
                                                 
                                                 [_loadingView setHidden:NO];
-                                                [_infoLbl setText:@"GENERATING IMAGE"];
+                                                [_infoLbl setText:AMLocalizedString(@"GENERATING IMAGE", nil) ];
                                                 
                                                 AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:compressedUrl options:nil];
                                                 AVAssetImageGenerator *generator = [[AVAssetImageGenerator alloc] initWithAsset:asset];
@@ -362,7 +372,7 @@
                                                 }
                                                 else{
                                                     
-                                                    [SVProgressHUD showInfoWithStatus:@"Something went wrong"];
+                                                    [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Some error occured", nil) ];
                                                     
                                                 }
                                                 
@@ -560,7 +570,7 @@
         
         langPickerOpen=true;
         catPickerOpen=false;
-        [_popTitle setText:@"SELECT JOKE LANGUAGE"];
+        [_popTitle setText:AMLocalizedString(@"SELECT JOKE LANGUAGE", nil) ];
         [_PopView setHidden:NO];
         [_popTable reloadData];
         
@@ -576,7 +586,7 @@
         
         catPickerOpen=true;
         langPickerOpen=false;
-        [_popTitle setText:@"CHOOSE CATEGORY"];
+        [_popTitle setText:AMLocalizedString(@"CHOOSE CATEGORY",nil)];
         [_PopView setHidden:NO];
         [_popTable reloadData];
         
@@ -603,7 +613,7 @@
 {
     
       [_loadingView setHidden:NO];
-      [_infoLbl setText:@"UPLOADING"];
+      [_infoLbl setText:AMLocalizedString(@"UPLOADING", nil) ];
 
     if ([self networkAvailable]) {
         
@@ -709,7 +719,7 @@
                                                       
                                                       
                                                       
-              [SVProgressHUD showInfoWithStatus:@"Video uploaded Successfully"];
+              [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Video uploaded Successfully", nil) ];
                                                       
               
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"videoLoaded"  object:self];
@@ -730,7 +740,7 @@
         
         // [self showAlertwithTitle:@"No internet" withMessage:@"Please check your Internet connection" withAlertType:UIAlertControllerStyleAlert withOk:YES withCancel:NO];
         
-        [SVProgressHUD showInfoWithStatus:@"Please check your Internet connection"];
+        [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Check your Internet connection",nil)];
         
     }
     

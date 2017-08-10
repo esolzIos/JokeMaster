@@ -24,18 +24,12 @@
 "Don't have an account? Sign Up" = "एक खाता नहीं है? साइन अप करें";
 "Sign Up" ="साइन अप करने";
 "Back to Log in" = "लॉग इन पर वापस जाएं";
-"English"="अंग्रेजी";
-"Hindi"="हिन्दी";
-"Hebrew"="यहूदी";
 "Choose Language" = "भाषा चुनें";
 "GO" = "आगे जाएं";
-"Enter Name" = "नाम दर्ज करें";
-"Enter Valid Email Address" = "मान्य ईमेल पता दर्ज करें";
 "Select Language" = "भाषा का चयन करें";
 "Enter Name" = "नाम दर्ज करें";
 "Enter Email Address" = "ईमेल पता दर्ज";
 "Enter Valid Email Address" = "मान्य ईमेल पता दर्ज करें";
-"Select Language" = "भाषा का चयन करें";
 "Enter Password" = "पास वर्ड दर्ज करें";
 "Password Should be at least 6 characters" = "पासवर्ड कम से कम 6 वर्ण होना चाहिए";
 "Enter Confirm Password" = "पासवर्ड की पुष्टि करें दर्ज करें";
@@ -63,6 +57,8 @@
 "LOG OUT" ="लोग आउट";
 "SCORE"= "स्कोर";
 "SEARCH BY NAME"="नाम से खोजें";
+"Server Failed to Respond" ="सर्वर प्रतिसाद में विफल रहा";
+"Click to retry" = "पुनः प्रयास करने के लिए क्लिक करें";
 "Joke Category" = "मजाक श्रेणी";
 "Forgot Password?" = "पासवर्ड भूल गए?";
 "Guest" = "अतिथि";
@@ -75,7 +71,6 @@
 "View All"="सभी को देखें";
 "Upload a Joke" = "मजाक अपलोड करें";
 "Edit Profile" = "प्रोफाइल एडिट करें";
-"Click to retry" = "पुनः प्रयास करने के लिए क्लिक करें";
 "Some error occured" = "कुछ त्रुटि हुई है";
 "Check your Internet connection"= "अपना इंटरनेट संपर्क जांचे";
 "Joke Master Rank" = "मजाक मास्टर रैंक";
@@ -98,3 +93,4 @@
 "You need to login to access this feature" ="इस सुविधा का उपयोग करने के लिए आपको प्लॉग इन करना होगा";
 "LOGIN" ="लॉग इन";
 "CANCEL" ="रद् करें";
+"CLICK TO RETRY" = "पुनः प्रयास करने के लिए क्लिक करें";

@@ -898,7 +898,7 @@
 //                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"No Camera Available." delegate:self cancelButtonTitle:AMLocalizedString(@"OK",nil) otherButtonTitles:nil];
 //                [alert show];
                 
-                         [SVProgressHUD showInfoWithStatus:@"No Camera Available."];
+                         [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"No Camera Available", nil) ];
             }
             break;
             
@@ -994,7 +994,7 @@
         
          countryOpen=NO;
         langOpen=YES;
-         [_popTitle setText:@"APP INTERFACE LANGUAGE"];
+         [_popTitle setText:AMLocalizedString(@"App interface language", nil) ];
         [_PopView setHidden:NO];
         [_popTable reloadData];
         
@@ -1196,7 +1196,7 @@
     }
     else
     {
-        [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
+        [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:AMLocalizedString(@"Check your Internet connection",nil)] ;
         
 //        [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Network Not Available." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
     }
@@ -1324,7 +1324,7 @@
     else
     {
         
-        [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
+        [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:AMLocalizedString(@"Check your Internet connection",nil)] ;
 //        [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Network Not Available." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
     }
 }
@@ -1348,7 +1348,7 @@
         
         langOpen=NO;
         countryOpen=YES;
-        [_popTitle setText:@"CHOOSE YOUR COUNTRY"];
+        [_popTitle setText:AMLocalizedString(@"Choose your country", nil)];
         [_popTable reloadData];
         [_PopView setHidden:NO];
         

@@ -330,7 +330,7 @@
     } else{
         //  [self showAlertwithTitle:@"No internet" withMessage:@"Please check your Internet connection" withAlertType:UIAlertControllerStyleAlert withOk:YES withCancel:NO];
         [_googleBtn setUserInteractionEnabled:YES];
-        [SVProgressHUD showInfoWithStatus:@"Please check your Internet connection"];
+        [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Check your Internet connection",nil)];
         
     }
     
@@ -591,7 +591,7 @@ dismissViewController:(UIViewController *)viewController {
     }
     else
     {
-        [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
+        [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:AMLocalizedString(@"Check your Internet connection",nil)] ;
         
         //        [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Network Not Available." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
     }
@@ -745,7 +745,7 @@ dismissViewController:(UIViewController *)viewController {
     }
     else
     {
-        [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:@"Check your Internet connection"] ;
+        [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:AMLocalizedString(@"Check your Internet connection",nil)] ;
         //        [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Network Not Available." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
     }
 }

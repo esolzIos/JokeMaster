@@ -304,7 +304,7 @@
     
     
     
-    [cell.RankLabel setText:[NSString stringWithFormat:@"RANK %@",[videoDict objectForKey:@"rank"]]];
+    [cell.RankLabel setText:[NSString stringWithFormat:@"%@ %@",AMLocalizedString(@"RANK", nil),[videoDict objectForKey:@"rank"]]];
     
     [cell.ProfileNameLabel setText:[videoDict objectForKey:@"sendername"]];
     

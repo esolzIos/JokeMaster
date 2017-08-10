@@ -248,7 +248,7 @@
     
     else if ([CurrentViewController isEqualToString:@"JMNotificationViewController"])
     {
-        HeaderView.HeaderLabel.text=AMLocalizedString(@"Notification", nil) ;
+        HeaderView.HeaderLabel.text=AMLocalizedString(@"NOTIFICATIONS", nil) ;
         
         HeaderView.moreView.hidden=YES;
     }
