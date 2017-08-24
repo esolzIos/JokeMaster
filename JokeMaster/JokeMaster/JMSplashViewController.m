@@ -45,7 +45,7 @@
             
             
             
-            JMHomeViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMHomeViewController"];
+            JMHomeViewController *VC=[app.storyBoard instantiateViewControllerWithIdentifier:@"JMHomeViewController"];
             
             [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
         }
@@ -53,7 +53,7 @@
 //            JMChooseCountryViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMChooseCountryViewController"];
 //            
 //            [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
-            JMLanguageViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMLanguageViewController"];
+            JMLanguageViewController *VC=[app.storyBoard instantiateViewControllerWithIdentifier:@"JMLanguageViewController"];
             VC.fromSplash=true;
             [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
         }
@@ -62,7 +62,7 @@
     
         //
         
-        JMLanguageViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMLanguageViewController"];
+        JMLanguageViewController *VC=[app.storyBoard instantiateViewControllerWithIdentifier:@"JMLanguageViewController"];
           VC.fromSplash=true;
 [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
 //        JMChooseCountryViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMChooseCountryViewController"];

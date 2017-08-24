@@ -31,6 +31,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+   appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    
     [self addMoreView:self.view];
     
     ChooseCategoryLabel.frame=CGRectMake(ChooseCatImage.frame.origin.x-ChooseCategoryLabel.frame.size.width-6, ChooseCategoryLabel.frame.origin.y, ChooseCategoryLabel.frame.size.width, ChooseCategoryLabel.frame.size.height);
@@ -164,7 +166,7 @@
 
 {
     
-    JMCategoryVideoListViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMVideoList"];
+    JMCategoryVideoListViewController *VC=[appDelegate.storyBoard instantiateViewControllerWithIdentifier:@"JMVideoList"];
     VC.CategoryId=[NSString stringWithFormat:@"%@",[[CategoryArray objectAtIndex:indexPath.row]objectForKey:@"id"]];
     VC.CategoryName=[NSString stringWithFormat:@"%@",[[[[CategoryArray objectAtIndex:indexPath.row]objectForKey:@"name"]stringByReplacingOccurrencesOfString:@"&amp;" withString:@"&"] uppercaseString]];
 
@@ -316,7 +318,7 @@
 
 - (IBAction)RecentlyUploadedVideoTapped:(id)sender
 {
-    JMRecentlyUploadedViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMRecentlyUploadedViewController"];
+    JMRecentlyUploadedViewController *VC=[appDelegate.storyBoard instantiateViewControllerWithIdentifier:@"JMRecentlyUploadedViewController"];
     
     [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
 }
@@ -335,10 +337,9 @@
             NSString *urlString;
             
             
-            urlString=[NSString stringWithFormat:@"%@index.php/video/category?mode=%@",GLOBALAPI,[[NSUserDefaults standardUserDefaults] objectForKey:@"langmode"]];
-            
-            
-            
+            urlString=[NSString stringWithFormat:@"%@index.php/video/category?language=%@&mode=%@",GLOBALAPI,[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"],[[NSUserDefaults standardUserDefaults] objectForKey:@"langmode"]];
+        
+
             urlString=[urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
             
             DebugLog(@"Send string Url%@",urlString);

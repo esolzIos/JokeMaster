@@ -203,7 +203,7 @@
 {
 
     
-        JMPlayVideoViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMPlayVideoViewController"];
+        JMPlayVideoViewController *VC=[appDelegate.storyBoard instantiateViewControllerWithIdentifier:@"JMPlayVideoViewController"];
         VC.VideoId=[[videoArr objectAtIndex:indexPath.row] valueForKey:@"id"];
         [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
     

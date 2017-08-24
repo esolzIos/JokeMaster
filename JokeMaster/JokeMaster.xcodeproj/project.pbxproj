@@ -69,7 +69,7 @@
 		B07764221F0132F3007FAEE5 /* UIView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = B077640D1F0132F3007FAEE5 /* UIView+WebCache.m */; };
 		B07764231F0132F3007FAEE5 /* UIView+WebCacheOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B077640F1F0132F3007FAEE5 /* UIView+WebCacheOperation.m */; };
 		B0779D701EEBD2D10065FECD /* Comic_Book.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B0779D6F1EEBD2D10065FECD /* Comic_Book.ttf */; };
-		B07ABAC11EE527050011DD57 /* Temp.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B07ABAC01EE527050011DD57 /* Temp.storyboard */; };
+		B07ABAC11EE527050011DD57 /* Hebrew.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B07ABAC01EE527050011DD57 /* Hebrew.storyboard */; };
 		B07ABAC41EE540B90011DD57 /* JMLanguageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B07ABAC31EE540B90011DD57 /* JMLanguageViewController.m */; };
 		B07ABAC71EE540F90011DD57 /* JMLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B07ABAC61EE540F90011DD57 /* JMLoginViewController.m */; };
 		B07ABACB1EE570C60011DD57 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B07ABAC81EE570C60011DD57 /* FBSDKCoreKit.framework */; };
@@ -270,7 +270,7 @@
 		B077640F1F0132F3007FAEE5 /* UIView+WebCacheOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+WebCacheOperation.m"; sourceTree = "<group>"; };
 		B0779D6E1EEBD2260065FECD /* Comic_Book.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Comic_Book.ttf; sourceTree = "<group>"; };
 		B0779D6F1EEBD2D10065FECD /* Comic_Book.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Comic_Book.ttf; sourceTree = "<group>"; };
-		B07ABAC01EE527050011DD57 /* Temp.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Temp.storyboard; sourceTree = "<group>"; };
+		B07ABAC01EE527050011DD57 /* Hebrew.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Hebrew.storyboard; sourceTree = "<group>"; };
 		B07ABAC21EE540B90011DD57 /* JMLanguageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMLanguageViewController.h; sourceTree = "<group>"; };
 		B07ABAC31EE540B90011DD57 /* JMLanguageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMLanguageViewController.m; sourceTree = "<group>"; };
 		B07ABAC51EE540F90011DD57 /* JMLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMLoginViewController.h; sourceTree = "<group>"; };
@@ -658,7 +658,7 @@
 				B0A32B521EE129300044D443 /* Info.plist */,
 				B0A32B4A1EE129300044D443 /* JokeMaster.xcdatamodeld */,
 				B0A32B3E1EE1292F0044D443 /* Supporting Files */,
-				B07ABAC01EE527050011DD57 /* Temp.storyboard */,
+				B07ABAC01EE527050011DD57 /* Hebrew.storyboard */,
 			);
 			path = JokeMaster;
 			sourceTree = "<group>";
@@ -668,8 +668,8 @@
 			children = (
 				0C35E1E91EF2991D00D2CBCE /* HCSStarRatingView */,
 				0C48BFB41EE7CF1200CD1C2A /* LocalizationSystem.h */,
-				0C48BFB51EE7CF1200CD1C2A /* LocalizationSystem.m */,
 				0C48BFB11EE7CD6F00CD1C2A /* Localizable.strings */,
+				0C48BFB51EE7CF1200CD1C2A /* LocalizationSystem.m */,
 				B0A32B3F1EE1292F0044D443 /* main.m */,
 			);
 			name = "Supporting Files";
@@ -980,7 +980,7 @@
 				B0A32B511EE129300044D443 /* LaunchScreen.storyboard in Resources */,
 				B00338BC1F383779001D38D1 /* iVersion.bundle in Resources */,
 				B0A32B4E1EE129300044D443 /* Assets.xcassets in Resources */,
-				B07ABAC11EE527050011DD57 /* Temp.storyboard in Resources */,
+				B07ABAC11EE527050011DD57 /* Hebrew.storyboard in Resources */,
 				B07ABAD61EE58E4E0011DD57 /* GoogleSignIn.bundle in Resources */,
 				B0A32B491EE129300044D443 /* Main.storyboard in Resources */,
 				0C48BFB81EE82DA400CD1C2A /* JMHeaderView.xib in Resources */,

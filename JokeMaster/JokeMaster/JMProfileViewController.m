@@ -25,7 +25,7 @@
     NSDictionary *userDetails;
     UIImagePickerController *ipc;
     NSURLSession *session;
-    BOOL firedOnce,catFonteSet;
+    BOOL firedOnce,catFonteSet,pickerOpen,imageOpen;
     NSDictionary *jsonResponse;
         AppDelegate *appDelegate;
     UIImage *selectedImage;
@@ -59,19 +59,31 @@
     
      [_scoreLbl setFont:[UIFont fontWithName:_scoreLbl.font.fontName size:[self getFontSize:_scoreLbl.font.pointSize]]];
     
-       [_rankLbl setFont:[UIFont fontWithName:_rankLbl.font.fontName size:[self getFontSize:_rankLbl.font.pointSize]]];
+       [_scoreTitle setFont:[UIFont fontWithName:_scoreTitle.font.fontName size:[self getFontSize:_scoreTitle.font.pointSize]]];
        [_countryName setFont:[UIFont fontWithName:_countryName.font.fontName size:[self getFontSize:_countryName.font.pointSize]]];
     
       [_membershipDate setFont:[UIFont fontWithName:_membershipDate.font.fontName size:[self getFontSize:_membershipDate.font.pointSize]]];
     
+       [_followTitle setFont:[UIFont fontWithName:_followTitle.font.fontName size:[self getFontSize:_followTitle.font.pointSize]]];
+    
        [_CategoryLabel setFont:[UIFont fontWithName:_CategoryLabel.font.fontName size:[self getFontSize:_CategoryLabel.font.pointSize]]];
+    
+        [_leaderLbl setFont:[UIFont fontWithName:_leaderLbl.font.fontName size:[self getFontSize:_leaderLbl.font.pointSize]]];
     
     [_CategoryLabel setText:AMLocalizedString(@"CHOOSE CATEGORY", nil)];
     
+      [_followTitle setText:[NSString stringWithFormat:@"%@ :",AMLocalizedString(@"FOLLOWERS", nil)]];
     
-           [_followerCountBtn.titleLabel setFont:[UIFont fontWithName:_followerCountBtn.titleLabel.font.fontName size:[self getFontSize:_followerCountBtn.titleLabel.font.pointSize]]];
+    [_scoreTitle setText:AMLocalizedString(@"TOTAL SCORE", nil)];
+           [_followerCount setFont:[UIFont fontWithName:_followerCount.font.fontName size:[self getFontSize:_followerCount.font.pointSize]]];
+    
+    [self setRoundCornertoView:_followerCount withBorderColor:[UIColor clearColor] WithRadius:0.15];
+    
     
 
+    [_followBtn.titleLabel setFont:[UIFont fontWithName:_followBtn.titleLabel.font.fontName size:[self getFontSize:_followBtn.titleLabel.font.pointSize]]];
+    
+    
         if ([_ProfileUserId isEqualToString:appDelegate.userId]) {
             [_followBtn setTitle:@"Upload a Joke" forState:UIControlStateNormal];
             
@@ -131,13 +143,23 @@ selectedcategoryId=@"";
        ;
     }
     
+    if (pickerOpen ) {
+        pickerOpen=false;
+    }
+    else  if (imageOpen ) {
+        imageOpen=false;
+    }
+    else{
     jsonResponse=[[NSDictionary alloc]init];
     videoArr=[[NSMutableArray alloc]init];
+        
+        [_categoryCollectionView reloadData];
+        
     //  categoryId=@"";
     page=1;
     totalCount=0;
 [self loadData];
-    
+    }
     
 }
 
@@ -275,19 +297,19 @@ selectedcategoryId=@"";
                             
                               if ([[userDetails objectForKey:@"leader"]boolValue]) {
                             
-                                    [_countryName setText:[[NSString stringWithFormat:@"%@ %@",AMLocalizedString(@"JOKE MASTER",nil),[userDetails objectForKey:@"country"]] capitalizedString]];
+                                    [_leaderLbl setText:[[NSString stringWithFormat:@"%@ %@",AMLocalizedString(@"JOKE MASTER",nil),[userDetails objectForKey:@"language"]] capitalizedString]];
                               }
-                            else
-                            {
+                         
                               [_countryName setText:[[NSString stringWithFormat: @"%@",[userDetails objectForKey:@"country"]] capitalizedString]];
-                            }
+                         
                             
-                            [_scoreLbl setText:[NSString stringWithFormat:@"%@ : %@/5",AMLocalizedString(@"TOTAL SCORE", nil),[userDetails objectForKey:@"score"]]];
+                       
                             
+                            [_scoreLbl setText:[NSString stringWithFormat:@"%.1f",[[userDetails objectForKey:@"score"] floatValue]]];
                             
-                                 [_rankLbl setText:[NSString stringWithFormat:@"%@: %@",AMLocalizedString(@"Joke Master Rank", nil),[userDetails objectForKey:@"rank"]]];
+         
                             
-                            [_membershipDate setText:[NSString stringWithFormat:@"%@ %@",AMLocalizedString(@"JOINED ON", nil),[userDetails objectForKey:@"memberSince"]]];
+                            [_membershipDate setText:[NSString stringWithFormat:@"%@ %@",AMLocalizedString(@"JOINED : ", nil),[userDetails objectForKey:@"memberSince"]]];
                             
                             
                             [_profileImage sd_setImageWithURL:[NSURL URLWithString:[userDetails objectForKey:@"user_image"]] placeholderImage:[UIImage imageNamed:@"noimage"]];
@@ -295,7 +317,7 @@ selectedcategoryId=@"";
                              [_countryImage sd_setImageWithURL:[NSURL URLWithString:[userDetails objectForKey:@"country_image"]] placeholderImage:[UIImage imageNamed:@"world"]];
                             
                             
-                            [_followerCountBtn setTitle:[NSString stringWithFormat:@"%@ %@",[userDetails objectForKey:@"followingcount"],AMLocalizedString(@"FOLLOWERS", nil)] forState:UIControlStateNormal];
+                            [_followerCount setText:[NSString stringWithFormat:@"%@",[userDetails objectForKey:@"followingcount"]] ];
                             
                             
                             if ([[userDetails objectForKey:@"leader"]boolValue]) {
@@ -441,7 +463,7 @@ selectedcategoryId=@"";
 - (void)collectionView:(UICollectionViewCell *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 
 {
-    JMProfileVidViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMProfileVid"];
+    JMProfileVidViewController *VC=[appDelegate.storyBoard instantiateViewControllerWithIdentifier:@"JMProfileVid"];
     VC.categoryId=[NSString stringWithFormat:@"%@",[[videoArr objectAtIndex:indexPath.row]objectForKey:@"id"]];
     VC.categoryName=[NSString stringWithFormat:@"%@",[[[[videoArr objectAtIndex:indexPath.row]objectForKey:@"name"]stringByReplacingOccurrencesOfString:@"&amp;" withString:@"&"] uppercaseString]];
     
@@ -475,7 +497,7 @@ selectedcategoryId=@"";
         if (appDelegate.isLogged) {
             
             if ([_ProfileUserId isEqualToString:appDelegate.userId]) {
-                JMUploadVideoViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMUploadVideoViewController"];
+                JMUploadVideoViewController *VC=[appDelegate.storyBoard instantiateViewControllerWithIdentifier:@"JMUploadVideoViewController"];
                 [self.navigationController pushViewController:VC animated:YES];
             }
             else{
@@ -551,7 +573,7 @@ selectedcategoryId=@"";
             if (error) {
                 NSLog(@"error = %@", error);
                 
-                [SVProgressHUD showErrorWithStatus:@"Some error occured"];
+              [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"Some error occured", nil) ];
                 
                 return;
             }
@@ -569,7 +591,7 @@ selectedcategoryId=@"";
                     
                     NSLog(@"response = %@",responseString);
                     
-                    [SVProgressHUD showInfoWithStatus:@"Some error occured"];
+                [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"Some error occured", nil) ];
                     
                     
                     
@@ -815,7 +837,7 @@ selectedcategoryId=@"";
 }
 -(void)showImage
 {
-    
+    imageOpen=true;
     // Create image info
     JTSImageInfo *imageInfo = [[JTSImageInfo alloc] init];
     imageInfo.image = _profileImage.image;
@@ -948,7 +970,7 @@ selectedcategoryId=@"";
                                            
                                            [self presentViewController:ipc animated:YES completion:^{
                                                
-                                               
+                                               pickerOpen=YES;
                                            }];
                                            
                                        }
@@ -982,7 +1004,7 @@ selectedcategoryId=@"";
                                         //                                        ipc.mediaTypes = [[NSArray alloc] initWithObjects: (NSString *) kUTTypeMovie,(NSString *)kUTTypeImage, nil];
                                         [self presentViewController:ipc animated:YES completion:^{
                                             
-                                            
+                                            pickerOpen=YES;
                                         }];
                                         
                                     }];
@@ -1050,14 +1072,14 @@ selectedcategoryId=@"";
 //                    
 //                }
         
-        [SVProgressHUD showWithStatus:@"Processing"];
+        [SVProgressHUD showWithStatus: AMLocalizedString(@"Processing",nil)];
         
         NSString *mediaType = [info objectForKey:UIImagePickerControllerMediaType];
         if ([mediaType isEqualToString:(NSString *)kUTTypeImage])
         {
             
             selectedImage=[info valueForKey:UIImagePickerControllerEditedImage];
-            
+   
             
             
             if ([self networkAvailable])
@@ -1066,7 +1088,7 @@ selectedcategoryId=@"";
                 
                 
                 
-                [SVProgressHUD showWithStatus:@"Uploading Please wait"];
+                [SVProgressHUD showWithStatus:AMLocalizedString(@"Uploading Please wait", nil) ];
                 
                 
                 //  AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
@@ -1131,7 +1153,7 @@ selectedcategoryId=@"";
                             // Error Parsing JSON
                             NSString *responseString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
                             
-                            [SVProgressHUD showInfoWithStatus:@"some error occured"];
+                                     [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"Some error occured", nil) ];
                             
                             NSLog(@"response = %@",responseString);
                         } else {
@@ -1279,7 +1301,7 @@ selectedcategoryId=@"";
                 
                 // [_chooseBtn setUserInteractionEnabled:YES];
                 
-             [SVProgressHUD showInfoWithStatus:@"some error occured"];
+                     [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"Some error occured", nil) ];
                 
                 return;
             }
@@ -1302,7 +1324,7 @@ selectedcategoryId=@"";
                     
                     NSLog(@"response = %@",responseString);
                     
-                    [SVProgressHUD showInfoWithStatus:@"some error occured"];
+                    [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"Some error occured", nil) ];
                     
 //                    [_gifImage setHidden:YES];
 //                    [_noVideoView setHidden:NO];
@@ -1354,7 +1376,7 @@ selectedcategoryId=@"";
                              [_categoryCollectionView setFrame:CGRectMake(_categoryCollectionView.frame.origin.x, _categoryCollectionView.frame.origin.y, FULLWIDTH, collectionHeight)];
                              
                              
-                             [_MainScroll setContentSize:CGSizeMake(FULLWIDTH, 320.0/480.0*FULLHEIGHT + _categoryCollectionView.frame.size.height)];
+                             [_MainScroll setContentSize:CGSizeMake(FULLWIDTH, 300.0/480.0*FULLHEIGHT + _categoryCollectionView.frame.size.height)];
     
                              [_categoryCollectionView  reloadData];
                          }
@@ -1587,7 +1609,7 @@ selectedcategoryId=@"";
 }
 - (IBAction)followerClicked:(id)sender {
     
-    JMFollowingViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMFollowingViewController"];
+    JMFollowingViewController *VC=[appDelegate.storyBoard instantiateViewControllerWithIdentifier:@"JMFollowingViewController"];
     VC.profileId=_ProfileUserId;
     VC.fromProfile=true;
     

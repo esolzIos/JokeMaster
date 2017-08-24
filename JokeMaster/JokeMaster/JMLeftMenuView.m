@@ -19,7 +19,16 @@
 */
 + (id)leftmenu
 {
-    JMLeftMenuView *customView = [[[NSBundle mainBundle] loadNibNamed:@"JMLeftMenuView" owner:nil options:nil] lastObject];
+    
+    JMLeftMenuView *customView;
+    
+    if ([[NSUserDefaults standardUserDefaults]boolForKey:@"rightToleft"]) {
+            customView = [[[NSBundle mainBundle] loadNibNamed:@"JMLeftMenuView" owner:nil options:nil] lastObject];
+    }
+    else{
+             customView = [[[NSBundle mainBundle] loadNibNamed:@"JMLeftMenuView" owner:nil options:nil] firstObject];
+    }
+
     
     
     
@@ -186,7 +195,7 @@
         else if (indexPath.row==1)
         {
                           [cell.notiCount setHidden:YES];
-            cell.menuName.text = [AMLocalizedString(@"MY FAVOURITES",nil)uppercaseString];;
+            cell.menuName.text = AMLocalizedString(@"MY FAVOURITES",nil);
             cell.menuImg.image = [UIImage imageNamed:@"favourite"];
             
            
@@ -217,12 +226,12 @@
         else if (indexPath.row==4)
         {
                           [cell.notiCount setHidden:YES];
-            cell.menuName.text = AMLocalizedString(@"UPLOAD A VIDEO",nil);
+            cell.menuName.text = AMLocalizedString(@"UPLOAD A VIDEO",nil) ;
             cell.menuImg.image = [UIImage imageNamed:@"settings"];
         }
         else if (indexPath.row==5)
         {
-            cell.menuName.text = AMLocalizedString(@"NOTIFICATIONS",nil);
+            cell.menuName.text =  AMLocalizedString(@"NOTIFICATIONS",nil);
             
             
                AppDelegate *app=(AppDelegate *)[[UIApplication sharedApplication]delegate];
@@ -234,7 +243,7 @@
                 [cell.notiCount setHidden:NO];
                 [cell.notiCount setText:[NSString stringWithFormat:@"%ld",(long)[UIApplication sharedApplication].applicationIconBadgeNumber]];
             }
-            
+        
     
             cell.menuImg.image = [UIImage imageNamed:@"bell"];
         }

@@ -290,13 +290,16 @@
 //        [cell.RatingLabel setFont:[UIFont fontWithName:cell.RatingLabel.font.fontName size:[self getFontSize:9]]];
     
     
+    [self setRoundCornertoView:cell.profileFrame withBorderColor:[UIColor clearColor] WithRadius:0.25];
+    [self setRoundCornertoView:cell.ProfileImage withBorderColor:[UIColor clearColor] WithRadius:0.15];
+    
     [cell.RankLabel setFont:[UIFont fontWithName:cell.RankLabel.font.fontName size:[self getFontSize:7.0]]];
     
-    [cell.ProfileNameLabel setFont:[UIFont fontWithName:cell.ProfileNameLabel.font.fontName size:[self getFontSize:10.0]]];
+    [cell.ProfileNameLabel setFont:[UIFont fontWithName:cell.ProfileNameLabel.font.fontName size:[self getFontSize:8.0]]];
     
-    [cell.RatingLabel setFont:[UIFont fontWithName:cell.RatingLabel.font.fontName size:[self getFontSize:9.0]]];
+    [cell.RatingLabel setFont:[UIFont fontWithName:cell.RatingLabel.font.fontName size:[self getFontSize:7.0]]];
     
-    [cell.CountryName setFont:[UIFont fontWithName:cell.CountryName.font.fontName size:[self getFontSize:9.0]]];
+    [cell.CountryName setFont:[UIFont fontWithName:cell.CountryName.font.fontName size:[self getFontSize:7.0]]];
     
     [cell.countryImage sd_setImageWithURL:[NSURL URLWithString:[videoDict objectForKey:@"countryimage"]] placeholderImage:[UIImage imageNamed:@"world"]];
     
@@ -340,7 +343,7 @@
 //        
         
         //
-        JMPlayVideoViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMPlayVideoViewController"];
+        JMPlayVideoViewController *VC=[appDelegate.storyBoard instantiateViewControllerWithIdentifier:@"JMPlayVideoViewController"];
         VC.VideoId=[videoDict valueForKey:@"videoid"];
         
         [self.navigationController pushViewController:VC animated:YES];
@@ -355,7 +358,7 @@
 //        [self.navigationController pushViewController:VC animated:YES];
 //
         //
-        JMPlayVideoViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMPlayVideoViewController"];
+        JMPlayVideoViewController *VC=[appDelegate.storyBoard instantiateViewControllerWithIdentifier:@"JMPlayVideoViewController"];
         VC.VideoId=[videoDict valueForKey:@"videoid"];
         
         [self.navigationController pushViewController:VC animated:YES];
@@ -365,7 +368,7 @@
         if ( [[videoDict objectForKey:@"type"]intValue]==3) {
             
             
-            JMFollowingViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMFollowingViewController"];
+            JMFollowingViewController *VC=[appDelegate.storyBoard instantiateViewControllerWithIdentifier:@"JMFollowingViewController"];
             VC.profileId=[videoDict valueForKey:@"receiverid"];
             VC.fromProfile=true;
             

@@ -29,7 +29,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     
       [self.searchHeaderView.searchBtn addTarget:self action:@selector(searchClicked) forControlEvents:UIControlEventTouchUpInside];
     
@@ -364,9 +364,9 @@
     
     [cell.RankLabel setFont:[UIFont fontWithName:cell.RankLabel.font.fontName size:[self getFontSize:7.0]]];
     
-    [cell.ProfileNameLabel setFont:[UIFont fontWithName:cell.ProfileNameLabel.font.fontName size:[self getFontSize:10.0]]];
+    [cell.ProfileNameLabel setFont:[UIFont fontWithName:cell.ProfileNameLabel.font.fontName size:[self getFontSize:9.0]]];
     
-    [cell.JokesNameLabel setFont:[UIFont fontWithName:cell.JokesNameLabel.font.fontName size:[self getFontSize:9.0]]];
+    [cell.JokesNameLabel setFont:[UIFont fontWithName:cell.JokesNameLabel.font.fontName size:[self getFontSize:7.0]]];
     
     [cell.CountryName setFont:[UIFont fontWithName:cell.CountryName.font.fontName size:[self getFontSize:7.0]]];
     
@@ -404,7 +404,7 @@
 {
     NSDictionary *videoDict=[videoArr objectAtIndex:indexPath.row];
     
-    JMPlayVideoViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMPlayVideoViewController"];
+    JMPlayVideoViewController *VC=[appDelegate.storyBoard instantiateViewControllerWithIdentifier:@"JMPlayVideoViewController"];
     VC.VideoId=[videoDict valueForKey:@"id"];
     [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
     

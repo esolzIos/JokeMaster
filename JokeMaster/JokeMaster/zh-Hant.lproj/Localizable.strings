@@ -96,7 +96,7 @@
 "CLICK TO RETRY" = "點擊重試";
 "JOKE MASTER" = "約克大師";
 "TOTAL SCORE" ="總得分";
-"JOINED ON" ="加入";
+"JOINED : " ="加入：";
 "FOLLOWERS" = "追隨者";
 "UNFOLLOW" = "取消關注";
 "FOLLOW" ="跟隨";
@@ -130,3 +130,15 @@
 "GENERATING IMAGE" = "生成圖像";
 "UPLOADING" = "上傳";
 "Video uploaded Successfully" = "視頻成功上傳";
+"Choose Country" = "選擇國家";
+"Please select a language first" ="請先選擇語言";
+"Please select a country first" ="請先選擇一個國家";
+"You have already rated this video"="您已經評價過此視頻";
+"You cannot rate your own videos"="您無法評價自己的影片";
+"You cannot like your own videos"="你不能喜歡你自己的視頻";
+"You cannot rate or comment your own videos"="您無法評價或評論自己的視頻";
+"Buffering"="緩衝";
+"Processing"="處理";
+"people voted" = "人投票";
+"Not rated yet" ="尚未評分";
+"Users who favorited" = "喜歡的用戶";

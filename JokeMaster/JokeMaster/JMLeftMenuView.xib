@@ -77,7 +77,71 @@
                 <outlet property="ProfileImage" destination="xoL-EC-VAq" id="UD4-km-isr"/>
                 <outlet property="ScoreLabel" destination="mYn-dg-WRf" id="dqh-6B-YmE"/>
             </connections>
-            <point key="canvasLocation" x="4" y="-176"/>
+            <point key="canvasLocation" x="-74" y="-176"/>
+        </view>
+        <view contentMode="scaleToFill" restorationIdentifier="JMLeftMenuView" id="rzi-4Y-MSR" customClass="JMLeftMenuView">
+            <rect key="frame" x="0.0" y="0.0" width="240" height="480"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8Ps-hn-NEw">
+                    <rect key="frame" x="0.0" y="0.0" width="240" height="480"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="left-bg" translatesAutoresizingMaskIntoConstraints="NO" id="rgD-v9-pk6">
+                            <rect key="frame" x="0.0" y="0.0" width="240" height="480"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        </imageView>
+                        <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UBK-98-yf0">
+                            <rect key="frame" x="140" y="13" width="88" height="65"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="noimage" translatesAutoresizingMaskIntoConstraints="NO" id="Bfz-OV-D3n">
+                                    <rect key="frame" x="0.0" y="8" width="88" height="49"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                </imageView>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="profileFrame" translatesAutoresizingMaskIntoConstraints="NO" id="Khy-MI-Pia">
+                                    <rect key="frame" x="0.0" y="0.0" width="88" height="65"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                </imageView>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </view>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="JOHN DOE" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VcR-q3-bjH">
+                            <rect key="frame" x="15" y="30" width="120" height="43"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" name="ComicBook" family="Comic Book" pointSize="13"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="SCORE: 0.0/5" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3fN-zV-zDb">
+                            <rect key="frame" x="112" y="46" width="90" height="21"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" name="ComicBook" family="Comic Book" pointSize="8"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Dej-HG-m33">
+                            <rect key="frame" x="0.0" y="112" width="240" height="368"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <outlet property="dataSource" destination="rzi-4Y-MSR" id="MWA-So-dvO"/>
+                                <outlet property="delegate" destination="rzi-4Y-MSR" id="S05-T5-Yr7"/>
+                            </connections>
+                        </tableView>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="LeftMenuTable" destination="Dej-HG-m33" id="KsS-5q-OHK"/>
+                <outlet property="NameLabel" destination="VcR-q3-bjH" id="hh0-5a-Efu"/>
+                <outlet property="ProfileImage" destination="Bfz-OV-D3n" id="3vJ-oa-Peg"/>
+                <outlet property="ScoreLabel" destination="3fN-zV-zDb" id="b9Z-49-DhE"/>
+            </connections>
+            <point key="canvasLocation" x="306" y="-176"/>
         </view>
     </objects>
     <resources>

@@ -74,7 +74,7 @@
       self.HeaderView.HeaderLabel.text=AMLocalizedString(@"Followers", nil) ;
     }
     else if (_fromVideo) {
-        self.HeaderView.HeaderLabel.text=AMLocalizedString(@"Favourites", nil) ;
+        self.HeaderView.HeaderLabel.text=AMLocalizedString(@"Users who favorited", nil) ;
            self.HeaderView.EmojiImage.image=[UIImage imageNamed:@"like"];
     }else{
       self.HeaderView.HeaderLabel.text=AMLocalizedString(@"Following", nil) ;
@@ -324,9 +324,9 @@
     
     [cell.RankLabel setFont:[UIFont fontWithName:cell.RankLabel.font.fontName size:[self getFontSize:7.0]]];
     
-    [cell.ProfileNameLabel setFont:[UIFont fontWithName:cell.ProfileNameLabel.font.fontName size:[self getFontSize:10.0]]];
+    [cell.ProfileNameLabel setFont:[UIFont fontWithName:cell.ProfileNameLabel.font.fontName size:[self getFontSize:9.0]]];
     
-    [cell.RatingLabel setFont:[UIFont fontWithName:cell.RatingLabel.font.fontName size:[self getFontSize:9.0]]];
+    [cell.RatingLabel setFont:[UIFont fontWithName:cell.RatingLabel.font.fontName size:[self getFontSize:7.0]]];
     
     [cell.CountryName setFont:[UIFont fontWithName:cell.CountryName.font.fontName size:[self getFontSize:7.0]]];
     
@@ -336,7 +336,7 @@
     
 
     
-    [cell.RankLabel setText:[NSString stringWithFormat:@"%@ %@",AMLocalizedString(@"RANK", nil),[videoDict objectForKey:@"rank"]]];
+    [cell.RankLabel setText:[NSString stringWithFormat:@"%@ %.1f/5",AMLocalizedString(@"SCORE", nil),[[videoDict objectForKey:@"score"] floatValue]]];
     
     [cell.ProfileNameLabel setText:[videoDict objectForKey:@"name"]];
     
@@ -375,7 +375,7 @@
 {
      NSDictionary *videoDict=[videoArr objectAtIndex:indexPath.row];
     
-    JMProfileViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMProfile"];
+    JMProfileViewController *VC=[appDelegate.storyBoard instantiateViewControllerWithIdentifier:@"JMProfile"];
     if (_fromVideo) {
      VC.ProfileUserId=[videoDict objectForKey:@"userid"];
     }
@@ -505,7 +505,7 @@
             if (error) {
                 NSLog(@"error = %@", error);
                 
-                [SVProgressHUD showErrorWithStatus:@"Some error occured"];
+                 [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"Some error occured", nil) ];
                 
                 return;
             }
@@ -523,7 +523,7 @@
                     
                     NSLog(@"response = %@",responseString);
                     
-                    [SVProgressHUD showInfoWithStatus:@"Some error occured"];
+                      [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"Some error occured", nil) ];
                     
                     
                     

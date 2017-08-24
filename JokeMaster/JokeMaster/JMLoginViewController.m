@@ -339,7 +339,7 @@
 #pragma mark -sign up button Clicked
 - (IBAction)signUpClicked:(id)sender
 {
-    JMRegistrationViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMRegistrationViewController"];
+    JMRegistrationViewController *VC=[app.storyBoard instantiateViewControllerWithIdentifier:@"JMRegistrationViewController"];
     
     [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
 }
@@ -456,7 +456,7 @@ didSignInForUser:(GIDGoogleUser *)user
         }
         else  if (error.userInfo.debugDescription.length==50) {
             
-            [SVProgressHUD showInfoWithStatus:@"Google did not respond"];
+               [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Server Failed to Respond",nil)];
             
             [_googleBtn setUserInteractionEnabled:YES];
             
@@ -546,12 +546,26 @@ dismissViewController:(UIViewController *)viewController {
                          
                          LocalizationSetLanguage([[responseDict objectForKey:@"Details"]valueForKey:@"short_name"]);
                          
+                         if([[[responseDict objectForKey:@"Details"]valueForKey:@"short_name"] isEqualToString:@"he"])
+                         {
+                             
+                             [[NSUserDefaults standardUserDefaults]setBool:YES forKey:@"rightToleft"];
+                             
+                             app.storyBoard = [UIStoryboard storyboardWithName:@"Hebrew" bundle:nil];
+                             
+                         }
+                         else{
+                             [[NSUserDefaults standardUserDefaults]setBool:NO forKey:@"rightToleft"];
+                             
+                             app.storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+                         }
+                         
 //                         [[NSUserDefaults standardUserDefaults]setObject:[[responseDict objectForKey:@"Details"]valueForKey:@"short_name"] forKey:@"langName"];
 
                          
                          [[NSUserDefaults standardUserDefaults]setObject:[[responseDict objectForKey:@"Details"]valueForKey:@"country"] forKey:@"userCountry"];
                          
-                         JMHomeViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMHomeViewController"];
+                         JMHomeViewController *VC=[app.storyBoard instantiateViewControllerWithIdentifier:@"JMHomeViewController"];
                          [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
                          
                      }
@@ -599,12 +613,14 @@ dismissViewController:(UIViewController *)viewController {
 
 - (IBAction)ForgotPasswordClick:(id)sender
 {
-    JMLoginViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMForgotPasswordViewController"];
+    JMLoginViewController *VC=[app.storyBoard instantiateViewControllerWithIdentifier:@"JMForgotPasswordViewController"];
     [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
 }
 
 - (IBAction)gobackClicked:(id)sender {
     
+       
+             [_goBackBtn setUserInteractionEnabled:NO];
     [self.navigationController popViewControllerAnimated:YES];
     
 }
@@ -680,9 +696,23 @@ dismissViewController:(UIViewController *)viewController {
                          
                          LocalizationSetLanguage([[responseDict objectForKey:@"userinfo"]valueForKey:@"short_name"]);
                          
+                         if([[[responseDict objectForKey:@"userinfo"]valueForKey:@"short_name"] isEqualToString:@"he"])
+                         {
+                             
+                             [[NSUserDefaults standardUserDefaults]setBool:YES forKey:@"rightToleft"];
+                             
+                             app.storyBoard = [UIStoryboard storyboardWithName:@"Hebrew" bundle:nil];
+                             
+                         }
+                         else{
+                             [[NSUserDefaults standardUserDefaults]setBool:NO forKey:@"rightToleft"];
+                             
+                             app.storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+                         }
+                         
                [[NSUserDefaults standardUserDefaults]setObject:[[responseDict objectForKey:@"userinfo"]valueForKey:@"country"] forKey:@"userCountry"];
                          
-                         JMHomeViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMHomeViewController"];
+                         JMHomeViewController *VC=[app.storyBoard instantiateViewControllerWithIdentifier:@"JMHomeViewController"];
                          [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
                          
                      }
@@ -691,7 +721,7 @@ dismissViewController:(UIViewController *)viewController {
                          if ([[responseDict objectForKey:@"user_exist"] isEqualToString:@"0"])
                          {
                              
-                             JMLanguageViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMLanguageViewController"];
+                             JMLanguageViewController *VC=[app.storyBoard instantiateViewControllerWithIdentifier:@"JMLanguageViewController"];
                              
                              NSMutableDictionary *dict=[[NSMutableDictionary alloc]init];
                              [dict setObject:name forKey:@"name"];

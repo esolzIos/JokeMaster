@@ -1080,7 +1080,8 @@
 
 #pragma mark - Back Button Click
 - (IBAction)backClicked:(id)sender {
-    
+
+    [_goBackBtn setUserInteractionEnabled:NO];
         [self.navigationController popViewControllerAnimated:NO];
 }
 #pragma mark -signup api call
@@ -1166,6 +1167,20 @@
                 
                 
                 LocalizationSetLanguage([[result objectForKey:@"Details"]valueForKey:@"short_name"]);
+                
+                if([[[result objectForKey:@"Details"]valueForKey:@"short_name"] isEqualToString:@"he"])
+                {
+                    
+                    [[NSUserDefaults standardUserDefaults]setBool:YES forKey:@"rightToleft"];
+                    
+                    app.storyBoard = [UIStoryboard storyboardWithName:@"Hebrew" bundle:nil];
+                    
+                }
+                else{
+                    [[NSUserDefaults standardUserDefaults]setBool:NO forKey:@"rightToleft"];
+                    
+                    app.storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+                }
                 
                 [[NSUserDefaults standardUserDefaults]setObject:[[result objectForKey:@"Details"]valueForKey:@"country"] forKey:@"userCountry"];
 
@@ -1336,7 +1351,7 @@
     [AlertView dismissWithClickedButtonIndex:0 animated:NO];
     
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"loggedIn"];
-    JMHomeViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMHomeViewController"];
+    JMHomeViewController *VC=[app.storyBoard instantiateViewControllerWithIdentifier:@"JMHomeViewController"];
     
     [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
 }

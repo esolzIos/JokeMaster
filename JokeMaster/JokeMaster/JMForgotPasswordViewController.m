@@ -367,7 +367,7 @@
                  {
                      if ([[responseDict objectForKey:@"status"] boolValue]==YES)
                      {
-                         
+                            [_goBackBtn setUserInteractionEnabled:NO];
                          [SVProgressHUD showInfoWithStatus:@"Password Updated Successfully."];
                          [self POPViewController];
                          
@@ -416,6 +416,7 @@
 #pragma mark - Back To Login
 - (IBAction)BackToLogin:(id)sender
 {
+        [_goBackBtn setUserInteractionEnabled:NO];
     [self POPViewController];
 }
 - (IBAction)goBackClicked:(id)sender {

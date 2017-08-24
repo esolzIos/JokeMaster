@@ -95,6 +95,17 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appendPushView) name:@"pushReceived" object:nil];
     
+    float degrees;
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"rightToleft"]) {
+ degrees = 2; //the value in degrees
+    }
+    else
+    {
+         degrees = -2; //the value in degrees
+    }
+    _VideoRatingView.transform = CGAffineTransformMakeRotation(degrees * M_PI/180);
+    
+
       //  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showWarning) name:@"showWarning" object:nil];
     
     //   // Do any additional setup after loading the view.
@@ -237,19 +248,47 @@
                          
                              _VideoNameLabel.text=[jokeDict objectForKey:@"videoname"];
                              _VideoCreaterNameLabel.text=[jokeDict objectForKey:@"username"];
-                             _VideoRatingLabel.text=[NSString stringWithFormat:@"%@/5",[jokeDict objectForKey:@"averagerating"]];
-                             
-                             
-                             _VideoRatingView.maximumValue = 5;
-                             _VideoRatingView.minimumValue = 0;
-                             _VideoRatingView.value =[[jokeDict objectForKey:@"averagerating"] floatValue];
-                             _VideoRatingView.userInteractionEnabled=NO;
-                             //    _RatingView.tintColor = [UIColor clearColor];
-                             _VideoRatingView.allowsHalfStars = YES;
-                             _VideoRatingView.emptyStarImage = [[UIImage imageNamed:@"emotion"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-                             _VideoRatingView.filledStarImage = [[UIImage imageNamed:@"emotion2"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-                             _VideoRatingView.accurateHalfStars = YES;
-                             _VideoRatingView.halfStarImage = [[UIImage imageNamed:@"emotion1"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+                        
+                        
+                        if ([[jokeDict objectForKey:@"averagerating"]floatValue]>0) {
+                   
+                            
+                                       _VideoRatingLabel.text=[NSString stringWithFormat:@"%@/5",[jokeDict objectForKey:@"averagerating"]];
+                            
+//                            
+//                          if ([[NSUserDefaults standardUserDefaults] boolForKey:@"rightToleft"]) {
+//                              
+//                              _VideoRatingLabel.text=[NSString stringWithFormat:@"(%@ %@) %@/5",AMLocalizedString(@"people voted", nil),[jokeDict objectForKey:@"totalratedusers"],[jokeDict objectForKey:@"averagerating"]];
+//                            } else {
+//                                
+//                                _VideoRatingLabel.text=[NSString stringWithFormat:@"%@/5 (%@ %@)",[jokeDict objectForKey:@"averagerating"],[jokeDict objectForKey:@"totalratedusers"],AMLocalizedString(@"people voted", nil)];
+//                            }
+                       
+                            
+                            _VideoRatingView.maximumValue = 5;
+                            _VideoRatingView.minimumValue = 0;
+                            _VideoRatingView.value =[[jokeDict objectForKey:@"averagerating"] floatValue];
+                            _VideoRatingView.userInteractionEnabled=NO;
+                            //    _RatingView.tintColor = [UIColor clearColor];
+                            _VideoRatingView.allowsHalfStars = YES;
+                            _VideoRatingView.emptyStarImage = [[UIImage imageNamed:@"emotion"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+                            _VideoRatingView.filledStarImage = [[UIImage imageNamed:@"emotion2"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+                            _VideoRatingView.accurateHalfStars = YES;
+                            _VideoRatingView.halfStarImage = [[UIImage imageNamed:@"emotion1"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+                            
+            
+                            
+                            [_VideoRatingView setHidden:NO];
+                        }
+                        else{
+                        
+                            _VideoRatingLabel.text=AMLocalizedString(@"Not rated yet", nil) ;
+                            
+                            [_VideoRatingView setHidden:YES];
+                            
+                        
+                        }
+             
                              
                              [_videoThumb sd_setImageWithURL:[NSURL URLWithString:[jokeDict objectForKey:@"videoimagename"] ] placeholderImage:[UIImage imageNamed: @"noimage"]];
                              
@@ -370,7 +409,7 @@
                     
                     NSLog(@"response = %@",responseString);
                     
-                    [SVProgressHUD showInfoWithStatus:@"some error occured"];
+                     [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"Some error occured", nil) ];
                     
                     //                    [_gifImage setHidden:YES];
                     //                    [_noVideoView setHidden:NO];
@@ -470,7 +509,7 @@
     //                     completion:^(BOOL finished){
     //                     }];
     
-    JMJokesCategoryVideoListViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMJokesCategoryVideoListViewController"];
+    JMJokesCategoryVideoListViewController *VC=[appDelegate.storyBoard instantiateViewControllerWithIdentifier:@"JMJokesCategoryVideoListViewController"];
     
     [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
 }
@@ -518,7 +557,7 @@
     }
     else
     {
-        JMPlayVideoViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMPlayVideoViewController"];
+        JMPlayVideoViewController *VC=[appDelegate.storyBoard instantiateViewControllerWithIdentifier:@"JMPlayVideoViewController"];
         VC.VideoId=[[RecentVideoArray objectAtIndex:indexPath.row] valueForKey:@"id"];
         [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
     }
@@ -551,7 +590,7 @@
 #pragma mark - recent button click
 - (IBAction)recentClicked:(id)sender {
     
-    JMRecentlyUploadedViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMRecentlyUploadedViewController"];
+    JMRecentlyUploadedViewController *VC=[appDelegate.storyBoard instantiateViewControllerWithIdentifier:@"JMRecentlyUploadedViewController"];
     
     [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
 }
@@ -597,10 +636,10 @@
         if([[jokeDict objectForKey:@"video_rating"] intValue]==0)
             [_ratingView setHidden:NO];
         else
-            [SVProgressHUD showInfoWithStatus:@"You have already rated this video"];
+            [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"You have already rated this video",nil)];
    
                   } else{
-                      [SVProgressHUD showInfoWithStatus:@"You cannot like your own videos"];
+                      [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"You cannot like your own videos", nil) ];
                   }
     }
    
@@ -673,7 +712,7 @@
             if (error) {
                 NSLog(@"error = %@", error);
                 
-                [SVProgressHUD showErrorWithStatus:@"Some error occured"];
+      [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"Some error occured", nil) ];
                 
                 return;
             }
@@ -691,7 +730,7 @@
                     
                     NSLog(@"response = %@",responseString);
                     
-                    [SVProgressHUD showInfoWithStatus:@"Some error occured"];
+          [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"Some error occured", nil) ];
                     
                     
                     
@@ -750,7 +789,7 @@
     }
           }
           else{
-                [SVProgressHUD showInfoWithStatus:@"You cannot like your own videos"];
+                [SVProgressHUD showInfoWithStatus:AMLocalizedString( @"You cannot like your own videos", nil)];
           }
 
       }
@@ -776,7 +815,7 @@
     {
         [_optionView setHidden:YES];
         [_ratingImage.layer removeAllAnimations];
-        JMPlayVideoViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMPlayVideoViewController"];
+        JMPlayVideoViewController *VC=[appDelegate.storyBoard instantiateViewControllerWithIdentifier:@"JMPlayVideoViewController"];
         VC.VideoId=[jokeDict valueForKey:@"id"];
         [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
     }
@@ -1079,7 +1118,7 @@
 - (IBAction)gotoJokeUser:(id)sender {
     
     
-    JMProfileViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMProfile"];
+    JMProfileViewController *VC=[appDelegate.storyBoard instantiateViewControllerWithIdentifier:@"JMProfile"];
     VC.ProfileUserId=[jokeDict objectForKey:@"userid"];
     
     [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];

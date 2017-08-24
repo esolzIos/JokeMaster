@@ -251,7 +251,9 @@ demoTxt = [[UITextView alloc] init];
 //        return 60;
 //    }
     
-     return 66.0/480.0*FULLHEIGHT + ( [[heightArr objectAtIndex:indexPath.row ] floatValue]);
+        DebugLog(@"%f",42.0/480.0*FULLHEIGHT + ( [[heightArr objectAtIndex:indexPath.row ] floatValue]));
+    
+     return 42.0/480.0*FULLHEIGHT + ( [[heightArr objectAtIndex:indexPath.row ] floatValue]);
 
     
 }
@@ -265,18 +267,26 @@ demoTxt = [[UITextView alloc] init];
        //  [cell.contentView setAutoresizesSubviews:NO];
     
     
-    [cell.userImage setFrame:CGRectMake(cell.userImage.frame.origin.x, cell.userImage.frame.origin.y, 34.0/320.0*FULLWIDTH, 30.0/480.0*FULLHEIGHT)];
+    [cell.userImage setFrame:CGRectMake(15.0/320.0*FULLWIDTH, 8.0/480.0*FULLHEIGHT, 34.0/320.0*FULLWIDTH, 30.0/480.0*FULLHEIGHT)];
     
         [cell.userName setFrame:CGRectMake(cell.userName.frame.origin.x, cell.userName.frame.origin.y, 134.0/320.0*FULLWIDTH, 22.0/480.0*FULLHEIGHT)];
     
-        [cell.ratingView setFrame:CGRectMake(cell.ratingView.frame.origin.x, cell.ratingView.frame.origin.y, 79.0/320.0*FULLWIDTH, 21.0/480.0*FULLHEIGHT)];
+        [cell.ratingView setFrame:CGRectMake(227.0/320.0*FULLWIDTH, 3.0/480.0*FULLHEIGHT, 79.0/320.0*FULLWIDTH, 21.0/480.0*FULLHEIGHT)];
     
-        [cell.ratingLbl setFrame:CGRectMake(cell.ratingLbl.frame.origin.x, cell.ratingLbl.frame.origin.y, 41.0/320.0*FULLWIDTH, 22.0/480.0*FULLHEIGHT)];
+        [cell.ratingLbl setFrame:CGRectMake(228.0/320.0*FULLWIDTH, 21.0/480.0*FULLHEIGHT, 42.0/320.0*FULLWIDTH, 22.0/480.0*FULLHEIGHT)];
     
     
-        [cell.reviewDate setFrame:CGRectMake(cell.reviewDate.frame.origin.x, cell.reviewDate.frame.origin.y, 134.0/320.0*FULLWIDTH, 22.0/480.0*FULLHEIGHT)];
+        [cell.reviewDate setFrame:CGRectMake(67.0/320.0*FULLWIDTH, 21.0/480.0*FULLHEIGHT, 134.0/320.0*FULLWIDTH, 22.0/480.0*FULLHEIGHT)];
     
-        [cell.reviewTxt setFrame:CGRectMake(cell.reviewTxt.frame.origin.x, cell.reviewTxt.frame.origin.y, 290.0/320.0*FULLWIDTH, [[heightArr objectAtIndex:indexPath.row]floatValue])];
+            [cell.deleteView setFrame:CGRectMake(280.0/320.0*FULLWIDTH, 35.0/480.0*FULLHEIGHT, 40.0/320.0*FULLWIDTH, 30.0/480.0*FULLHEIGHT)];
+    
+    [cell.userBtn setFrame:CGRectMake(15.0/320.0*FULLWIDTH, 5.0/480.0*FULLHEIGHT,185.0/320.0*FULLWIDTH, 30.0/480.0*FULLHEIGHT)];
+    
+//        [cell.reviewTxt setFrame:CGRectMake(cell.reviewTxt.frame.origin.x, cell.reviewTxt.frame.origin.y, 260.0/320.0*FULLWIDTH, [[heightArr objectAtIndex:indexPath.row]floatValue])];
+    
+      [cell.reviewTxt setFrame:CGRectMake(15.0/320.0*FULLWIDTH, 41.0/480.0*FULLHEIGHT, 260.0/320.0*FULLWIDTH, [[heightArr objectAtIndex:indexPath.row]floatValue])];
+    
+    DebugLog(@"%f,%f,%f,%f",cell.reviewTxt.frame.origin.x,cell.reviewTxt.frame.origin.y,cell.reviewTxt.frame.size.width,cell.reviewTxt.frame.size.height);
     
     [self setRoundCornertoView:cell.userImage withBorderColor:[UIColor clearColor] WithRadius:0.5];
     
@@ -302,7 +312,7 @@ demoTxt = [[UITextView alloc] init];
     
     //   [formatter setTimeZone:[NSTimeZone timeZoneWithName:@"IST"]];
     
-    [formatter setDateFormat:@"yyyy-MM-dd HH:mm a"];
+    [formatter setDateFormat:@"yyyy-MM-dd hh:mm a"];
     
     NSDate *Ddate = [formatter dateFromString:[NSString stringWithFormat:@"%@",[reviewDict objectForKey:@"date"]]];
     
@@ -321,7 +331,7 @@ demoTxt = [[UITextView alloc] init];
 
     
      [cell.reviewDate setText:formattedTime];
-     [cell.ratingLbl setText:[reviewDict objectForKey:[NSString stringWithFormat:@"%@/5",[reviewDict objectForKey:@"userrating"]]]];
+     [cell.ratingLbl setText:[NSString stringWithFormat:@"%@/5",[reviewDict objectForKey:@"userrating"]]];
      [cell.reviewTxt setText:[reviewDict objectForKey:@"usercomment"]];
     [cell.userImage sd_setImageWithURL:[NSURL URLWithString:[reviewDict objectForKey:@"userimage"]] placeholderImage:[UIImage imageNamed:@"noimage"]];
     
@@ -339,12 +349,191 @@ demoTxt = [[UITextView alloc] init];
 
     
     
+    [cell.userBtn addTarget:self action:@selector(userReviewClicked:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [cell.deleteBtn addTarget:self action:@selector(deleteReviewClicked:) forControlEvents:UIControlEventTouchUpInside];
+    
+    if ([[reviewDict objectForKey:@"userid"] isEqualToString:app.userId] || [app.userId isEqualToString:[VideoDictionary objectForKey:@"user_id"]]) {
+        
+        [cell.deleteView setHidden:NO];
+        
+    }
+    else
+    {
+      [cell.deleteView setHidden:YES];
+    }
+    
+    
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
 }
 
+-(void)userReviewClicked:(UIButton *)btn
+{
+    
+    ReviewsTableViewCell *cCell=(ReviewsTableViewCell *)btn.superview.superview.superview;
+    
+    
+    NSIndexPath *index=[_reviewTable indexPathForCell:cCell];
+    
+    
+    NSDictionary *reviewDict=[reviewArr objectAtIndex:index.row];
+
+    
+    JMProfileViewController *VC=[app.storyBoard instantiateViewControllerWithIdentifier:@"JMProfile"];
+    VC.ProfileUserId=[reviewDict objectForKey:@"userid"];
+    
+    [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
+
+}
+
+-(void)deleteReviewClicked:(UIButton *)btn
+{
+
+    ReviewsTableViewCell *cCell=(ReviewsTableViewCell *)btn.superview.superview.superview;
+    
+    
+    NSIndexPath *index=[_reviewTable indexPathForCell:cCell];
+    
+    
+    NSDictionary *reviewDict=[reviewArr objectAtIndex:index.row];
+
+
+    DebugLog(@"%@",reviewDict);
+    
+    if([self networkAvailable])
+    {
+        
+        
+        
+        [SVProgressHUD show];
+        
+        NSString *urlString;
+        
+        //http://ec2-13-58-196-4.us-east-2.compute.amazonaws.com/jokemaster/index.php/useraction/deletecomment?commentid=&mode=1
+        urlString=[NSString stringWithFormat:@"%@index.php/Useraction/deletecomment?commentid=%@&mode=%@",GLOBALAPI,[reviewDict objectForKey:@"commentid"],[[NSUserDefaults standardUserDefaults] objectForKey:@"langmode"]];
+        
+        
+        
+        urlString=[urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+        
+        DebugLog(@"Send string Url%@",urlString);
+        
+        
+        NSURLSessionConfiguration *sessionConfig = [NSURLSessionConfiguration defaultSessionConfiguration];
+        session = [NSURLSession sessionWithConfiguration:sessionConfig delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
+        
+        [[session dataTaskWithURL:[NSURL URLWithString:urlString] completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+            
+            
+            
+            
+            if (error) {
+                NSLog(@"error = %@", error);
+                
+                //                [_gifImage setHidden:YES];
+                //                [_noVideoView setHidden:NO];
+                //                  [_noVideoLbl setText:[NSString stringWithFormat:@"%@. \n\n %@",AMLocalizedString(@"Some error occured", nil),AMLocalizedString(@"Click to retry", nil)]];
+                //                [_loaderBtn setHidden:NO];
+                
+                // [_chooseBtn setUserInteractionEnabled:YES];
+                
+                return;
+            }
+            
+            if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
+                NSError *jsonError;
+                NSDictionary *jsonResponse = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
+                
+                
+                
+                
+                
+                
+                // [_chooseBtn setUserInteractionEnabled:YES];
+                
+                if (jsonError) {
+                    // Error Parsing JSON
+                    
+                    NSString *responseString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                    
+                    NSLog(@"response = %@",responseString);
+                    
+                    [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"some error occured", nil) ];
+                    
+                    //                    [_gifImage setHidden:YES];
+                    //                    [_noVideoView setHidden:NO];
+                    //                      [_noVideoLbl setText:[NSString stringWithFormat:@"%@. \n\n %@",AMLocalizedString(@"Some error occured", nil),AMLocalizedString(@"Click to retry", nil)]];
+                    //                    [_loaderBtn setHidden:NO];
+                    
+                } else {
+                    // Success Parsing JSON
+                    // Log NSDictionary response:
+                    
+                    
+                    [_rateView setHidden:YES];
+                    
+                    NSLog(@"result = %@",jsonResponse);
+                    if ([[jsonResponse objectForKey:@"status"]boolValue]) {
+                        
+                        [SVProgressHUD dismiss];
+                        [_reviewTable beginUpdates];
+                        [_reviewTable deleteRowsAtIndexPaths:[NSArray arrayWithObject:index] withRowAnimation:UITableViewRowAnimationFade];
+                        
+                        
+                        [reviewArr removeObjectAtIndex:index.row];
+                        
+                       
+                        
+                        [_reviewTable endUpdates];
+
+                        if (reviewArr.count==0) {
+                            [_reviewTable setUserInteractionEnabled:NO];
+                            
+                            [_noreviewLbl setHidden:NO];
+                        }
+                    }
+                    else
+                    {
+                        
+                        [SVProgressHUD showInfoWithStatus:[jsonResponse objectForKey:@"message"]];
+                        
+                    }
+                    
+                }
+                
+                
+            }
+            
+            
+        }]resume ];
+        
+        
+        
+        
+        
+        
+    }
+    
+    else{
+        
+        //
+        //        [_gifImage setHidden:YES];
+        //        [_noVideoView setHidden:NO];
+        //        [_noVideoLbl setText:[NSString stringWithFormat:@"%@. \n\n %@",AMLocalizedString(@"Check your Internet connection", nil),AMLocalizedString(@"Click to retry", nil)]];
+        //        [_loaderBtn setHidden:NO];
+        
+        [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:AMLocalizedString(@"Check your Internet connection",nil)] ;
+        
+        
+    }
+    
+    
+
+    
+}
 
 -(void)rateVideo:(UIButton *)btn
 {
@@ -407,7 +596,7 @@ demoTxt = [[UITextView alloc] init];
                     
                     NSLog(@"response = %@",responseString);
                     
-                     [SVProgressHUD showInfoWithStatus:@"some error occured"];
+                     [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"some error occured", nil) ];
                     
 //                    [_gifImage setHidden:YES];
 //                    [_noVideoView setHidden:NO];
@@ -493,9 +682,9 @@ demoTxt = [[UITextView alloc] init];
     if([[VideoDictionary objectForKey:@"video_rating"] intValue]==0)
         [_rateView setHidden:NO];
         else
-         [SVProgressHUD showInfoWithStatus:@"You have already rated this video"];
+         [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"You have already rated this video", nil) ];
         } else{
-            [SVProgressHUD showInfoWithStatus:@"You cannot rate your own videos"];
+            [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"You cannot rate your own videos", nil) ];
         }
     }
     else{
@@ -506,7 +695,8 @@ demoTxt = [[UITextView alloc] init];
 }
 
 - (IBAction)backClicked:(id)sender {
-    
+
+    [_gobackBtn setUserInteractionEnabled:NO];
     [self.navigationController popViewControllerAnimated:YES];
     
 }
@@ -624,7 +814,7 @@ demoTxt = [[UITextView alloc] init];
             if (error) {
                 NSLog(@"error = %@", error);
                 
-                [SVProgressHUD showErrorWithStatus:@"Some error occured"];
+                [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"Some error occured", nil) ];
                 
                 return;
             }
@@ -642,7 +832,7 @@ demoTxt = [[UITextView alloc] init];
                     
                     NSLog(@"response = %@",responseString);
                     
-                    [SVProgressHUD showInfoWithStatus:@"Some error occured"];
+         [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"Some error occured", nil) ];
                     
                     
                     
@@ -701,7 +891,7 @@ demoTxt = [[UITextView alloc] init];
     }
           }
     else{
-        [SVProgressHUD showInfoWithStatus:@"You cannot like your own videos"];
+        [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"You cannot like your own videos", nil) ];
     }
 
     }
@@ -801,6 +991,42 @@ demoTxt = [[UITextView alloc] init];
 }
 - (IBAction)reportClicked:(id)sender {
     
+    
+ 
+    [self addReportView:self.view];
+    [self.warningTitle setText:AMLocalizedString(@"Reason of report:", nil) ];
+    
+ 
+    
+    [self.warnChoice1 setText:AMLocalizedString(@"SUBMIT", nil)];
+    
+    [self.warnChoice2 setText:AMLocalizedString(@"CANCEL", nil)];
+
+    [self.warnBtn1 addTarget:self action:@selector(reportOneClicked) forControlEvents:UIControlEventTouchUpInside];
+    
+
+    [self.warnBtn2 addTarget:self action:@selector(reportTwoClicked) forControlEvents:UIControlEventTouchUpInside];
+    
+
+    [self.warnCrossBtn addTarget:self action:@selector(reportTwoClicked) forControlEvents:UIControlEventTouchUpInside];
+    
+}
+ -(void)reportOneClicked
+ {
+        
+     if ([self textFieldBlankorNot:self.reportText.text]) {
+         
+         
+         
+         [SVProgressHUD showInfoWithStatus:@"Please provide a reason"];
+     }
+     else
+     {
+        
+
+       [self.reportView removeFromSuperview];
+  
+    
     if([self networkAvailable])
     {
         
@@ -828,6 +1054,10 @@ demoTxt = [[UITextView alloc] init];
         sendData = [sendData stringByAppendingString:@"&userid="];
         sendData = [sendData stringByAppendingString:[NSString stringWithFormat:@"%@",app.userId]];
         
+        sendData = [sendData stringByAppendingString:@"&reasons="];
+        sendData = [sendData stringByAppendingString:[NSString stringWithFormat:@"%@",self.reportText.text]];
+
+        
         
         DebugLog(@"url : %@&%@",url,sendData);
         
@@ -846,7 +1076,7 @@ demoTxt = [[UITextView alloc] init];
             if (error) {
                 NSLog(@"error = %@", error);
                 
-                [SVProgressHUD showErrorWithStatus:@"Some error occured"];
+                [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"Some error occured", nil) ];
                 
                 return;
             }
@@ -864,7 +1094,7 @@ demoTxt = [[UITextView alloc] init];
                     
                     NSLog(@"response = %@",responseString);
                     
-                    [SVProgressHUD showInfoWithStatus:@"Some error occured"];
+                    [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Some error occured",nil)];
                     
                     
                     
@@ -911,13 +1141,21 @@ demoTxt = [[UITextView alloc] init];
         [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:AMLocalizedString(@"Check your Internet connection",nil)] ;
     }
     
+     }
+
+}
+ -(void)reportTwoClicked
+{
+
+    [self.reportView removeFromSuperview];
     
 
 }
+
 #pragma mark -Go to Profile Page
 - (IBAction)gotoProfile:(id)sender {
     
-    JMProfileViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMProfile"];
+    JMProfileViewController *VC=[app.storyBoard instantiateViewControllerWithIdentifier:@"JMProfile"];
     VC.ProfileUserId=VideoPosterId;
     
     [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
@@ -940,7 +1178,7 @@ demoTxt = [[UITextView alloc] init];
 
    [self.filterView setHidden:YES];
     
-    JMEditVideoViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMEditVideoViewController"];
+    JMEditVideoViewController *VC=[app.storyBoard instantiateViewControllerWithIdentifier:@"JMEditVideoViewController"];
     
     VC.videoDict=VideoDictionary;
     
@@ -1018,7 +1256,7 @@ demoTxt = [[UITextView alloc] init];
             if (error) {
                 NSLog(@"error = %@", error);
                 
-                [SVProgressHUD showErrorWithStatus:@"Some error occured"];
+                [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"Some error occured", nil) ];
                 
                 return;
             }
@@ -1036,7 +1274,7 @@ demoTxt = [[UITextView alloc] init];
                     
                     NSLog(@"response = %@",responseString);
                     
-                    [SVProgressHUD showInfoWithStatus:@"Some error occured"];
+                                 [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"Some error occured", nil) ];
                     
                     
                     
@@ -1090,7 +1328,7 @@ demoTxt = [[UITextView alloc] init];
     
    
         
-        JMGlobalMethods *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMLogin"];
+        JMGlobalMethods *VC=[app.storyBoard instantiateViewControllerWithIdentifier:@"JMLogin"];
         [self.navigationController pushViewController:VC animated:YES];
     }
     
@@ -1148,7 +1386,7 @@ demoTxt = [[UITextView alloc] init];
         
 //        if([[VideoDictionary objectForKey:@"video_rating"] intValue]==0)
 //        {
-            JMReviewViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMReview"];
+            JMReviewViewController *VC=[app.storyBoard instantiateViewControllerWithIdentifier:@"JMReview"];
             VC.VideoId=[VideoDictionary objectForKey:@"video_id"];
         VC.userRating=[VideoDictionary objectForKey:@"video_rating"];
         
@@ -1160,7 +1398,7 @@ demoTxt = [[UITextView alloc] init];
     
                 }
                 else{
-                    [SVProgressHUD showInfoWithStatus:@"You cannot rate or comment your own videos"];
+                    [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"You cannot rate or comment your own videos", nil) ];
                 }
     }
     else{
@@ -1197,7 +1435,7 @@ demoTxt = [[UITextView alloc] init];
     }
 else
 {
-    [SVProgressHUD showWithStatus:@"Buffering"];
+    [SVProgressHUD showWithStatus:AMLocalizedString(@"Buffering", nil) ];
     
 }
 
@@ -1237,7 +1475,7 @@ else
 -(void)VideoDetailsApi
 {
     [_loaderView setHidden:NO];
-   
+    [mainscroll setHidden:YES];
     
     if([self networkAvailable])
     {
@@ -1354,7 +1592,7 @@ else
                             
                             [player addObserver:self forKeyPath:@"status" options:0 context:nil];
                             
-                            [item addObserver:self forKeyPath:@"playbackBufferEmpty" options:NSKeyValueObservingOptionNew context:nil];
+                        [item addObserver:self forKeyPath:@"playbackBufferEmpty" options:NSKeyValueObservingOptionNew context:nil];
                             [item addObserver:self forKeyPath:@"playbackLikelyToKeepUp" options:NSKeyValueObservingOptionNew context:nil];
                             
                             [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(playerDidFinishPlaying:) name:AVPlayerItemDidPlayToEndTimeNotification object:item];
@@ -1432,17 +1670,30 @@ else
                                 _ownerName.text=[VideoDictionary objectForKey:@"username"];
                                 VideoPosterId=[VideoDictionary objectForKey:@"user_id"];
                                 
+                                          [_favouriteCountBtn setTitle:[NSString stringWithFormat:@"%@ %@" ,[VideoDictionary objectForKey:@"favouritecount"],AMLocalizedString(@"FAVOURITES", nil) ] forState:UIControlStateNormal];
                                 
-                                _ratingLbl.text=[NSString stringWithFormat:@"%@/5",[VideoDictionary objectForKey:@"video_average_rating"]];
-                                
-                                [_favouriteCountBtn setTitle:[NSString stringWithFormat:@"%@ %@" ,[VideoDictionary objectForKey:@"favouritecount"],AMLocalizedString(@"FAVOURITES", nil) ] forState:UIControlStateNormal];
-                                
+                               _viewCountLbl.text=[NSString stringWithFormat:@"%@ %@",[VideoDictionary objectForKey:@"views"],AMLocalizedString(@"VIEWS", nil)];
                                 
                                 
                                 
-                                _viewCountLbl.text=[NSString stringWithFormat:@"%@ %@",[VideoDictionary objectForKey:@"views"],AMLocalizedString(@"VIEWS", nil)];
+                                _rankLbl.text=[NSString stringWithFormat:@"%@ %@",AMLocalizedString(@"SCORE",nil),[VideoDictionary objectForKey:@"userscore"]];
                                 
-                                _rankLbl.text=[NSString stringWithFormat:@"%@ %@",AMLocalizedString(@"RANK",nil),[VideoDictionary objectForKey:@"rank"]];
+                                
+                                if ([[VideoDictionary objectForKey:@"video_average_rating"] intValue]>0) {
+                                 
+                                
+//                                _ratingLbl.text=[NSString stringWithFormat:@"%@ %@ %@/5",[VideoDictionary objectForKey:@"totalratedusers"],AMLocalizedString(@"people rated", nil),[VideoDictionary objectForKey:@"video_average_rating"]];
+                                
+                                    
+                                    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"rightToleft"]) {
+                                        
+                                        _ratingLbl.text=[NSString stringWithFormat:@"(%@ %@) %@/5",AMLocalizedString(@"people voted", nil),[VideoDictionary objectForKey:@"totalratedusers"],[VideoDictionary objectForKey:@"video_average_rating"]];
+                                    } else {
+                                        
+                                        _ratingLbl.text=[NSString stringWithFormat:@"%@/5 (%@ %@)",[VideoDictionary objectForKey:@"video_average_rating"],[VideoDictionary objectForKey:@"totalratedusers"],AMLocalizedString(@"people voted", nil)];
+                                    }
+                                    
+                                
                                 
                                 _ratingView.maximumValue = 5;
                                 _ratingView.minimumValue = 0;
@@ -1457,6 +1708,13 @@ else
                                 _ratingView.filledStarImage = [[UIImage imageNamed:@"emotion2"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
                                 _ratingView.hidden=NO;
                                 
+                                    
+                                }
+                                else{
+                                
+                                    [_ratingView setHidden:YES];
+                                    [_ratingLbl setText:AMLocalizedString(@"Not rated yet", nil) ];
+                                }
                                 [_videoThumb sd_setImageWithURL:[NSURL URLWithString:[VideoDictionary objectForKey:@"videoimagename"]] placeholderImage:[UIImage imageNamed: @"noimage"]];
                                 
                                 [_ownerImage sd_setImageWithURL:[NSURL URLWithString:[VideoDictionary objectForKey:@"userimage"]] placeholderImage:[UIImage imageNamed: @"noimage"]];
@@ -1470,11 +1728,12 @@ else
                                 
                                 
                                 [_tvView setHidden:NO];
-                                [_ratingView setHidden:NO];
+                              //  [_ratingView setHidden:NO];
                                 [_ratingLbl setHidden:NO];
                                 [_ownerView setHidden:NO];
                                 [_reviewHeaderView setHidden:NO];
                                 [_reviewTable setHidden:NO];
+                                   [mainscroll setHidden:NO];
                           
                                 //Run UI Updates
                             });
@@ -1549,7 +1808,7 @@ else
         NSString *url;
         
         
-        url=[NSString stringWithFormat:@"%@%@useraction/reviewlisting?videoid=%@&page=%d&limit=10&mode=%@",GLOBALAPI,INDEX,VideoId,page,[[NSUserDefaults standardUserDefaults] objectForKey:@"langmode"]];
+        url=[NSString stringWithFormat:@"%@%@useraction/reviewlisting?videoid=%@&page=%d&limit=5&mode=%@",GLOBALAPI,INDEX,VideoId,page,[[NSUserDefaults standardUserDefaults] objectForKey:@"langmode"]];
         
         
         
@@ -1586,7 +1845,7 @@ else
                     
                     NSLog(@"response = %@",responseString);
                     
-                    [SVProgressHUD showInfoWithStatus:@"some error occured"];
+                    [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"some error occured", nil) ];
                     
                 } else {
                     // Success Parsing JSON
@@ -1594,11 +1853,11 @@ else
                     NSLog(@"result = %@",jsonResponse);
                     if ([[jsonResponse objectForKey:@"status"]boolValue]) {
                         
-                          
+                                    [_noreviewLbl setHidden:YES];
                         
                     NSArray    *tempArr=[[jsonResponse objectForKey:@"reviewdetails"] copy];
                         
-                        totalCount=[[jsonResponse objectForKey:@"totalCount"]intValue];
+                        totalCount=[[jsonResponse objectForKey:@"totalcount"]intValue];
                         
                         
                         
@@ -1613,7 +1872,7 @@ else
                             
                             demoTxt.text=[Dict objectForKey:@"usercomment"];
            
-                            CGSize size = [demoTxt sizeThatFits:CGSizeMake(290.0/320.0*FULLWIDTH, FLT_MAX)];
+                            CGSize size = [demoTxt sizeThatFits:CGSizeMake(260.0/320.0*FULLWIDTH, FLT_MAX)];
             
                             [heightArr addObject:[NSString stringWithFormat:@"%f",size.height]];
                             
@@ -1628,7 +1887,21 @@ else
                             
                             
                             
+                           float totalHeight=0;
                             
+                            for (NSString *heightStr in heightArr) {
+                                totalHeight+=[heightStr floatValue]+(42.0/480.0*FULLHEIGHT) ;
+                                
+                            }
+                            
+                            CGRect tableRect =_reviewTable.frame;
+                            
+                            tableRect.size.height=totalHeight;
+                            
+                            _reviewTable.frame=tableRect;
+                            
+                            
+                            [mainscroll setContentSize:CGSizeMake(FULLWIDTH, _reviewTable.frame.origin.y+_reviewTable.frame.size.height)];
                             
                             
                             [_reviewTable reloadData];
@@ -1695,7 +1968,7 @@ else
 {
     
     
-    if (scrollView==_reviewTable && totalCount>reviewArr.count)
+    if (scrollView==mainscroll && totalCount>reviewArr.count)
     {
         CGPoint offset = scrollView.contentOffset;
         CGRect bounds = scrollView.bounds;
@@ -1931,7 +2204,7 @@ else
     else if (object == player.currentItem && [keyPath isEqualToString:@"playbackBufferEmpty"])
     {
        // if (player.currentItem.playbackBufferEmpty) {
-            [SVProgressHUD showWithStatus:@"Buffering"];
+            [SVProgressHUD showWithStatus:AMLocalizedString(@"Buffering", nil) ];
        // }
     }
     
@@ -1966,18 +2239,24 @@ else
 }
 - (IBAction)favouriteListClicked:(id)sender {
     
-    JMFollowingViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMFollowingViewController"];
+    if([[VideoDictionary objectForKey:@"favouritecount"] intValue]>0)
+    {
+    JMFollowingViewController *VC=[app.storyBoard instantiateViewControllerWithIdentifier:@"JMFollowingViewController"];
     VC.profileId=[VideoDictionary objectForKey:@"video_id"];
     VC.fromVideo=YES;
         [self.navigationController pushViewController:VC animated:YES];
-
+    }
 }
 - (IBAction)ratingListClicked:(id)sender {
     
-    JMRatingListViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMRatingListViewController"];
+               if ([[VideoDictionary objectForKey:@"video_average_rating"] intValue]>0) {
+    
+    JMRatingListViewController *VC=[app.storyBoard instantiateViewControllerWithIdentifier:@"JMRatingListViewController"];
   
     VC.videoId=VideoId;
     
     [self.navigationController pushViewController:VC animated:YES];
+                   
+               }
 }
 @end

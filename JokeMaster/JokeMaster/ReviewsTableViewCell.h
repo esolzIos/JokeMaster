@@ -21,6 +21,10 @@
 @property (strong, nonatomic) IBOutlet UILabel *ratingLbl;
 @property (strong, nonatomic) IBOutlet UIImageView *userImage;
 @property (strong, nonatomic) IBOutlet UITextView *reviewTxt;
+@property (strong, nonatomic) IBOutlet UIView *deleteView;
+
+@property (strong, nonatomic) IBOutlet UIButton *deleteBtn;
+@property (strong, nonatomic) IBOutlet UIButton *userBtn;
 
 @property (weak, nonatomic) IBOutlet HCSStarRatingView *ratingView;
 @end

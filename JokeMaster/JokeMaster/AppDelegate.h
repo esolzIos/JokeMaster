@@ -22,6 +22,7 @@
 @property(nonatomic) BOOL isLogged,socialLogin;
 @property (readonly, strong) NSPersistentContainer *persistentContainer;
 @property(nonatomic) NSDictionary *pushDict;
+@property(strong,nonatomic) UIStoryboard *storyBoard;
 - (void)saveContext;
 
 

@@ -307,9 +307,9 @@
     [self setRoundCornertoView:cell.profileFrame withBorderColor:[UIColor clearColor] WithRadius:0.2];
     [self setRoundCornertoView:cell.ProfileImage withBorderColor:[UIColor clearColor] WithRadius:0.15];
     
-    [cell.ProfileNameLabel setFont:[UIFont fontWithName:cell.ProfileNameLabel.font.fontName size:[self getFontSize:10]]];
-    [cell.JokesNameLabel setFont:[UIFont fontWithName:cell.JokesNameLabel.font.fontName size:[self getFontSize:9]]];
-    [cell.RatingLabel setFont:[UIFont fontWithName:cell.RatingLabel.font.fontName size:[self getFontSize:9]]];
+    [cell.ProfileNameLabel setFont:[UIFont fontWithName:cell.ProfileNameLabel.font.fontName size:[self getFontSize:9]]];
+    [cell.JokesNameLabel setFont:[UIFont fontWithName:cell.JokesNameLabel.font.fontName size:[self getFontSize:8]]];
+    [cell.RatingLabel setFont:[UIFont fontWithName:cell.RatingLabel.font.fontName size:[self getFontSize:7]]];
     
 
     
@@ -349,7 +349,7 @@
 {
       NSDictionary *videoDict=[videoArr objectAtIndex:indexPath.row];
     
-    JMPlayVideoViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMPlayVideoViewController"];
+    JMPlayVideoViewController *VC=[appDelegate.storyBoard instantiateViewControllerWithIdentifier:@"JMPlayVideoViewController"];
        VC.VideoId=[videoDict valueForKey:@"id"];
     [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
 }
@@ -474,7 +474,7 @@
             if (error) {
                 NSLog(@"error = %@", error);
                 
-                [SVProgressHUD showErrorWithStatus:@"Some error occured"];
+                [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"Some error occured", nil) ];
                 
                 return;
             }
@@ -492,7 +492,7 @@
                     
                     NSLog(@"response = %@",responseString);
                     
-                    [SVProgressHUD showInfoWithStatus:@"Some error occured"];
+                  [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"Some error occured", nil) ];
                     
                     
                     

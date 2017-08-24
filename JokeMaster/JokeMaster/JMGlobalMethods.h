@@ -59,12 +59,15 @@
 -(void)addRefreshView:(UIView *)mainView;
 -(void)addPushView:(UIView *)mainView;
 -(void)addWarningView:(UIView *)mainView;
+-(void)addReportView:(UIView *)mainView;
 -(void)addSearchBar:(UIView *)mainView;
 - (BOOL) checkforNumeric:(NSString*) numericstr;
 @property(nonatomic,weak) UILabel *headerLbl,*doneLbl,*cancelLbl,*saveLbl,*nodataLbl,*editLbl,*pushTitle,*pushDesc,*badgeLbl,*warningTitle,*warningtext,*warnChoice1,*warnChoice2;
 @property(nonatomic,weak) UIButton *profileBtn,*notifyBtn,*chatBtn,*homeBtn,*eventBtn,*locationBtn,*trophyBtn,*searchBtn,*backBtn,*doneBtn,*cancelBtn,*moreBtn,*saveBtn,*writeBtn,*refreshBtn,*editBtn,*userBttn,*pushBtn,*trashBtn,*warnBtn1,*warnBtn2,*warnCrossBtn,*delBtn;
 @property(nonatomic,weak) UIImageView *profileImg,*notifyImg,*chatImg,*favImage,*homeImg,*eventImg,*locationImg,*trophyImg,*searchImg,*backImg,*moreImg,*writeImg,*userImg,*trashImg,*refreshImg;
 @property(nonatomic,weak) UIView *profileView,*notifyView,*chatView,*homeView,*eventView,*locationview,*trophyView,*searchView,*backView,*cancelview,*doneView,*moreView,*saveView,*writeView,*refreshInnerView,*editview,*userView,*pushInnerView,*trashView;
+
+@property(nonatomic,weak)UITextView *reportText;
 
 @property(nonatomic,weak)UISearchBar *searchBar;
 -(void)shakeAnimation:(UILabel*) label;
@@ -74,7 +77,7 @@
 @property(nonatomic,weak) UITabBar *footerTabBar;
 -(void)checkPushCount;
 -(void)readAfterPush;
- @property (strong, nonatomic) UIView *filterView,*warningView;
+ @property (strong, nonatomic) UIView *filterView,*warningView,*reportView;
 @property (weak, nonatomic) IBOutlet UIView *MainView;
 @property (weak, nonatomic) IBOutlet JMHeaderView *HeaderView;
 @property (strong, nonatomic) IBOutlet JMSearchView *searchHeaderView;

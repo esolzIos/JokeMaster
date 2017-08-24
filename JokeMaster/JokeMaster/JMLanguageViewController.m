@@ -26,6 +26,8 @@
     
     AppDelegate *app;
     
+    NSMutableDictionary *backData;
+    
 }
 @end
 
@@ -59,54 +61,82 @@
     _countryTitle.layer.shadowRadius = 1.0f;
    // [_LanguageLabel setText:AMLocalizedString(@"Choose Video Language", nil)];
     
-    [_GoButton setTitle:AMLocalizedString(@"GO",nil) forState:UIControlStateNormal] ;
-    
-    [_languagePicker setDelegate:self];
-    
-    if (!_fromLogin) {
-        langSelected=[[NSUserDefaults standardUserDefaults ]objectForKey:@"langId"];
-       // countrySelected= [[NSUserDefaults standardUserDefaults ]objectForKey:@"countryId"];
-        
-        langName=[[NSUserDefaults standardUserDefaults ]objectForKey:@"language"];
-    }
-    
-    
-    
-    NSString* filePath = [[NSBundle mainBundle] pathForResource:@"giphy.gif" ofType:nil];
-    NSData* imageData = [NSData dataWithContentsOfFile:filePath];
-    
-    _gifImage.animatedImage = [FLAnimatedImage animatedImageWithGIFData:imageData];
-    
-    [self setRoundCornertoView:_gifImage withBorderColor:[UIColor clearColor] WithRadius:0.15];
-    [self setRoundCornertoView:_noVideoView withBorderColor:[UIColor clearColor] WithRadius:0.15];
-    [self setRoundCornertoView:_loaderImage withBorderColor:[UIColor clearColor] WithRadius:0.15];
-    [_noVideoLbl setFont:[UIFont fontWithName:_noVideoLbl.font.fontName size:[self getFontSize:_noVideoLbl.font.pointSize]]];
-    
-    if (_fromLogin) {
-      //  [_countryTitle setText:AMLocalizedString(@"Choose your country", nil) ];
-        [_countryTitle setText:AMLocalizedString(@"Choose app language",nil)];
-    }
-    else{
-      //  [_countryTitle setText:AMLocalizedString(@"Filter by Country",nil)];
-       [_countryTitle setText:AMLocalizedString(@"Choose Video language",nil)];
-    }
-    
-    
-    [_selectBtn setTitle:AMLocalizedString(@"Select", nil)  forState:UIControlStateNormal];
-    
-    [_cancelBttn setTitle:AMLocalizedString(@"Cancel", nil) forState:UIControlStateNormal];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appendPushView) name:@"pushReceived" object:nil];
     
-    if (_fromSplash) {
+    if (_fromSplash || _fromLogin) {
         [self.HeaderView.BackView setHidden:YES];
         
     }
-    
+    else
+    {
+        [self.HeaderView.BackView setHidden:NO];
+    }
     //   // Do any additional setup after loading the view.
+    
+    
+        backData=[[NSMutableDictionary alloc]init];
+    
+    if ([[NSUserDefaults standardUserDefaults ] objectForKey:@"langname"]!=nil) {
+                [backData setObject:[[NSUserDefaults standardUserDefaults ] objectForKey:@"langname"] forKey:@"langname"];
+    }
+    if ([[NSUserDefaults standardUserDefaults ] objectForKey:@"langId"]!=nil) {
+        [backData setObject:[[NSUserDefaults standardUserDefaults ] objectForKey:@"langId"] forKey:@"langId"];
+    }
+    
+    if ([[NSUserDefaults standardUserDefaults ] objectForKey:@"language"]!=nil) {
+        [backData setObject:[[NSUserDefaults standardUserDefaults ] objectForKey:@"language"] forKey:@"language"];
+    }
+    
+    if ([[NSUserDefaults standardUserDefaults ] objectForKey:@"langmode"]!=nil) {
+        [backData setObject:[[NSUserDefaults standardUserDefaults ] objectForKey:@"langmode"] forKey:@"langmode"];
+    }
+    
+
+
+
+
 }
 
+-(void)BackClicked
+{
+        [self.HeaderView.BackButton setUserInteractionEnabled:NO];
+    
+    if (!_fromLogin) {
+        
+        [[NSUserDefaults standardUserDefaults ]setObject:[backData objectForKey:@"langname"] forKey:@"langname"];
+        [[NSUserDefaults standardUserDefaults ]setObject: [backData objectForKey:@"language"] forKey:@"language"];
+        [[NSUserDefaults standardUserDefaults ]setObject: [backData objectForKey:@"langId"] forKey:@"langId"];
+        
+        
+        
+        if (!app.isLogged) {
+            
+              LocalizationSetLanguage( [backData objectForKey:@"language"]);
+            
+            if([[backData objectForKey:@"language"] isEqualToString:@"he"])
+            {
+                
+                [[NSUserDefaults standardUserDefaults]setBool:YES forKey:@"rightToleft"];
+                
+                app.storyBoard = [UIStoryboard storyboardWithName:@"Hebrew" bundle:nil];
+                
+            }
+            else{
+                [[NSUserDefaults standardUserDefaults]setBool:NO forKey:@"rightToleft"];
+                
+                app.storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+            }
 
+            [[NSUserDefaults standardUserDefaults]setObject: [backData  objectForKey:@"langmode"] forKey:@"langmode"];
+            
+        }
+    }
+    
+    
+    [self POPViewController];
+    
+}
 -(void)appendPushView
 {
     [self addPushView:self.view];
@@ -130,6 +160,42 @@
     
     codeArr=[[NSMutableArray alloc] init];
     
+    [_GoButton setTitle:AMLocalizedString(@"GO",nil) forState:UIControlStateNormal] ;
+    
+    [_languagePicker setDelegate:self];
+    
+    if (!_fromLogin) {
+        langSelected=[[NSUserDefaults standardUserDefaults ]objectForKey:@"langId"];
+        // countrySelected= [[NSUserDefaults standardUserDefaults ]objectForKey:@"countryId"];
+        
+        langName=[[NSUserDefaults standardUserDefaults ]objectForKey:@"language"];
+    }
+    
+    
+    
+    NSString* filePath = [[NSBundle mainBundle] pathForResource:@"giphy.gif" ofType:nil];
+    NSData* imageData = [NSData dataWithContentsOfFile:filePath];
+    
+    _gifImage.animatedImage = [FLAnimatedImage animatedImageWithGIFData:imageData];
+    
+    [self setRoundCornertoView:_gifImage withBorderColor:[UIColor clearColor] WithRadius:0.15];
+    [self setRoundCornertoView:_noVideoView withBorderColor:[UIColor clearColor] WithRadius:0.15];
+    [self setRoundCornertoView:_loaderImage withBorderColor:[UIColor clearColor] WithRadius:0.15];
+    [_noVideoLbl setFont:[UIFont fontWithName:_noVideoLbl.font.fontName size:[self getFontSize:_noVideoLbl.font.pointSize]]];
+    
+    if (_fromLogin) {
+        //  [_countryTitle setText:AMLocalizedString(@"Choose your country", nil) ];
+        [_countryTitle setText:AMLocalizedString(@"Choose app language",nil)];
+    }
+    else{
+        //  [_countryTitle setText:AMLocalizedString(@"Filter by Country",nil)];
+        [_countryTitle setText:AMLocalizedString(@"Choose Video language",nil)];
+    }
+    
+    
+    [_selectBtn setTitle:AMLocalizedString(@"Select", nil)  forState:UIControlStateNormal];
+    
+    [_cancelBttn setTitle:AMLocalizedString(@"Cancel", nil) forState:UIControlStateNormal];
 
     
     [self loadData];
@@ -667,14 +733,29 @@
         
         if (!app.isLogged) {
             LocalizationSetLanguage([[langArr objectAtIndex:rowSelected]objectForKey:@"short_name"]);
-            [[NSUserDefaults standardUserDefaults]setObject:[[langArr objectAtIndex:rowSelected]objectForKey:@"short_name"] forKey:@"language"];
             
+            
+            if([[[langArr objectAtIndex:rowSelected]objectForKey:@"short_name"] isEqualToString:@"he"])
+            {
+            
+                [[NSUserDefaults standardUserDefaults]setBool:YES forKey:@"rightToleft"];
+                
+              app.storyBoard = [UIStoryboard storyboardWithName:@"Hebrew" bundle:nil];
+                
+            }
+            else{
+              [[NSUserDefaults standardUserDefaults]setBool:NO forKey:@"rightToleft"];
+                
+                     app.storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+            }
+            
+            //[[NSUserDefaults standardUserDefaults]setObject:[[langArr objectAtIndex:rowSelected]objectForKey:@"short_name"] forKey:@"language"];
             [[NSUserDefaults standardUserDefaults]setObject:[[langArr objectAtIndex:rowSelected]objectForKey:@"id"] forKey:@"langmode"];
             
         }
                }
         
-         JMChooseCountryViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMChooseCountryViewController"];
+         JMChooseCountryViewController *VC=[app.storyBoard instantiateViewControllerWithIdentifier:@"JMChooseCountryViewController"];
         VC.fromSplash=_fromSplash;
         VC.langSelected=langSelected;
         VC.langName=langName;
@@ -859,6 +940,22 @@
                          
                          LocalizationSetLanguage([[responseDict objectForKey:@"userinfo"]valueForKey:@"short_name"]);
                          
+                         if([[[responseDict objectForKey:@"userinfo"]valueForKey:@"short_name"] isEqualToString:@"he"])
+                         {
+                             
+                             [[NSUserDefaults standardUserDefaults]setBool:YES forKey:@"rightToleft"];
+                             
+                             app.storyBoard = [UIStoryboard storyboardWithName:@"Hebrew" bundle:nil];
+                             
+                         }
+                         else{
+                             [[NSUserDefaults standardUserDefaults]setBool:NO forKey:@"rightToleft"];
+                             
+                             app.storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+                         }
+                         
+                         
+                         
                          [[NSUserDefaults standardUserDefaults]setObject:[[responseDict objectForKey:@"userinfo"]valueForKey:@"short_name"] forKey:@"language"];
                          
                          
@@ -874,7 +971,7 @@
                          
                          [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"loggedIn"];
                          
-                         JMHomeViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMHomeViewController"];
+                         JMHomeViewController *VC=[app.storyBoard instantiateViewControllerWithIdentifier:@"JMHomeViewController"];
                          [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
                          
                      }

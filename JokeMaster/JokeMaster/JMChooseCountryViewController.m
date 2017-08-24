@@ -113,11 +113,14 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appendPushView) name:@"pushReceived" object:nil];
     
-    if (_fromSplash) {
-        [self.HeaderView.BackView setHidden:YES];
-        
-    }
-    
+//    if (_fromSplash) {
+//        [self.HeaderView.BackView setHidden:NO];
+//        
+//    }
+//    else{
+//            [self.HeaderView.BackView setHidden:YES];
+//    }
+  
     //   // Do any additional setup after loading the view.
 }
 
@@ -572,9 +575,13 @@
 
       [cell.CountryImage sd_setImageWithURL:[NSURL URLWithString:[[CountryArray objectAtIndex:indexPath.row]objectForKey:@"image"]] placeholderImage:[UIImage imageNamed:@"world"]];
     
+    if (indexPath.row==0) {
+            [cell.CountryLabel setFont:[UIFont fontWithName:cell.CountryLabel.font.fontName size:[self getFontSize:14.0]]];
+    }
+    else{
     [cell.CountryLabel setFont:[UIFont fontWithName:cell.CountryLabel.font.fontName size:[self getFontSize:11.0]]];
     
-    
+    }
     [cell.CountryLabel setText:AMLocalizedString([[[CountryArray objectAtIndex:indexPath.row]objectForKey:@"countryName"] uppercaseString], nil) ];
     
     
@@ -644,12 +651,12 @@
     
     if (langSelected.length==0) {
         
-        [SVProgressHUD showInfoWithStatus:@"Please select a language first"];
+        [SVProgressHUD showInfoWithStatus:AMLocalizedString( @"Please select a language first", nil)];
     }
     
     else if (countrySelected.length==0) {
         
-        [SVProgressHUD showInfoWithStatus:@"Please select a country first"];
+        [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Please select a country first",nil)];
     }
           else{
         if (_fromLogin) {
@@ -666,7 +673,7 @@
 
      
     
-    JMHomeViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMHomeViewController"];
+    JMHomeViewController *VC=[app.storyBoard instantiateViewControllerWithIdentifier:@"JMHomeViewController"];
     
     [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
         }
@@ -852,6 +859,20 @@ langName=[[langArr objectAtIndex:rowSelected] objectForKey:@"short_name"];
                          
                               LocalizationSetLanguage([[responseDict objectForKey:@"userinfo"]valueForKey:@"short_name"]);
                          
+                         if([[[responseDict objectForKey:@"userinfo"]valueForKey:@"short_name"] isEqualToString:@"he"])
+                         {
+                             
+                             [[NSUserDefaults standardUserDefaults]setBool:YES forKey:@"rightToleft"];
+                             
+                             app.storyBoard = [UIStoryboard storyboardWithName:@"Hebrew" bundle:nil];
+                             
+                         }
+                         else{
+                             [[NSUserDefaults standardUserDefaults]setBool:NO forKey:@"rightToleft"];
+                             
+                             app.storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+                         }
+                         
                          [[NSUserDefaults standardUserDefaults]setObject:[[responseDict objectForKey:@"userinfo"]valueForKey:@"short_name"] forKey:@"language"];
                          
                          
@@ -867,7 +888,7 @@ langName=[[langArr objectAtIndex:rowSelected] objectForKey:@"short_name"];
                          
                          [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"loggedIn"];
                          
-                         JMHomeViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMHomeViewController"];
+                         JMHomeViewController *VC=[app.storyBoard instantiateViewControllerWithIdentifier:@"JMHomeViewController"];
                          [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
                          
                      }

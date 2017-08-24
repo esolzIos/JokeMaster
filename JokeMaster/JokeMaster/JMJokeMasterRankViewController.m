@@ -46,6 +46,21 @@
     // Do any additional setup after loading the view.
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appendPushView) name:@"pushReceived" object:nil];
     
+         self.HeaderView.HeaderLabel.text=[NSString stringWithFormat:@"%@ (%@)",AMLocalizedString(@"Joke Master Rank", nil),[[NSUserDefaults standardUserDefaults]objectForKey:@"langname"]] ;
+    
+//    if (self.HeaderView.HeaderLabel.text.length>0) {
+//        UIFont *font1 = [UIFont fontWithName:@"GROBOLD" size:self.HeaderView.HeaderLabel.font.pointSize];
+//        NSDictionary *arialDict = [NSDictionary dictionaryWithObject: font1 forKey:NSFontAttributeName];
+//        
+//        NSMutableAttributedString *aAttrString1 = [[NSMutableAttributedString alloc] initWithString:self.HeaderView.HeaderLabel.text attributes: arialDict];
+//        CGRect rect;
+//        rect =[aAttrString1 boundingRectWithSize:CGSizeMake(self.HeaderView.HeaderLabel.frame.size.width, 1000) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading context:nil];
+//        
+//        self.HeaderView.HeaderLabel.frame=CGRectMake(self.view.frame.size.width/2-rect.size.width/2, self.HeaderView.HeaderLabel.frame.origin.y, rect.size.width, self.HeaderView.HeaderLabel.frame.size.height);
+//        
+//        self.HeaderView.EmojiImage.frame=CGRectMake(self.HeaderView.HeaderLabel.frame.origin.x+self.HeaderView.HeaderLabel.frame.size.width+10.0/320.0*FULLWIDTH, self.HeaderView.EmojiImage.frame.origin.y, self.HeaderView.EmojiImage.frame.size.width, self.HeaderView.EmojiImage.frame.size.height);
+//    }
+    
     //   // Do any additional setup after loading the view.
 }
 
@@ -85,12 +100,12 @@
         //http://ec2-13-58-196-4.us-east-2.compute.amazonaws.com/jokemaster/index.php/Useraction/userankinglisting?page=1&limit=15
         
         
-        if (appDelegate.isLogged) {
-                    url=[NSString stringWithFormat:@"%@%@Useraction/userankinglisting?page=%d&limit=15&mode=%@&language=%@",GLOBALAPI,INDEX,page,[[NSUserDefaults standardUserDefaults] objectForKey:@"langmode"],[[NSUserDefaults standardUserDefaults] objectForKey:@"langmode"]];
-        }
-        else{
+//        if (appDelegate.isLogged) {
+//                    url=[NSString stringWithFormat:@"%@%@Useraction/userankinglisting?page=%d&limit=15&mode=%@&language=%@",GLOBALAPI,INDEX,page,[[NSUserDefaults standardUserDefaults] objectForKey:@"langmode"],[[NSUserDefaults standardUserDefaults] objectForKey:@"langmode"]];
+//        }
+//        else{
              url=[NSString stringWithFormat:@"%@%@Useraction/userankinglisting?page=%d&limit=15&mode=%@&language=%@",GLOBALAPI,INDEX,page,[[NSUserDefaults standardUserDefaults] objectForKey:@"langmode"],[[NSUserDefaults standardUserDefaults] objectForKey:@"langId"]];
-        }
+    //    }
 
         
         
@@ -303,33 +318,43 @@
     
     NSDictionary *videoDict=[videoArr objectAtIndex:indexPath.row];
     
-    if ([swipedRows containsObject:[NSString stringWithFormat:@"%ld",indexPath.row]]) {
-        cell.WhiteView.frame =CGRectMake(-50.0/320.0*FULLWIDTH,  cell.WhiteView.frame.origin.y,  cell.WhiteView.frame.size.width,  cell.WhiteView.frame.size.height);
+//    if ([swipedRows containsObject:[NSString stringWithFormat:@"%ld",indexPath.row]]) {
+//        cell.WhiteView.frame =CGRectMake(-50.0/320.0*FULLWIDTH,  cell.WhiteView.frame.origin.y,  cell.WhiteView.frame.size.width,  cell.WhiteView.frame.size.height);
+//    }
+//    else{
+    
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"rightToleft"]) {
+               cell.WhiteView.frame =CGRectMake(23.0/320.0*FULLWIDTH,  cell.WhiteView.frame.origin.y,  cell.WhiteView.frame.size.width,  cell.WhiteView.frame.size.height);
     }
-    else{
-        cell.WhiteView.frame =CGRectMake(23.0/320.0*FULLWIDTH,  cell.WhiteView.frame.origin.y,  cell.WhiteView.frame.size.width,  cell.WhiteView.frame.size.height);
+    else {
+        cell.WhiteView.frame =CGRectMake(53.0/320.0*FULLWIDTH,  cell.WhiteView.frame.origin.y,  cell.WhiteView.frame.size.width,  cell.WhiteView.frame.size.height);
     }
+   // }
     
     
-    [cell.RankLabel setFont:[UIFont fontWithName:cell.RankLabel.font.fontName size:[self getFontSize:9.0]]];
+    [cell.RankLabel setFont:[UIFont fontWithName:cell.RankLabel.font.fontName size:[self getFontSize:7.0]]];
     
-    [cell.ProfileNameLabel setFont:[UIFont fontWithName:cell.ProfileNameLabel.font.fontName size:[self getFontSize:10.0]]];
+    [cell.ProfileNameLabel setFont:[UIFont fontWithName:cell.ProfileNameLabel.font.fontName size:[self getFontSize:8.0]]];
     
-    [cell.RatingLabel setFont:[UIFont fontWithName:cell.RatingLabel.font.fontName size:[self getFontSize:9.0]]];
+    [cell.RatingLabel setFont:[UIFont fontWithName:cell.RatingLabel.font.fontName size:[self getFontSize:7.0]]];
     
-    [cell.CountryName setFont:[UIFont fontWithName:cell.CountryName.font.fontName size:[self getFontSize:9.0]]];
+    [cell.CountryName setFont:[UIFont fontWithName:cell.CountryName.font.fontName size:[self getFontSize:7.0]]];
+    
+       [cell.rankLbl setFont:[UIFont fontWithName:cell.RatingLabel.font.fontName size:[self getFontSize:7.0]]];
     
     [cell.ProfileImage sd_setImageWithURL:[NSURL URLWithString:[videoDict objectForKey:@"user_image"]] placeholderImage:[UIImage imageNamed:@"noimage"]];
     
         [cell.countryImage sd_setImageWithURL:[NSURL URLWithString:[videoDict objectForKey:@"country_image"]] placeholderImage:[UIImage imageNamed:@"world"]];
     
-     [cell.RankLabel setText:[NSString stringWithFormat:@"%@ %@",AMLocalizedString(@"RANK", nil),[videoDict objectForKey:@"rank"]]];
+     //[cell.RankLabel setText:[NSString stringWithFormat:@"%@ %@",AMLocalizedString(@"RANK", nil),[videoDict objectForKey:@"rank"]]];
     
     [cell.ProfileNameLabel setText:[videoDict objectForKey:@"username"]];
     
-    [cell.RatingLabel setText:[NSString stringWithFormat:@"%@/5",[videoDict objectForKey:@"score"]]];
+    [cell.RatingLabel setText:[NSString stringWithFormat:@"%@ %.1f/5",AMLocalizedString(@"SCORE", nil),[[videoDict objectForKey:@"score"] floatValue]]];
     
-        [cell.CountryName setText:[NSString stringWithFormat:@"%@",[videoDict objectForKey:@"country"]]];
+    [cell.CountryName setText:[NSString stringWithFormat:@"%@",[videoDict objectForKey:@"country"]]];
+    
+    [cell.rankLbl setText:[NSString stringWithFormat:@"%ld.",indexPath.row+1]];
     
     [self setRoundCornertoView:cell.profileFrame withBorderColor:[UIColor clearColor] WithRadius:0.4];
     [self setRoundCornertoView:cell.ProfileImage withBorderColor:[UIColor clearColor] WithRadius:0.36];
@@ -361,7 +386,7 @@
 {
     NSDictionary *videoDict=[videoArr objectAtIndex:indexPath.row];
     
-    JMProfileViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMProfile"];
+    JMProfileViewController *VC=[appDelegate.storyBoard instantiateViewControllerWithIdentifier:@"JMProfile"];
     VC.ProfileUserId=[videoDict objectForKey:@"user_id"];
     
     [self.navigationController pushViewController:VC animated:kCAMediaTimingFunctionEaseIn];

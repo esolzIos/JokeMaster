@@ -349,11 +349,11 @@
 #pragma mark -After success pop view controller called
 -(void)GotoNextPageAfterSuccess
 {
-    JMHomeViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMHomeViewController"];
+//    JMHomeViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMHomeViewController"];
+//    
+//    [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
     
-    [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
-    
-  //  [self POPViewController];
+    [self POPViewController];
 }
 #pragma mark - textview delegate
 - (void)textViewDidBeginEditing:(UITextView *)textView;

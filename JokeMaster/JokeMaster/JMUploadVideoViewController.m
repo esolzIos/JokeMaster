@@ -941,7 +941,7 @@
 {
     
      [_loadingView setHidden:YES];
-    JMHomeViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMHomeViewController"];
+    JMHomeViewController *VC=[app.storyBoard instantiateViewControllerWithIdentifier:@"JMHomeViewController"];
     
     
     [self.navigationController pushViewController:VC animated:kCAMediaTimingFunctionEaseIn];
@@ -1463,6 +1463,31 @@
     
     
     [_PopView setHidden:YES];
+    
+    
+}
+- (IBAction)loaderClicked:(id)sender {
+    
+    
+    [_gifImage setHidden:NO];
+    [_noVideoView setHidden:YES];
+    [_noVideoLbl setText:@""];
+    [_loaderBtn setHidden:YES];
+    
+    categoryArr=[[NSMutableArray alloc] init];
+    
+    //    langArr=[[NSMutableArray alloc] initWithObjects:@"English",@"Hebrew",@"Hindi",@"Chinese",@"Spanish", nil];
+    //
+    //    codeArr=[[NSMutableArray alloc] initWithObjects:@"en",@"he",@"hi",@"zh",@"es", nil];
+    
+    langArr=[[NSMutableArray alloc] init];
+    
+    codeArr=[[NSMutableArray alloc] init];
+    [_langBtn setUserInteractionEnabled:NO];
+    [_categoryBtn setUserInteractionEnabled:NO];
+
+    
+    [self loadData];
     
     
 }

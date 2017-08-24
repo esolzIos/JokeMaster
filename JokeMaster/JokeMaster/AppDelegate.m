@@ -87,20 +87,34 @@
 //    }
 //#endif
 
+    NSLocale *currentLocale = [NSLocale currentLocale];  // get the current locale.
+    NSString *countryCode = [currentLocale objectForKey:NSLocaleCountryCode];
     
+    NSString *language = [[NSLocale preferredLanguages] objectAtIndex:0];
+    
+    NSDictionary *languageDic = [NSLocale componentsFromLocaleIdentifier:language];
+    
+    NSString *languageCode = [languageDic objectForKey:@"kCFLocaleLanguageCodeKey"];
 
+    if ([languageCode isEqualToString:@"he"]) {
+
+              [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"rightToleft"];
+        
+       _storyBoard = [UIStoryboard storyboardWithName:@"Hebrew" bundle:nil];
+        UIViewController *initViewController = [_storyBoard instantiateInitialViewController];
+        [self.window setRootViewController:initViewController];
+    }
+    else{
+                  [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"rightToleft"];
+        
+        _storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        UIViewController *initViewController = [_storyBoard instantiateInitialViewController];
+        [self.window setRootViewController:initViewController];
+    }
 
     if ([[[NSUserDefaults standardUserDefaults] valueForKey:@"language"] length]==0)
     {
         
-        NSLocale *currentLocale = [NSLocale currentLocale];  // get the current locale.
-        NSString *countryCode = [currentLocale objectForKey:NSLocaleCountryCode];
-        
-        NSString *language = [[NSLocale preferredLanguages] objectAtIndex:0];
-        
-NSDictionary *languageDic = [NSLocale componentsFromLocaleIdentifier:language];
-        
-        NSString *languageCode = [languageDic objectForKey:@"kCFLocaleLanguageCodeKey"];
         
         DebugLog(@"country %@ and language %@",countryCode,languageCode);
         
@@ -110,6 +124,8 @@ NSDictionary *languageDic = [NSLocale componentsFromLocaleIdentifier:language];
 
                      [[NSUserDefaults standardUserDefaults]setObject:@"he" forKey:@"language"];
             [[NSUserDefaults standardUserDefaults]setObject:@"3" forKey:@"langmode"];
+            
+         
         }
        else if ([languageCode isEqualToString:@"zh"]) {
            LocalizationSetLanguage(@"zh");
@@ -350,10 +366,10 @@ NSDictionary *languageDic = [NSLocale componentsFromLocaleIdentifier:language];
         if ( [[_pushDict objectForKey:@"type"]intValue]==1) {
             
             
-            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main"
-                                                                 bundle: nil];
+        //    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main"
+                                                               //  bundle: nil];
             //
-            JMPlayVideoViewController *VC=[storyboard instantiateViewControllerWithIdentifier:@"JMPlayVideoViewController"];
+            JMPlayVideoViewController *VC=[_storyBoard instantiateViewControllerWithIdentifier:@"JMPlayVideoViewController"];
             VC.VideoId=[_pushDict valueForKey:@"videoid"];
             
             [navigationController pushViewController:VC animated:YES];
@@ -363,10 +379,10 @@ NSDictionary *languageDic = [NSLocale componentsFromLocaleIdentifier:language];
             if ( [[_pushDict objectForKey:@"type"]intValue]==2) {
                 
                 
-                UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main"
-                                                                     bundle: nil];
+              //  UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main"
+               //                                                      bundle: nil];
                 //
-                JMProfileViewController *VC=[storyboard instantiateViewControllerWithIdentifier:@"JMProfile"];
+                JMProfileViewController *VC=[_storyBoard instantiateViewControllerWithIdentifier:@"JMProfile"];
                 VC.ProfileUserId=[_pushDict valueForKey:@"followingid"];
                 
                 
@@ -559,10 +575,10 @@ NSDictionary *languageDic = [NSLocale componentsFromLocaleIdentifier:language];
     if ( [[_pushDict objectForKey:@"type"]intValue]==1) {
         
 
-        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main"
-                                                             bundle: nil];
+       // UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main"
+       //                                                      bundle: nil];
 //
-        JMPlayVideoViewController *VC=[storyboard instantiateViewControllerWithIdentifier:@"JMPlayVideoViewController"];
+        JMPlayVideoViewController *VC=[_storyBoard instantiateViewControllerWithIdentifier:@"JMPlayVideoViewController"];
         VC.VideoId=[_pushDict valueForKey:@"videoid"];
 
         [navigationController pushViewController:VC animated:YES];
@@ -572,10 +588,10 @@ NSDictionary *languageDic = [NSLocale componentsFromLocaleIdentifier:language];
         if ( [[_pushDict objectForKey:@"type"]intValue]==2) {
             
             
-            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main"
-                                                                 bundle: nil];
+//            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main"
+//                                                                 bundle: nil];
             //
-            JMProfileViewController *VC=[storyboard instantiateViewControllerWithIdentifier:@"JMProfile"];
+            JMProfileViewController *VC=[_storyBoard instantiateViewControllerWithIdentifier:@"JMProfile"];
             VC.ProfileUserId=[_pushDict valueForKey:@"followingid"];
             
 

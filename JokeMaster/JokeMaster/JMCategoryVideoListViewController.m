@@ -31,6 +31,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+       appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    
     [self addMoreView:self.view];
     self.HeaderView.HeaderLabel.text=CategoryName;
     
@@ -318,7 +320,7 @@
 - (void)collectionView:(UICollectionViewCell *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 
 {
-    JMPlayVideoViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMPlayVideoViewController"];
+    JMPlayVideoViewController *VC=[appDelegate.storyBoard instantiateViewControllerWithIdentifier:@"JMPlayVideoViewController"];
     VC.VideoId=[[videoArr objectAtIndex:indexPath.row] valueForKey:@"id"];
     [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
     
@@ -492,7 +494,7 @@
                      }
                      completion:^(BOOL finished)
      {
-         JMCategoryVideoListViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMVideoList"];
+         JMCategoryVideoListViewController *VC=[appDelegate.storyBoard instantiateViewControllerWithIdentifier:@"JMVideoList"];
          VC.CategoryId=[NSString stringWithFormat:@"%@",[[CategoryArray objectAtIndex:indexPath.row]objectForKey:@"id"]];
          VC.CategoryName=[NSString stringWithFormat:@"%@",[[[[CategoryArray objectAtIndex:indexPath.row]objectForKey:@"name"]stringByReplacingOccurrencesOfString:@"&amp;" withString:@"&"] uppercaseString]];
          

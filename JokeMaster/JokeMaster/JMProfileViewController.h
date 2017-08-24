@@ -31,6 +31,8 @@
 - (IBAction)followClicked:(id)sender;
 @property (strong, nonatomic) IBOutlet UIButton *categoryBtn;
 @property (strong, nonatomic) IBOutlet UIImageView *FollowImg;
+@property (strong, nonatomic) IBOutlet UILabel *scoreTitle;
+@property (strong, nonatomic) IBOutlet UILabel *followTitle;
 
 - (IBAction)categoryClicked:(id)sender;
 @property (weak, nonatomic) IBOutlet UICollectionView *categoryCollectionView;
@@ -44,16 +46,19 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *CategoryTable;
 - (IBAction)profileClicked:(id)sender;
+@property (strong, nonatomic) IBOutlet UILabel *leaderLbl;
 
+@property (strong, nonatomic) IBOutlet UIView *followerView;
 @property (strong, nonatomic) IBOutlet UIButton *profileBttn;
 @property(nonatomic) BOOL fromLeftMenu;
 @property (strong, nonatomic) NSString *ProfileUserId;
 @property (strong, nonatomic) IBOutlet UILabel *noVidLbl;
 @property (strong, nonatomic) IBOutlet UIImageView *countryImage;
-@property (strong, nonatomic) IBOutlet UILabel *rankLbl;
+
 @property (strong, nonatomic) IBOutlet UILabel *countryName;
 @property (strong, nonatomic) IBOutlet UIButton *followerCountBtn;
 - (IBAction)followerClicked:(id)sender;
+@property (strong, nonatomic) IBOutlet UILabel *followerCount;
 
 @property (strong, nonatomic) IBOutlet UIView *loaderView;
 @property (strong, nonatomic) IBOutlet UIView *loadertvView;

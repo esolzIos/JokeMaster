@@ -34,7 +34,7 @@
 
 @implementation JMGlobalMethods
 @synthesize HeaderView,MainView;
-@synthesize headerLbl,footerTabBar,favImage,myQueue,searchBar,footerLoadView,footerReloadView,profileBtn,profileView,chatBtn,chatView,notifyBtn,notifyView,pushTitle,pushDesc,pushBtn,pushInnerView,badgeLbl,warningView;
+@synthesize headerLbl,footerTabBar,favImage,myQueue,searchBar,footerLoadView,footerReloadView,profileBtn,profileView,chatBtn,chatView,notifyBtn,notifyView,pushTitle,pushDesc,pushBtn,pushInnerView,badgeLbl,warningView,reportView;
 @synthesize managedObjectCon = _managedObjectContext;
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
@@ -110,7 +110,7 @@
 -(void)editClicked
 {
     if (app.isLogged) {
-        JMGlobalMethods *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMEditViewController"];
+        JMGlobalMethods *VC=[app.storyBoard instantiateViewControllerWithIdentifier:@"JMEditViewController"];
         [self.navigationController pushViewController:VC animated:YES];
     }
     else{
@@ -177,7 +177,7 @@
     HeaderView.menuView.hidden=YES;
           HeaderView.HeaderLabel.hidden=NO;
       HeaderView.logoImage.hidden=YES;
-    HeaderView.BackView.hidden=NO;
+
         HeaderView.EmojiImage.hidden=NO;
     
     if ([CurrentViewController isEqualToString:@"JMHomeViewController"])
@@ -197,7 +197,23 @@
         
         
     }
-  else  if ([CurrentViewController isEqualToString:@"JMReviewViewController"])
+    else  if ([CurrentViewController isEqualToString:@"JMLanguageViewController"])
+    {
+        // leftmenurowindex=2;
+        
+        
+        HeaderView.HeaderLabel.text=AMLocalizedString(@"Choose Language", nil) ;
+        
+        HeaderView.moreView.hidden=YES;
+        
+        
+    }
+
+    else
+    {
+            HeaderView.BackView.hidden=NO;
+ 
+   if ([CurrentViewController isEqualToString:@"JMReviewViewController"])
     {
         // leftmenurowindex=2;
        
@@ -207,28 +223,18 @@
         HeaderView.moreView.hidden=YES;
         
     }
-  else  if ([CurrentViewController isEqualToString:@"JMLanguageViewController"])
-  {
-      // leftmenurowindex=2;
-      
-     
-      HeaderView.HeaderLabel.text=AMLocalizedString(@"Choose Language", nil) ;
-      
-      HeaderView.moreView.hidden=YES;
-      
-      
-  }
-  else  if ([CurrentViewController isEqualToString:@"JMChooseCountryViewController"])
-  {
-      // leftmenurowindex=2;
-
-      
-      HeaderView.HeaderLabel.text=AMLocalizedString(@"Choose Country", nil) ;
-      
-      HeaderView.moreView.hidden=YES;
-      
-      
-  }
+   else  if ([CurrentViewController isEqualToString:@"JMChooseCountryViewController"])
+   {
+       // leftmenurowindex=2;
+       
+       
+       HeaderView.HeaderLabel.text=AMLocalizedString(@"Choose Country", nil) ;
+       
+       HeaderView.moreView.hidden=YES;
+       
+       
+   }
+  
   else  if ([CurrentViewController isEqualToString:@"JMSearchViewController"])
     {
         
@@ -278,7 +284,7 @@
     else if ([CurrentViewController isEqualToString:@"JMJokeMasterRankViewController"] )
     {
 
-        HeaderView.HeaderLabel.text=AMLocalizedString(@"Joke Master Rank", nil) ;
+   
      HeaderView.moreView.hidden=NO;
               HeaderView.moreView.hidden=YES;
     }
@@ -321,7 +327,7 @@
         
         NSMutableAttributedString *aAttrString1 = [[NSMutableAttributedString alloc] initWithString:HeaderView.HeaderLabel.text attributes: arialDict];
         CGRect rect;
-        rect =[aAttrString1 boundingRectWithSize:CGSizeMake(HeaderView.HeaderLabel.frame.size.width, 1000) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading context:nil];
+        rect =[aAttrString1 boundingRectWithSize:CGSizeMake(200.0/320.0*FULLWIDTH, 21.0/480.0*FULLHEIGHT) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading context:nil];
         
         HeaderView.HeaderLabel.frame=CGRectMake(self.view.frame.size.width/2-rect.size.width/2, HeaderView.HeaderLabel.frame.origin.y, rect.size.width, HeaderView.HeaderLabel.frame.size.height);
         
@@ -329,7 +335,7 @@
     }
     
  
-    
+    }
 }
 
 
@@ -434,7 +440,7 @@
                             //
                             
                             //
-                            JMPlayVideoViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMPlayVideoViewController"];
+                            JMPlayVideoViewController *VC=[app.storyBoard instantiateViewControllerWithIdentifier:@"JMPlayVideoViewController"];
                             VC.VideoId=[app.pushDict valueForKey:@"videoid"];
                             
                             [self.navigationController pushViewController:VC animated:YES];
@@ -449,7 +455,7 @@
                             //        [self.navigationController pushViewController:VC animated:YES];
                             //
                             //
-                            JMPlayVideoViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMPlayVideoViewController"];
+                            JMPlayVideoViewController *VC=[app.storyBoard instantiateViewControllerWithIdentifier:@"JMPlayVideoViewController"];
                             VC.VideoId=[app.pushDict valueForKey:@"videoid"];
                             
                             [self.navigationController pushViewController:VC animated:YES];
@@ -459,7 +465,7 @@
                             if ( [[app.pushDict objectForKey:@"type"]intValue]==3) {
                                 
                                 
-                                JMFollowingViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMFollowingViewController"];
+                                JMFollowingViewController *VC=[app.storyBoard instantiateViewControllerWithIdentifier:@"JMFollowingViewController"];
                                 VC.profileId=[app.pushDict valueForKey:@"followerid"];
                                 VC.fromProfile=true;
                                 
@@ -522,7 +528,7 @@
                                 //
                                 
                                 //
-                                JMPlayVideoViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMPlayVideoViewController"];
+                                JMPlayVideoViewController *VC=[app.storyBoard instantiateViewControllerWithIdentifier:@"JMPlayVideoViewController"];
                                 VC.VideoId=[app.pushDict valueForKey:@"videoid"];
                                 
                                 [self.navigationController pushViewController:VC animated:YES];
@@ -537,7 +543,7 @@
                                 //        [self.navigationController pushViewController:VC animated:YES];
                                 //
                                 //
-                                JMPlayVideoViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMPlayVideoViewController"];
+                                JMPlayVideoViewController *VC=[app.storyBoard instantiateViewControllerWithIdentifier:@"JMPlayVideoViewController"];
                                 VC.VideoId=[app.pushDict valueForKey:@"videoid"];
                                 
                                 [self.navigationController pushViewController:VC animated:YES];
@@ -547,7 +553,7 @@
                                 if ( [[app.pushDict objectForKey:@"type"]intValue]==3) {
                                     
                                     
-                                    JMFollowingViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMFollowingViewController"];
+                                    JMFollowingViewController *VC=[app.storyBoard instantiateViewControllerWithIdentifier:@"JMFollowingViewController"];
                                     VC.profileId=[app.pushDict valueForKey:@"receiverid"];
                                     VC.fromProfile=true;
                                     
@@ -617,10 +623,10 @@
         if ( [[app.pushDict objectForKey:@"type"]intValue]==1) {
             
             
-            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main"
-                                                                 bundle: nil];
+           // UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main"
+                                                            //     bundle: nil];
             //
-            JMPlayVideoViewController *VC=[storyboard instantiateViewControllerWithIdentifier:@"JMPlayVideoViewController"];
+            JMPlayVideoViewController *VC=[app.storyBoard instantiateViewControllerWithIdentifier:@"JMPlayVideoViewController"];
             VC.VideoId=[app.pushDict valueForKey:@"videoid"];
             
             [self.navigationController pushViewController:VC animated:YES];
@@ -630,10 +636,10 @@
             if ( [[app.pushDict objectForKey:@"type"]intValue]==2) {
                 
                 
-                UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main"
-                                                                     bundle: nil];
+              //  UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main"
+               //                                                      bundle: nil];
                 //
-                JMProfileViewController *VC=[storyboard instantiateViewControllerWithIdentifier:@"JMProfile"];
+                JMProfileViewController *VC=[app.storyBoard instantiateViewControllerWithIdentifier:@"JMProfile"];
                 VC.ProfileUserId=[app.pushDict valueForKey:@"followingid"];
                 
                 
@@ -804,6 +810,59 @@
 }
 
 
+-(void)addReportView:(UIView *)mainView
+{
+    
+    DebugLog(@"%@",app.pushDict);
+    
+    
+    [reportView removeFromSuperview];
+    
+    reportView= [[[NSBundle mainBundle] loadNibNamed:@"ExtendedViews" owner:self options:nil] objectAtIndex:4];
+    
+    
+    [ reportView setFrame:CGRectMake(0, 0, FULLWIDTH,FULLHEIGHT)];
+    
+    
+    
+    _warningTitle=(UILabel *)[reportView viewWithTag:1];
+    [_warningTitle setFont:[UIFont fontWithName:_warningTitle.font.fontName size:[self getFontSize:_warningTitle.font.pointSize]]];
+    
+    [_warningTitle setText:AMLocalizedString(@"Not Logged in !!", nil) ];
+    
+    _reportText=(UITextView *)[reportView viewWithTag:2];
+    [_reportText setFont:[UIFont fontWithName:_reportText.font.fontName size:[self getFontSize:_reportText.font.pointSize]]];
+    
+    
+  
+    
+    _warnChoice1=(UILabel *)[reportView viewWithTag:3];
+    [_warnChoice1 setFont:[UIFont fontWithName:_warnChoice1.font.fontName size:[self getFontSize:_warnChoice1.font.pointSize]]];
+    
+            [_warnChoice1 setText:AMLocalizedString(@"SUBMIT", nil) ];
+    
+    _warnChoice2=(UILabel *)[reportView viewWithTag:4];
+    [_warnChoice2 setFont:[UIFont fontWithName:_warnChoice2.font.fontName size:[self getFontSize:_warnChoice2.font.pointSize]]];
+    
+        [_warnChoice2 setText:AMLocalizedString(@"CANCEL", nil) ];
+    
+    _warnBtn1=(UIButton *)[reportView viewWithTag:5];
+
+    
+    _warnBtn2=(UIButton *)[reportView viewWithTag:6];
+
+    
+    _warnCrossBtn=(UIButton *)[reportView viewWithTag:7];
+
+    
+    
+    [mainView addSubview:reportView];
+    
+ 
+    
+}
+
+
 -(void)addWarningView:(UIView *)mainView
 {
     
@@ -828,17 +887,17 @@
     [_warningtext setFont:[UIFont fontWithName:_warningtext.font.fontName size:[self getFontSize:_warningtext.font.pointSize]]];
     
     
-        [_warningtext setText:AMLocalizedString(@"You need to login to access this feature", nil) ];
+    [_warningtext setText:AMLocalizedString(@"You need to login to access this feature", nil) ];
     
     _warnChoice1=(UILabel *)[warningView viewWithTag:3];
     [_warnChoice1 setFont:[UIFont fontWithName:_warnChoice1.font.fontName size:[self getFontSize:_warnChoice1.font.pointSize]]];
     
-            [_warnChoice1 setText:AMLocalizedString(@"LOGIN", nil) ];
+    [_warnChoice1 setText:AMLocalizedString(@"LOGIN", nil) ];
     
     _warnChoice2=(UILabel *)[warningView viewWithTag:4];
     [_warnChoice2 setFont:[UIFont fontWithName:_warnChoice2.font.fontName size:[self getFontSize:_warnChoice2.font.pointSize]]];
     
-        [_warnChoice2 setText:AMLocalizedString(@"CANCEL", nil) ];
+    [_warnChoice2 setText:AMLocalizedString(@"CANCEL", nil) ];
     
     _warnBtn1=(UIButton *)[warningView viewWithTag:5];
     [_warnBtn1 addTarget:self action:@selector(warnOneClicked) forControlEvents:UIControlEventTouchUpInside];
@@ -852,14 +911,16 @@
     
     [mainView addSubview:warningView];
     
- 
+    
     
 }
+
+
 -(void)warnOneClicked
 {
         [warningView removeFromSuperview];
     
-    JMGlobalMethods *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMLogin"];
+    JMGlobalMethods *VC=[app.storyBoard instantiateViewControllerWithIdentifier:@"JMLogin"];
     [self.navigationController pushViewController:VC animated:YES];
 
 }
@@ -2015,7 +2076,7 @@
 -(void)addClicked
 {
     
-    UIViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"EIAddPost"];
+    UIViewController *VC=[app.storyBoard instantiateViewControllerWithIdentifier:@"EIAddPost"];
     
     
     
@@ -2450,6 +2511,8 @@
 }
 -(void)POPViewController
 {
+    
+    
     [self.navigationController popViewControllerAnimated:YES];
     
 //    CATransition *Transition=[CATransition animation];
@@ -3267,14 +3330,14 @@
     
 //    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Temp" bundle: nil];
     
-    JMGlobalMethods *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMSearch"];
+    JMGlobalMethods *VC=[app.storyBoard instantiateViewControllerWithIdentifier:@"JMSearch"];
     [self.navigationController pushViewController:VC animated:kCAMediaTimingFunctionEaseIn];
     
 }
 
 -(void)gotoCountrySelect
 {
-    JMGlobalMethods *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMLanguageViewController"];
+    JMGlobalMethods *VC=[app.storyBoard instantiateViewControllerWithIdentifier:@"JMLanguageViewController"];
     [self.navigationController pushViewController:VC animated:kCAMediaTimingFunctionEaseIn];
 }
 
@@ -3306,7 +3369,7 @@
                     [UIView commitAnimations];
                     [MainView removeGestureRecognizer:tapRecognizer];
                     
-                    JMGlobalMethods *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMJokeMasterRankViewController"];
+                    JMGlobalMethods *VC=[app.storyBoard instantiateViewControllerWithIdentifier:@"JMJokeMasterRankViewController"];
                     [self.navigationController pushViewController:VC animated:kCAMediaTimingFunctionEaseIn];
                 }];
             
@@ -3334,7 +3397,7 @@
                 [UIView commitAnimations];
                 [MainView removeGestureRecognizer:tapRecognizer];
                 
-                JMGlobalMethods *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMFavouriteViewController"];
+                JMGlobalMethods *VC=[app.storyBoard instantiateViewControllerWithIdentifier:@"JMFavouriteViewController"];
                 [self.navigationController pushViewController:VC animated:kCAMediaTimingFunctionEaseIn];
             }];
             
@@ -3384,7 +3447,7 @@
                 [UIView commitAnimations];
                 [MainView removeGestureRecognizer:tapRecognizer];
                 
-                JMFollowingViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMFollowingViewController"];
+                JMFollowingViewController *VC=[app.storyBoard instantiateViewControllerWithIdentifier:@"JMFollowingViewController"];
                 VC.profileId=app.userId;
                 [self.navigationController pushViewController:VC animated:kCAMediaTimingFunctionEaseIn];
            }];
@@ -3439,7 +3502,7 @@
                
                 DebugLog(@"%@",app.userId);
                 
-                    JMProfileViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMProfile"];
+                    JMProfileViewController *VC=[app.storyBoard instantiateViewControllerWithIdentifier:@"JMProfile"];
                     VC.ProfileUserId=app.userId;
                                [self.navigationController pushViewController:VC animated:YES];
              
@@ -3495,7 +3558,7 @@
                 [MainView removeGestureRecognizer:tapRecognizer];
                 
          
-                    JMGlobalMethods *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMUploadVideoViewController"];
+                    JMGlobalMethods *VC=[app.storyBoard instantiateViewControllerWithIdentifier:@"JMUploadVideoViewController"];
                     [self.navigationController pushViewController:VC animated:YES];
             
             }];
@@ -3545,7 +3608,7 @@
                 [MainView removeGestureRecognizer:tapRecognizer];
                 
                 
-                JMGlobalMethods *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMNotificationViewController"];
+                JMGlobalMethods *VC=[app.storyBoard instantiateViewControllerWithIdentifier:@"JMNotificationViewController"];
                 [self.navigationController pushViewController:VC animated:YES];
                 
                 [self  readAfterPush];
@@ -3664,6 +3727,13 @@
                                                [[NSUserDefaults standardUserDefaults ]setObject:@"עִברִית" forKey:@"langname"];
                                                
                                                [[NSUserDefaults standardUserDefaults] setObject:@"3" forKey:@"langId"];
+                                               
+                                            
+                                                   [[NSUserDefaults standardUserDefaults]setBool:YES forKey:@"rightToleft"];
+                                                   
+                                                   app.storyBoard = [UIStoryboard storyboardWithName:@"Hebrew" bundle:nil];
+                                                   
+                                            
                                            }
                                            else if ([languageCode isEqualToString:@"zh"]) {
                                                LocalizationSetLanguage(@"zh");
@@ -3674,6 +3744,10 @@
                                                [[NSUserDefaults standardUserDefaults ]setObject:@"中文" forKey:@"langname"];
                                                
                                                [[NSUserDefaults standardUserDefaults] setObject:@"4" forKey:@"langId"];
+                                               
+                                               [[NSUserDefaults standardUserDefaults]setBool:NO forKey:@"rightToleft"];
+                                               
+                                               app.storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
                                            }
                                            else if ([languageCode isEqualToString:@"es"]) {
                                                LocalizationSetLanguage(@"es");
@@ -3684,6 +3758,10 @@
                                                [[NSUserDefaults standardUserDefaults ]setObject:@"Español" forKey:@"langname"];
                                                
                                                [[NSUserDefaults standardUserDefaults] setObject:@"5" forKey:@"langId"];
+                                               
+                                               [[NSUserDefaults standardUserDefaults]setBool:NO forKey:@"rightToleft"];
+                                               
+                                               app.storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
                                            }
                                            else if ([languageCode isEqualToString:@"hi"]) {
                                                LocalizationSetLanguage(@"hi");
@@ -3695,6 +3773,10 @@
                                                
                                                [[NSUserDefaults standardUserDefaults] setObject:@"2" forKey:@"langId"];
                                                
+                                               [[NSUserDefaults standardUserDefaults]setBool:NO forKey:@"rightToleft"];
+                                               
+                                               app.storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+                                               
                                            }
                                            else{
                                                LocalizationSetLanguage(@"en");
@@ -3703,6 +3785,10 @@
                                                [[NSUserDefaults standardUserDefaults ]setObject:@"English" forKey:@"langname"];
                                                
                                                [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:@"langId"];
+                                               
+                                               [[NSUserDefaults standardUserDefaults]setBool:NO forKey:@"rightToleft"];
+                                               
+                                               app.storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
                                            }
                              
                                            
@@ -3716,7 +3802,7 @@
                                                app.isLogged=false;
                                                
                                                
-                                               JMGlobalMethods *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMHomeViewController"];
+                                               JMGlobalMethods *VC=[app.storyBoard instantiateViewControllerWithIdentifier:@"JMHomeViewController"];
                                                
                                                [self.navigationController pushViewController:VC animated:YES];
                                        
@@ -3755,7 +3841,7 @@
        
             
             
-            JMGlobalMethods *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMLogin"];
+            JMGlobalMethods *VC=[app.storyBoard instantiateViewControllerWithIdentifier:@"JMLogin"];
         [self.navigationController pushViewController:VC animated:YES];
                         }
         }

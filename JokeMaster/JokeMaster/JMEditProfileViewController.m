@@ -672,7 +672,7 @@
                     // Log NSDictionary response:
                     NSLog(@"result = %@",jsonResponse);
                     
-                    [_loaderView setHidden:YES];
+             
                     
                     
                     
@@ -697,7 +697,9 @@
                         
                         [ConfirmPassword setText:[userDetails objectForKey:@"password"]];
                         
-                        [ProfileImage sd_setImageWithURL:[userDetails objectForKey:@"user_image"] placeholderImage:[UIImage imageNamed:@"noimage"]];
+                        [ProfileImage sd_setImageWithURL:[userDetails objectForKey:@"user_image"] placeholderImage:[UIImage imageNamed:@"noimage"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+                                   [_loaderView setHidden:YES];
+                        }];
                         
                         
                         langSelected=[userDetails objectForKey:@"loggedInUserLanguage"];
@@ -708,6 +710,7 @@
                     
                     else{
                         
+                           [_loaderView setHidden:YES];
                         [_gifImage setHidden:YES];
                         [_noVideoView setHidden:NO];
                               [_noVideoLbl setText:[NSString stringWithFormat:@"%@\n\n %@",[jsonResponse objectForKey:@"message"],AMLocalizedString(@"Click to retry", nil)]];
@@ -1094,6 +1097,8 @@
 
 #pragma mark - Back Button Click
 - (IBAction)backClicked:(id)sender {
+   
+    [_goBackbtn setUserInteractionEnabled:NO];
     
     [self.navigationController popViewControllerAnimated:NO];
 }
@@ -1173,16 +1178,30 @@
                      
                 
                      
-                     [[NSUserDefaults standardUserDefaults ]setObject:[[result objectForKey:@"Details"]valueForKey:@"language"] forKey:@"langname"];
+                  //   [[NSUserDefaults standardUserDefaults ]setObject:[[result objectForKey:@"Details"]valueForKey:@"language"] forKey:@"langname"];
                      
                      [[NSUserDefaults standardUserDefaults]setObject:[[result objectForKey:@"Details"]valueForKey:@"short_name"] forKey:@"language"];
                      
                      [[NSUserDefaults standardUserDefaults]setObject:[[result objectForKey:@"Details"]valueForKey:@"languageid"] forKey:@"langmode"];
                      
-                     [[NSUserDefaults standardUserDefaults]setObject:[[result objectForKey:@"Details"]valueForKey:@"languageid"] forKey:@"langId"];
+                    // [[NSUserDefaults standardUserDefaults]setObject:[[result objectForKey:@"Details"]valueForKey:@"languageid"] forKey:@"langId"];
                      
                      
                      LocalizationSetLanguage([[result objectForKey:@"Details"]objectForKey:@"short_name"]);
+                     
+                     if([[[result objectForKey:@"Details"]objectForKey:@"short_name"] isEqualToString:@"he"])
+                     {
+                         
+                         [[NSUserDefaults standardUserDefaults]setBool:YES forKey:@"rightToleft"];
+                         
+                         app.storyBoard = [UIStoryboard storyboardWithName:@"Hebrew" bundle:nil];
+                         
+                     }
+                     else{
+                         [[NSUserDefaults standardUserDefaults]setBool:NO forKey:@"rightToleft"];
+                         
+                         app.storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+                     }
                      
                      [[NSUserDefaults standardUserDefaults]setObject:[[result objectForKey:@"Details"]valueForKey:@"country"] forKey:@"userCountry"];
                      
@@ -1226,140 +1245,13 @@
         //        [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Network Not Available." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
     }
 }
-#pragma mark -signup api call-- not used
--(void)SignUpApi
-{
-    
-    
-    BOOL net=[urlobj connectedToNetwork];
-    if (net==YES)
-    {
-        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-            
-            [self checkLoader];
-        }];
-        [[NSOperationQueue new] addOperationWithBlock:^{
-            
-            NSMutableString *urlString;
-            
-            
-            
-            //   urlString=[NSMutableString stringWithFormat:@"%@index.php/Signup",GLOBALAPI];
-            
-            
-            urlString=[NSMutableString stringWithFormat:@"%@index.php/Signup?register_type=1&name=%@&email=%@&password=%@&language=%@&country=&device_token=%@&device_type=1&mode=%@",GLOBALAPI,[Nametxt.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[Emailtxt.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[Passwordtxt.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[LanguageLabel.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],[[NSUserDefaults standardUserDefaults] objectForKey:@"deviceToken"],[[NSUserDefaults standardUserDefaults] objectForKey:@"langmode"]];
-            
-            
-            NSString *strEncoded,*requestBody;
-            
-            UIImage *secondImage = [UIImage imageNamed:@"no-image"];
-            
-            NSData *imgData = UIImagePNGRepresentation(ProfileImage.image);
-            NSData *imgData1 = UIImagePNGRepresentation(secondImage);
-            
-            BOOL isCompare =  [imgData1 isEqual:imgData];
-            if (!isCompare)
-            {
-                //             AttachmentImage.image=[self compressImage:AttachmentImage.image];
-                //
-                //            imgData = UIImageJPEGRepresentation(AttachmentImage.image, 1.0);
-                //  DebugLog(@"Size of Image(bytes):%lu",(unsigned long)[imgData length]);
-                
-                
-                strEncoded = [self encodeToBase64String:ProfileImage.image];
-                requestBody= [NSString stringWithFormat:@"userimage=%@",strEncoded];
-            }
-            else
-            {
-                requestBody= [NSString stringWithFormat:@"userimage="];
-            }
-            
-            
-            DebugLog(@"post string: %@",urlString);
-            DebugLog(@"requestBody string: %@",requestBody);
-            
-            [urlobj getSessionJsonResponseWithUploadImage :(NSString *)urlString Image :(NSString *)requestBody  success:^(NSDictionary *responseDict)
-             {
-                 
-                 DebugLog(@"success %@ Status Code:%ld",responseDict,(long)urlobj.statusCode);
-                 
-                 
-                 self.view.userInteractionEnabled = YES;
-                 [self checkLoader];
-                 
-                 if (urlobj.statusCode==200)
-                 {
-                     if ([[responseDict objectForKey:@"status"] boolValue]==YES)
-                     {
-                         [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Registration successful.",nil)];
-                         //                         AlertView = [[UIAlertView alloc] initWithTitle:@"Success"
-                         //                                                                message:@"Registration successful."
-                         //                                                               delegate:self
-                         //                                                      cancelButtonTitle:nil
-                         //                                                      otherButtonTitles:nil];
-                         //
-                         //                         [AlertView show];
-                         
-                         [[NSUserDefaults standardUserDefaults] setObject:[[responseDict objectForKey:@"Details"] valueForKey:@"user_id"] forKey:@"UserId"];
-                         [[NSUserDefaults standardUserDefaults] setObject:[[responseDict objectForKey:@"Details"] valueForKey:@"name"] forKey:@"Name"];
-                         [[NSUserDefaults standardUserDefaults] setObject:[[responseDict objectForKey:@"Details"] valueForKey:@"image"] forKey:@"Image"];
-                         
-                         app.userId=[[responseDict objectForKey:@"Details"] valueForKey:@"user_id"];
-                         app.userName=[[responseDict objectForKey:@"Details"] valueForKey:@"name"];
-                         app.userImage=[[responseDict objectForKey:@"Details"] valueForKey:@"image"];
-                         
-                         
-                         // (success message) dismiss delay of 1 sec
-                         [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(GotoNextPageAfterSuccess) userInfo:nil repeats: NO];
-                     }
-                     else
-                     {
-                         [SVProgressHUD showInfoWithStatus:[responseDict objectForKey:@"message"]];
-                         //                [[[UIAlertView alloc]initWithTitle:@"Error!" message:[result objectForKey:@"message"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
-                     }
-                     
-                 }
-                 else if (urlobj.statusCode==500 || urlobj.statusCode==400)
-                 {
-                     [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Server Failed to Respond",nil)];
-                     //            [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Server Failed to Respond" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
-                     
-                 }
-                 else
-                 {
-                     [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Server Failed to Respond",nil)];
-                     //            [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Server Failed to Respond" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
-                 }
-                 
-                 
-             } failure:^(NSError *error) {
-                 
-                 [self checkLoader];
-                 self.view.userInteractionEnabled = YES;
-                 NSLog(@"Failure");
-                 //                 [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Server Failed to Respond" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
-                 
-                 [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Server Failed to Respond",nil)];
-                 
-             }];
-            
-            
-        }];
-    }
-    else
-    {
-        
-        [SVProgressHUD showImage:[UIImage imageNamed:@"nowifi"] status:AMLocalizedString(@"Check your Internet connection",nil)] ;
-        //        [[[UIAlertView alloc]initWithTitle:@"Error!" message:@"Network Not Available." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]show];
-    }
-}
 #pragma mark -After registration go to Home screen
 -(void)GotoNextPageAfterSuccess
 {
 
    // [AlertView dismissWithClickedButtonIndex:0 animated:NO];
     
-    JMHomeViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"JMHomeViewController"];
+    JMHomeViewController *VC=[app.storyBoard instantiateViewControllerWithIdentifier:@"JMHomeViewController"];
     
     [self PushViewController:VC WithAnimation:kCAMediaTimingFunctionEaseIn];
    // [self.navigationController popViewControllerAnimated:YES];

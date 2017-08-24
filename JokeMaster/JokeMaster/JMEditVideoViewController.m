@@ -397,6 +397,9 @@
                         
                         [_loaderView setHidden:YES];
                         
+                        
+                  [_goBackbtn setUserInteractionEnabled:NO];
+                        
                             [self POPViewController];
                         //[SVProgressHUD dismiss];
                        // [NSTimer scheduledTimerWithTimeInterval:2.0 target:self selector:@selector(GotoNextPageAfterSuccess) userInfo:nil repeats: NO];
@@ -455,7 +458,7 @@
 
 -(void)GotoNextPageAfterSuccess
 {
-
+    [_goBackbtn setUserInteractionEnabled:NO];
     [self POPViewController];
     
 }
